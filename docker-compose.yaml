@@ -8,6 +8,8 @@ services:
       - ./frontend:/app
       - /app/node_modules
     command: npm run dev
+    
+#add env_file : .env (to automatically create .env file for developmnet)
 
   backend:
     build: ./backend
@@ -17,3 +19,5 @@ services:
       - ./backend:/app
       - /app/node_modules
     command: nodemon server.js
+    
+#add env_file : .env (to automatically create .env file for developmnet)
