@@ -5,5 +5,8 @@
     "json-web-token": "^3.2.0",
     "rate-limiter": "^0.2.0",
     "zod": "^4.1.13"
-  }
+  },"scripts": {
+  "start": "node index.js",
+  "dev": "nodemon index.js"
+}
 }
