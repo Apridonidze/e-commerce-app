@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "json-web-token": "^3.2.0",
+    "rate-limiter": "^0.2.0",
+    "zod": "^4.1.13"
+  }
+}
