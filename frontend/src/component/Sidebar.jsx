@@ -12,13 +12,17 @@ const Sidebar = () => {
                     <Link>Top Sellers</Link>
                     <Link>Contact</Link>
                 </div>
-                <div className="center-center">
+                <div className="center-center"> {/**if clicked and user does not have cookies popup sign/login alert message */}
                     <Link>Add New Product</Link>
                     <Link>My Products</Link>
                 </div>
-                <div className="center-bottom">
+                <div className="center-bottom">{/**trigger it when user has cookies and role === admin */}
                     <Link>Reports</Link>
                     <Link>Dashboard</Link>
+                </div>
+                <div className="center-auth"> {/**trigger it when user does not have cookies */}
+                    <Link>Login</Link>
+                    <Link>Sign</Link>
                 </div>
             </div>
             <div className="sidebar-end"> 
