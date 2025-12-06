@@ -8,18 +8,26 @@ const Sidebar = () => {
             <div className="sidebar-center">
                 <div className="center-header">
                     <Link>Home</Link>
-                    <Link>Discover</Link> {/**make it dropdownable for dropdown categories */}
+                    <Link>Discover</Link>
                     <Link>Product</Link>
-                </div>
-                <div className="center-bottom">{/** make it visible only for admins */}
                     <Link>Add New Product</Link>
-                    <Link>Update Products</Link>
+                </div>
+                <div className="center-bottom">
+                    <Link>Reports</Link>
                     <Link>Dashboard</Link>
                 </div>
             </div>
             <div className="sidebar-end"> 
-                <div className="end-start"></div>
-                <div className="end-bottom"></div>
+                <div className="end-start">
+                    <span>Settings</span>
+                    <span>Help</span>
+                </div>
+                <div className="end-bottom">
+                    <span>Terms</span>
+                    <span>Privacy</span>
+                    <span>Policy</span>
+                    <span>copyright 2022</span>
+                </div>
             </div>
         </div>
     )
