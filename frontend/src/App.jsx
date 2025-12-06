@@ -18,6 +18,7 @@ const App = () => {
     {path : '/dashboard' , element : <Main />},
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
+    {path : '*' , element : <Sign />}, /**add error page */
   ])
 
   return(
@@ -26,12 +27,5 @@ const App = () => {
     </div>
   )
 }
-/**<Link>Home</Link>
-                    <Link>Discover</Link>
-                    <Link>Add New Product</Link>
-                </div>
-                <div className="center-bottom">
-                    <Link>Reports</Link>
-                    <Link>Dashboard</Link> */
 
 export default App

@@ -7,10 +7,14 @@ const Sidebar = () => {
             </div>
             <div className="sidebar-center">
                 <div className="center-header">
-                    <Link>Home</Link>
                     <Link>Discover</Link>
                     <Link>Product</Link>
+                    <Link>Top Sellers</Link>
+                    <Link>Contact</Link>
+                </div>
+                <div className="center-center">
                     <Link>Add New Product</Link>
+                    <Link>My Products</Link>
                 </div>
                 <div className="center-bottom">
                     <Link>Reports</Link>
