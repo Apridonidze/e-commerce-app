@@ -1,6 +1,9 @@
+import axios from 'axios'
 import { useRef, useState } from "react"
 
-const Login = () => {
+import BACKEND_URL from '../../config'
+
+const Login =  () =>  {
     
     const NumberRegex = /\d/;
     const regexContainsSpecial = /[^\w\s]/;
@@ -15,7 +18,7 @@ const Login = () => {
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
 
-    const submitLogin = (e) => {
+    const submitLogin = async (e) => {
 
         e.preventDefault()
 
@@ -31,6 +34,18 @@ const Login = () => {
         else if (NumberRegex.test(password) === false ) {isValid = false ; setPasswordErr('Your Password Should Contain Numbers');passwordRef.current.classList.add('is-invalid');passwordRef.current.classList.remove('is-valid')}
         else if (regexContainsSpecial.test(password) === false ){isValid = false; setPasswordErr('Your Password Should Contain Special Characters');passwordRef.current.classList.add('is-invalid');passwordRef.current.classList.remove('is-valid')}
         else {isValid = true; setPasswordErr('') ; passwordRef.current.classList.remove('is-invalid'); passwordRef.current.classList.add('is-valid'); data = {...data, password : password}}
+        
+        if(isValid){
+            try{
+
+                await axios.post(`${BACKEND_URL}/login` , {data : data} ,).then(resp => console.log(resp))
+
+
+            }catch(err){
+                console.log(err)
+            }
+        }
+    
     }
 
     return(
