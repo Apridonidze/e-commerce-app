@@ -35,6 +35,7 @@ const Sign = () => {
     const [showPass,setShowPass] = useState(false)
     const [showConfPass , setShowConfPass] = useState(false)
 
+    //TODO add max limits to each inpout (name shoulb be less than 55 chars)
 
     const SubmitForm = async (e) => {
 
