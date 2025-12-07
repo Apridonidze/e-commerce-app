@@ -4,6 +4,8 @@ import CountryCode from "../component/CountryCode";
 import axios from "axios";
 
 import { BACKEND_URL } from '../../config'
+import { useNavigate } from 'react-router-dom'
+import { useCookies } from "react-cookie";
 
 const Sign = () => {
 
@@ -34,6 +36,10 @@ const Sign = () => {
 
     const [showPass,setShowPass] = useState(false)
     const [showConfPass , setShowConfPass] = useState(false)
+
+    const [ cookies , setCookies ] = useCookies(['token'])
+
+    const navigator = useNavigate()
 
     //TODO add max limits to each inpout (name shoulb be less than 55 chars)
 
@@ -76,7 +82,11 @@ const Sign = () => {
 
             try{
 
-                await axios.post(`${BACKEND_URL}/sign` , {data}).then(resp => console.log(resp))
+                await axios.post(`${BACKEND_URL}/sign` , {data}).then(resp => {
+                    console.log(resp);
+                    setCookies('token' , resp.data.token , {path : '/' , maxAge :  2592000})
+                    navigator('/' , {replace : true})
+                })
 
 
             }catch(err){
