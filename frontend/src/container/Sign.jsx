@@ -52,7 +52,7 @@ const Sign = () => {
         else if (phone.trim() == ''){isValid = false ; setPhoneErr(`This Field Can't Be Empty`); isValid = false; phoneErr.current.classList.add('is-invalid'), phoneErr.current.classList.remove('is-valid'); countryRef.current.classList.add('is-invalid'), countryRef.current.classList.remove('is-valid')}
         else if (NumberRegex.test(phone) === false){isValid = false ; setPhoneErr('Only Numbers Allowed'); isValid = false; phoneRef.current.classList.add('is-invalid'), phoneRef.current.classList.remove('is-valid')}
         else {isValid = true; setPhoneErr(''); setCountryCodeErr(''); countryCodeRef.current.classList.add('is-valid'), countryRef.current.classList.remove('is-invalid'); phoneRef.current.classList.add('is-valid'), phoneRef.current.classList.remove('is-invalid'); data = {...data , phoneNumber : `${countryCode} ${phone}`}}
-    
+     
         if(password.trim() == '' || password.trim() == null || password.trim() == undefined){isValid = false; setPasswordErr(`This Field Can't Be Empty`) ; passwordRef.current.classList.add('is-invalid'); passwordRef.current.classList.remove('is-valid')}
         else if (password.trim().length <= 8 ){isValid == false ; setPasswordErr('Your Password Should Be 8 Letters Long'); passwordRef.current.classList.add('is-invalid');passwordRef.current.classList.remove('is-valid')}
         else if (NumberRegex.test(password) === false ) {isValid = false ; setPasswordErr('Your Password Should Contain Numbers');passwordRef.current.classList.add('is-invalid');passwordRef.current.classList.remove('is-valid')}
@@ -62,8 +62,6 @@ const Sign = () => {
         if(confrimPass.trim() == '' || confrimPass.trim() == null || confrimPass.trim() == undefined){isValid = false; setConfrimPassErr(`This Field Can't Be Empty`) ; submitPasswordRef.current.classList.add('is-invalid'); submitPasswordRef.current.classList.remove('is-valid')}
         else if (confrimPass !== password){isValid = false; setConfrimPassErr('Input Does Not Match Password');submitPasswordRef.current.classList.add('is-invalid');submitPasswordRef.current.classList.remove('is-valid')}
         else {isValid = true; setConfrimPassErr('') ; submitPasswordRef.current.classList.remove('is-invalid'); submitPasswordRef.current.classList.add('is-valid')}
-
-       
 
        
 
