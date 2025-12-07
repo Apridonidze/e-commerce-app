@@ -2,7 +2,8 @@ import axios from 'axios'
 import { useRef, useState } from "react"
 
 import {BACKEND_URL} from '../../config'
-
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 const Login =  () =>  {
     
     const NumberRegex = /\d/;
@@ -17,6 +18,10 @@ const Login =  () =>  {
 
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
+
+    const [ cookies, setCookies ] = useCookies(['token'])
+
+    const navigator = useNavigate()
 
     const submitLogin = async (e) => {
 
@@ -38,10 +43,15 @@ const Login =  () =>  {
         if(isValid){
             try{
 
-                await axios.post(`${BACKEND_URL}/login` , {data}).then(resp => console.log(resp))
+                await axios.post(`${BACKEND_URL}/login` , {data}).then(resp => {
+                    console.log(resp);
+                    setCookies('token' , resp.data.token , {path : '/' , maxAge :  2592000})
+                    navigator('/' , {replace : true})
+                })
 
 
             }catch(err){
+                if(err.status === 400)isValid = false; setPasswordErr(err.response.data.err) ; setEmailErr('') ; passwordRef.current.classList.add('is-invalid'); passwordRef.current.classList.remove('is-valid'); emailRef.current.classList.add('is-invalid'); emailRef.current.classList.remove('is-valid')
                 console.log(err)
             }
         }
