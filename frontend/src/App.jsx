@@ -5,6 +5,7 @@ import Main from './container/Main'
 import Landing from './container/Landing'
 import Login from './container/Login'
 import Sign from './container/Sign'
+import CreateProduct from './container/CreateProduct'
 
 
 const App = () => {
@@ -13,7 +14,7 @@ const App = () => {
     {path : '/' , element : <Landing />},
     {path : '/main-page' , element : <Main />},
     {path : '/discover' , element : <Main />},
-    {path : '/add-new-product' , element : <Main />},
+    {path : '/add-new-product' , element : <CreateProduct />},
     {path : '/reports' , element : <Main />},
     {path : '/dashboard' , element : <Main />},
     {path : '/login' , element : <Login />},
