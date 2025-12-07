@@ -32,6 +32,9 @@ const Sign = () => {
     const passwordRef = useRef(null)
     const submitPasswordRef = useRef(null)
 
+    const [showPass,setShowPass] = useState(false)
+    const [showConfPass , setShowConfPass] = useState(false)
+
 
     const SubmitForm = async (e) => {
 
@@ -115,22 +118,22 @@ const Sign = () => {
                 </div>
                 <div className="input-group"> 
                     <div className="form-floating">
-                        <input className="form-control" type="password" id="name" placeholder="Full Name" ref={passwordRef} onChange={(e) => setPassword(e.target.value)} value={password}/>
+                        <input className="form-control" type={showPass ? 'text' : 'password'} id="name" placeholder="Full Name" ref={passwordRef} onChange={(e) => setPassword(e.target.value)} value={password}/>
                         <label htmlFor="name">Password</label>
                         
                     </div>
-                    <button>Show</button>
+                    <button onClick={() => setShowPass(!showPass)}>{showPass ? <i class="fa-regular fa-eye-slash"></i> : <i class="fa-regular fa-eye"></i>}</button>
                 </div>
                 <span>{passwordErr}</span>
                 <div className="input-group"> 
                     <div className="form-floating">
-                        <input className="form-control" type="password" id="name" placeholder="Full Name" ref={submitPasswordRef} onChange={(e) => setConfrimPass(e.target.value)} value={confrimPass}/>
+                        <input className="form-control" type={showConfPass ? 'text' : 'password'} id="name" placeholder="Full Name" ref={submitPasswordRef} onChange={(e) => setConfrimPass(e.target.value)} value={confrimPass}/>
                         <label htmlFor="name">Confrim Password</label>
                         
-                        <span>{confrimPassErr}</span>
                     </div>
-                    <button>Show</button>
+                    <button onClick={() => setShowConfPass(!showConfPass)}>{showConfPass ? <i class="fa-regular fa-eye-slash"></i> : <i class="fa-regular fa-eye"></i>}</button>
                 </div>
+                <span>{confrimPassErr}</span>
                 <input type="submit" value="Create Account" />
             </form>
         </div>
