@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 
 import CountryCode from "../component/CountryCode";
+import axios from "axios";
 
 const Sign = () => {
 
@@ -30,7 +31,7 @@ const Sign = () => {
     const submitPasswordRef = useRef(null)
 
 
-    const SubmitForm = (e) => {
+    const SubmitForm = async (e) => {
 
         e.preventDefault()
 
@@ -65,7 +66,17 @@ const Sign = () => {
         else if (confrimPass !== password){isValid = false; setConfrimPassErr('Input Does Not Match Password');submitPasswordRef.current.classList.add('is-invalid');submitPasswordRef.current.classList.remove('is-valid')}
         else {isValid = true; setConfrimPassErr('') ; submitPasswordRef.current.classList.remove('is-invalid'); submitPasswordRef.current.classList.add('is-valid')}
 
-       
+       if(isValid) {
+
+            try{
+
+                await axios
+
+            }catch(err){
+
+            }
+
+       }
 
     }
 
