@@ -3,7 +3,7 @@ const LoginRouter = express.Router()
 
 
 LoginRouter.post('/', (req,res) => {
-    console.log(req.body)
+    console.log(req)
 })
 
 

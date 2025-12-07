@@ -38,7 +38,7 @@ const Login =  () =>  {
         if(isValid){
             try{
 
-                await axios.post(`${BACKEND_URL}/login` , {data : data}).then(resp => console.log(resp))
+                await axios.post(`${BACKEND_URL}/login` , {data}).then(resp => console.log(resp))
 
 
             }catch(err){

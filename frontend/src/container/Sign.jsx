@@ -41,7 +41,7 @@ const Sign = () => {
         e.preventDefault()
 
         let isValid
-        let data = {}
+        let data
 
         
         if(name.trim() == '' || name.trim() == null || name.trim() == undefined){isValid = false ; setNameErr(`This Field Can't Be Empty`); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
@@ -59,7 +59,7 @@ const Sign = () => {
         else if (phone.trim().length <= 8){isValid = false ; setPhoneErr('Your Phone Number Length Should Be Atleast 8 Numbers Length');isValid = false;phoneRef.current.classList.add('is-invalid'), phoneRef.current.classList.remove('is-valid'); countryRef.current.classList.add('is-invalid'), countryRef.current.classList.remove('is-valid') }
         else if (phone.trim() == ''){isValid = false ; setPhoneErr(`This Field Can't Be Empty`); isValid = false; phoneErr.current.classList.add('is-invalid'), phoneErr.current.classList.remove('is-valid'); countryRef.current.classList.add('is-invalid'), countryRef.current.classList.remove('is-valid')}
         else if (NumberRegex.test(phone) === false){isValid = false ; setPhoneErr('Only Numbers Allowed'); isValid = false; phoneRef.current.classList.add('is-invalid'), phoneRef.current.classList.remove('is-valid')}
-        else {isValid = true; setPhoneErr(''); setCountryCodeErr(''); countryCodeRef.current.classList.add('is-valid'), countryRef.current.classList.remove('is-invalid'); phoneRef.current.classList.add('is-valid'), phoneRef.current.classList.remove('is-invalid'); data = {...data , phoneNumber : `${countryCode} ${phone}`}}
+        else {isValid = true; setPhoneErr(''); setCountryCodeErr(''); countryRef.current.classList.add('is-valid'), countryRef.current.classList.remove('is-invalid'); phoneRef.current.classList.add('is-valid'), phoneRef.current.classList.remove('is-invalid'); data = {...data , phoneNumber : `${countryCode} ${phone}`}}
      
         if(password.trim() == '' || password.trim() == null || password.trim() == undefined){isValid = false; setPasswordErr(`This Field Can't Be Empty`) ; passwordRef.current.classList.add('is-invalid'); passwordRef.current.classList.remove('is-valid')}
         else if (password.trim().length <= 8 ){isValid == false ; setPasswordErr('Your Password Should Be 8 Letters Long'); passwordRef.current.classList.add('is-invalid');passwordRef.current.classList.remove('is-valid')}
@@ -75,12 +75,11 @@ const Sign = () => {
 
             try{
 
-                await axios.post(`${BACKEND_URL}/sign` , {data : data}).then(resp => console.log(resp))
+                await axios.post(`${BACKEND_URL}/sign` , {data}).then(resp => console.log(resp))
+
 
             }catch(err){
-
                 console.log(err)
-
             }
 
        }
