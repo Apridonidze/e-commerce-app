@@ -90,6 +90,10 @@ const Sign = () => {
 
 
             }catch(err){
+                
+                if(err.status === 400 & err.response.data.state === 'name') console.log(err); isValid = false ; setNameErr(`Name Already In Use`); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')
+                if(err.status === 400 & err.response.data.state === 'email') console.log(err); isValid = false ; setEmailErr(`Email Already In Use`); emailRef.current.classList.add('is-invalid');emailRef.current.classList.remove('is-valid')
+                if(err.status === 400 & err.response.data.state === 'phone') console.log(err); isValid = false ; setPhoneErr(`Phone Number Already In Use`); phoneRef.current.classList.add('is-invalid');phoneRef.current.classList.remove('is-valid')
                 console.log(err)
             }
 
