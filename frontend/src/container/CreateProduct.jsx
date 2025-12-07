@@ -1,4 +1,8 @@
+import axios from "axios";
 import { useRef, useState } from "react"
+
+import { BACKEND_URL } from "../../config";
+import { useCookies } from "react-cookie";
 
 const CreateProduct = () => {
     
@@ -79,8 +83,8 @@ const CreateProduct = () => {
         }
 ]
 
+    const [ cookies ] = useCookies(['token'])
 
-    const NumberRegex = /\d/;
     const regexContainsSpecial = /[^\w\s]/;
 
     const [images,setImages] = useState([])
@@ -101,7 +105,7 @@ const CreateProduct = () => {
     const categoryRef = useRef(null)
     const subCategoryRef = useRef(null)
     
-    const handleUploadProduct = (e) => {
+    const handleUploadProduct = async (e) => {
         
         e.preventDefault();
 
@@ -134,6 +138,17 @@ const CreateProduct = () => {
         else if(selectedSub.trim().length <= 3){isValid = false; setSubCategoryErr('Enter Valid Product Description'); subCategoryRef.current.classList.add('is-invalid');subCategoryRef.current.classList.remove('is-valid')}
         else {isValid = true; setSubCategoryErr('') ;subCategoryRef.current.classList.add('is-valid') ;subCategoryRef.current.classList.remove('is-invalid'); data = {...data, subCategory : selectedSub}}
 
+        if(isValid){
+
+            try{
+
+                await axios.post(`${BACKEND_URL}/products/new-product`, {data} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+
+            }catch(err){
+                console.log(err)
+            }
+
+        }
 
     }
 
