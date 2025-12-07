@@ -4,6 +4,7 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "json-web-token": "^3.2.0",
+    "mysql2": "^3.15.3",
     "rate-limiter": "^0.2.0",
     "zod": "^4.1.13"
   },
