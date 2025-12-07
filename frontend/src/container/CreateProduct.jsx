@@ -79,13 +79,26 @@ const CreateProduct = () => {
         }
 ]
 
+    const [images,setImages] = useState([])
     const [selectedCat , setSelectedCat] = useState('')
     const [selectedSub, setSelectedSub] = useState('')
-
     
+    const handlePicturesChange = (e) => {
+        console.log(e.target.files)
+
+        //save files in state
+    }
+
+    //add submitForm function to insert product data into server
+
     return(
         <div className="create-product-container">
             <form>
+
+                <div className="form-floating">
+                    <input type="file" multiple className="form-control" onChange={(e) => handlePicturesChange(e)} value={images} content="image"/>
+                </div>
+
                 <div className="form-floating">
                     <input className="form-control" type="text" id="title" placeholder="Product Name"/>
                     <label htmlFor="title">Product Name</label>
@@ -102,13 +115,14 @@ const CreateProduct = () => {
                     ))}
                 </select>
 
-                {selectedCat && <select onChange={(e) => setSelectedSub(e.target.value)}>
+                {selectedCat && 
+                    <select onChange={(e) => setSelectedSub(e.target.value)} value={selectedSub}>
                         {categories.filter(cat => cat.name === selectedCat)[0].subcategories.map((sub, subId) => <option key={subId} value={sub}>{sub}</option>)}
-                    </select>}
+                    </select>
+                }
                 
+                <input type="submit" value='Add Product'/>
                 
-               
-
             </form>
         </div>
     )
