@@ -2,14 +2,16 @@ const z = require('zod')
 
 
 const SignSchema = z.object({
-    name : z.string().min(5).max(55),
+    name : z.string().min(5),
     email: z.email(),
-    phoneNumber: z.string().min(8).max(15),
-    password: z.string().min(),
+    phoneNumber: z.string().min(9),
+    password: z.string(),
 })
 
 function validateSign (data) {
+    
     return SignSchema.safeParse(data)
+
 }
 
 module.exports = validateSign
