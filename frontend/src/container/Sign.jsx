@@ -4,7 +4,7 @@ import CountryCode from "../component/CountryCode";
 import axios from "axios";
 
 import { BACKEND_URL } from '../../config'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCookies } from "react-cookie";
 
 const Sign = () => {
@@ -150,6 +150,7 @@ const Sign = () => {
                 <span>{confrimPassErr}</span>
                 <input type="submit" value="Create Account" />
             </form>
+            <Link to='/login' replace>Already Have An Account?</Link>
         </div>
     )
 }

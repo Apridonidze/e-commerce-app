@@ -8,11 +8,11 @@ const Main = () => {
 
 
     return(
-        <div className="main-container">
-            <div className="main-start">
+        <div className="main-container container-fluid row border" style={{height : '100vh'}}>
+            <div className="main-start col-3">
                 <Sidebar /> 
             </div>
-            <div className="main-end">
+            <div className="main-end col">
                 <Header />
                 <Category />
             </div>
