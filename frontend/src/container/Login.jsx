@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useRef, useState } from "react"
 
-import BACKEND_URL from '../../config'
+import {BACKEND_URL} from '../../config'
 
 const Login =  () =>  {
     

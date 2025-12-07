@@ -3,6 +3,8 @@ import { useRef, useState } from "react";
 import CountryCode from "../component/CountryCode";
 import axios from "axios";
 
+import { BACKEND_URL } from '../../config'
+
 const Sign = () => {
 
     const NumberRegex = /\d/;
@@ -70,9 +72,11 @@ const Sign = () => {
 
             try{
 
-                await axios
+                await axios.post(`${BACKEND_URL}/sign` , {data : data}).then(resp => console.log(resp))
 
             }catch(err){
+
+                console.log(err)
 
             }
 
@@ -113,10 +117,11 @@ const Sign = () => {
                     <div className="form-floating">
                         <input className="form-control" type="password" id="name" placeholder="Full Name" ref={passwordRef} onChange={(e) => setPassword(e.target.value)} value={password}/>
                         <label htmlFor="name">Password</label>
-                        <span>{passwordErr}</span>
+                        
                     </div>
                     <button>Show</button>
                 </div>
+                <span>{passwordErr}</span>
                 <div className="input-group"> 
                     <div className="form-floating">
                         <input className="form-control" type="password" id="name" placeholder="Full Name" ref={submitPasswordRef} onChange={(e) => setConfrimPass(e.target.value)} value={confrimPass}/>
