@@ -15,11 +15,11 @@ const PORT = process.env.PORT || 8080
 
 const LoginRouter = require('./routes/Login')
 const SignRouter = require('./routes/Sign')
-const ProductRouter = require('./routes/Product')
+const ProductsRouter = require('./routes/Products')
 
 app.use('/login', LoginRouter)
 app.use('/sign', SignRouter)
-app.use('/product' , ProductRouter)
+app.use('/products' , ProductsRouter)
 
 app.listen(PORT , () => {
     console.log(`listening to port ${PORT}`)
