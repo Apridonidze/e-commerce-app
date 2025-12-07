@@ -3,7 +3,7 @@ import { useRef, useState } from "react"
 
 import {BACKEND_URL} from '../../config'
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const Login =  () =>  {
     
     const NumberRegex = /\d/;
@@ -73,6 +73,7 @@ const Login =  () =>  {
                 </div>
                 <input type="submit" value="Log In" />
             </form>
+            <Link to='/sign' replace>Do Not Have A Account? Sign Up Here!</Link>
         </div>
     )
 }
