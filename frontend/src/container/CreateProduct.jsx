@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 const CreateProduct = () => {
     
@@ -79,47 +79,98 @@ const CreateProduct = () => {
         }
 ]
 
+
+    const NumberRegex = /\d/;
+    const regexContainsSpecial = /[^\w\s]/;
+
     const [images,setImages] = useState([])
+    const [name , setName] = useState('')
+    const [description , setDescription] = useState('')
     const [selectedCat , setSelectedCat] = useState('')
     const [selectedSub, setSelectedSub] = useState('')
+
+    const [imageErr , setImageErr] = useState('')
+    const [nameErr, setNameErr] = useState('')
+    const [descErr, setDescErr] = useState('')
+    const [categoryErr, setCategoryErr] = useState('')
+    const [subCategoryErr, setSubCategoryErr] = useState('')
+
+    const imageRef = useRef(null)
+    const nameRef = useRef(null)
+    const descRef = useRef(null)
+    const categoryRef = useRef(null)
+    const subCategoryRef = useRef(null)
     
-    const handlePicturesChange = (e) => {
-        console.log(e.target.files)
+    const handleUploadProduct = (e) => {
+        
+        e.preventDefault();
 
-        //save files in state
+        let isValid
+        let data
+        
+        const formData = new FormData();
+
+        for (let img of images) {
+            formData.append("images", img);
+        }
+
+        if(images.length < 1){isValid = false ; setImageErr(`This Field Can't Be Empty`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
+        else {isValid = true; setImageErr('') ;imageRef.current.classList.add('is-valid') ;imageRef.current.classList.remove('is-invalid'); data = {...data, images : formData}}
+
+        if(name.trim() == '' || name.trim() == null || name.trim() == undefined){isValid = false ; setNameErr(`This Field Can't Be Empty`); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
+        else if(name.trim().length <= 3){isValid = false; setNameErr('Enter Valid Product Name'); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
+        else if(regexContainsSpecial.test(name) === true){isValid = false; setNameErr('Your Product Name Should Not Contain Special Characters'); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
+        else {isValid = true; setNameErr('') ;nameRef.current.classList.add('is-valid') ;nameRef.current.classList.remove('is-invalid'); data = {...data,name:name}}
+
+        if(description.trim() == '' || description.trim() == null || description.trim() == undefined){isValid = false ; setDescErr(`This Field Can't Be Empty`); descRef.current.classList.add('is-invalid');descRef.current.classList.remove('is-valid')}
+        else if(description.trim().length <= 3){isValid = false; setDescErr('Enter Valid Product Description'); descRef.current.classList.add('is-invalid');descRef.current.classList.remove('is-valid')}
+        else {isValid = true; setDescErr('') ;descRef.current.classList.add('is-valid') ;descRef.current.classList.remove('is-invalid'); data = {...data, description : description}}
+
+        if(selectedCat.trim() == '' || selectedCat.trim() == null || selectedCat.trim() == undefined){isValid = false ; setCategoryErr(`This Field Can't Be Empty`); categoryRef.current.classList.add('is-invalid');categoryRef.current.classList.remove('is-valid')}
+        else if(selectedCat.trim().length <= 3){isValid = false; setCategoryErr('Enter Valid Product Description'); descRef.current.classList.add('is-invalid');categoryRef.current.classList.remove('is-valid')}
+        else {isValid = true; setCategoryErr('') ;categoryRef.current.classList.add('is-valid') ;categoryRef.current.classList.remove('is-invalid'); data = {...data, category : selectedCat}}
+
+        if(selectedSub.trim() == '' || selectedSub.trim() == null || selectedSub.trim() == undefined){isValid = false ; setSubCategoryErr(`This Field Can't Be Empty`); subCategoryRef.current.classList.add('is-invalid');subCategoryRef.current.classList.remove('is-valid')}
+        else if(selectedSub.trim().length <= 3){isValid = false; setSubCategoryErr('Enter Valid Product Description'); subCategoryRef.current.classList.add('is-invalid');subCategoryRef.current.classList.remove('is-valid')}
+        else {isValid = true; setSubCategoryErr('') ;subCategoryRef.current.classList.add('is-valid') ;subCategoryRef.current.classList.remove('is-invalid'); data = {...data, subCategory : selectedSub}}
+
+
     }
-
-    //add submitForm function to insert product data into server
 
     return(
         <div className="create-product-container">
-            <form>
+            <form onSubmit={handleUploadProduct}>
 
                 <div className="form-floating">
-                    <input type="file" multiple className="form-control" onChange={(e) => handlePicturesChange(e)} value={images} content="image"/>
+                    <input type="file" multiple className="form-control" onChange={(e) => setImages(e.target.files)}  accept="image/*" ref={imageRef}/>
+                    <span>{imageErr}</span>
                 </div>
 
                 <div className="form-floating">
-                    <input className="form-control" type="text" id="title" placeholder="Product Name"/>
+                    <input className="form-control" type="text" id="title" placeholder="Product Name" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name}/>
                     <label htmlFor="title">Product Name</label>
+                    <span>{nameErr}</span>
                 </div>
 
                 <div className="form-floating">
-                    <input className="form-control" type="text" id="title" placeholder="Product Description"/>
+                    <input className="form-control" type="text" id="title" placeholder="Product Description" ref={descRef} onChange={(e) => setDescription(e.target.value)} value={description}/>
                     <label htmlFor="title">Product Description</label>
+                    <span>{descErr}</span>
                 </div>
 
-                <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat}>
+                <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
                     {categories.map((cat, catId) => (
                         <option value={cat.name} key={catId}>{cat.name}</option>
                     ))}
                 </select>
+                <span>{categoryErr}</span>
 
                 {selectedCat && 
-                    <select onChange={(e) => setSelectedSub(e.target.value)} value={selectedSub}>
+                    <select onChange={(e) => setSelectedSub(e.target.value)} value={selectedSub} ref={subCategoryRef}>
                         {categories.filter(cat => cat.name === selectedCat)[0].subcategories.map((sub, subId) => <option key={subId} value={sub}>{sub}</option>)}
                     </select>
                 }
+                <span>{subCategoryErr}</span>
                 
                 <input type="submit" value='Add Product'/>
                 
