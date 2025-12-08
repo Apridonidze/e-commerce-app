@@ -112,11 +112,10 @@ const CreateProduct = () => {
         let isValid
         let data
         
-        const formData = new FormData();
 
 
         if(images.length < 1){isValid = false ; setImageErr(`This Field Can't Be Empty`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
-        else {isValid = true; setImageErr('') ;imageRef.current.classList.add('is-valid') ;imageRef.current.classList.remove('is-invalid'); for (let img of images) {formData.append("images", img);data = {...data, images : formData}}}//fix this line
+        else {isValid = true; setImageErr('') ;imageRef.current.classList.add('is-valid') ;imageRef.current.classList.remove('is-invalid')}
 
         if(name.trim() == '' || name.trim() == null || name.trim() == undefined){isValid = false ; setNameErr(`This Field Can't Be Empty`); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
         else if(name.trim().length <= 3){isValid = false; setNameErr('Enter Valid Product Name'); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
@@ -137,9 +136,21 @@ const CreateProduct = () => {
 
         if(isValid){
 
+            const formData = new FormData();
+
+            for(let img of images){
+                formData.append('images', img)
+            }
+
+            Object.entries(data).forEach(([key,value]) => {
+                formData.append(key,value)
+            })
+
             try{
 
-                await axios.post(`${BACKEND_URL}/products/new-product`, {data} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+                console.log(formData)
+
+                await axios.post(`${BACKEND_URL}/products/new-product`, formData , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
 
             }catch(err){
                 console.log(err)

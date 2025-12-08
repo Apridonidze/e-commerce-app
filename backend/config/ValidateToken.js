@@ -6,7 +6,7 @@ function ValidateToken ( req , res , next ) {
 
     const AuthHeaders = req.headers['authorization']
 
-    if(!AuthHeaders || !AuthHeaders.split(' ').length < 1) return res.status(400).json({err : 'Invalid Headers'})
+    if(!AuthHeaders) return res.status(400).json({err : 'Invalid Headers'})
 
     const token = AuthHeaders.split(' ')[1]
     

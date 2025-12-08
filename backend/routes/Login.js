@@ -34,7 +34,7 @@ LoginRouter.post('/', async (req,res) => {
         return res.status(200).json({message : 'Loginned' , token : token})
 
     }catch(err){
-        return res.status(500).json({messageErr : "Internal Error" , err : err})
+        return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
 })
 
