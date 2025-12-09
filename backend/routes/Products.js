@@ -10,7 +10,9 @@ const NewProductSchema = require('../schemas/NewProductSchema')
 
 const db = require('../config/db')
 
-ProductsRouter.post('/' , ValidateToken, upload.fields([{name :'images', maxCount : 20}]), async (req,res) => {
+const RateLimiter = require('../config/RateLimiter')
+
+ProductsRouter.post('/' , ValidateToken, RateLimiter ,upload.fields([{name :'images', maxCount : 20}]), async (req,res) => {
 
     const validateProduct = NewProductSchema(req.body)
     
