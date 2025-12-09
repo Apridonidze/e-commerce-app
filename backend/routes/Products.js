@@ -60,4 +60,22 @@ ProductsRouter.get('/' , async (req,res) => {
 })
 
 
+ProductsRouter.get('/:id' , async (req,res) => {
+
+    const id = req.params.id
+
+    try{
+
+        const [ products ] = await db.query('select * from products where id = ?' , id)
+        
+        if(products.length < 1) return res.status(400).json({message : 'No Product Found Created By This User' , productDetails : null})
+
+        return res.status(200).json(200).json({message : 'Product Found Created By This User' , productDetails : products})
+
+    }catch(err){
+        return res.status(500).json({errMessage : 'Internal Errror' , err : err})
+    }
+})
+
+
 module.exports = ProductsRouter
