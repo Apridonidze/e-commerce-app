@@ -64,6 +64,7 @@ ProductsRouter.get('/my-products' , ValidateToken , async (req,res) => {
 
         const [ products ] = await db.query('select * from products where id = ?' , req.user.userId)
 
+
         if(products.length < 1) return res.status(400).json({errMessage: 'No Products Yet' , products : null})
 
         return res.status(200).json({message : 'Products Fetched Succesfully' , products : products[0]})
@@ -81,6 +82,7 @@ ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {
     try{
 
         const [ products ] = await db.query('select * from products where id = ?' , id)
+
         
         if(products.length < 1) return res.status(400).json({message : 'No Product Found Created By This User' , productDetails : null})
 
