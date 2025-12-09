@@ -18,4 +18,4 @@ SavedRouter.get('/' , ValidateToken , async(req,res) => {
 
 })
 
-module.exports = SavedRouter
+module.exports = SavedRouter;
