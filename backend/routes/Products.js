@@ -60,7 +60,7 @@ ProductsRouter.get('/' , async (req,res) => {
 })
 
 
-ProductsRouter.get('/:id' , async (req,res) => {
+ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {
 
     const id = req.params.id
 

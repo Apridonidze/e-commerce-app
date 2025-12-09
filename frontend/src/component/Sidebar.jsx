@@ -9,8 +9,7 @@ const Sidebar = () => {
             <div className="sidebar-center row g-4">
                 <div className="center-header col-12 h-auto">
                     <div className="text d-flex flex-column">
-                        <Link>Discover</Link>
-                        <Link>Product</Link>
+                        <Link to='/home-page'>Home</Link>
                         <Link>Top Sellers</Link>
                         <Link>Contact</Link>
                     </div>
@@ -18,7 +17,7 @@ const Sidebar = () => {
                 <div className="center-center col-12 h-auto"> {/**if clicked and user does not have cookies popup sign/login alert message */}
                     <div className="text d-flex flex-column">
                         <Link>Add New Product</Link>
-                        <Link>My Products</Link>
+                        <Link to='/dashboard'>Dashboard</Link>
                     </div>
                 </div>
                 <div className="center-bottom col-12 h-auto">{/**trigger it when user has cookies and role === admin */}
@@ -29,8 +28,8 @@ const Sidebar = () => {
                 </div>
                 <div className="center-auth col-12 h-auto"> {/**trigger it when user does not have cookies */}
                     <div className="text d-flex flex-column">
-                        <Link>Login</Link>
-                        <Link>Sign</Link>
+                        <Link to='/login'>Login</Link>
+                        <Link to='/sign'>Sign</Link>
                     </div>
                 </div>
             </div>
