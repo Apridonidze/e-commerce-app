@@ -4,7 +4,6 @@ const categoryList = ["Electronics" , "Home & Living" , "Fashion" , "Beauty & Pe
 const subCategoryList = ["Smartphones & Accessories","Laptops & Computers","PC Parts & Components","Gaming Consoles","Audio & Headphones","Smart Home","Kitchen & Dining","Home Decor","Lighting","Cleaning Appliances","Men's Clothing","Women's Clothing","Shoes","Accessories","Watches & Jewelry", "Skincare","Haircare","Makeup","Grooming Tools", "Fitness Equipment","Outdoor Gear","Sportswear","Cycling Accessories", "Car Accessories","Auto Parts","Motorcycle Gear","Toys","Cameras & Drones","Furniture","Baby Essentials","Kids Clothing"]
 
 const NewProductSchema = z.object({
-    images : z.object(),
     name : z.string().min(3),
     description : z.string().min(3),
     category : z.enum(categoryList),
@@ -13,7 +12,9 @@ const NewProductSchema = z.object({
 
 
 function ValidateNewProduct (data) {
-    return NewProductSchema.safeParse({data})
+    
+    
+    return NewProductSchema.safeParse(data)
 }
 
 
