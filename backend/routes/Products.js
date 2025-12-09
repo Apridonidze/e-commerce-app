@@ -34,5 +34,16 @@ ProductsRouter.post('/' , ValidateToken, upload.fields([{name :'images', maxCoun
 
 })
 
+ProductsRouter.get('/' , async (req,res) => {
+    try{
+
+        const products = await db.query('select * from products')
+        return res.status(200).json({message : 'Products Fetched Succesfully' , products : products[0]})
+
+    }catch(err){
+        return res.status(500).json({errMessage : 'Internal Errror' , err : err})
+    }
+})
+
 
 module.exports = ProductsRouter
