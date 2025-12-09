@@ -14,7 +14,6 @@ const App = () => {
   const router = createBrowserRouter([
     {path : '/' , element : <Landing />},
     {path : '/home-page' , element : <Main />},
-    {path : '/add-new-product' , element : <CreateProduct />},
     {path : '/reports' , element : <Main />},
     {path : '/dashboard' , element : <Dashboard />},
     {path : '/admin-dashboard' , element : <Main />},
