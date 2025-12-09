@@ -5,7 +5,7 @@ import Main from './container/Main'
 import Landing from './container/Landing'
 import Login from './container/Login'
 import Sign from './container/Sign'
-import CreateProduct from './container/CreateProduct'
+import CreateProduct from './component/CreateProduct'
 import Dashboard from './container/Dashboard'
 
 
