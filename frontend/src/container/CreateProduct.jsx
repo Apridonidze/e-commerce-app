@@ -150,7 +150,7 @@ const CreateProduct = () => {
 
                 console.log(formData)
 
-                await axios.post(`${BACKEND_URL}/products/new-product`, formData , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+                await axios.post(`${BACKEND_URL}/products`, formData , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
 
             }catch(err){
                 console.log(err)
@@ -165,7 +165,7 @@ const CreateProduct = () => {
             <form onSubmit={handleUploadProduct}>
 
                 <div className="form-floating">
-                    <input type="file" multiple className="form-control" onChange={(e) => setImages(e.target.files)}  accept="image/*" ref={imageRef}/>
+                    <input type="file" multiple encType="multipart/form-data" className="form-control" onChange={(e) => setImages(e.target.files)}  accept="image/*" ref={imageRef}/>
                     <span>{imageErr}</span>
                 </div>
 

@@ -5,17 +5,26 @@ const ProductsRouter = express.Router()
 
 const fs = require('fs')
 const multer = require('multer')
-const dest = multer({dest : '/uploads'})
+const upload = multer({dest : '/uploads'})
 
-ProductsRouter.post('/new-product' , ValidateToken, dest.array('images'), async (req,res) => {
-    console.log(req.files);
-console.log(req.body);
+ProductsRouter.post('/' , ValidateToken, upload.fields([{name :'images', maxCount : 20}]), async (req,res) => {
+    try{
+        
+        const files = req.files?.images
 
-//validate text with zod schemas
-//read files with fs
-//push into db as json
-//return response
-//usese try/catch
+        const filesBuffer = await Promise.all(
+            files.map(file => fs.promises.readFile(file.path))
+        )
+
+        const base64 = filesBuffer.map(buffer => buffer.toString("base64"))
+
+        console.log(base64)
+        
+
+    }catch(err){
+        return res.status(500).json({errMessage : 'Internal Error in Products'  , err : err})
+    }
+
 })
 
 
