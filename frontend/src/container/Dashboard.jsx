@@ -16,7 +16,7 @@ const Dashboard = () => {
         const fetchUser = async() => {
             try{
 
-                await axios.get(`${BACKEND_URL}/users/:id` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+                await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
 
             }catch(err){
                 console.log(err)
