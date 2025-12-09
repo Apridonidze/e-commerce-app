@@ -19,7 +19,10 @@ const Dashboard = () => {
         const fetchUser = async() => {
             try{
 
-                await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+                await Promise.all([
+                    await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp)),
+                    await axios.get(`${BACKEND_URL}/products/my-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp)),
+                ])
 
             }catch(err){
                 console.log(err)

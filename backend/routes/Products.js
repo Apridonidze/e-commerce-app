@@ -59,7 +59,7 @@ ProductsRouter.get('/' , async (req,res) => {
     }
 })
 
-ProductsRouter.get('/' , ValidateToken , async (req,res) => {
+ProductsRouter.get('/my-products' , ValidateToken , async (req,res) => {
     try{
 
         const [ products ] = await db.query('select * from products where id = ?' , req.user.userId)
