@@ -22,6 +22,7 @@ const Dashboard = () => {
                 await Promise.all([
                     await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp)),
                     await axios.get(`${BACKEND_URL}/products/my-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp)),
+                    await axios.get(`${BACKEND_URL}/products/saved-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp)),
                 ])
 
             }catch(err){
@@ -32,6 +33,10 @@ const Dashboard = () => {
         fetchUser();
     },[])
 
+    //TODO : create component for saved products
+    //TODO : create component for producfts created by me (make it updatable , delatable)
+    //TODO : create chars for statistics
+    
     return(
         <div className="dashboard-container">
             <User />

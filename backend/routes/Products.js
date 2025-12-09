@@ -92,7 +92,7 @@ ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {
 })
 
 
-ProductsRouter.get('/' , ValidateToken , async(req,res) => {
+ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
 
     try{
 
