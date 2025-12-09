@@ -14,13 +14,21 @@ const RateLimiter = require('../config/RateLimiter')
 
 ProductsRouter.post('/' , ValidateToken, RateLimiter ,upload.fields([{name :'images', maxCount : 20}]), async (req,res) => {
 
-    const validateProduct = NewProductSchema(req.body)
-    
+    const product = req.body
+
+    const parsedRequest = {
+        name : product.name.toString(),
+        description : product.description.toString(),
+        price : Number(product.price),
+        category : product.category.toString(),
+        subCategory : product.subCategory.toString(),
+    }
+
+    const validateProduct = NewProductSchema(parsedRequest)
 
     if(!validateProduct.success) return res.status(400).json({errMessage : 'Invalid Input'})
 
     try{
-        const product = req.body
         
         const files = req.files?.images;
         const filesBuffer = await Promise.all(files.map(file => fs.promises.readFile(file.path)));
@@ -31,7 +39,7 @@ ProductsRouter.post('/' , ValidateToken, RateLimiter ,upload.fields([{name :'ima
         if(isAlreadyAdded.length > 0) return res.status(400).json({errMessage : 'Product Already Exists'})
 
 
-        await db.query('insert into products (id, images, title, description , category , subcategory) values (?,?,?,?,?,?)' , [req.user.userId , [JSON.stringify(base64)] , product.name , product.description , product.category , product.subCategory])
+        await db.query('insert into products (id, images, title, description , category , subcategory , price) values (?,?,?,?,?,?,?)' , [req.user.userId , [JSON.stringify(base64)] , parsedRequest.name , parsedRequest.description , parsedRequest.category , parsedRequest.subCategory, parsedRequest.price])
         return res.status(200).json({message : 'product added succsefully' , productDetails : `${product.name}${product.description}${product.category}${product.subCategory}`})
 
     }catch(err){

@@ -5,14 +5,14 @@ const subCategoryList = ["Smartphones & Accessories","Laptops & Computers","PC P
 
 const NewProductSchema = z.object({
     name : z.string().min(3),
-    description : z.string().min(3),
+    description : z.string().nonempty(),
+    price : z.number().max(100000).min(0),
     category : z.enum(categoryList),
     subCategory: z.enum(subCategoryList),
 })
 
 
 function ValidateNewProduct (data) {
-    
     
     return NewProductSchema.safeParse(data)
 }

@@ -116,7 +116,6 @@ const CreateProduct = () => {
         let isValid
         let data
 
-
         if(images.length < 1){isValid = false ; setImageErr(`This Field Can't Be Empty`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
         else {isValid = true; setImageErr('') ;imageRef.current.classList.add('is-valid') ;imageRef.current.classList.remove('is-invalid')}
 
@@ -125,14 +124,14 @@ const CreateProduct = () => {
         else if(regexContainsSpecial.test(name) === true){isValid = false; setNameErr('Your Product Name Should Not Contain Special Characters'); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
         else {isValid = true; setNameErr('') ;nameRef.current.classList.add('is-valid') ;nameRef.current.classList.remove('is-invalid'); data = {...data,name:name}}
 
-        if(price.trim() == '' || price.trim() == null || price.trim() == undefined){isValid = false ; setPriceErr(`This Field Can't Be Empty`); priceRef.current.classList.add('is-invalid');priceRef.current.classList.remove('is-valid')}
-        else if(Number(price) === 0 || Number(price) >= 100000){isValid = false; setPriceErr('Enter Valid Product Description'); priceRef.current.classList.add('is-invalid');priceRef.current.classList.remove('is-valid')}
-        else if (NumberRegex.test(Number(price)) === false){isValid = false ; setPriceErr('Enter Valid Price (Numbers Only)')}
-        else {isValid = true; setPriceErr('') ;priceRef.current.classList.add('is-valid') ;priceRef.current.classList.remove('is-invalid'); data = {...data, price : price}}
-
         if(description.trim() == '' || description.trim() == null || description.trim() == undefined){isValid = false ; setDescErr(`This Field Can't Be Empty`); descRef.current.classList.add('is-invalid');descRef.current.classList.remove('is-valid')}
         else if(description.trim().length <= 3){isValid = false; setDescErr('Enter Valid Product Description'); descRef.current.classList.add('is-invalid');descRef.current.classList.remove('is-valid')}
         else {isValid = true; setDescErr('') ;descRef.current.classList.add('is-valid') ;descRef.current.classList.remove('is-invalid'); data = {...data, description : description}}
+
+        if(price.trim() == '' || price.trim() == null || price.trim() == undefined){isValid = false ; setPriceErr(`This Field Can't Be Empty`); priceRef.current.classList.add('is-invalid');priceRef.current.classList.remove('is-valid')}
+        else if(Number(price) === 0 || Number(price) >= 100000 || Number(price) <= 0){isValid = false; setPriceErr('Enter Valid Price'); priceRef.current.classList.add('is-invalid');priceRef.current.classList.remove('is-valid')}
+        else if (NumberRegex.test(Number(price)) === false){isValid = false ; setPriceErr('Enter Valid Price (Numbers Only)')}
+        else {isValid = true; setPriceErr('') ;priceRef.current.classList.add('is-valid') ;priceRef.current.classList.remove('is-invalid'); data = {...data, price : Number(price)}}
 
         if(selectedCat.trim() == '' || selectedCat.trim() == null || selectedCat.trim() == undefined){isValid = false ; setCategoryErr(`This Field Can't Be Empty`); categoryRef.current.classList.add('is-invalid');categoryRef.current.classList.remove('is-valid')}
         else if(selectedCat.trim().length <= 3){isValid = false; setCategoryErr('Enter Valid Product Description'); descRef.current.classList.add('is-invalid');categoryRef.current.classList.remove('is-valid')}
@@ -141,8 +140,6 @@ const CreateProduct = () => {
         if(selectedSub.trim() == '' || selectedSub.trim() == null || selectedSub.trim() == undefined){isValid = false ; setSubCategoryErr(`This Field Can't Be Empty`); subCategoryRef.current.classList.add('is-invalid');subCategoryRef.current.classList.remove('is-valid')}
         else if(selectedSub.trim().length <= 3){isValid = false; setSubCategoryErr('Enter Valid Product Description'); subCategoryRef.current.classList.add('is-invalid');subCategoryRef.current.classList.remove('is-valid')}
         else {isValid = true; setSubCategoryErr('') ;subCategoryRef.current.classList.add('is-valid') ;subCategoryRef.current.classList.remove('is-invalid'); data = {...data, subCategory : selectedSub}}
-
-        
 
         if(isValid){
 
