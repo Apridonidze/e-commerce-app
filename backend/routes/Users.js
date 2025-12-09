@@ -10,7 +10,7 @@ UsersRouter.get('/', ValidateToken , async(req,res) => {
 
         const id = req.user.userId
 
-        const [ user ] = await db.query('select fullname, email,country_code, phone  from users where id = ?' , id)
+        const [ user ] = await db.query('select id ,fullname, email,country_code, phone  from users where id = ?' , id)
         
         if(user.length < 1) return res.status(400).json({errMessage : "User Not Found" , user : null})
 

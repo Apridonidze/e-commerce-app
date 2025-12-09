@@ -59,6 +59,20 @@ ProductsRouter.get('/' , async (req,res) => {
     }
 })
 
+ProductsRouter.get('/' , ValidateToken , async (req,res) => {
+    try{
+
+        const [ products ] = await db.query('select * from products where id = ?' , req.user.userId)
+
+        if(products.length < 1) return res.status(400).json({errMessage: 'No Products Yet' , products : null})
+
+        return res.status(200).json({message : 'Products Fetched Succesfully' , products : products[0]})
+
+    }catch(err){
+        return res.status(500).json({errMessage : 'Internal Errror' , err : err})
+    }
+})
+
 
 ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {
 
