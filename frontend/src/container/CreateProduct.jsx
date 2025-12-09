@@ -86,24 +86,28 @@ const CreateProduct = () => {
     const [ cookies ] = useCookies(['token'])
 
     const regexContainsSpecial = /[^\w\s]/;
+    const NumberRegex = /\d/;
 
     const [images,setImages] = useState([])
     const [name , setName] = useState('')
     const [description , setDescription] = useState('')
     const [selectedCat , setSelectedCat] = useState('')
     const [selectedSub, setSelectedSub] = useState('')
+    const [price ,setPrice] = useState('')
 
     const [imageErr , setImageErr] = useState('')
     const [nameErr, setNameErr] = useState('')
     const [descErr, setDescErr] = useState('')
     const [categoryErr, setCategoryErr] = useState('')
     const [subCategoryErr, setSubCategoryErr] = useState('')
+    const [priceErr ,setPriceErr] = useState('')
 
     const imageRef = useRef(null)
     const nameRef = useRef(null)
     const descRef = useRef(null)
     const categoryRef = useRef(null)
     const subCategoryRef = useRef(null)
+    const priceRef = useRef(null)
     
     const handleUploadProduct = async (e) => {
         
@@ -111,7 +115,6 @@ const CreateProduct = () => {
 
         let isValid
         let data
-        
 
 
         if(images.length < 1){isValid = false ; setImageErr(`This Field Can't Be Empty`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
@@ -121,6 +124,11 @@ const CreateProduct = () => {
         else if(name.trim().length <= 3){isValid = false; setNameErr('Enter Valid Product Name'); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
         else if(regexContainsSpecial.test(name) === true){isValid = false; setNameErr('Your Product Name Should Not Contain Special Characters'); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
         else {isValid = true; setNameErr('') ;nameRef.current.classList.add('is-valid') ;nameRef.current.classList.remove('is-invalid'); data = {...data,name:name}}
+
+        if(price.trim() == '' || price.trim() == null || price.trim() == undefined){isValid = false ; setPriceErr(`This Field Can't Be Empty`); priceRef.current.classList.add('is-invalid');priceRef.current.classList.remove('is-valid')}
+        else if(Number(price) === 0 || Number(price) >= 100000){isValid = false; setPriceErr('Enter Valid Product Description'); priceRef.current.classList.add('is-invalid');priceRef.current.classList.remove('is-valid')}
+        else if (NumberRegex.test(Number(price)) === false){isValid = false ; setPriceErr('Enter Valid Price (Numbers Only)')}
+        else {isValid = true; setPriceErr('') ;priceRef.current.classList.add('is-valid') ;priceRef.current.classList.remove('is-invalid'); data = {...data, price : price}}
 
         if(description.trim() == '' || description.trim() == null || description.trim() == undefined){isValid = false ; setDescErr(`This Field Can't Be Empty`); descRef.current.classList.add('is-invalid');descRef.current.classList.remove('is-valid')}
         else if(description.trim().length <= 3){isValid = false; setDescErr('Enter Valid Product Description'); descRef.current.classList.add('is-invalid');descRef.current.classList.remove('is-valid')}
@@ -133,6 +141,8 @@ const CreateProduct = () => {
         if(selectedSub.trim() == '' || selectedSub.trim() == null || selectedSub.trim() == undefined){isValid = false ; setSubCategoryErr(`This Field Can't Be Empty`); subCategoryRef.current.classList.add('is-invalid');subCategoryRef.current.classList.remove('is-valid')}
         else if(selectedSub.trim().length <= 3){isValid = false; setSubCategoryErr('Enter Valid Product Description'); subCategoryRef.current.classList.add('is-invalid');subCategoryRef.current.classList.remove('is-valid')}
         else {isValid = true; setSubCategoryErr('') ;subCategoryRef.current.classList.add('is-valid') ;subCategoryRef.current.classList.remove('is-invalid'); data = {...data, subCategory : selectedSub}}
+
+        
 
         if(isValid){
 
@@ -147,8 +157,6 @@ const CreateProduct = () => {
             })
 
             try{
-
-                console.log(formData)
 
                 await axios.post(`${BACKEND_URL}/products`, formData , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
 
@@ -181,6 +189,12 @@ const CreateProduct = () => {
                     <span>{descErr}</span>
                 </div>
 
+                <div className="form-floating">
+                    <input className="form-control" id="priceId" placeholder="Product Price (In GEL)" ref={priceRef} onChange={(e) => setPrice(e.target.value)} value={price}/>
+                    <label htmlFor="priceId">Product Price (In GEL)</label>
+                    <span>{priceErr}</span>
+                </div>
+
                 <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
                     {categories.map((cat, catId) => (
                         <option value={cat.name} key={catId}>{cat.name}</option>
@@ -194,6 +208,9 @@ const CreateProduct = () => {
                     </select>
                 }
                 <span>{subCategoryErr}</span>
+
+                
+                
                 
                 <input type="submit" value='Add Product'/>
                 
