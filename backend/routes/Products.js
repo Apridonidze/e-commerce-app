@@ -64,10 +64,11 @@ ProductsRouter.get('/my-products' , ValidateToken , async (req,res) => {
 
         const [ products ] = await db.query('select * from products where id = ?' , req.user.userId)
 
-
         if(products.length < 1) return res.status(400).json({errMessage: 'No Products Yet' , products : null})
+        
+        const [ user ] = await db.query('select fullname , email , country_code , phone from users where id = ?' , req.user.userId)
 
-        return res.status(200).json({message : 'Products Fetched Succesfully' , products : products[0]})
+        return res.status(200).json({message : 'Products Fetched Succesfully' , data : {user : user[0] , products  : products}})
 
     }catch(err){
         return res.status(500).json({errMessage : 'Internal Errror' , err : err})
