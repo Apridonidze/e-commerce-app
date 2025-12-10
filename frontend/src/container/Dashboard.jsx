@@ -3,17 +3,29 @@ import { useEffect, useState } from "react"
 
 
 import User from "../component/User"
+import MyProducts from '../component/MyProducts'
+import CreateProduct from '../component/CreateProduct'
+
 
 import {BACKEND_URL} from '../../config'
 import { useCookies } from 'react-cookie'
-import MyProducts from '../component/MyProducts'
+
+
 const Dashboard = () => {
 
     const [ cookies ] = useCookies(['token'])
 
+    const [toggleCreateProduct, setToggleCreateProduct] = useState(false)
+
     const [user,setUser] = useState(null)
     const [products, setProducts] = useState([])
     const [saved , setSaved] = useState([])
+
+    if(toggleCreateProduct){
+        document.body.style.overflow = 'hidden';
+    }else {
+        document.body.style.overflow = 'unset';
+    }
 
     useEffect(() => {
         
@@ -40,8 +52,11 @@ const Dashboard = () => {
     //TODO : create chars for statistics
     return(
         <div className="dashboard-container">
+
+            {toggleCreateProduct && <><div className="create-prodcut-bg position-fixed w-100 h-100 bg-dark opacity-50" style={{zIndex : 1}}></div> <CreateProduct /></>}
+
             <User user={user}/>
-            <MyProducts products={products}/>
+            <MyProducts products={products} setToggleCreateProduct={setToggleCreateProduct}/>
         </div>
     )
 }

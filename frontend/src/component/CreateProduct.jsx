@@ -166,7 +166,7 @@ const CreateProduct = () => {
     }
 
     return(
-        <div className="create-product-container">
+        <div className="create-product-container position-relative bg-white mx-auto top-25" style={{zIndex : 2}}>
             <form onSubmit={handleUploadProduct} enctype="multipart/form-data">
 
                 <div className="form-floating">
@@ -205,9 +205,6 @@ const CreateProduct = () => {
                     </select>
                 }
                 <span>{subCategoryErr}</span>
-
-                
-                
                 
                 <input type="submit" value='Add Product'/>
                 
