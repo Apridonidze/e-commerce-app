@@ -166,49 +166,54 @@ const CreateProduct = () => {
     }
 
     return(
-        <div className="create-product-container position-relative bg-white mx-auto top-25" style={{zIndex : 2}}>
-            <form onSubmit={handleUploadProduct} enctype="multipart/form-data">
+        <div className="create-product-container position-fixed bg-white" style={{zIndex : 2}}>
+            <div className="create-products-top">
+                <h4>Create New Product</h4>
+            </div>
+            <div className="create-products-main">
+                <form onSubmit={handleUploadProduct} enctype="multipart/form-data">
 
-                <div className="form-floating">
-                    <input type="file" multiple  className="form-control" onChange={(e) => setImages(e.target.files)}  accept="image/*" ref={imageRef}/>
-                    <span>{imageErr}</span>
-                </div>
+                `    <div className="form-floating">
+                        <input type="file" multiple  className="form-control" onChange={(e) => setImages(e.target.files)}  accept="image/*" ref={imageRef}/>
+                        <span>{imageErr}</span>
+                    </div>
 
-                <div className="form-floating">
-                    <input className="form-control" type="text" id="title" placeholder="Product Name" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name}/>
-                    <label htmlFor="title">Product Name</label>
-                    <span>{nameErr}</span>
-                </div>
+                    <div className="form-floating">
+                        <input className="form-control" type="text" id="title" placeholder="Product Name" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name}/>
+                        <label htmlFor="title">Product Name</label>
+                        <span>{nameErr}</span>
+                    </div>
 
-                <div className="form-floating">
-                    <input className="form-control" type="text" id="title" placeholder="Product Description" ref={descRef} onChange={(e) => setDescription(e.target.value)} value={description}/>
-                    <label htmlFor="title">Product Description</label>
-                    <span>{descErr}</span>
-                </div>
+                    <div className="form-floating">
+                        <input className="form-control" type="text" id="title" placeholder="Product Description" ref={descRef} onChange={(e) => setDescription(e.target.value)} value={description}/>
+                        <label htmlFor="title">Product Description</label>
+                        <span>{descErr}</span>
+                    </div>
 
-                <div className="form-floating">
-                    <input className="form-control" id="priceId" placeholder="Product Price (In GEL)" ref={priceRef} onChange={(e) => setPrice(e.target.value)} value={price}/>
-                    <label htmlFor="priceId">Product Price (In GEL)</label>
-                    <span>{priceErr}</span>
-                </div>
+                    <div className="form-floating">
+                        <input className="form-control" id="priceId" placeholder="Product Price (In GEL)" ref={priceRef} onChange={(e) => setPrice(e.target.value)} value={price}/>
+                        <label htmlFor="priceId">Product Price (In GEL)</label>
+                        <span>{priceErr}</span>
+                    </div>
 
-                <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
-                    {categories.map((cat, catId) => (
-                        <option value={cat.name} key={catId}>{cat.name}</option>
-                    ))}
-                </select>
-                <span>{categoryErr}</span>
-
-                {selectedCat && 
-                    <select onChange={(e) => setSelectedSub(e.target.value)} value={selectedSub} ref={subCategoryRef}>
-                        {categories.filter(cat => cat.name === selectedCat)[0].subcategories.map((sub, subId) => <option key={subId} value={sub}>{sub}</option>)}
+                    <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
+                        {categories.map((cat, catId) => (
+                            <option value={cat.name} key={catId}>{cat.name}</option>
+                        ))}
                     </select>
-                }
-                <span>{subCategoryErr}</span>
-                
-                <input type="submit" value='Add Product'/>
-                
-            </form>
+                    <span>{categoryErr}</span>
+
+                    {selectedCat && 
+                        <select onChange={(e) => setSelectedSub(e.target.value)} value={selectedSub} ref={subCategoryRef}>
+                            {categories.filter(cat => cat.name === selectedCat)[0].subcategories.map((sub, subId) => <option key={subId} value={sub}>{sub}</option>)}
+                        </select>
+                    }
+                    <span>{subCategoryErr}</span>
+                    
+                    <input type="submit" value='Add Product'/>
+                    
+                </form>
+            </div>
         </div>
     )
 }

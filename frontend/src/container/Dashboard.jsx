@@ -21,11 +21,7 @@ const Dashboard = () => {
     const [products, setProducts] = useState([])
     const [saved , setSaved] = useState([])
 
-    if(toggleCreateProduct){
-        document.body.style.overflow = 'hidden';
-    }else {
-        document.body.style.overflow = 'unset';
-    }
+    
 
     useEffect(() => {
         
@@ -53,7 +49,7 @@ const Dashboard = () => {
     return(
         <div className="dashboard-container">
 
-            {toggleCreateProduct && <><div className="create-prodcut-bg position-fixed w-100 h-100 bg-dark opacity-50" style={{zIndex : 1}}></div> <CreateProduct /></>}
+            {toggleCreateProduct && <><div className="create-prodcut-bg position-fixed w-100 h-100 bg-dark opacity-50" onClick={() => {setToggleCreateProduct(false) ; document.body.classList.remove('overflow-hidden')}} style={{zIndex : 1}}></div> <CreateProduct /></>}
 
             <User user={user}/>
             <MyProducts products={products} setToggleCreateProduct={setToggleCreateProduct}/>

@@ -7,7 +7,7 @@ const MyProducts = ( { products, setToggleCreateProduct } ) => {
             <div className="my-products-header position-relative d-flex justify-content-between" style={{bottom: '15px'}}>
                     
                 <span className=' bg-white' >{'Your Products'|| <Skeleton />}</span> 
-                <button className="btn btn-sm btn-success" onClick={() => setToggleCreateProduct(true)}>Add New Product</button>
+                <button className="btn btn-sm btn-success" onClick={() => {setToggleCreateProduct(true) ; document.body.classList.add('overflow-hidden')}}>Add New Product</button>
             </div>
             {products.products?.map((prod , prodId) => (
                 <Product prod={prod} prodId={prodId} key={prodId} user={products.user}/>
