@@ -45,9 +45,6 @@ const Dashboard = () => {
 
     },[])
 
-    //TODO : create component for saved products
-    //TODO : create component for producfts created by me (make it updatable , delatable)
-    //TODO : create chars for statistics
     return(
         <div className="dashboard-container container-fluid d-flex">
 
