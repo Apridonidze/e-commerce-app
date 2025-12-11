@@ -13,7 +13,6 @@ const User = ( { user } ) => {
                 <h1>{user?.fullname || <Skeleton />}</h1>
                 <h1>{user?.email || <Skeleton />}</h1>
                 <h1>{[user?.country_code , ' ' , user?.phone]|| <Skeleton />}</h1>
-                <h1>{user?.fullname || <Skeleton />}</h1>
 
             </div>
 

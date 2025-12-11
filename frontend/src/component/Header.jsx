@@ -1,6 +1,3 @@
-import moonIcon from '../assets/icons/moon.png'
-import cartIcon from '../assets/icons/cart.png'
-import notificationIcon from '../assets/icons/bell.png'
 
 const Header = () => {
     return(

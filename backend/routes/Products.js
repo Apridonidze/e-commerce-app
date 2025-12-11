@@ -75,6 +75,26 @@ ProductsRouter.get('/my-products' , ValidateToken , async (req,res) => {
     }
 })
 
+ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
+
+    try{
+        
+        const [saved_ids] = await db.query('select * from saved_products where id = ?' , [req.user.userId])
+        
+        if(saved_ids.length < 1) return res.status(400).json({message : 'No Saved Jobs Found' , data : []})
+
+        const ids = saved_ids.map(id => id)
+        const queries = ids.map(id => db.query('select * from products where id = ?' , id.id , id.product_id))
+        const resp = await Promise.all(queries)
+
+        return res.status(200).json({message : 'Saved Jobs Found' , data  : resp[0][0]})
+
+    }catch(err){
+        return res.status(500).json({errMessage : 'Internal Error' , err : err})
+    }
+
+
+})
 
 ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {
 
@@ -84,32 +104,13 @@ ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {
 
         const [ products ] = await db.query('select * from products where id = ?' , id)
 
-        
         if(products.length < 1) return res.status(400).json({message : 'No Product Found Created By This User' , productDetails : null})
 
-        return res.status(200).json(200).json({message : 'Product Found Created By This User' , productDetails : products})
+            return res.status(200).json(200).json({message : 'Product Found Created By This User' , productDetails : products})
 
     }catch(err){
         return res.status(500).json({errMessage : 'Internal Errror' , err : err})
     }
 })
-
-
-ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
-
-    try{
-
-        const [ saved ] = await db.query('select * from saved_products where id = ?' , req.user.userId)
-
-        if(saved.length < 1) return res.status(400).json({errMessage : 'No Products Saved' , saved_products : []})
-
-        return res.status(200).json({message : 'Succesfully Fetched Saved Products' , saved_products : saved})
-
-    }catch(err){
-        return res.status(500).json({errMessage : 'Internal Error' , err : err})
-    }
-
-})
-
 
 module.exports = ProductsRouter

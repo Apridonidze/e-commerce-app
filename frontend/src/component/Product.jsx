@@ -1,14 +1,13 @@
 import Skeleton from "react-loading-skeleton"
 
 const Product = ( { prod ,prodId , key , user } ) => {
-    console.log(prod)
     return(
         <div className="product-container col-4 border" key={prodId} >
 
-            <div className="product-top">
+            <div className="product-top w-100 h-auto" >
                 {prod.images ? prod.images?.map((img, imgId) => (
-                    <img className="w-100 h-100" src={`data:image/jpeg;base64,${img}`} key={imgId} />
-                )) : <Skeleton height={'25vh'}/>}
+                    <img className="w-100 h-100 rounded-1" src={`data:image/jpeg;base64,${img}`} key={imgId} />
+                )) : prod.images === null ? <img src="" className="bg-grey w-100 h-100 border" style={{height: '120px'}}  alt="No Image Provided"/> : <Skeleton />}
             </div>
             
             <div className="product-main">
