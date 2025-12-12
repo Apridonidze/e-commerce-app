@@ -57,7 +57,7 @@ const Dashboard = () => {
                 <Header />
                 <User user={user}/>
                 <MyProducts products={products} setToggleCreateProduct={setToggleCreateProduct}/>
-                <Saved />
+                <Saved saved={saved}/>
             </div>
         </div>
     )
