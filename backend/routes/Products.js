@@ -77,25 +77,11 @@ ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
 
     try{
         
-        const [saved_ids] = await db.query('select * from saved_products where id = ?' , [req.user.userId])
+        const [ saved_products ] = await db.query('select * from saved_products join users on users.id = saved_products.creator_id join products on products.products_id = saved_products.product_id where saved_products.id = ?' , [req.user.userId])
         
-        if(saved_ids.length < 1) return res.status(400).json({message : 'No Saved Jobs Found' , data : []})
+        if(saved_products.length < 1) return res.status(400).json({message : 'No Saved Jobs Found' , data : []})
 
-        const ids = saved_ids.map(id => id)
-        const products = ids.map(id => db.query('select * from products where id = ? and select * from users' , id.id))
-        const productsResp = await Promise.all(products)
-
-        
-        const creatorQueries = ids.map(id => db.query('select id ,fullname , email , country_code , phone from users where id = ?' , id.id))
-        const creatorResp = await Promise.all(creatorQueries)
-
-        const productsList = productsResp[0][0]
-        const creatorList = creatorResp[0][0]
-
-        console.log(productsList)
-        console.log(creatorList)
-
-        // return res.status(200).json({message : 'Saved Jobs Found' , data  : resp})
+        return res.status(200).json({message : 'Saved Jobs Found' , data  : saved_products})
 
     }catch(err){
         return res.status(500).json({errMessage : 'Internal Error' , err : err})
