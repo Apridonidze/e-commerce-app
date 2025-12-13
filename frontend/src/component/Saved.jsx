@@ -1,3 +1,5 @@
+import Product from "./Product"
+
 const Saved = ( { saved } ) => {
     console.log(saved)
     return(
@@ -8,7 +10,7 @@ const Saved = ( { saved } ) => {
             </div>
             <div className="products">
                 {saved?.map((prod , prodId) => (
-                    <Product prod={prod} prodId={prodId} key={prodId} user={products.user}/>
+                    <Product prod={prod} prodId={prodId} key={prodId}/>
                 ))}
             </div>
         </div>

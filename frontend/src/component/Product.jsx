@@ -1,6 +1,6 @@
 import Skeleton from "react-loading-skeleton"
 
-const Product = ( { prod ,prodId , key , user } ) => {
+const Product = ( { prod ,prodId , key } ) => {
     return(
         <div className="product-container col-4 border" key={prodId} >
 
@@ -18,7 +18,7 @@ const Product = ( { prod ,prodId , key , user } ) => {
 
             </div>
             <div className="product-bottom">
-                <h6>{`Creator : ${user.fullname}` || <Skeleton />}</h6>
+                <h6>{`Creator : ${prod.fullname}` || <Skeleton />}</h6>
             </div>
         </div>
     )

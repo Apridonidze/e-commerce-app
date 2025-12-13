@@ -66,7 +66,7 @@ ProductsRouter.get('/my-products' , ValidateToken , async (req,res) => {
         
         if(products.length < 1) return res.status(400).json({errMessage: 'No Products Yet' , products : []})
         
-        return res.status(200).json({message : 'Products Fetched Succesfully' , data : products})
+        return res.status(200).json({message : 'Products Fetched Succesfully' , products : products})
 
     }catch(err){
         return res.status(500).json({errMessage : 'Internal Errror' , err : err})
@@ -79,9 +79,9 @@ ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
         
         const [ saved_products ] = await db.query('select * from saved_products join users on users.id = saved_products.creator_id join products on products.products_id = saved_products.product_id where saved_products.id = ?' , [req.user.userId])
         
-        if(saved_products.length < 1) return res.status(400).json({message : 'No Saved Jobs Found' , data : []})
+        if(saved_products.length < 1) return res.status(400).json({message : 'No Saved Jobs Found' , products : []})
 
-        return res.status(200).json({message : 'Saved Jobs Found' , data  : saved_products})
+        return res.status(200).json({message : 'Saved Jobs Found' , products  : saved_products})
 
     }catch(err){
         return res.status(500).json({errMessage : 'Internal Error' , err : err})
