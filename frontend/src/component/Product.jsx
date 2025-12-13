@@ -15,6 +15,7 @@ const Product = ( { prod ,prodId , key } ) => {
                 <h5>{prod.title || <Skeleton count={1} width={'12vw'}/>}</h5>
                 <h5>{prod.description || <Skeleton count={2}/>}</h5>
                 <h5>{`${prod.category} / ${prod.subcategory}` || <Skeleton count={2}/>}</h5>
+                <h5>{prod?.price.toString().split('.').length > 1 ? prod.price : `${prod.price}.00` + '₾' || <Skeleton/>}</h5>
 
             </div>
             <div className="product-bottom">
