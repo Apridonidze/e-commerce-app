@@ -100,9 +100,32 @@ ProductsRouter.post('/saved-products/:id' , ValidateToken , async (req, res) => 
 
         if(DoesProductExists.length < 1) return res.status(400).json({message : 'Product Does Not Exists In Database'})
 
-        
         await db.query('insert into saved_products (id, product_id) values (?,?)' , [req.user.userId , ProductId])
         return res.status(200).json({message : 'Product Saved Successfully'})
+
+    }catch(err){
+        return res.status(500).json({errMessage : "Internal Error" , err : err})
+    }
+
+})
+
+
+ProductsRouter.delete('/saved-products/:id' , ValidateToken , async (req, res) => {
+    const ProductId = req.params.id
+
+    try{
+        
+        if(!Number(ProductId)) return res.status(400).json({message : "Invalid Product Id"})
+
+        const [ DoesProductExists ] = await db.query('select * from products where products_id = ?', ProductId)
+        if(DoesProductExists.length < 1) return res.status(400).json({message : 'This Product Does Not Exists In Database'})
+
+        const [ isProductSaved ]  = await db.query('select * from saved_products where product_id = ? and id = ?' , [ProductId , req.user.userId])
+        if(isProductSaved.length < 1) return res.status(400).json({message : 'This Product Is Not Saved'})
+        
+
+        await db.query('delete from saved_products where id = ? and product_id = ?' , [req.user.userId , ProductId])
+        return res.status(200).json({message : 'Product Unsaved Successfully'})
 
     }catch(err){
         return res.status(500).json({errMessage : "Internal Error" , err : err})
