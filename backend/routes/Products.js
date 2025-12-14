@@ -89,8 +89,8 @@ ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
 
 })
 
-ProductsRouter.post('/saved-products' , ValidateToken , async (req, res) => {
-    
+ProductsRouter.post('/saved-products/:id' , ValidateToken , async (req, res) => {
+    const product_id  = req.params.id
 })
 
 ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {
