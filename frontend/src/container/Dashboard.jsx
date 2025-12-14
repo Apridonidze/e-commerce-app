@@ -11,6 +11,7 @@ import Sidebar from '../component/Sidebar'
 
 import {BACKEND_URL} from '../../config'
 import { useCookies } from 'react-cookie'
+import DashboardCart from '../component/DashboardCart'
 
 
 const Dashboard = () => {
@@ -58,6 +59,7 @@ const Dashboard = () => {
             <div className="dashboard-end col">
                 <Header />
                 <User user={user}/>
+                <DashboardCart />
                 <MyProducts products={products} setToggleCreateProduct={setToggleCreateProduct}/>
                 <Saved saved={saved}/>
             </div>
