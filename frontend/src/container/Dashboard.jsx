@@ -23,7 +23,7 @@ const Dashboard = () => {
     const [user,setUser] = useState(null)
     const [products, setProducts] = useState([])
     const [saved , setSaved] = useState([])
-
+    const [isSaved , setIsSaved] = useState([])
     
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const Dashboard = () => {
                 await Promise.all([
                     await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setUser(resp.data.user)}),
                     await axios.get(`${BACKEND_URL}/products/my-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setProducts(resp.data.products)}),
-                    await axios.get(`${BACKEND_URL}/products/saved-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setSaved(resp.data.products)}),
+                    await axios.get(`${BACKEND_URL}/products/saved-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setSaved(resp.data.products) , setIsSaved(resp.data.products.product_id)}),
                 ])
 
             }catch(err){
@@ -58,6 +58,8 @@ const Dashboard = () => {
         }
 
     }
+
+    console.log(isSaved)
 
     const handleAddToCart = (e) => {
 console.log(e)
