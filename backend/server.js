@@ -17,11 +17,13 @@ const LoginRouter = require('./routes/Login')
 const SignRouter = require('./routes/Sign')
 const ProductsRouter = require('./routes/Products')
 const UsersRouter = require('./routes/Users')
+const CartRouter = require('./routes/Cart')
 
 app.use('/login', LoginRouter)
 app.use('/sign', SignRouter)
 app.use('/products' , ProductsRouter)
 app.use('/users' , UsersRouter)
+app.use('/cart' , CartRouter)
 
 app.listen(PORT , () => {
     console.log(`listening to port ${PORT}`)
