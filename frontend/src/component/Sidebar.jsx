@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Sidebar = () => {
     return(
-        <div className="sidebar-container d-flex flex-column justify-content-between h-100 border">
+        <div className="sidebar-container d-flex flex-column justify-content-between border h-100 position-static" style={{maxHeight:"100vh"}}>
             <div className="sidebar-top">
 
             </div>

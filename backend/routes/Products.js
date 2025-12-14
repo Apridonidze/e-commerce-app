@@ -87,7 +87,10 @@ ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
         return res.status(500).json({errMessage : 'Internal Error' , err : err})
     }
 
+})
 
+ProductsRouter.post('/saved-products' , ValidateToken , async (req, res) => {
+    
 })
 
 ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {
