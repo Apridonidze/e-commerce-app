@@ -1,6 +1,9 @@
 import Skeleton from "react-loading-skeleton"
 
-const Product = ( { prod ,prodId , key , handleSave , handleAddToCart } ) => {
+const Product = ( { prod ,prodId , key , handleSave , handleAddToCart  } ) => {
+
+
+
     return(
         <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" key={prodId} >
 

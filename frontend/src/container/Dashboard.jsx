@@ -9,7 +9,7 @@ import Saved from '../component/Saved'
 import Header from '../component/Header'
 import Sidebar from '../component/Sidebar'
 
-import {BACKEND_URL} from '../../config'
+import { BACKEND_URL } from '../../config'
 import { useCookies } from 'react-cookie'
 import DashboardCart from '../component/DashboardCart'
 
@@ -23,8 +23,6 @@ const Dashboard = () => {
     const [user,setUser] = useState(null)
     const [products, setProducts] = useState([])
     const [saved , setSaved] = useState([])
-    const [isSaved , setIsSaved] = useState([])
-    
 
     useEffect(() => {
         
@@ -34,7 +32,7 @@ const Dashboard = () => {
                 await Promise.all([
                     await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setUser(resp.data.user)}),
                     await axios.get(`${BACKEND_URL}/products/my-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setProducts(resp.data.products)}),
-                    await axios.get(`${BACKEND_URL}/products/saved-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setSaved(resp.data.products) , setIsSaved(resp.data.products.product_id)}),
+                    await axios.get(`${BACKEND_URL}/products/saved-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setSaved(resp.data.products)}),
                 ])
 
             }catch(err){
@@ -42,7 +40,16 @@ const Dashboard = () => {
             }
         }
 
+        const isSaved = async() => {
+
+
+        }
+
+        return () => {
+
         fetchUser();
+        isSaved();
+        }
 
     },[cookies.token])
 
@@ -59,7 +66,6 @@ const Dashboard = () => {
 
     }
 
-    console.log(isSaved)
 
     const handleAddToCart = (e) => {
 console.log(e)
@@ -77,7 +83,7 @@ console.log(e)
                 <User user={user}/>
                 <DashboardCart />
                 <MyProducts products={products} setToggleCreateProduct={setToggleCreateProduct} handleSave={handleSave} handleAddToCart={handleAddToCart}/>
-                <Saved saved={saved} handleSave={handleSave} handleAddToCart={handleAddToCart}/>
+                <Saved saved={saved} handleSave={handleSave} handleAddToCart={handleAddToCart} />
             </div>
         </div>
     )

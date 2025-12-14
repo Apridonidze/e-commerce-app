@@ -1,6 +1,11 @@
+import { useEffect,useState } from "react"
 import Product from "./Product"
 
-const Saved = ( { saved , handleSave , handleAddToCart } ) => {
+const Saved = ( { saved , handleSave , handleAddToCart , isSaved , setIsSaved} ) => {
+
+
+    
+
     return(
         <div className="saved-container col border border-2 my-3">
             <div className="saved-header position-relative d-flex justify-content-between" style={{bottom: '15px'}}>
