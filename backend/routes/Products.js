@@ -90,7 +90,24 @@ ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
 })
 
 ProductsRouter.post('/saved-products/:id' , ValidateToken , async (req, res) => {
-    const product_id  = req.params.id
+    const ProductId = req.params.id
+
+    try{
+        
+        if(!Number(ProductId)) return res.status(400).json({message : "Invalid Product Id"})
+
+        const [ DoesProductExists ] = await db.query('select * from products where products_id = ?', ProductId)
+
+        if(DoesProductExists.length < 1) return res.status(400).json({message : 'Product Does Not Exists In Database'})
+
+        
+        await db.query('insert into saved_products (id, product_id) values (?,?)' , [req.user.userId , ProductId])
+        return res.status(200).json({message : 'Product Saved Successfully'})
+
+    }catch(err){
+        return res.status(500).json({errMessage : "Internal Error" , err : err})
+    }
+
 })
 
 ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {

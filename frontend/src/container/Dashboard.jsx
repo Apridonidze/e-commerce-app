@@ -47,8 +47,16 @@ const Dashboard = () => {
     },[cookies.token])
 
 
-    const handleSave = (e) => {
-        console.log(e)
+    const handleSave = async(e) => {
+        
+        try{
+
+            await axios.post(`${BACKEND_URL}/products/saved-products/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+            
+        }catch(err){
+            console.log(err)
+        }
+
     }
 
     const handleAddToCart = (e) => {
