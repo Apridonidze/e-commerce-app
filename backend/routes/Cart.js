@@ -5,7 +5,7 @@ const ValidateToken = require('../config/ValidateToken');
 
 
 CartRouter.get('/' , ValidateToken , async(req,res) => {
-    res.send('Cart Get Api EndPoint')
+    
 })
 
 CartRouter.post('/' , ValidateToken , async (req, res) => {

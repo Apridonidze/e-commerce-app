@@ -12,4 +12,6 @@ create table products (id int, products_id int auto_increment primary key ,image
 -- create saved products table --
 create table saved_products (id int, product_id int, foreign key (id) references users(id) , foreign key (product_id) references products(products_id));
 -- create table for admin users --
-create table admin (id int , foreign key (id) references users(id))
+create table admin (id int , foreign key (id) references users(id));
+-- create table for products that are in our carts--
+create table cart (id int, product_id int , foreign key (id) references users(id) , foreign key (product_id) references products(products_id));
