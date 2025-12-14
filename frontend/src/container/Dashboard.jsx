@@ -47,7 +47,13 @@ const Dashboard = () => {
     },[cookies.token])
 
 
+    const handleSave = (e) => {
+        console.log(e)
+    }
 
+    const handleAddToCart = (e) => {
+console.log(e)
+    }
 
     return(
         <div className="dashboard-container container-fluid d-flex">
@@ -60,8 +66,8 @@ const Dashboard = () => {
                 <Header />
                 <User user={user}/>
                 <DashboardCart />
-                <MyProducts products={products} setToggleCreateProduct={setToggleCreateProduct}/>
-                <Saved saved={saved}/>
+                <MyProducts products={products} setToggleCreateProduct={setToggleCreateProduct} handleSave={handleSave} handleAddToCart={handleAddToCart}/>
+                <Saved saved={saved} handleSave={handleSave} handleAddToCart={handleAddToCart}/>
             </div>
         </div>
     )

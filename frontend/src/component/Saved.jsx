@@ -1,6 +1,6 @@
 import Product from "./Product"
 
-const Saved = ( { saved } ) => {
+const Saved = ( { saved , handleSave , handleAddToCart } ) => {
     console.log(saved)
     return(
         <div className="saved-container col border border-2 my-3">
@@ -10,7 +10,7 @@ const Saved = ( { saved } ) => {
             </div>
             <div className="products">
                 {saved?.map((prod , prodId) => (
-                    <Product prod={prod} prodId={prodId} key={prodId}/>
+                    <Product prod={prod} prodId={prodId} key={prodId} handleSave={handleSave} handleAddToCart={handleAddToCart}/>
                 ))}
             </div>
         </div>

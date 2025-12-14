@@ -1,6 +1,6 @@
 import Product from "./Product";
 
-const MyProducts = ( { products, setToggleCreateProduct } ) => {
+const MyProducts = ( { products, setToggleCreateProduct , handleSave , handleAddToCart } ) => {
 
     return(
         <div className="my-products-container col border border-2 my-3">
@@ -11,7 +11,7 @@ const MyProducts = ( { products, setToggleCreateProduct } ) => {
             </div>
             <div className="products ">
                 {products?.map((prod , prodId) => (
-                    <Product prod={prod} prodId={prodId} key={prodId}/>
+                    <Product prod={prod} prodId={prodId} key={prodId} handleSave={handleSave} handleAddToCart={handleAddToCart}/>
                 ))}
             </div>
         </div>
