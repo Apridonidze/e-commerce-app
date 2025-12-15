@@ -9,7 +9,8 @@ AdminRouter.get('/' , ValidateToken , async(req,res) => {
 
         const id = req.user.userId
 
-        // const [ doesUserExists ]
+        const [ doesUserExists ] = await db.query('select id from users where id = ?' , id)
+        if(doesUserExists.length < 1) return res.status(400).json({message : "User Not Found"})
 
         const [ isAdmin ] = await db.query('select id from admin where id = ?' , id)
         if(isAdmin.length < 1) return res.status(400).json({message : "Access Declined"})
