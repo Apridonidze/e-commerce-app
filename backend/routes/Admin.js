@@ -2,18 +2,11 @@ const express = require('express')
 const AdminRouter = express.Router()
 
 const ValidateToken = require('../config/ValidateToken')
+const isAdmin = require('../config/isAdmin')
 const db = require('../config/db')
 
-AdminRouter.get('/' , ValidateToken , async(req,res) => {
+AdminRouter.get('/' , ValidateToken , isAdmin ,  async(req,res) => {
     try{
-
-        const id = req.user.userId
-
-        const [ doesUserExists ] = await db.query('select id from users where id = ?' , id)
-        if(doesUserExists.length < 1) return res.status(400).json({message : "User Not Found" , isAdmin : false})
-
-        const [ isAdmin ] = await db.query('select id from admin where id = ?' , id)
-        if(isAdmin.length < 1) return res.status(400).json({message : "Access Declined" , isAdmin : false})
         
         return res.status(200).json({message : 'Access Granted', isAdmin : true})
 
@@ -21,6 +14,8 @@ AdminRouter.get('/' , ValidateToken , async(req,res) => {
         return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
 })
+
+
 
 AdminRouter.post('/add-new-admin/:id' , ValidateToken , async(req,res) => {
     try{
