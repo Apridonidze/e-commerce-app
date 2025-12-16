@@ -23,6 +23,7 @@ ProductsRouter.post('/' , ValidateToken, RateLimiter ,upload.fields([{name :'ima
         price : Number(product.price),
         category : product.category.toString(),
         subCategory : product.subCategory.toString(),
+        amount :  Number(product.amount),
     }
 
     const validateProduct = NewProductSchema(parsedRequest)

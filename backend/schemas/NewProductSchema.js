@@ -9,6 +9,7 @@ const NewProductSchema = z.object({
     price : z.number().max(100000).min(0),
     category : z.enum(categoryList),
     subCategory: z.enum(subCategoryList),
+    amount : z.number().max(100000).min(0)
 })
 
 
