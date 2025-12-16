@@ -22,8 +22,8 @@ const AdminDashboard = () => {
                 await Promise.all([
                     axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)}),
                     axios.get(`${BACKEND_URL}/admin/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; console.log(resp)}),
-
-                ])
+                    axios.get(`${BACKEND_URL}/products/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; console.log(resp)}),
+            ])
                 
             }catch(err){
                 console.log(err)

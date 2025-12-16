@@ -54,8 +54,22 @@ ProductsRouter.post('/' , ValidateToken, isAdmin , RateLimiter ,upload.fields([{
 ProductsRouter.get('/' , async (req,res) => {
     try{
 
-        const products = await db.query('select * from products')
-        return res.status(200).json({message : 'Products Fetched Succesfully' , products : products[0]})
+        const [ products ] = await db.query('select products_id, images, title, description, category, subcategory, price, amount from products')
+        return res.status(200).json({message : 'Products Fetched Succesfully' , products : products})
+
+    }catch(err){
+        return res.status(500).json({errMessage : 'Internal Errror' , err : err})
+    }
+})
+
+ProductsRouter.get('/admin-products' , isAdmin, async (req,res) => {
+    try{
+
+        const [ products ] = await db.query('select products.* , users.fullname , users.id from products join users on products.id = users.id')
+        if(products.length  < 1) return res.status(400).json({message : 'No Products Yet' , products : products})
+
+
+        return res.status(200).json({message : 'Products Fetched Succesfully' , products : products})
 
     }catch(err){
         return res.status(500).json({errMessage : 'Internal Errror' , err : err})
