@@ -16,10 +16,9 @@ import { useCookies } from 'react-cookie'
 const Dashboard = () => {
 
     const [ cookies ] = useCookies(['token'])
-
     const [toggleCreateProduct, setToggleCreateProduct] = useState(false)
-
     const [user,setUser] = useState(null)
+
     useEffect(() => {
         
         const fetchUser = async() => {

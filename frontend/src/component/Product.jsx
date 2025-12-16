@@ -3,10 +3,16 @@ import axios from "axios"
 import Skeleton from "react-loading-skeleton"
 import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
+import { useState } from "react"
+import { useEffect } from "react"
 
 const Product = ( { prod ,prodId , key } ) => {
 
-    const [cookies] = useCookies(['token'])
+    const [ cookies ] = useCookies(['token'])
+
+    const [isSaved, setIsSaved] = useState(false);
+    const [isInCart, setIsInCart] = useState(false);
+
 
     const handleSave = async(e) => {
 

@@ -3,6 +3,7 @@ import { useEffect, useState} from "react"
 
 import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
+import Product from "./Product"
 const DashboardCart = () => {
 
     const [cookies] = useCookies(['token'])
@@ -28,8 +29,9 @@ const DashboardCart = () => {
                 <h3>Cart</h3>
             </div>
             <div className="dasboard-center">
-                {cart.length < 1 ? <h1>No Items In Cart Yet.</h1> : cart?.map((item,itemId) => (
-                    <span key={itemId}>{item}</span>
+                {cart.map((prod , prodId) => (
+                    
+                    <Product prod={prod} prodId={prodId} key={prodId}/>
                 ))}
             </div>
             <div className="dasboard-end">

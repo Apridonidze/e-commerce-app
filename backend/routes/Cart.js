@@ -7,16 +7,17 @@ const db = require('../config/db')
 CartRouter.get('/' , ValidateToken , async(req,res) => {
     try{
         
-        const [ cartItems ] = await db.query('select * from cart where id = ?' , req.user.userId)
+        const [ cartItems ] = await db.query('select * from cart join products on cart.product_id = products.products_id where products_id = ?' , req.user.userId)
 
         if(cartItems.length < 1) return res.status(400).json({message : 'No Items In Cart', products : []})
         
         return res.status(200).json({message : 'Found Items In Your Cart' , products : cartItems})
 
     }catch(err){
-        return res.status(500).json({errMessage : 'Internal Error' , err : err})
+        return res.status(500).json({errMessage : 'Internal Error While Fetching cart items' , err : err})
     }
 })
+
 
 CartRouter.post('/:id' , ValidateToken , async (req, res) => {
     
