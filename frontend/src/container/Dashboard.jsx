@@ -7,10 +7,10 @@ import CreateProduct from '../component/CreateProduct'
 import Saved from '../component/Saved'
 import Header from '../component/Header'
 import Sidebar from '../component/Sidebar'
+import Cart from '../component/Cart'
 
 import { BACKEND_URL } from '../../config'
 import { useCookies } from 'react-cookie'
-import DashboardCart from '../component/DashboardCart'
 
 
 const Dashboard = () => {
@@ -20,7 +20,6 @@ const Dashboard = () => {
     const [toggleCreateProduct, setToggleCreateProduct] = useState(false)
 
     const [user,setUser] = useState(null)
-    const [saved , setSaved] = useState([])
     useEffect(() => {
         
         const fetchUser = async() => {
@@ -28,7 +27,6 @@ const Dashboard = () => {
 
                 await Promise.all([
                     await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setUser(resp.data.user)}),
-                    await axios.get(`${BACKEND_URL}/products/saved-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setSaved(resp.data.products)}),
                 ])
 
             }catch(err){
@@ -73,8 +71,8 @@ console.log(e)
             <div className="dashboard-end col">
                 <Header />
                 <User user={user}/>
-                <DashboardCart/>
-                <Saved saved={saved} handleSave={handleSave} handleAddToCart={handleAddToCart} />
+                <div className="cart-container border"><Cart/></div>
+                <Saved handleSave={handleSave} handleAddToCart={handleAddToCart} />
             </div>
         </div>
     )
