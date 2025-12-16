@@ -14,6 +14,7 @@ const RateLimiter = require('../config/RateLimiter')
 
 ProductsRouter.post('/' , ValidateToken, RateLimiter ,upload.fields([{name :'images', maxCount : 20}]), async (req,res) => {
 
+    //add admin checking before making them post new product
     const product = req.body
 
     const parsedRequest = {
@@ -57,39 +58,6 @@ ProductsRouter.get('/' , async (req,res) => {
     }catch(err){
         return res.status(500).json({errMessage : 'Internal Errror' , err : err})
     }
-})
-
-ProductsRouter.get('/my-products' , ValidateToken , async (req,res) => {
-    try{
-
-        const [ products ] = await db.query('select users.id , products.products_id , products.images, products.title , products.description , products.category , products.subcategory, products.price, users.fullname , users.email , users.country_code, users.phone from products join users on users.id = products.id where products.id = ?' , req.user.userId)
-        
-        if(products.length < 1) return res.status(400).json({errMessage: 'No Products Yet' , products : []})
-        
-        return res.status(200).json({message : 'Products Fetched Succesfully' , products : products})
-
-    }catch(err){
-        return res.status(500).json({errMessage : 'Internal Errror' , err : err})
-    }
-})
-
-ProductsRouter.delete('/my-products/:id' , ValidateToken , async (req,res) => {
-    const ProductId = req.params.id
-
-    try{
-
-        if(!Number(ProductId)) return res.status(400).json({message : "Invalid Product Id"})
-        
-        const [ DoesProductExists ] = await db.query('select * from products where id = ? and products_id = ?' , [req.user.userId , ProductId])
-        if(DoesProductExists.length < 1) return res.status(400).json({message : 'Product Does Not Exists or It Is Not Created By You'})
-        
-        await db.query('delete from products where id = ? and products_id = ?', [req.user.userId , ProductId])
-        return res.status(200).json({message : "Product Deleted Successfully"})
-
-    }catch(err){
-        return res.status(500).json({errMessage : 'Internal Error' , err : err})
-    }
-
 })
 
 ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {

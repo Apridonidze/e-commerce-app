@@ -20,7 +20,6 @@ const Dashboard = () => {
     const [toggleCreateProduct, setToggleCreateProduct] = useState(false)
 
     const [user,setUser] = useState(null)
-    const [products, setProducts] = useState([])
     const [saved , setSaved] = useState([])
 
     useEffect(() => {
@@ -43,11 +42,7 @@ const Dashboard = () => {
 
         }
 
-        return () => {
-
-        fetchUser();
-        isSaved();
-        }
+        return () => {fetchUser();isSaved();}
 
     },[cookies.token])
 
