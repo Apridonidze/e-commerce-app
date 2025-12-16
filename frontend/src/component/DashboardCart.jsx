@@ -1,6 +1,26 @@
-const DashboardCart = ({ cart }) => {
+import axios from "axios"
+import { useEffect, useState} from "react"
+
+const DashboardCart = () => {
+
+    
+    const [cart , setCart] = useState([])
+
+    useEffect(() => {
+        const fetchCartItems = async() => {
+            try{
+                await axios.get(`${BACKEND_URL}/cart` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setCart(resp.data.products)})
+            }catch(err){
+                console.log(err)
+            }
+        }
+
+        return () => {fetchCartItems()};
+
+    },[])
+
     return(
-        <div className="dashboard-cart">
+        <>
             <div className="dasboard-start">
                 <h3>Cart</h3>
             </div>
@@ -10,9 +30,9 @@ const DashboardCart = ({ cart }) => {
                 ))}
             </div>
             <div className="dasboard-end">
-
+                
             </div>
-        </div>
+        </>
     )
 }
 

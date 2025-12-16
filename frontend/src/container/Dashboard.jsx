@@ -21,7 +21,6 @@ const Dashboard = () => {
 
     const [user,setUser] = useState(null)
     const [saved , setSaved] = useState([])
-    const [cart , setCart] = useState([])
     useEffect(() => {
         
         const fetchUser = async() => {
@@ -30,7 +29,6 @@ const Dashboard = () => {
                 await Promise.all([
                     await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setUser(resp.data.user)}),
                     await axios.get(`${BACKEND_URL}/products/saved-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setSaved(resp.data.products)}),
-                    await axios.get(`${BACKEND_URL}/cart` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setCart(resp.data.products)})
                 ])
 
             }catch(err){
@@ -75,7 +73,7 @@ console.log(e)
             <div className="dashboard-end col">
                 <Header />
                 <User user={user}/>
-                <DashboardCart cart={cart}/>
+                <DashboardCart/>
                 <Saved saved={saved} handleSave={handleSave} handleAddToCart={handleAddToCart} />
             </div>
         </div>
