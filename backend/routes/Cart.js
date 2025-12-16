@@ -41,8 +41,5 @@ CartRouter.post('/:id' , ValidateToken , async (req, res) => {
 
 })
 
-CartRouter.post('/buy-cart-items' , ValidateToken , async(req,res) => {
-    
-})
 
 module.exports = CartRouter

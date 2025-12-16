@@ -14,8 +14,17 @@ const RateLimiter = require('../config/RateLimiter')
 
 ProductsRouter.post('/' , ValidateToken, RateLimiter ,upload.fields([{name :'images', maxCount : 20}]), async (req,res) => {
 
-    //add admin checking before making them post new product
+    const id = req.user.userId
     const product = req.body
+    
+    const validateProduct = NewProductSchema(parsedRequest)
+    
+    const [ DoesUserExists ] =  await db.query('select id from users where id = ?' , [id]);
+    if(DoesUserExists.length < 1 )return res.status(400).json({message : "User Does Not Exists"})
+    
+    const [ isAdmin ] = await db.query('select id from admin where id = ?' , id)
+    if(isAdmin.length < 1) return res.status(400).json({message : 'Access Denied'})
+
 
     const parsedRequest = {
         name : product.name.toString(),
@@ -26,7 +35,6 @@ ProductsRouter.post('/' , ValidateToken, RateLimiter ,upload.fields([{name :'ima
         amount :  Number(product.amount),
     }
 
-    const validateProduct = NewProductSchema(parsedRequest)
 
     if(!validateProduct.success) return res.status(400).json({errMessage : 'Invalid Input'})
 
@@ -138,6 +146,16 @@ ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {
 
     }catch(err){
         return res.status(500).json({errMessage : 'Internal Errror' , err : err})
+    }
+})
+
+ProductsRouter.get('/pending-items' , ValidateToken , async(req,res) => {
+    try{
+
+        
+
+    }catch(err){
+        return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
 })
 
