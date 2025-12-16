@@ -26,6 +26,7 @@ app.use('/products' , ProductsRouter)
 app.use('/users' , UsersRouter)
 app.use('/cart' , CartRouter)
 app.use('/admin', AdminRouter)
+app.use('/internal-products', AdminRouter)
 
 app.listen(PORT , () => {
     console.log(`listening to port ${PORT}`)
