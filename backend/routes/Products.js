@@ -62,7 +62,7 @@ ProductsRouter.get('/' , async (req,res) => {
     }
 })
 
-ProductsRouter.get('/admin-products' , isAdmin, async (req,res) => {
+ProductsRouter.get('/admin-products' ,ValidateToken , isAdmin, async (req,res) => {
     try{
 
         const [ products ] = await db.query('select products.* , users.fullname , users.id from products join users on products.id = users.id')
@@ -156,6 +156,13 @@ ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {
     }
 })
 
+ProductsRouter.get('/pending-products' , ValidateToken , isAdmin , async(req,res) => {
+    try{
 
+
+    }catch(err){
+        return res.status(500).json({errMessage : "Internal Error" , err : err})
+    }
+})
 
 module.exports = ProductsRouter
