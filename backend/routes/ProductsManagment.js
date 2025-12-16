@@ -9,9 +9,9 @@ InternalProducts.get('/pending-items' ,ValidateToken, isAdmin , async(req,res) =
     try{
     
         const [ PendingProducts ] = await db.query('select products.* , cart.* , users.id , users.fullname , users.email from cart join products on cart.product_id = products.products_id join users on products.id = users.id where cart.status = ?' , 'pending')
-        if(PendingProducts.length < 1) return res.status(400).json({message : "No Products Beign Ordered" , PendingProducts : []})
+        if(PendingProducts.length < 1) return res.status(400).json({message : "No Products Beign Ordered" , products : []})
 
-        return res.status(200).json({message : "Ordered Products" , PendingProducts : PendingProducts})
+        return res.status(200).json({message : "Ordered Products" , products : PendingProducts})
 
 
     }catch(err){
@@ -22,10 +22,24 @@ InternalProducts.get('/pending-items' ,ValidateToken, isAdmin , async(req,res) =
 InternalProducts.get('/on-way-items' ,ValidateToken, isAdmin , async(req,res) => {
     try{
         
-        const [ PendingProducts ] = await db.query('select products.* , cart.* , users.id , users.fullname , users.email from cart join products on cart.product_id = products.products_id join users on products.id = users.id where cart.status = ?' , 'on way')
-        if(PendingProducts.length < 1) return res.status(400).json({message : "No Products Beign Ordered" , PendingProducts : []})
+        const [ OnWayProducts ] = await db.query('select products.* , cart.* , users.id , users.fullname , users.email from cart join products on cart.product_id = products.products_id join users on products.id = users.id where cart.status = ?' , 'on way')
+        if(OnWayProducts.length < 1) return res.status(400).json({message : "No Products Beign Ordered" , products : []})
 
-        return res.status(200).json({message : "Products On Way" , OnWayProducts: PendingProducts})
+        return res.status(200).json({message : "Products On Way" , products: OnWayProducts})
+
+    }catch(err){
+        return res.status(500).json({errMessage : "Internal Error" , err : err})
+    }
+})
+
+InternalProducts.get('/delivered-items', ValidateToken, isAdmin, async(req,res) => {
+    try{
+
+        const [ DeliveredProducts ] = await db.query('select products.* , cart.* , users.id , users.fullname , users.email from cart join products on cart.product_id = products.products_id join users on products.id = users.id where cart.status = ?' , 'on way')
+        if(DeliveredProducts.length < 1) return res.status(400).json({message : "No Products Has Been Delivered Yet" , products : []})
+
+        return res.status(200).json({message : "Delivered Products" , products: PendingProducts})
+
 
     }catch(err){
         return res.status(500).json({errMessage : "Internal Error" , err : err})

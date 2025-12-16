@@ -19,7 +19,7 @@ const ProductsRouter = require('./routes/Products')
 const UsersRouter = require('./routes/Users')
 const CartRouter = require('./routes/Cart')
 const AdminRouter = require('./routes/Admin')
-const InternalProducts = require('./routes/InternalProducts')
+const ProductsManagment = require('./routes/ProductsManagment')
 
 app.use('/login', LoginRouter)
 app.use('/sign', SignRouter)
@@ -27,7 +27,7 @@ app.use('/products' , ProductsRouter)
 app.use('/users' , UsersRouter)
 app.use('/cart' , CartRouter)
 app.use('/admin', AdminRouter)
-app.use('/internal-products', InternalProducts)
+app.use('/internal-products', ProductsManagment)
 
 app.listen(PORT , () => {
     console.log(`listening to port ${PORT}`)
