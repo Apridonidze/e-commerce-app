@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 
 
 import User from "../component/User"
-import MyProducts from '../component/MyProducts'
 import CreateProduct from '../component/CreateProduct'
 import Saved from '../component/Saved'
 import Header from '../component/Header'
@@ -31,7 +30,6 @@ const Dashboard = () => {
 
                 await Promise.all([
                     await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setUser(resp.data.user)}),
-                    await axios.get(`${BACKEND_URL}/products/my-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setProducts(resp.data.products)}),
                     await axios.get(`${BACKEND_URL}/products/saved-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setSaved(resp.data.products)}),
                 ])
 
@@ -82,7 +80,6 @@ console.log(e)
                 <Header />
                 <User user={user}/>
                 <DashboardCart />
-                <MyProducts products={products} setToggleCreateProduct={setToggleCreateProduct} handleSave={handleSave} handleAddToCart={handleAddToCart}/>
                 <Saved saved={saved} handleSave={handleSave} handleAddToCart={handleAddToCart} />
             </div>
         </div>
