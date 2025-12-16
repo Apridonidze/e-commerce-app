@@ -47,7 +47,7 @@ const Sidebar = () => {
                 </div>
                 <div className="center-bottom col-12 h-auto">
                     {isAdmin ? <div className="text d-flex flex-column">
-                        <Link>Admin Dashboard</Link>
+                        <Link to='/admin-dashboard'>Admin Dashboard</Link>
                         <Link>Product Pendings</Link>
                         <Link>Add New Products</Link>
                         <Link>Reports</Link>
