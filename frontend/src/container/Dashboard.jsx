@@ -72,7 +72,7 @@ console.log(e)
                 <Header />
                 <User user={user}/>
                 <div className="cart-container border"><Cart/></div>
-                <Saved handleSave={handleSave} handleAddToCart={handleAddToCart} />
+                <div className="saved-container border"><Saved handleSave={handleSave} handleAddToCart={handleAddToCart} /></div>
             </div>
         </div>
     )

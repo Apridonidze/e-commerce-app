@@ -1,8 +1,11 @@
 import axios from "axios"
 import { useEffect, useState} from "react"
 
+import { BACKEND_URL } from "../../config"
+import { useCookies } from "react-cookie"
 const DashboardCart = () => {
 
+    const [cookies] = useCookies(['token'])
     
     const [cart , setCart] = useState([])
 

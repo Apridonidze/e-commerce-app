@@ -1,6 +1,10 @@
+import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
 
 const Sidebar = () => {
+
+    const [cookies] = useCookies(['token'])
+
     return(
         <div className="sidebar-container d-flex flex-column justify-content-between border h-100 position-static" style={{maxHeight:"100vh"}}>
             <div className="sidebar-top">
@@ -10,27 +14,30 @@ const Sidebar = () => {
                 <div className="center-header col-12 h-auto">
                     <div className="text d-flex flex-column">
                         <Link to='/home-page'>Home</Link>
-                        <Link>Top Sellers</Link>
                         <Link>Contact</Link>
                     </div>
                 </div>
-                <div className="center-center col-12 h-auto"> {/**if clicked and user does not have cookies popup sign/login alert message */}
+                <div className="center-center col-12 h-auto">
                     <div className="text d-flex flex-column">
-                        <Link>Add New Product</Link>
                         <Link to='/dashboard'>Dashboard</Link>
+                        <Link to='/dashboard'>Cart</Link>
+                        <Link to='/dashboard'>Saved</Link>
+
                     </div>
                 </div>
                 <div className="center-bottom col-12 h-auto">{/**trigger it when user has cookies and role === admin */}
                     <div className="text d-flex flex-column">
+                        <Link>Admin Dashboard</Link>
+                        <Link>Product Pendings</Link>
+                        <Link>Add New Products</Link>
                         <Link>Reports</Link>
-                        <Link>Dashboard</Link>
                     </div>
                 </div>
-                <div className="center-auth col-12 h-auto"> {/**trigger it when user does not have cookies */}
-                    <div className="text d-flex flex-column">
+                <div className="center-auth col-12 h-auto">
+                    {!cookies.token ? <div className="text d-flex flex-column">
                         <Link to='/login'>Login</Link>
                         <Link to='/sign'>Sign</Link>
-                    </div>
+                    </div> : <></>}
                 </div>
             </div>
             <div className="sidebar-end"> 
