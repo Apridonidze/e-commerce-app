@@ -149,14 +149,6 @@ ProductsRouter.get('/:id' , ValidateToken , async (req,res) => {
     }
 })
 
-ProductsRouter.get('/pending-items' , ValidateToken , async(req,res) => {
-    try{
 
-        
-
-    }catch(err){
-        return res.status(500).json({errMessage : "Internal Error" , err : err})
-    }
-})
 
 module.exports = ProductsRouter
