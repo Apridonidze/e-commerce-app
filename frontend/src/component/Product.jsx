@@ -1,8 +1,34 @@
+import axios from "axios"
+
 import Skeleton from "react-loading-skeleton"
+import { BACKEND_URL } from "../../config"
+import { useCookies } from "react-cookie"
 
-const Product = ( { prod ,prodId , key , handleSave , handleAddToCart  } ) => {
+const Product = ( { prod ,prodId , key } ) => {
 
+    const [cookies] = useCookies(['token'])
 
+    const handleSave = async(e) => {
+
+        try{
+
+            await axios.post(`${BACKEND_URL}/products/saved-products/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+            
+        }catch(err){
+            console.log(err)
+        }
+
+    }
+
+    const handleAddToCart = async(e) => {
+        try{
+
+            await axios.post(`${BACKEND_URL}/cart/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+
+        }catch(err){
+            console.log(err)
+        }
+    }
 
     return(
         <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" key={prodId} >

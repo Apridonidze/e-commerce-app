@@ -34,32 +34,11 @@ const Dashboard = () => {
             }
         }
 
-        const isSaved = async() => {
 
-
-        }
-
-        return () => {fetchUser();isSaved();}
+        return () => {fetchUser()}
 
     },[cookies.token])
 
-
-    const handleSave = async(e) => {
-        
-        try{
-
-            await axios.post(`${BACKEND_URL}/products/saved-products/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
-            
-        }catch(err){
-            console.log(err)
-        }
-
-    }
-
-
-    const handleAddToCart = (e) => {
-console.log(e)
-    }
 
     return(
         <div className="dashboard-container container-fluid d-flex">
@@ -72,7 +51,7 @@ console.log(e)
                 <Header />
                 <User user={user}/>
                 <div className="cart-container border"><Cart/></div>
-                <div className="saved-container border"><Saved handleSave={handleSave} handleAddToCart={handleAddToCart} /></div>
+                <div className="saved-container border"><Saved /></div>
             </div>
         </div>
     )
