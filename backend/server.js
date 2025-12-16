@@ -6,7 +6,6 @@ require('dotenv').config()
 const cors = require('cors')
 const CorsOptions = require('./config/CorsOptions')
 
-
 app.use(cors(CorsOptions))
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
@@ -20,6 +19,7 @@ const UsersRouter = require('./routes/Users')
 const CartRouter = require('./routes/Cart')
 const AdminRouter = require('./routes/Admin')
 const ProductsManagment = require('./routes/ProductsManagment')
+const ReportsRouter = require('./routes/Reports')
 
 app.use('/login', LoginRouter)
 app.use('/sign', SignRouter)
@@ -27,7 +27,8 @@ app.use('/products' , ProductsRouter)
 app.use('/users' , UsersRouter)
 app.use('/cart' , CartRouter)
 app.use('/admin', AdminRouter)
-app.use('/internal-products', ProductsManagment)
+app.use('/manage-products', ProductsManagment)
+app.use('/reports', ReportsRouter)
 
 app.listen(PORT , () => {
     console.log(`listening to port ${PORT}`)
