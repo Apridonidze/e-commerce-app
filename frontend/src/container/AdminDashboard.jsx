@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie"
 import Sidebar from "../component/Sidebar"
 import { Navigate } from "react-router-dom"
 import User from "../component/User"
+import AdminList from "../component/AdminList"
 
 const AdminDashboard = () => {
 
@@ -41,6 +42,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="admin-dashboard-end col">
                         <User />
+                        <AdminList />
                     </div>
                 </div>
             
