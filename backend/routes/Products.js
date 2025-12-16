@@ -11,21 +11,14 @@ const NewProductSchema = require('../schemas/NewProductSchema')
 const db = require('../config/db')
 
 const RateLimiter = require('../config/RateLimiter')
+const isAdmin = require('../config/isAdmin')
 
-ProductsRouter.post('/' , ValidateToken, RateLimiter ,upload.fields([{name :'images', maxCount : 20}]), async (req,res) => {
+ProductsRouter.post('/' , ValidateToken, isAdmin , RateLimiter ,upload.fields([{name :'images', maxCount : 20}]), async (req,res) => {
 
-    const id = req.user.userId
     const product = req.body
     
     const validateProduct = NewProductSchema(parsedRequest)
-    
-    const [ DoesUserExists ] =  await db.query('select id from users where id = ?' , [id]);
-    if(DoesUserExists.length < 1 )return res.status(400).json({message : "User Does Not Exists"})
-    
-    const [ isAdmin ] = await db.query('select id from admin where id = ?' , id)
-    if(isAdmin.length < 1) return res.status(400).json({message : 'Access Denied'})
-
-
+   
     const parsedRequest = {
         name : product.name.toString(),
         description : product.description.toString(),
@@ -109,7 +102,7 @@ ProductsRouter.post('/saved-products/:id' , ValidateToken , async (req, res) => 
 })
 
 
-ProductsRouter.delete('/saved-products/:id' , ValidateToken , async (req, res) => {
+ProductsRouter.delete('/saved-products/:id' , ValidateToken , isAdmin,  async (req, res) => {
     const ProductId = req.params.id
 
     try{
