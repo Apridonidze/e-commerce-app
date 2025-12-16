@@ -94,6 +94,7 @@ const CreateProduct = () => {
     const [selectedCat , setSelectedCat] = useState('')
     const [selectedSub, setSelectedSub] = useState('')
     const [price ,setPrice] = useState('')
+    const [amount, setAmount] = useState('')
 
     const [imageErr , setImageErr] = useState('')
     const [nameErr, setNameErr] = useState('')
@@ -101,6 +102,7 @@ const CreateProduct = () => {
     const [categoryErr, setCategoryErr] = useState('')
     const [subCategoryErr, setSubCategoryErr] = useState('')
     const [priceErr ,setPriceErr] = useState('')
+    const [amountErr ,setAmountErr] = useState('')
 
     const imageRef = useRef(null)
     const nameRef = useRef(null)
@@ -108,6 +110,7 @@ const CreateProduct = () => {
     const categoryRef = useRef(null)
     const subCategoryRef = useRef(null)
     const priceRef = useRef(null)
+    const amountRef = useRef(null)
     
     const handleUploadProduct = async (e) => {
         
@@ -140,6 +143,12 @@ const CreateProduct = () => {
         if(selectedSub.trim() == '' || selectedSub.trim() == null || selectedSub.trim() == undefined){isValid = false ; setSubCategoryErr(`This Field Can't Be Empty`); subCategoryRef.current.classList.add('is-invalid');subCategoryRef.current.classList.remove('is-valid')}
         else if(selectedSub.trim().length <= 3){isValid = false; setSubCategoryErr('Enter Valid Product Description'); subCategoryRef.current.classList.add('is-invalid');subCategoryRef.current.classList.remove('is-valid')}
         else {isValid = true; setSubCategoryErr('') ;subCategoryRef.current.classList.add('is-valid') ;subCategoryRef.current.classList.remove('is-invalid'); data = {...data, subCategory : selectedSub}}
+
+        if(amount.trim() == '' || amount.trim() == null || amount.trim() == undefined){isValid = false ; setAmountErr(`This Field Can't Be Empty`); amountRef.current.classList.add('is-invalid');amountRef.current.classList.remove('is-valid')}
+        else if(Number(amount) === 0 || Number(amount) >= 100000 || Number(amount) <= 0){isValid = false; setAmountErr('Enter Valid Amount'); amountRef.current.classList.add('is-invalid');amountRef.current.classList.remove('is-valid')}
+        else if (NumberRegex.test(Number(amount)) === false){isValid = false ; setAmountErr('Enter Valid Amount (Numbers Only)')}
+        else {isValid = true; setAmountErr('') ;amountRef.current.classList.add('is-valid') ;amountRef.current.classList.remove('is-invalid'); data = {...data, amount : Number(amount)}}
+
 
         if(isValid){
 
@@ -209,6 +218,12 @@ const CreateProduct = () => {
                         </select>
                     }
                     <span>{subCategoryErr}</span>
+
+                    <div className="form-floating">
+                        <input className="form-control" id="amountId" placeholder="Stock / Amount In WareHouse" ref={amountRef} onChange={(e) => setAmount(e.target.value)} value={amount}/>
+                        <label htmlFor="priceId">Stock / Amount In WareHouse</label>
+                        <span>{amountErr}</span>
+                    </div>
                     
                     <input type="submit" value='Add Product'/>
                     
