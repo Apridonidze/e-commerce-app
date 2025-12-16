@@ -1,7 +1,7 @@
 import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
 
-const Sidebar = () => {
+const Sidebar = ({ isAdmin }) => {
 
     const [cookies] = useCookies(['token'])
 
@@ -14,24 +14,23 @@ const Sidebar = () => {
                 <div className="center-header col-12 h-auto">
                     <div className="text d-flex flex-column">
                         <Link to='/home-page'>Home</Link>
-                        <Link>Contact</Link>
+                        <Link>Top Products</Link>
                     </div>
                 </div>
                 <div className="center-center col-12 h-auto">
-                    <div className="text d-flex flex-column">
+                    {cookies.token ? <div className="text d-flex flex-column">
                         <Link to='/dashboard'>Dashboard</Link>
                         <Link to='/dashboard'>Cart</Link>
                         <Link to='/dashboard'>Saved</Link>
-
-                    </div>
+                    </div> : <></>}
                 </div>
-                <div className="center-bottom col-12 h-auto">{/**trigger it when user has cookies and role === admin */}
-                    <div className="text d-flex flex-column">
+                <div className="center-bottom col-12 h-auto">
+                    {isAdmin ? <div className="text d-flex flex-column">
                         <Link>Admin Dashboard</Link>
                         <Link>Product Pendings</Link>
                         <Link>Add New Products</Link>
                         <Link>Reports</Link>
-                    </div>
+                    </div> : <></>}
                 </div>
                 <div className="center-auth col-12 h-auto">
                     {!cookies.token ? <div className="text d-flex flex-column">
@@ -42,8 +41,8 @@ const Sidebar = () => {
             </div>
             <div className="sidebar-end"> 
                 <div className="end-start">
-                    <span>Settings</span>
-                    <span>Help</span>
+                    <Link>Settings</Link>
+                    <Link>Help</Link>
                 </div>
                 <div className="end-bottom">
                     <span>Terms</span>
