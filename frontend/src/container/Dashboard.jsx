@@ -17,26 +17,7 @@ const Dashboard = () => {
 
     const [ cookies ] = useCookies(['token'])
     const [toggleCreateProduct, setToggleCreateProduct] = useState(false)
-    const [user,setUser] = useState(null)
-
-    useEffect(() => {
-        
-        const fetchUser = async() => {
-            try{
-
-                await Promise.all([
-                    await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setUser(resp.data.user)}),
-                ])
-
-            }catch(err){
-                console.log(err)
-            }
-        }
-
-
-        return () => {fetchUser()}
-
-    },[cookies.token])
+    
 
 
     return(
@@ -48,7 +29,7 @@ const Dashboard = () => {
             </div>
             <div className="dashboard-end col">
                 <Header />
-                <User user={user}/>
+                <User />
                 <div className="cart-container border"><Cart/></div>
                 <div className="saved-container border"><Saved /></div>
             </div>

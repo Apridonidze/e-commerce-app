@@ -6,7 +6,7 @@ import { BACKEND_URL } from '../../config'
 const Sidebar = () => {
 
     const [ cookies ] = useCookies(['token'])
-    const [ isAdmin, setIsAdmin ] = useState(false)
+    const [ isAdmin, setIsAdmin ] = useState(null)
 
     useEffect(() => {
 
@@ -22,12 +22,12 @@ const Sidebar = () => {
 
         }
         
-        return () => {fetchStatus()};''
+        return () => {fetchStatus()};
 
     },[])
 
     return(
-        <div className="sidebar-container d-flex flex-column justify-content-between border h-100 position-static" style={{maxHeight:"100vh"}}>
+        <div className="sidebar-container d-flex flex-column justify-content-between border position-sticky " style={{maxHeight:"100vh"}}>
             <div className="sidebar-top">
 
             </div>
@@ -46,7 +46,7 @@ const Sidebar = () => {
                     </div> : <></>}
                 </div>
                 <div className="center-bottom col-12 h-auto">
-                    {isAdmin ? <div className="text d-flex flex-column">
+                    {isAdmin !== null && isAdmin ? <div className="text d-flex flex-column">
                         <Link to='/admin-dashboard'>Admin Dashboard</Link>
                         <Link>Product Pendings</Link>
                         <Link>Add New Products</Link>
