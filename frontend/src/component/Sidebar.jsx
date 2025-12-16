@@ -1,9 +1,30 @@
+import axios from 'axios'
 import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
+import { useEffect , useState } from 'react'
+import { BACKEND_URL } from '../../config'
+const Sidebar = () => {
 
-const Sidebar = ({ isAdmin }) => {
+    const [ cookies ] = useCookies(['token'])
+    const [ isAdmin, setIsAdmin ] = useState(false)
 
-    const [cookies] = useCookies(['token'])
+    useEffect(() => {
+
+        const fetchStatus = async() => {
+
+            try{
+
+                await axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)})
+
+            }catch(err){
+                console.log(err)
+            }
+
+        }
+        
+        return () => {fetchStatus()};''
+
+    },[])
 
     return(
         <div className="sidebar-container d-flex flex-column justify-content-between border h-100 position-static" style={{maxHeight:"100vh"}}>

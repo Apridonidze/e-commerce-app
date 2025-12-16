@@ -6,29 +6,11 @@ import axios from "axios"
 import { useEffect } from "react"
 import { useState } from "react"
 import { useCookies } from "react-cookie"
+import { BACKEND_URL } from "../../config"
 
 const Main = () => {
 
-    const [ cookies ] = useCookies(['token'])
-    const [ isAdmin, setIsAdmin ] = useState(false)
-
-    useEffect(() => {
-
-        const fetchStatus = async() => {
-
-            try{
-
-                await axios.get('/' , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)})
-
-            }catch(err){
-                console.log(err)
-            }
-
-        }
-        
-        return () => {fetchStatus()};''
-
-    },[])
+    
 
 
     return(
