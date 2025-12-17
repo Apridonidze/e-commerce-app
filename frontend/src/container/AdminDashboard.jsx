@@ -9,6 +9,7 @@ import AdminList from "../component/AdminList"
 import Pendings from "../component/Pendings"
 import OnWayProducts from "../component/OnWayProducts"
 import DeliveredProducts from "../component/DeliveredProducts"
+import Reports from "../component/Reports"
 
 const AdminDashboard = () => {
 
@@ -55,6 +56,7 @@ const AdminDashboard = () => {
                         <Pendings />
                         <OnWayProducts />
                         <DeliveredProducts />
+                        <Reports />
                     </div>
                 </div>
             
