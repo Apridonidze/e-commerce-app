@@ -7,6 +7,7 @@ import { Navigate } from "react-router-dom"
 import User from "../component/User"
 import AdminList from "../component/AdminList"
 import Pendings from "../component/Pendings"
+import OnWayProducts from "../component/OnWayProducts"
 
 const AdminDashboard = () => {
 
@@ -51,6 +52,7 @@ const AdminDashboard = () => {
                         <User />
                         <AdminList admins={admins} user={user}/>
                         <Pendings />
+                        <OnWayProducts />
                     </div>
                 </div>
             
