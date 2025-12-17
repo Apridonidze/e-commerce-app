@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 import Sidebar from "../component/Sidebar"
-import { Navigate } from "react-router-dom"
+import { Navigate, useLocation } from "react-router-dom"
 import User from "../component/User"
 import AdminList from "../component/AdminList"
 import Pendings from "../component/Pendings"
@@ -11,6 +11,7 @@ import OnWayProducts from "../component/OnWayProducts"
 import DeliveredProducts from "../component/DeliveredProducts"
 import Reports from "../component/Reports"
 import Feedback from "../component/Feedback"
+import CreateProduct from "../component/CreateProduct"
 
 const AdminDashboard = () => {
 
@@ -18,6 +19,8 @@ const AdminDashboard = () => {
     const [ user, setUser ] = useState(null)
     const [ isAdmin, setIsAdmin ] = useState(null)
     const [ admins, setAdminds ] = useState(null)
+
+    const { hash } = useLocation();
 
     useEffect(() => {
 
@@ -42,6 +45,16 @@ const AdminDashboard = () => {
 
     },[])
 
+    useEffect(() => {
+        if (hash) {
+        
+            const el = document.querySelector(hash);
+            if (el) {el.scrollIntoView({ behavior: "smooth" })}
+
+        }
+        return
+    }, [hash]);
+
     return(
         <div className="admin-dashboard-container">
             {isAdmin !== null && !isAdmin ? <Navigate to='/'/> : <>
@@ -54,10 +67,13 @@ const AdminDashboard = () => {
                     <div className="admin-dashboard-end col">
                         <User />
                         <AdminList admins={admins} user={user}/>
-                        <Pendings />
-                        <OnWayProducts />
-                        <DeliveredProducts />
-                        <Reports />
+                        <section id="manage-products">
+                            <button>Add New Product</button>
+                            <Pendings />
+                            <OnWayProducts />
+                            <DeliveredProducts />
+                        </section>
+                        <section id="reports"><Reports /></section>
                         <Feedback />
                     </div>
                 </div>

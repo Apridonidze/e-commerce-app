@@ -48,9 +48,8 @@ const Sidebar = () => {
                 <div className="center-bottom col-12 h-auto">
                     {isAdmin !== null && isAdmin ? <div className="text d-flex flex-column">
                         <Link to='/admin-dashboard'>Admin Dashboard</Link>
-                        <Link>Product Pendings</Link>
-                        <Link>Add New Products</Link>
-                        <Link>Reports</Link>
+                        <Link to='/admin-dashboard#manage-products'>Manage Products</Link>
+                        <Link to='/admin-dashboard#reports'>Reports</Link>
                     </div> : <></>}
                 </div>
                 <div className="center-auth col-12 h-auto">
