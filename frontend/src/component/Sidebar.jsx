@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useEffect , useState } from 'react'
 import { BACKEND_URL } from '../../config'
 const Sidebar = () => {
@@ -41,8 +41,8 @@ const Sidebar = () => {
                 <div className="center-center col-12 h-auto">
                     {cookies.token ? <div className="text d-flex flex-column">
                         <Link to='/dashboard'>Dashboard</Link>
-                        <Link to='/dashboard'>Cart</Link>
-                        <Link to='/dashboard'>Saved</Link>
+                        <Link to='/dashboard#cart-items'>Cart</Link>
+                        <Link to='/dashboard#saved-items'>Saved</Link>
                     </div> : <></>}
                 </div>
                 <div className="center-bottom col-12 h-auto">

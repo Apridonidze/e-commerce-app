@@ -12,9 +12,6 @@ const Product = ( { prod ,prodId , key } ) => {
     const [isSaved, setIsSaved] = useState(false);
     const [isInCart, setIsInCart] = useState(false);
 
-    console.log(prod)
-
-
     const handleSave = async(e) => {
 
         try{

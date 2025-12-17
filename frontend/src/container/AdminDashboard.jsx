@@ -10,6 +10,7 @@ import Pendings from "../component/Pendings"
 import OnWayProducts from "../component/OnWayProducts"
 import DeliveredProducts from "../component/DeliveredProducts"
 import Reports from "../component/Reports"
+import Feedback from "../component/Feedback"
 
 const AdminDashboard = () => {
 
@@ -57,6 +58,7 @@ const AdminDashboard = () => {
                         <OnWayProducts />
                         <DeliveredProducts />
                         <Reports />
+                        <Feedback />
                     </div>
                 </div>
             

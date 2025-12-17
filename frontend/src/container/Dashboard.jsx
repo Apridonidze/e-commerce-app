@@ -11,6 +11,7 @@ import Cart from '../component/Cart'
 
 import { BACKEND_URL } from '../../config'
 import { useCookies } from 'react-cookie'
+import { useLocation } from 'react-router-dom'
 
 
 const Dashboard = () => {
@@ -18,7 +19,17 @@ const Dashboard = () => {
     const [ cookies ] = useCookies(['token'])
     const [toggleCreateProduct, setToggleCreateProduct] = useState(false)
     
+    const { hash } = useLocation();
 
+    useEffect(() => {
+        if (hash) {
+        
+            const el = document.querySelector(hash);
+            if (el) {el.scrollIntoView({ behavior: "smooth" })}
+
+        }
+        return
+    }, [hash]);
 
     return(
         <div className="dashboard-container container-fluid d-flex">
@@ -30,8 +41,8 @@ const Dashboard = () => {
             <div className="dashboard-end col">
                 <Header />
                 <User />
-                <div className="cart-container border"><Cart/></div>
-                <div className="saved-container border"><Saved /></div>
+                <section id='cart-items'><Cart /></section>
+                <section id='saved-items'><Saved /></section>
             </div>
         </div>
     )
