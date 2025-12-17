@@ -18,4 +18,18 @@ FeedbackRouter.get('/' , ValidateToken, isAdmin , async(req,res) => {
     }
 })
 
+FeedbackRouter.post('/new-feedback' , ValidateToken, async(req,res) => {
+    try{
+        const data = req.body.data
+
+        // validate data in zod schema
+
+        const [ newFeedback ] = await db.query('insert into feedback (id, content, starts) values (?,?,?)' , [req.user.userId , data.content, data.stars])
+        return res.status(200).json({message : "Feedback Sent Succesfully" , feedbackId : newFeedback.insertId})
+
+    }catch(err){
+        return res.status(500).json({errMessage : "Internal Error" , err : err})
+    }
+})
+
 module.exports = FeedbackRouter
