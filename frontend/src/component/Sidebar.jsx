@@ -62,8 +62,9 @@ const Sidebar = () => {
             </div>
             <div className="sidebar-end"> 
                 <div className="end-start">
-                    <Link>Settings</Link>
                     <Link>Help</Link>
+                    <Link>Feedback</Link>
+                    <Link>Settings</Link>
                 </div>
                 <div className="end-bottom">
                     <span>Terms</span>
