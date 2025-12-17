@@ -1,6 +1,8 @@
 import Skeleton from "react-loading-skeleton"
 
-const AdminList = ({ admins }) => {
+const AdminList = ({ admins, user }) => {
+
+
     return(
         <div className="admin-list-container">
             <h1>Admins</h1>
@@ -12,7 +14,8 @@ const AdminList = ({ admins }) => {
                         <span>Id : {admin.email}</span>
                     </div>
                     <div className="admin-end">
-                        <button>Remove</button>
+                        {admin.id === user.id ? <></> : 
+                        <button>Remove</button>}
                     </div>
                 </div>
             ) : <Skeleton />}

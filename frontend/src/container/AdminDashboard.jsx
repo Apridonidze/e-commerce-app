@@ -9,8 +9,8 @@ import AdminList from "../component/AdminList"
 
 const AdminDashboard = () => {
 
-    
     const [ cookies ] = useCookies(['token'])
+    const [ user, setUser ] = useState(null)
     const [ isAdmin, setIsAdmin ] = useState(null)
     const [ admins, setAdminds ] = useState(null)
 
@@ -21,6 +21,7 @@ const AdminDashboard = () => {
             try{
 
                 await Promise.all([
+                    axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setUser(resp.data.user)}),
                     axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)}),
                     axios.get(`${BACKEND_URL}/admin/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setAdminds(resp.data.adminList)}),
                     axios.get(`${BACKEND_URL}/products/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; console.log(resp)}),
@@ -47,7 +48,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="admin-dashboard-end col">
                         <User />
-                        <AdminList admins={admins}/>
+                        <AdminList admins={admins} user={user}/>
                     </div>
                 </div>
             
