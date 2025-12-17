@@ -19,13 +19,14 @@ ReportsRouter.get('/product-reports', ValidateToken, isAdmin, async(req,res) => 
 })
 
 
-ReportsRouter.post('/report-product', ValidateToken, async(req,res) => {
+ReportsRouter.post('/report-product/product_id=:id', ValidateToken, async(req,res) => {
     try{
+        const productId = req.params.id
         const data = req.body.data
 
         // add zod schema for data
 
-        await db.query('insert into report (id, type, content) values (?,?,?)' , [req.user.userId , data.type , data.content])
+        await db.query('insert into report (id, product_id ,type, content) values (?,?,?,?)' , [req.user.userId , productId, data.type , data.content])
         return res.status(200).json({message : "Report Sent Successfully"})
 
 
