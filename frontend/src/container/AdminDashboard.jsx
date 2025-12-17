@@ -6,6 +6,7 @@ import Sidebar from "../component/Sidebar"
 import { Navigate } from "react-router-dom"
 import User from "../component/User"
 import AdminList from "../component/AdminList"
+import Pendings from "../component/Pendings"
 
 const AdminDashboard = () => {
 
@@ -49,6 +50,7 @@ const AdminDashboard = () => {
                     <div className="admin-dashboard-end col">
                         <User />
                         <AdminList admins={admins} user={user}/>
+                        <Pendings />
                     </div>
                 </div>
             
