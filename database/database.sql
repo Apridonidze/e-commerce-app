@@ -18,4 +18,6 @@ create table cart (id int, product_id int , status enum("none" , "pending" , 'on
 -- create table for bought items to display in users dashboard later---
 create table bought_products (id int , product_id int , foreign key (id) references users(id) , foreign key (product_id) references products(products_id));
 -- create table for reports  --
-create table reports (id int , report_id int primary key, product_id int, type enum("product" , "delivery"), content varchar(255), foreign key reports(id) references users(id),  foreign key reports(product_id) references products(products_id))
+create table reports (id int , report_id int primary key, product_id int, type enum("product" , "delivery"), content varchar(255), foreign key reports(id) references users(id),  foreign key reports(product_id) references products(products_id));
+-- create table for feedback --
+create table feedback (id int , feedback_id int primary key auto_increment , content varchar(255), starts int(5) , foreign key (id) references users(id));
