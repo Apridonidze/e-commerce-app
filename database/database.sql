@@ -17,3 +17,5 @@ create table admin (id int , foreign key (id) references users(id));
 create table cart (id int, product_id int , status enum("none" , "pending" , 'on way', "delivered") ,foreign key (id) references users(id) , foreign key (product_id) references products(products_id));
 -- create table for bought items to display in users dashboard later---
 create table bought_products (id int , product_id int , foreign key (id) references users(id) , foreign key (product_id) references products(products_id));
+-- create table for reports  --
+create table reports (id int , report_id int primary key, type enum("product", "webapp" , "delivery"), content varchar(255), foreign key reports(id) references users(id))
