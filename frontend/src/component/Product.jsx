@@ -4,7 +4,6 @@ import Skeleton from "react-loading-skeleton"
 import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 import { useState } from "react"
-import { useEffect } from "react"
 
 const Product = ( { prod ,prodId , key } ) => {
 
@@ -12,6 +11,8 @@ const Product = ( { prod ,prodId , key } ) => {
 
     const [isSaved, setIsSaved] = useState(false);
     const [isInCart, setIsInCart] = useState(false);
+
+    console.log(prod)
 
 
     const handleSave = async(e) => {
@@ -58,6 +59,7 @@ const Product = ( { prod ,prodId , key } ) => {
                 <div className="product-bottom d-flex align-items-center" >
                         
                     <h5>{prod?.price.toString().split('.').length > 1 ? prod.price : `${prod.price}.00` + '₾' || <Skeleton/>}</h5>
+                    <h5>{`Items Left: ${prod?.amount}`|| <Skeleton/>}</h5>
                 </div>
 
             </div>
