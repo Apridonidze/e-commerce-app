@@ -16,9 +16,8 @@ const isAdmin = require('../config/isAdmin')
 ProductsRouter.post('/' , ValidateToken, isAdmin , RateLimiter ,upload.fields([{name :'images', maxCount : 20}]), async (req,res) => {
 
     const product = req.body
+
     
-    const validateProduct = NewProductSchema(parsedRequest)
-   
     const parsedRequest = {
         name : product.name.toString(),
         description : product.description.toString(),
@@ -26,7 +25,10 @@ ProductsRouter.post('/' , ValidateToken, isAdmin , RateLimiter ,upload.fields([{
         category : product.category.toString(),
         subCategory : product.subCategory.toString(),
         amount :  Number(product.amount),
+        date : product.date
     }
+
+    const validateProduct = NewProductSchema(parsedRequest)
 
 
     if(!validateProduct.success) return res.status(400).json({errMessage : 'Invalid Input'})

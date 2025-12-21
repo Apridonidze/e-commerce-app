@@ -1,17 +1,20 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
-import Sidebar from "../component/Sidebar"
 import { Navigate, useLocation } from "react-router-dom"
+
+import { BACKEND_URL } from "../../config"
+
+import Sidebar from "../component/Sidebar"
 import User from "../component/User"
 import AdminList from "../component/AdminList"
-import Pendings from "../component/Pendings"
 import OnWayProducts from "../component/OnWayProducts"
 import DeliveredProducts from "../component/DeliveredProducts"
 import Reports from "../component/Reports"
 import Feedback from "../component/Feedback"
 import CreateProduct from "../component/CreateProduct"
+
+import Pendings from "../component/Pendings"
 
 const AdminDashboard = () => {
 
@@ -33,6 +36,7 @@ const AdminDashboard = () => {
                     axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)}),
                     axios.get(`${BACKEND_URL}/admin/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setAdminds(resp.data.adminList)}),
                     axios.get(`${BACKEND_URL}/products/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; console.log(resp)}),
+                    axios.get(`${BACKEND_URL}/manage-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; console.log(resp)}),
             ])
                 
             }catch(err){
@@ -46,13 +50,7 @@ const AdminDashboard = () => {
     },[])
 
     useEffect(() => {
-        if (hash) {
-        
-            const el = document.querySelector(hash);
-            if (el) {el.scrollIntoView({ behavior: "smooth" })}
-
-        }
-        return
+        if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
     }, [hash]);
 
     return(
@@ -67,8 +65,8 @@ const AdminDashboard = () => {
                     <div className="admin-dashboard-end col">
                         <User />
                         <AdminList admins={admins} user={user}/>
+                        <CreateProduct />
                         <section id="manage-products">
-                            <button>Add New Product</button>
                             <Pendings />
                             <OnWayProducts />
                             <DeliveredProducts />

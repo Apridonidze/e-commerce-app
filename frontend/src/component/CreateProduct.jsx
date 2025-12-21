@@ -118,6 +118,9 @@ const CreateProduct = () => {
 
         let isValid
         let data
+        
+        const now = new Date()
+        const date = now.toLocaleDateString('en-GB')
 
         if(images.length < 1){isValid = false ; setImageErr(`This Field Can't Be Empty`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
         else {isValid = true; setImageErr('') ;imageRef.current.classList.add('is-valid') ;imageRef.current.classList.remove('is-invalid')}
@@ -147,7 +150,7 @@ const CreateProduct = () => {
         if(amount.trim() == '' || amount.trim() == null || amount.trim() == undefined){isValid = false ; setAmountErr(`This Field Can't Be Empty`); amountRef.current.classList.add('is-invalid');amountRef.current.classList.remove('is-valid')}
         else if(Number(amount) === 0 || Number(amount) >= 100000 || Number(amount) <= 0){isValid = false; setAmountErr('Enter Valid Amount'); amountRef.current.classList.add('is-invalid');amountRef.current.classList.remove('is-valid')}
         else if (NumberRegex.test(Number(amount)) === false){isValid = false ; setAmountErr('Enter Valid Amount (Numbers Only)')}
-        else {isValid = true; setAmountErr('') ;amountRef.current.classList.add('is-valid') ;amountRef.current.classList.remove('is-invalid'); data = {...data, amount : Number(amount)}}
+        else {isValid = true; setAmountErr('') ;amountRef.current.classList.add('is-valid') ;amountRef.current.classList.remove('is-invalid'); data = {...data, amount : Number(amount), date : date}}
 
 
         if(isValid){
