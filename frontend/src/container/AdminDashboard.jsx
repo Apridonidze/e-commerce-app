@@ -59,7 +59,6 @@ const AdminDashboard = () => {
         return () => {fetchStatus()};
 
     },[])
-
     //creatye function to update status of products that are bought by users api endpoint /update-product-status/product_id=:id/user_id=:userId/status=:status
 
     useEffect(() => {
