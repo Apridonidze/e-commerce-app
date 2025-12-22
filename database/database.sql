@@ -14,7 +14,7 @@ create table saved_products (id int, product_id int, foreign key (id) references
 -- create table for admin users --
 create table admin (id int , foreign key (id) references users(id));
 -- create table for products that are in our carts--
-create table cart (id int, product_id int , status enum("none" , "pending" , 'on way', "delivered") ,foreign key (id) references users(id) , foreign key (product_id) references products(products_id));
+create table cart (id int, product_id int , status enum("none" , "pending" , 'on way', "delivered") , date varchar(55),foreign key (id) references users(id) , foreign key (product_id) references products(products_id));
 -- create table for bought items to display in users dashboard later---
 create table bought_products (id int , product_id int , foreign key (id) references users(id) , foreign key (product_id) references products(products_id));
 -- create table for reports  --
