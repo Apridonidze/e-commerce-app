@@ -35,6 +35,7 @@ const AdminDashboard = () => {
                     axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setUser(resp.data.user)}),
                     axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)}),
                     axios.get(`${BACKEND_URL}/admin/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setAdminds(resp.data.adminList)}),
+                    axios.get(`${BACKEND_URL}/products/admin-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) }),
                     axios.get(`${BACKEND_URL}/manage-products/pending-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; }),
                     axios.get(`${BACKEND_URL}/manage-products/on-way-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; }),
                     axios.get(`${BACKEND_URL}/manage-products/delivered-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; }),
