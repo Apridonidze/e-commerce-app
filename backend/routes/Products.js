@@ -58,7 +58,7 @@ ProductsRouter.get('/' , async (req,res) => {
         const limit = 15
         const offset = parseInt(req.query.productsOffset);
 
-        const [ products ] = await db.query('select products_id, images, title, description, category, subcategory, price, amount from products order by date LIMIT = ?, ?' , [offset, offset + limit]) //add offsets
+        const [ products ] = await db.query('select products_id, images, title, description, category, subcategory, price, amount from products order by date LIMIT = ?, ?' , [offset, offset + limit])
         return res.status(200).json({message : 'Products Fetched Succesfully' , products : products})
 
     }catch(err){
@@ -69,7 +69,11 @@ ProductsRouter.get('/' , async (req,res) => {
 ProductsRouter.get('/admin-products' ,ValidateToken , isAdmin, async (req,res) => {
     try{
 
-        const [ products ] = await db.query('select products.* , users.fullname , users.id from products join users on products.id = users.id')
+        
+        const limit = 15
+        const offset = parseInt(req.query.adminProductsOffset);
+
+        const [ products ] = await db.query('select products.* , users.fullname , users.id from products order by date join users on products.id = users.id LIMIT = ?, ?' ,  [offset, offset + limit])
         if(products.length  < 1) return res.status(400).json({message : 'No Products Yet' , products : products})
 
 
