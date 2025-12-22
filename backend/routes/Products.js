@@ -73,7 +73,7 @@ ProductsRouter.get('/admin-products' ,ValidateToken , isAdmin, async (req,res) =
         const limit = 15
         const offset = parseInt(req.query.adminProductsOffset);
 
-        const [ products ] = await db.query('select products.* , users.fullname , users.id from products order by date join users on products.id = users.id LIMIT = ?, ?' ,  [offset, offset + limit])
+        const [ products ] = await db.query('select products.* , users.fullname , users.id from products join users on products.id = users.id ORDER BY products.date desc limit 15')
         if(products.length  < 1) return res.status(400).json({message : 'No Products Yet' , products : products})
 
 

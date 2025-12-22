@@ -47,7 +47,7 @@ const AdminDashboard = () => {
                     axios.get(`${BACKEND_URL}/manage-products/pending-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setPendings(prev => [...prev, ...resp.data.products])}),
                     axios.get(`${BACKEND_URL}/manage-products/on-way-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setOnway(prev => [...prev, ...resp.data.products])}),
                     axios.get(`${BACKEND_URL}/manage-products/delivered-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setDelivered(prev => [...prev, ...resp.data.products])}),
-                    axios.get(`${BACKEND_URL}/reports` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setReports(prev => [...prev, ...resp.data.reports])}),
+                    axios.get(`${BACKEND_URL}/reports/product-reports` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setReports(prev => [...prev, ...resp.data.reports])}),
                     axios.get(`${BACKEND_URL}/feedback` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setFeedback(prev => [...prev, ...resp.data.feedback])}),
             ])
             }catch(err){
@@ -81,12 +81,12 @@ const AdminDashboard = () => {
                         <AdminList admins={admins} user={user}/>
                         <section id="manage-products">
                             
-                            <Pendings />
-                            <OnWayProducts />
-                            <DeliveredProducts />
+                            <Pendings pendings={pendings}/>
+                            <OnWayProducts onway={onway}/>
+                            <DeliveredProducts delivered={delivered}/>
                         </section>
-                        <section id="reports"><Reports /></section>
-                        <Feedback />
+                        <section id="reports"><Reports reports={reports}/></section>
+                        <Feedback feedback={feedback}/>
                     </div>
                 </div>
             
