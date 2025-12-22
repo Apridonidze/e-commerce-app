@@ -18,12 +18,20 @@ import Pendings from "../component/Pendings"
 
 const AdminDashboard = () => {
 
+    const { hash } = useLocation();
     const [ cookies ] = useCookies(['token'])
+
     const [ user, setUser ] = useState(null)
     const [ isAdmin, setIsAdmin ] = useState(null)
-    const [ admins, setAdminds ] = useState(null)
+    const [ admins, setAdmins ] = useState(null)
 
-    const { hash } = useLocation();
+    const [ latestProducts, setLatestProducts] = useState([])
+    const [ pendings, setPendings] = useState([])
+    const [ onway, setOnway ] = useState([])
+    const [ delivered, setDelivered ] = useState([])
+
+    const [ reports , setReports ] = useState([])
+    const [ feedback, setFeedback ] = useState([])
 
     useEffect(() => {
 
@@ -34,13 +42,13 @@ const AdminDashboard = () => {
                 await Promise.all([
                     axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setUser(resp.data.user)}),
                     axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)}),
-                    axios.get(`${BACKEND_URL}/admin/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setAdminds(resp.data.adminList)}),
-                    axios.get(`${BACKEND_URL}/products/admin-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) }),
-                    axios.get(`${BACKEND_URL}/manage-products/pending-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; }),
-                    axios.get(`${BACKEND_URL}/manage-products/on-way-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; }),
-                    axios.get(`${BACKEND_URL}/manage-products/delivered-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; }),
-                    axios.get(`${BACKEND_URL}/reports` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ;}),
-                    axios.get(`${BACKEND_URL}/feedback` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; }),
+                    axios.get(`${BACKEND_URL}/admin/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setAdmins(resp.data.adminList)}),
+                    axios.get(`${BACKEND_URL}/products/admin-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setLatestProducts(prev => [...prev, ...resp.data.products])}),
+                    axios.get(`${BACKEND_URL}/manage-products/pending-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setPendings(prev => [...prev, ...resp.data.products])}),
+                    axios.get(`${BACKEND_URL}/manage-products/on-way-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setOnway(prev => [...prev, ...resp.data.products])}),
+                    axios.get(`${BACKEND_URL}/manage-products/delivered-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setDelivered(prev => [...prev, ...resp.data.products])}),
+                    axios.get(`${BACKEND_URL}/reports` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setReports(prev => [...prev, ...resp.data.reports])}),
+                    axios.get(`${BACKEND_URL}/feedback` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setFeedback(prev => [...prev, ...resp.data.feedback])}),
             ])
             }catch(err){
                 console.log(err)
@@ -73,6 +81,7 @@ const AdminDashboard = () => {
                         <User />
                         <AdminList admins={admins} user={user}/>
                         <section id="manage-products">
+                            
                             <Pendings />
                             <OnWayProducts />
                             <DeliveredProducts />
