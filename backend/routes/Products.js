@@ -56,7 +56,7 @@ ProductsRouter.post('/' , ValidateToken, isAdmin , RateLimiter ,upload.fields([{
 ProductsRouter.get('/' , async (req,res) => {
     try{
 
-        const [ products ] = await db.query('select products_id, images, title, description, category, subcategory, price, amount from products')
+        const [ products ] = await db.query('select products_id, images, title, description, category, subcategory, price, amount from products') //add offsets
         return res.status(200).json({message : 'Products Fetched Succesfully' , products : products})
 
     }catch(err){

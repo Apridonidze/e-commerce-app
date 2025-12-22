@@ -35,10 +35,12 @@ const AdminDashboard = () => {
                     axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setUser(resp.data.user)}),
                     axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)}),
                     axios.get(`${BACKEND_URL}/admin/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setAdminds(resp.data.adminList)}),
-                    axios.get(`${BACKEND_URL}/products/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; console.log(resp)}),
-                    axios.get(`${BACKEND_URL}/manage-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; console.log(resp)}),
+                    axios.get(`${BACKEND_URL}/manage-products/pending-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; }),
+                    axios.get(`${BACKEND_URL}/manage-products/on-way-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; }),
+                    axios.get(`${BACKEND_URL}/manage-products/delivered-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; }),
+                    axios.get(`${BACKEND_URL}/reports` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ;}),
+                    axios.get(`${BACKEND_URL}/feedback` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; }),
             ])
-                
             }catch(err){
                 console.log(err)
             }
@@ -49,6 +51,8 @@ const AdminDashboard = () => {
 
     },[])
 
+    //creatye function to update status of products that are bought by users api endpoint /update-product-status/product_id=:id/user_id=:userId/status=:status
+
     useEffect(() => {
         if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
     }, [hash]);
@@ -58,6 +62,8 @@ const AdminDashboard = () => {
             {isAdmin !== null && !isAdmin ? <Navigate to='/'/> : <>
             
                 <div className="row">
+
+                    {/** toggle component on button click <CreateProduct /> */}
                         
                     <div className="admin-dashboard-start col">
                         <Sidebar />
@@ -65,7 +71,6 @@ const AdminDashboard = () => {
                     <div className="admin-dashboard-end col">
                         <User />
                         <AdminList admins={admins} user={user}/>
-                        <CreateProduct />
                         <section id="manage-products">
                             <Pendings />
                             <OnWayProducts />
