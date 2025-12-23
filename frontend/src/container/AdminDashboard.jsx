@@ -15,6 +15,7 @@ import Feedbacks from "../component/Feedbacks"
 import CreateProduct from "../component/CreateProduct"
 
 import Pendings from "../component/Pendings"
+import Products from "../component/Products"
 
 const AdminDashboard = () => {
 
@@ -60,7 +61,7 @@ const AdminDashboard = () => {
 
     },[])
     //creatye function to update status of products that are bought by users api endpoint /update-product-status/product_id=:id/user_id=:userId/status=:status
-
+    
     useEffect(() => {
         if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
     }, [hash]);
@@ -84,9 +85,11 @@ const AdminDashboard = () => {
 
                         <section id="manage-products">
                             
+                            <Products latestProducts={latestProducts}/>
                             <Pendings pendings={pendings}/>
                             <OnWayProducts onway={onway}/>
                             <DeliveredProducts delivered={delivered}/>
+                            
                         </section>
 
                         <section id="reports">
