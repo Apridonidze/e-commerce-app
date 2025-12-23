@@ -11,7 +11,7 @@ import AdminList from "../component/AdminList"
 import OnWayProducts from "../component/OnWayProducts"
 import DeliveredProducts from "../component/DeliveredProducts"
 import Reports from "../component/Reports"
-import Feedback from "../component/Feedback"
+import Feedbacks from "../component/Feedbacks"
 import CreateProduct from "../component/CreateProduct"
 
 import Pendings from "../component/Pendings"
@@ -76,7 +76,7 @@ const AdminDashboard = () => {
                     <div className="admin-dashboard-start col">
                         <Sidebar />
                     </div>
-                    
+
                     <div className="admin-dashboard-end col">
 
                         <User />
@@ -91,7 +91,7 @@ const AdminDashboard = () => {
 
                         <section id="reports">
                             <Reports reports={reports}/>
-                            <Feedback feedback={feedback}/>
+                            <Feedbacks feedback={feedback}/>
                         </section>
 
                     </div>
