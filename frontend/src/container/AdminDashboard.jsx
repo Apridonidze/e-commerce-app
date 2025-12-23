@@ -76,17 +76,24 @@ const AdminDashboard = () => {
                     <div className="admin-dashboard-start col">
                         <Sidebar />
                     </div>
+                    
                     <div className="admin-dashboard-end col">
+
                         <User />
                         <AdminList admins={admins} user={user}/>
+
                         <section id="manage-products">
                             
                             <Pendings pendings={pendings}/>
                             <OnWayProducts onway={onway}/>
                             <DeliveredProducts delivered={delivered}/>
                         </section>
-                        <section id="reports"><Reports reports={reports}/></section>
-                        <Feedback feedback={feedback}/>
+
+                        <section id="reports">
+                            <Reports reports={reports}/>
+                            <Feedback feedback={feedback}/>
+                        </section>
+
                     </div>
                 </div>
             

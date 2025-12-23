@@ -44,7 +44,7 @@ CartRouter.post('/:id' , ValidateToken , async (req, res) => {
 
 CartRouter.post('/order-cart-items' , ValidateToken , async (req,res) => {
     try{
-        
+        //check if items amount are not 0
         const now = new Date()
         const date = now.toLocaleDateString('en-GB')
 

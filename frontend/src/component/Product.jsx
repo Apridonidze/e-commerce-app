@@ -1,11 +1,15 @@
 import axios from "axios"
+import { useState } from "react"
+import { useCookies } from "react-cookie"
 
 import Skeleton from "react-loading-skeleton"
+
 import { BACKEND_URL } from "../../config"
-import { useCookies } from "react-cookie"
-import { useState } from "react"
+
 
 const Product = ( { prod ,prodId , key } ) => {
+
+    //check if amount is equal to 0 , if so toggle style of disable
 
     const [ cookies ] = useCookies(['token'])
 
@@ -66,7 +70,6 @@ const Product = ( { prod ,prodId , key } ) => {
                 <button className="btn btn-warning" onClick={() => handleAddToCart(prod.products_id)}>Add to Cart</button>
             </div>
           
-            
         </div>
     )
 }

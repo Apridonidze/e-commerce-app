@@ -76,4 +76,6 @@ const Sidebar = () => {
     )
 }
 
+//add user account in sidebar footer + move settings to very bottom and assign it as a gear icon , remove sidebar-end texts that will collide with user component
+
 export default Sidebar
