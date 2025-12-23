@@ -1,5 +1,7 @@
 import Skeleton from "react-loading-skeleton"
 
+import Report from "./Report"
+
 const Reports = ({ reports }) => {
     return(
         <div className="reports-container">
