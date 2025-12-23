@@ -57,9 +57,9 @@ ProductsRouter.get('/' , async (req,res) => {
     try{
         const limit = 15
         const offset = parseInt(req.query.offset);
-        const category = req.query.category
+        const category = req.query.category;
         console.log(offset, category)
-        //
+        //validate offsets and category
 
         const [ products ] = await db.query('select products.products_id, products.images, products.title, products.description, products.category, products.subcategory, products.price, products.amount from products order by products.date limit ? , ?' , [offset , offset + limit])
         return res.status(200).json({message : 'Products Fetched Succesfully' , products : products})
