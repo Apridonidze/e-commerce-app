@@ -23,8 +23,10 @@ const App = () => {
     //add feedbacks send page
     //add report send page
     //add credit cart fillout form
+    //add page for each page with likes , orders , comments  and data
   ])
 
+  //add live chat between supports and users 
   return(
     <div className="app-container">
       <RouterProvider router={router}/>

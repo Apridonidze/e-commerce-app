@@ -3,21 +3,32 @@ import Category from "../component/Category"
 import Header from "../component/Header"
 import Products from "../component/Products"
 import Sidebar from "../component/Sidebar"
+import axios from "axios"
+import { BACKEND_URL } from "../../config"
+import { useCookies } from "react-cookie"
 
 const Main = () => {
+
+    const [ cookies ] = useCookies(['token'])
 
     const [offset, setOffset] = useState(0)
     const [category, setCategory] = useState(null);
 
-    const fetchProducts = () => {
+    const fetchProducts = async(offset, category) => {
+        try{
 
+            await axios.get(`${BACKEND_URL}/products`, { params : {offset, category} ,headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+
+        }catch(err){
+            console.log(err)
+        }
     }
 
     useEffect(() => {
-        return () => {fetchProducts()}
+        return () => {fetchProducts(0,null)}
     },[])
 
-
+    //create another useeffect with offset ,category dependencies
 
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
