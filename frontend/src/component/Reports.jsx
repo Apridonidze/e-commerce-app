@@ -4,7 +4,7 @@ const Reports = ({ reports }) => {
     return(
         <div className="reports-container">
             <h1>Reports</h1>
-            {reports?.map((report, reportId) => <h1>{report.content}</h1>) || <Skeleton />}
+            {reports?.map((report, reportId) => <Report report={report} reportId={reportId} key={reportId}/>) || <Skeleton />}
         </div>
     )
 }
