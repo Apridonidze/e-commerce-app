@@ -7,6 +7,7 @@ import axios from "axios"
 import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 import Product from "../component/Product"
+import Skeleton from "react-loading-skeleton"
 
 const Main = () => {
 
@@ -20,25 +21,16 @@ const Main = () => {
     const fetchProducts = async(offset, category) => {
         try{
 
-            await axios.get(`${BACKEND_URL}/products`, { params : {offset, category} ,headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setProducts(prev => [...prev, ...resp.data.products])})
+            await axios.get(`${BACKEND_URL}/products`, { params : {offset, category} ,headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setProducts(prev => [...prev, ...resp.data.products])})
 
         }catch(err){
             console.log(err)
         }
     }
-
-    console.log(products)
-
-  
-
     
     useEffect(() => {
         return () => {fetchProducts(offset,category)}
     },[offset,category])
-
-    console.log(products)
-
-    //create another useeffect with offset ,category dependencies
 
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
@@ -47,9 +39,9 @@ const Main = () => {
             </div>
             <div className="main-end col">
                 <Header />
-                <Category setCategory={setCategory} category={category}/>
+                <Category setCategory={setCategory} category={category} setProducts={setProducts}/>
                 <div className="products row">
-                    {products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}/>)}
+                    {products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}/>) || <Skeleton />}
                     <button className="btn btn-warning" onClick={() => setOffset(prev => prev + 15)}>Load More...</button>
                 </div>
             </div>

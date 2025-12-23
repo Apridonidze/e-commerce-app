@@ -1,4 +1,4 @@
-const Category = ({ setCategory, category }) => {
+const Category = ({ setCategory, category, setProducts }) => {
 
     const categories = [
         
@@ -79,7 +79,7 @@ const Category = ({ setCategory, category }) => {
     return(
         <div className="category-container">
             {categories.map((cat , catId) => (
-                <select name={cat.name} id={catId} onChange={(e) => setCategory(e.target.value)} value={category}>
+                <select name={cat.name} id={catId} onChange={(e) => {setProducts([]) ;setCategory(e.target.value)}} value={category}>
                     {cat.subcategories.map((sub, subId) => (
                         <option value={sub} key={sub}>{sub}</option>
                     ))}
