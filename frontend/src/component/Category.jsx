@@ -89,5 +89,7 @@ const Category = ({ setCategory, category, setProducts }) => {
     )
 }
 
+//highlight the selected category
+
 
 export default Category 
