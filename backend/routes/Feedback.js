@@ -8,10 +8,10 @@ const db = require('../config/db')
 FeedbackRouter.get('/' , ValidateToken, isAdmin , async(req,res) => {
     try{
 
-        const [ feedbacks ] = await db.query('select feedback.* users.fullname, users.id from feedback join users on users.id = feedback.id')
-        if(feedbacks.length < 1) return res.status(400).json({message : "No Feedbacks Yet." , feedbacks : feedbacks})
+        const [ feedbacks ] = await db.query('select feedback.*, users.fullname, users.id from feedback join users on users.id = feedback.id')
+        if(feedbacks.length < 1) return res.status(400).json({message : "No Feedbacks Yet." , feedback  : feedbacks})
 
-        return res.status(200).json({message : "Feedbacks Found" , feedbacks})
+        return res.status(200).json({message : "Feedbacks Found" , feedback  : feedbacks})
 
     }catch(err){
         return res.status(500).json({errMessage : "Internal Error" , err : err})
