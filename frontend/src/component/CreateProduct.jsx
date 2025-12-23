@@ -185,7 +185,7 @@ const CreateProduct = () => {
             <div className="create-products-main">
                 <form onSubmit={handleUploadProduct} enctype="multipart/form-data">
 
-                `    <div className="form-floating">
+                    <div className="form-floating">
                         <input type="file" multiple  className="form-control" onChange={(e) => setImages(e.target.files)}  accept="image/*" ref={imageRef}/>
                         <span>{imageErr}</span>
                     </div>

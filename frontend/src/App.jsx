@@ -20,6 +20,9 @@ const App = () => {
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
     {path : '*' , element : <Landing />}, /**add error page */
+    //add feedbacks send page
+    //add report send page
+    //add credit cart fillout form
   ])
 
   return(

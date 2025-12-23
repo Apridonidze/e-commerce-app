@@ -14,5 +14,7 @@ const Landing = () => {
         </div>
     )
 }
+//display feedbackss here on landing page
+//add landing text
 
 export default Landing
