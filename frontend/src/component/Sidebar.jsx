@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie'
 import { Link, NavLink } from 'react-router-dom'
 import { useEffect , useState } from 'react'
 import { BACKEND_URL } from '../../config'
+import User from './User'
 const Sidebar = () => {
 
     const [ cookies ] = useCookies(['token'])
@@ -14,7 +15,9 @@ const Sidebar = () => {
 
             try{
 
-                await axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)})
+                await Promise.all([
+                    axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)})
+                ])
 
             }catch(err){
                 console.log(err)
@@ -27,9 +30,9 @@ const Sidebar = () => {
     },[])
 
     return(
-        <div className="sidebar-container d-flex flex-column justify-content-between border position-sticky " style={{maxHeight:"100vh"}}>
+        <div className="sidebar-container d-flex flex-column justify-content-between border position-sticky w-25 text-break" style={{maxHeight:"100vh"}}>
             <div className="sidebar-top">
-
+                <h1>E-commerce-app-icon</h1>
             </div>
             <div className="sidebar-center row g-4">
                 <div className="center-header col-12 h-auto">
@@ -60,6 +63,9 @@ const Sidebar = () => {
                 </div>
             </div>
             <div className="sidebar-end"> 
+                
+                <User />
+
                 <div className="end-start">
                     <Link>Help</Link>
                     <Link>Feedback</Link>

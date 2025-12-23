@@ -50,5 +50,5 @@ const User = () => {
         </section>
     )
 }
-
+//add logout button at the end of div
 export default User
