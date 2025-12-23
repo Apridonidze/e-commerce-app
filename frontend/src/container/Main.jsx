@@ -25,7 +25,7 @@ const Main = () => {
     }
 
     useEffect(() => {
-        return () => {fetchProducts(0,null)}
+        return () => {fetchProducts(0,category)}
     },[])
 
     //create another useeffect with offset ,category dependencies
