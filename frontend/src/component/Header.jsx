@@ -5,7 +5,7 @@ import { BACKEND_URL } from "../../config";
 
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ setProducts }) => {
 
     const [dataList,setDataList] = useState([]);
     const [searchItem, setSearchItem] = useState('');
@@ -21,12 +21,12 @@ const Header = () => {
         }
 
         return () => {fetchDataList()}
-    },[searchItem]) //add filters to serachItems
+    },[searchItem]) 
 
     return(
         <div className="header-container  d-flex justify-content-between">
 
-            <div className="header-start  ">
+            <div className="header-start">
                 <div className="input-group  align-items-center ">
                     <i className="fa-solid fa-magnifying-glass"></i>
                     <input type="text" className='form-control' list="searchlist" onChange={(e) => setSearchItem(e.target.value)} value={searchItem}/>
