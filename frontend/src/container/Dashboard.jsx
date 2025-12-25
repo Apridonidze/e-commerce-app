@@ -39,7 +39,6 @@ const Dashboard = () => {
                 <Sidebar />
             </div>
             <div className="dashboard-end col">
-                <Header />
                 <User />
                 <section id='cart-items'><Cart /></section>
                 <section id='saved-items'><Saved /></section>

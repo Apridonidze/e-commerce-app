@@ -14,14 +14,16 @@ const Header = ({ setProducts, fetchProducts }) => {
             if(searchItem.trim().length < 1 || searchItem.trim() === '') {
                 fetchProducts()
             }else {
+
                 try{
                     await axios.get(`${BACKEND_URL}/products/item-data-list?searchItem=${searchItem}`).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
                 }catch(err){
                     console.log(err)
                 }
-            }
 
+            }
         }
+        
         fetchDataList()
     },[searchItem])
 
