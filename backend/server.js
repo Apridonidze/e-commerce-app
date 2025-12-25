@@ -21,6 +21,7 @@ const AdminRouter = require('./routes/Admin')
 const ProductsManagment = require('./routes/ProductsManagment')
 const ReportsRouter = require('./routes/Reports')
 const FeedbackRouter = require('./routes/Feedback')
+const SupportChatRouter = require('./routes/SupportChat')
 
 app.use('/login', LoginRouter)
 app.use('/sign', SignRouter)
@@ -31,6 +32,7 @@ app.use('/admin', AdminRouter)
 app.use('/manage-products', ProductsManagment)
 app.use('/reports', ReportsRouter)
 app.use('/feedback', FeedbackRouter)
+app.use('/support-chat', SupportChatRouter)
 
 app.listen(PORT , () => {
     console.log(`listening to port ${PORT}`)

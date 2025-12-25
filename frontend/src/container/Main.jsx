@@ -38,7 +38,7 @@ const Main = () => {
             <div className="main-start col">
                 <Sidebar /> 
             </div>
-            <div className="main-end col">
+            <div className="main-end col " style={{minHeight : '100vh'}}>
                 <Header setProducts={setProducts} fetchProducts={fetchProducts}/>
                 <Category setCategory={setCategory} category={category} setProducts={setProducts}/>
                 <div className="products row">
@@ -46,9 +46,8 @@ const Main = () => {
                     <button className="btn btn-warning" onClick={() => setOffset(prev => prev + 15)}>Load More...</button>
                 </div>
                 
-                <SupportChat />
+                <SupportChat /> {/**toggle support chat if user != admin , if user has cookies */}
             </div>
-            
         </div>
     )
 }
