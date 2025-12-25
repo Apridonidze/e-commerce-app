@@ -12,6 +12,7 @@ const db = require('../config/db')
 
 const RateLimiter = require('../config/RateLimiter')
 const isAdmin = require('../config/isAdmin')
+const SearchSchema = require('../schemas/SearchSchema')
 
 ProductsRouter.post('/' , ValidateToken, isAdmin , RateLimiter ,upload.fields([{name :'images', maxCount : 20}]), async (req,res) => {
 
@@ -79,10 +80,15 @@ ProductsRouter.get('/' , async (req,res) => {
 ProductsRouter.get('/item-data-list' , async (req,res) => {
     try{
 
-        const searchInput = req.query.searchItem ; //add zod validation to this input
+        const ValidateSearch = SearchSchema(req.query)
+
+        if(!ValidateSearch.success) return res.status(400).json({message : "Invalid Input" , products : []})
+        
+     
+        const searchInput = req.query.searchItem;
 
         const [ datalist ] = await db.query('select products_id , title from products where LOWER(products.title) like LOWER(?)', [`${searchInput}%`])
-        if(datalist.length < 1) return res.status(400).json({message : "No Items Found" , products : []})
+        if(datalist.length < 1) return res.status(204)
 
         return res.status(200).json({message : "Items Found" , products : datalist})
 

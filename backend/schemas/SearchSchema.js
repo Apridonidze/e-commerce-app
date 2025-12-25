@@ -5,10 +5,9 @@ const SearchSchema = z.object({
 })
 
 function SearchSchemaValidation (data) {
-
+    
     return SearchSchema.safeParse(data)
-
 }
 
 
-module.exports = SearchSchemaValidation()
+module.exports = SearchSchemaValidation
