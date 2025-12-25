@@ -60,7 +60,7 @@ const AdminDashboard = () => {
         return () => {fetchStatus()};
 
     },[])
-    //creatye function to update status of products that are bought by users api endpoint /update-product-status/product_id=:id/user_id=:userId/status=:status
+    //create function for responding messages
     
     useEffect(() => {
         if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
