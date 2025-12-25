@@ -1,12 +1,31 @@
+import { useEffect } from "react";
+import { useState } from "react"
 
 const Header = () => {
+
+    const [dataList,setDataList] = useState([]);
+
+    useEffect(() => {
+        const fetchDataList = async() => {
+
+            try{
+                
+            }catch(err){
+
+            }
+
+        }
+    },[])
+
     return(
         <div className="header-container  d-flex justify-content-between">
 
             <div className="header-start  ">
                 <div className="input-group  align-items-center ">
                     <i className="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" className='form-control' />
+                    <input type="text" className='form-control' list="searchlist"/>
+                    <datalist id="searchlist">
+                    </datalist>
                 </div>
             </div>
 

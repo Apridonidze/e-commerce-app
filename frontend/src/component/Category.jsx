@@ -89,6 +89,7 @@ const Category = ({ setCategory, category, setProducts }) => {
     )
 }
 
+//add category on top of subcategory
 //highlight the selected category
 
 

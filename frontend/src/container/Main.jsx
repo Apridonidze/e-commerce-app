@@ -41,7 +41,7 @@ const Main = () => {
                 <Header />
                 <Category setCategory={setCategory} category={category} setProducts={setProducts}/>
                 <div className="products row">
-                    {products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}/>) || <Skeleton />}
+                    {products.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}/>) || <Skeleton />}
                     <button className="btn btn-warning" onClick={() => setOffset(prev => prev + 15)}>Load More...</button>
                 </div>
             </div>

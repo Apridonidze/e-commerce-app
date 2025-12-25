@@ -26,9 +26,9 @@ ProductsRouter.post('/' , ValidateToken, isAdmin , RateLimiter ,upload.fields([{
         subCategory : product.subCategory.toString(),
         amount :  Number(product.amount),
         date : product.date
-    }
+    }; //displaying bodys data
 
-    const validateProduct = NewProductSchema(parsedRequest)
+    const validateProduct = NewProductSchema(parsedRequest);
 
 
     if(!validateProduct.success) return res.status(400).json({errMessage : 'Invalid Input'})
@@ -78,7 +78,6 @@ ProductsRouter.get('/' , async (req,res) => {
 
 ProductsRouter.get('/admin-products' ,ValidateToken , isAdmin, async (req,res) => {
     try{
-
         
         const limit = 15
         const offset = parseInt(req.query.adminProductsOffset);
@@ -95,12 +94,12 @@ ProductsRouter.get('/admin-products' ,ValidateToken , isAdmin, async (req,res) =
 })
 
 ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
-
+    
     try{
         
         const [ saved_products ] = await db.query('select * from saved_products join products on saved_products.product_id = products.id join users on users.id = products.id where products.products_id = ?' , [req.user.userId])
         
-        if(saved_products.length < 1) return res.status(400).json({message : 'No Saved Products Found' , products : []})
+        if(saved_products.length < 1) return res.status(204).json({message : 'No Saved Products Found' , products : []})
 
         return res.status(200).json({message : 'Saved Products Found' , products  : saved_products})
 
