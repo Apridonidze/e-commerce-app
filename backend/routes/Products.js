@@ -76,6 +76,21 @@ ProductsRouter.get('/' , async (req,res) => {
     }
 })
 
+ProductsRouter.get('/item-data-list' , async (req,res) => {
+    try{
+
+        const searchInput = req.body.searchInput.toLowerCase()
+
+        const [ datalist ] = await db.query('select products_id , title from products where LOWER(products.title) like ?', [`${searchInput}%`])
+        if(datalist.length < 1) return res.status(400).json({message : "No Items Found" , products : []})
+
+        return res.status(200).json({message : "Items Found" , products : datalist})
+
+    }catch(err){
+        return res.status(500).json({errMessage : "Internal Error" , err : err})
+    }
+})
+
 ProductsRouter.get('/admin-products' ,ValidateToken , isAdmin, async (req,res) => {
     try{
         
