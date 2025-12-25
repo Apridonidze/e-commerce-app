@@ -8,6 +8,7 @@ import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 import Product from "../component/Product"
 import Skeleton from "react-loading-skeleton"
+import SupportChat from "../component/SupportChat"
 
 const Main = () => {
 
@@ -44,7 +45,10 @@ const Main = () => {
                     {products.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}/>) || <Skeleton />}
                     <button className="btn btn-warning" onClick={() => setOffset(prev => prev + 15)}>Load More...</button>
                 </div>
+                
+                <SupportChat />
             </div>
+            
         </div>
     )
 }
