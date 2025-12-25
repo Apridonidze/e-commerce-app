@@ -3,31 +3,30 @@ import { useEffect } from "react";
 import { useState } from "react"
 import { BACKEND_URL } from "../../config";
 
-const Header = ({ setProducts, fetchProducts }) => {
+const Header = ({ setProducts, fetchProducts, offset,category }) => {
 
     const [dataList,setDataList] = useState([]);
     const [searchItem, setSearchItem] = useState('');
 
-    useEffect(() => {
-        const fetchDataList = async() => {
 
-            if(searchItem.trim().length < 1 || searchItem.trim() === '') {
-                fetchProducts()
-            }else {
+    const fetchDataList = async() => {
 
-                try{
-                    await axios.get(`${BACKEND_URL}/products/item-data-list?searchItem=${searchItem}`).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
-                }catch(err){
-                    console.log(err)
-                }
-
+            if(searchItem.trim().length < 1 || searchItem.trim() === "" || searchItem === "" || searchItem.trim() === undefined || searchItem.trim() === null) {
+                fetchProducts(offset,category)
             }
-        }
+            
+            try{
+                await axios.get(`${BACKEND_URL}/products/item-data-list?searchItem=${searchItem}`).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
+            }catch(err){
+                console.log(err)
+            }
         
-        fetchDataList()
-    },[searchItem])
+            }
 
-    console.log(searchItem)
+    useEffect(() => {
+        fetchDataList()
+    },[searchItem]) //optimize seraching
+
 
     return(
         <div className="header-container  d-flex justify-content-between">
@@ -37,7 +36,7 @@ const Header = ({ setProducts, fetchProducts }) => {
                     <i className="fa-solid fa-magnifying-glass"></i>
                     <input type="text" className='form-control' list="searchlist" onChange={(e) => setSearchItem(e.target.value)} value={searchItem}/>
                     <datalist id="searchlist">
-                        {dataList?.map((dl, dlId) => <option key={dlId}>{dl.title}</option>)}
+                        {dataList?.map((dl, dlId) => <option key={dlId} value={dl.title} />)}
                     </datalist>
                 </div>
             </div>

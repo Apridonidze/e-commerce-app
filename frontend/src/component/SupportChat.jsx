@@ -1,7 +1,23 @@
+import axios from "axios"
+import { useState } from "react"
+import { BACKEND_URL } from "../../config"
+
 const SupportChat = () => {
 
-    const handleMessageSend = (e) => {
+    const [input, setInput] = useState('')
+
+    const handleMessageSend = async(e) => {
         e.preventDefault()
+
+        //add input filtering here
+
+        try{
+
+            await axios.post(`${BACKEND_URL}/support-chat/send-user-message`, {content : input} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+
+        }catch(err){
+            console.log(err)
+        }
     }
 
     return(
@@ -18,7 +34,7 @@ const SupportChat = () => {
             <div className="support-chat-header">
                 <form onSubmit={handleMessageSend}>
                     <div className="input-group">
-                        <input type="text" className="form-control"/>
+                        <input type="text" className="form-control" placeholder="Send Message..." onChange={(e) => setInput(e.target.value)} value={input}/>
                         <input type="submit" className="btn btn-primary" value='Send'/>
                     </div>
                 </form>

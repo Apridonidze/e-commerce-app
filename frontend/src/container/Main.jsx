@@ -19,6 +19,8 @@ const Main = () => {
     
     const [products, setProducts] = useState([])
 
+    const [toggleChat, setToggleChat] = useState(false)
+
     const fetchProducts = async(offset, category) => {
         try{
 
@@ -28,9 +30,21 @@ const Main = () => {
             console.log(err)
         }
     }
+
+    const fetchUser = async() => {
+        try{
+            await Promise.all([
+                axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setToggleChat(true)}),
+                axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setToggleChat(false)})
+            ])
+        }catch(err){
+            console.log(err)
+            setToggleChat(false)
+        }
+    }
     
     useEffect(() => {
-        return () => {fetchProducts(offset,category)}
+        return () => {fetchProducts(offset,category) ; fetchUser()}
     },[offset,category])
 
     return(
@@ -39,14 +53,14 @@ const Main = () => {
                 <Sidebar /> 
             </div>
             <div className="main-end col " style={{minHeight : '100vh'}}>
-                <Header setProducts={setProducts} fetchProducts={fetchProducts}/>
+                <Header setProducts={setProducts} fetchProducts={fetchProducts} offset={offset} category={category}/>
                 <Category setCategory={setCategory} category={category} setProducts={setProducts}/>
                 <div className="products row">
                     {products.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}/>) || <Skeleton />}
                     <button className="btn btn-warning" onClick={() => setOffset(prev => prev + 15)}>Load More...</button>
                 </div>
                 
-                <SupportChat /> {/**toggle support chat if user != admin , if user has cookies */}
+                {!cookies ? <></> : toggleChat ? <SupportChat /> : <></>}
             </div>
         </div>
     )
