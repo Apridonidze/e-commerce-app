@@ -3,25 +3,29 @@ import { useEffect } from "react";
 import { useState } from "react"
 import { BACKEND_URL } from "../../config";
 
-import { Link } from "react-router-dom";
-
-const Header = ({ setProducts }) => {
+const Header = ({ setProducts, fetchProducts }) => {
 
     const [dataList,setDataList] = useState([]);
     const [searchItem, setSearchItem] = useState('');
+
     useEffect(() => {
         const fetchDataList = async() => {
 
-            try{
-                await axios.get(`${BACKEND_URL}/products/item-data-list?searchItem=${searchItem}`).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
-            }catch(err){
-                console.log(err)
+            if(searchItem.trim().length < 1 || searchItem.trim() === '') {
+                fetchProducts()
+            }else {
+                try{
+                    await axios.get(`${BACKEND_URL}/products/item-data-list?searchItem=${searchItem}`).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
+                }catch(err){
+                    console.log(err)
+                }
             }
 
         }
+        fetchDataList()
+    },[searchItem])
 
-        return () => {fetchDataList()}
-    },[searchItem]) 
+    console.log(searchItem)
 
     return(
         <div className="header-container  d-flex justify-content-between">

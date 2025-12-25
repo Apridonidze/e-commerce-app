@@ -38,7 +38,7 @@ const Main = () => {
                 <Sidebar /> 
             </div>
             <div className="main-end col">
-                <Header setProducts={setProducts}/>
+                <Header setProducts={setProducts} fetchProducts={fetchProducts}/>
                 <Category setCategory={setCategory} category={category} setProducts={setProducts}/>
                 <div className="products row">
                     {products.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}/>) || <Skeleton />}
