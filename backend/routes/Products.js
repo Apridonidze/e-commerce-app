@@ -79,7 +79,7 @@ ProductsRouter.get('/' , async (req,res) => {
 ProductsRouter.get('/item-data-list' , async (req,res) => {
     try{
 
-        const searchInput = req.body.searchInput.toLowerCase()
+        const searchInput = req.query.searchItem
 
         const [ datalist ] = await db.query('select products_id , title from products where LOWER(products.title) like ?', [`${searchInput}%`])
         if(datalist.length < 1) return res.status(400).json({message : "No Items Found" , products : []})
