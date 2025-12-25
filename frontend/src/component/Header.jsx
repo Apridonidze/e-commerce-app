@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { useState } from "react"
 import { BACKEND_URL } from "../../config";
 
+import { Link } from "react-router-dom";
+
 const Header = () => {
 
     const [dataList,setDataList] = useState([]);
@@ -19,7 +21,7 @@ const Header = () => {
         }
 
         return () => {fetchDataList()}
-    },[searchItem])
+    },[searchItem]) //add filters to serachItems
 
     return(
         <div className="header-container  d-flex justify-content-between">

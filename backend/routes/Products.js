@@ -79,9 +79,9 @@ ProductsRouter.get('/' , async (req,res) => {
 ProductsRouter.get('/item-data-list' , async (req,res) => {
     try{
 
-        const searchInput = req.query.searchItem
+        const searchInput = req.query.searchItem ; //add zod validation to this input
 
-        const [ datalist ] = await db.query('select products_id , title from products where LOWER(products.title) like ?', [`${searchInput}%`])
+        const [ datalist ] = await db.query('select products_id , title from products where LOWER(products.title) like LOWER(?)', [`${searchInput}%`])
         if(datalist.length < 1) return res.status(400).json({message : "No Items Found" , products : []})
 
         return res.status(200).json({message : "Items Found" , products : datalist})
