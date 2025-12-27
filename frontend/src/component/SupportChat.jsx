@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState } from "react"
 import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
+import { useEffect } from "react"
 
 const SupportChat = () => {
 
@@ -22,6 +23,19 @@ const SupportChat = () => {
             console.log(err)
         }
     }
+
+    const RecieveMessage = async () => {
+        try{
+            await axios.get(`${BACKEND_URL}/support-chat` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp.data))
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+
+    useEffect(() => {
+        RecieveMessage()
+    },[])
 
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
