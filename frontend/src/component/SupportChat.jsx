@@ -1,8 +1,11 @@
 import axios from "axios"
 import { useState } from "react"
 import { BACKEND_URL } from "../../config"
+import { useCookies } from "react-cookie"
 
 const SupportChat = () => {
+
+    const [ cookies ] = useCookies(['token'])
 
     const [input, setInput] = useState('')
 

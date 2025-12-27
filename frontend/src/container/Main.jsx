@@ -60,7 +60,8 @@ const Main = () => {
                     <button className="btn btn-warning" onClick={() => setOffset(prev => prev + 15)}>Load More...</button>
                 </div>
                 
-                {!cookies ? <></> : toggleChat ? <SupportChat /> : <></>}
+                {/* {!cookies ? <></> : toggleChat ? <SupportChat /> : <></>} uncomment this line after testing/development is done */}
+                {!cookies ? <></> : !toggleChat ? <SupportChat /> : <></> }
             </div>
         </div>
     )
