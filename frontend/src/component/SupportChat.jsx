@@ -18,7 +18,7 @@ const SupportChat = () => {
         try{
 
             await axios.post(`${BACKEND_URL}/support-chat/send-user-message`, {content : input} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
-
+            
         }catch(err){
             console.log(err)
         }
@@ -34,7 +34,7 @@ const SupportChat = () => {
 
 
     useEffect(() => {
-        RecieveMessage()
+        RecieveMessage() //mount on messsages change
     },[])
 
     return(

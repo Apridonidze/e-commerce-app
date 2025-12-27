@@ -14,6 +14,7 @@ SupportChatRouter.get('/' , ValidateToken, async(req,res) => {
         const [ messages ] = await db.query('select * from support_messages where id = ? or reciever_id = ?' , [userId, userId])
         return res.status(200).json({message : "Recieved Messages Succesfully" , messages : messages})
 
+       
     }catch(err){
         return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
