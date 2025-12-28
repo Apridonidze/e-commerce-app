@@ -1,4 +1,4 @@
-const Category = ({ setCategory, category, setProducts }) => {
+const Category = ({ setCategory, category, setProducts, fetchProducts,offset }) => {
 
     const categories = [
         
@@ -85,11 +85,12 @@ const Category = ({ setCategory, category, setProducts }) => {
                     ))}
                 </select>
             ))}
+            <button onClick={() => {setCategory(null);fetchProducts(offset,null)}}>Clear Filters</button>
         </div>
     )
 }
 
-//add category on top of subcategory
+//add category on top of subcategory    
 //highlight the selected category
 
 

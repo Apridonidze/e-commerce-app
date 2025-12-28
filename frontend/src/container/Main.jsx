@@ -53,8 +53,10 @@ const Main = () => {
                 <Sidebar /> 
             </div>
             <div className="main-end col " style={{minHeight : '100vh'}}>
+
                 <Header setProducts={setProducts} fetchProducts={fetchProducts} offset={offset} category={category}/>
-                <Category setCategory={setCategory} category={category} setProducts={setProducts}/>
+                <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
+
                 <div className="products row">
                     {products.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}/>) || <Skeleton />}
                     <button className="btn btn-warning" onClick={() => setOffset(prev => prev + 15)}>Load More...</button>

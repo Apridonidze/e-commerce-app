@@ -12,16 +12,13 @@ SupportChatRouter.get('/' , ValidateToken, async(req,res) => {
         const userId = req.user.userId
 
         const [ messages ] = await db.query('select * from support_messages where id = ? or reciever_id = ?' , [userId, userId])
-        return res.status(200).json({message : "Recieved Messages Succesfully" , messages : messages})
+        return res.status(200).json({message : "Recieved Messages" , messages : messages})
 
-       
+        
     }catch(err){
         return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
 })
-
-//add api endpoint for admins to get all messages  
-
 
 SupportChatRouter.post('/send-user-message', ValidateToken, async(req,res) => {
     try{
