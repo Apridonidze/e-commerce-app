@@ -1,11 +1,10 @@
 import axios from "axios"
-import { useState } from "react"
-import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
-import { useEffect } from "react"
+import { useEffect , useState } from "react"
 
 import { BACKEND_URL } from "../../config"
 
+import { io } from "socket.io-client"
 
 const SupportChat = () => {
 
@@ -14,24 +13,14 @@ const SupportChat = () => {
     const [input, setInput] = useState('')
     const [messages , setMessages] = useState([])
 
-    
+    const socket = io(BACKEND_URL)
 
-    
 
+    useEffect(() => {},[]) //function to recieve messages when user is online and once new message is created + join socket 
 
     const handleMessageSend = async(e) => {
         e.preventDefault()
-
-        //add input filtering here
-
-        try{
-
-            await axios.post(`${BACKEND_URL}/support-chat/send-user-message`, {content : input} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setInput('');RecieveMessage()})
-            
-        }catch(err){
-            console.log(err)
-        }
-    }
+    } //function to send messages to server
 
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
