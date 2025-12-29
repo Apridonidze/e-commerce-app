@@ -21,6 +21,7 @@ const SupportChat = () => {
     const handleMessageSend = async(e) => {
         e.preventDefault()
 
+
         //send message via axios to server
     } //function to send messages to server
 
@@ -28,7 +29,7 @@ const SupportChat = () => {
         const fetchMessages = async() => {
             try{
 
-                await axios.get(`${BACKEND_URL}/support-chat` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setMessages(resp.data.messages)})
+                await axios.get(`${BACKEND_URL}/support-chat` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) })
 
             }catch(err){
                 console.log(err)

@@ -7,10 +7,12 @@ const isAdmin = require('../config/isAdmin')
 const db = require('../config/db')
 
 
-SupportChatRouter.get('/' , ValidateToken, async(req,res) => { //get chat messages with conversation id params
+SupportChatRouter.get('/' , ValidateToken, async(req,res) => { //get chat messages for users 
     try {
 
         const userId = req.user.userId
+
+        //add 204 status code to not return empty data as successful
 
         const [ messages ] = await db.query('select * from support_messages where sender_id = ? ' , [userId])
         return res.status(200).json({message : "Recieved Messages" , messages : messages})
@@ -53,6 +55,7 @@ SupportChatRouter.post('/send-admin-message', ValidateToken, isAdmin , async(req
 
 module.exports = SupportChatRouter;
 
+//create route for admin to finsh conversation once admin helps user and tere is no need to keep chatting 
 
 //create admins inbox size checker middlewware
 //before user is assigned to admin for support chat , when we get request from user we should check if admin is online and if they have space in inbox (less than 10 inboxes)
@@ -64,3 +67,4 @@ module.exports = SupportChatRouter;
 //middleware should check if user already has responder
 //if not conversation id should be generated and defined as varaiobe (exp: conversation_id)
 //then variable will be used for assigning user to admin 
+

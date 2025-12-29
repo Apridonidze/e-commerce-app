@@ -34,6 +34,8 @@ app.use('/reports', ReportsRouter)
 app.use('/feedback', FeedbackRouter)
 app.use('/support-chat', SupportChatRouter)
 
+//add websocket connection here in main file 
+
 app.listen(PORT , () => {
     console.log(`listening to port ${PORT}`)
 })
