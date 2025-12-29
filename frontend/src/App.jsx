@@ -12,8 +12,8 @@ import AdminDashboard from './container/AdminDashboard'
 const App = () => {
 
   const router = createBrowserRouter([
-    {path : '/' , element : <Landing />},
-    {path : '/home-page' , element : <Main />},
+    {path : '/' , element : <Main />},
+    {path : '/landing-page' , element : <Landing />},
     {path : '/reports' , element : <></>},
     {path : '/dashboard' , element : <Dashboard />},
     {path : '/admin-dashboard' , element : <AdminDashboard/>},

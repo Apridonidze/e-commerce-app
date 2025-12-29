@@ -9,24 +9,13 @@ const SupportChat = () => {
     const [ cookies ] = useCookies(['token'])
 
     const [input, setInput] = useState('')
+    const [messages , setMessages] = useState([])
 
-    const handleMessageSend = async(e) => {
-        e.preventDefault()
-
-        //add input filtering here
-
-        try{
-
-            await axios.post(`${BACKEND_URL}/support-chat/send-user-message`, {content : input} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
-            
-        }catch(err){
-            console.log(err)
-        }
-    }
+    
 
     const RecieveMessage = async () => {
         try{
-            await axios.get(`${BACKEND_URL}/support-chat` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp.data))
+            await axios.get(`${BACKEND_URL}/support-chat` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setMessages(resp.data.messages)})
         }catch(err){
             console.log(err)
         }
@@ -37,6 +26,21 @@ const SupportChat = () => {
         RecieveMessage() //mount on messsages change
     },[])
 
+
+    const handleMessageSend = async(e) => {
+        e.preventDefault()
+
+        //add input filtering here
+
+        try{
+
+            await axios.post(`${BACKEND_URL}/support-chat/send-user-message`, {content : input} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setInput('');RecieveMessage()})
+            
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
             <div className="support-chat-header d-flex justify-content-between">
@@ -44,8 +48,8 @@ const SupportChat = () => {
                 
             </div>
 
-            <div className="support-chat-header">
-                <h1>Messages</h1>
+            <div className="support-chat-header d-flex flex-column">
+                {messages?.map((m , mId) => <span key={mId}>{m.content}</span>)}
             </div>
 
             <div className="support-chat-header">

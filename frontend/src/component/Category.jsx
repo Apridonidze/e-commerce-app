@@ -90,7 +90,6 @@ const Category = ({ setCategory, category, setProducts, fetchProducts,offset }) 
     )
 }
 
-//add category on top of subcategory    
 //highlight the selected category
 
 
