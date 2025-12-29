@@ -20,6 +20,8 @@ const SupportChat = () => {
 
     const handleMessageSend = async(e) => {
         e.preventDefault()
+
+        //send message via axios to server
     } //function to send messages to server
 
     return(

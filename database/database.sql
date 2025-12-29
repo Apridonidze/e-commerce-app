@@ -21,5 +21,5 @@ create table bought_products (id int , product_id int , foreign key (id) referen
 create table reports (id int , report_id int primary key, product_id int, type enum("product" , "delivery"), content varchar(255), foreign key reports(id) references users(id),  foreign key reports(product_id) references products(products_id));
 -- create table for feedback --
 create table feedback (id int , feedback_id int primary key auto_increment , content varchar(255), starts int(5) , foreign key (id) references users(id));
--- cretea table for support-user message --
-create table support_messages (message_id int primary key auto_increment,sender_id int, reciever_id int, content varchar(500), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, foreign key (sender_id) references users(id) , foreign key (reciever_id) references users(id));
+-- cretea table for support messages --
+create table support_messages (message_id int primary key auto_increment, conversation_id int , sender_id int, content varchar(500), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, foreign key (sender_id) references users(id));
