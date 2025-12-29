@@ -4,6 +4,9 @@ import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 import { useEffect } from "react"
 
+import { BACKEND_URL } from "../../config"
+
+
 const SupportChat = () => {
 
     const [ cookies ] = useCookies(['token'])
@@ -13,18 +16,7 @@ const SupportChat = () => {
 
     
 
-    const RecieveMessage = async () => {
-        try{
-            await axios.get(`${BACKEND_URL}/support-chat` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setMessages(resp.data.messages)})
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-
-    useEffect(() => {
-        RecieveMessage() //mount on messsages change
-    },[])
+    
 
 
     const handleMessageSend = async(e) => {
