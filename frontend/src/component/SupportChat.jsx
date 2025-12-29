@@ -24,6 +24,20 @@ const SupportChat = () => {
         //send message via axios to server
     } //function to send messages to server
 
+    useEffect(() => {
+        const fetchMessages = async() => {
+            try{
+
+                await axios.get(`${BACKEND_URL}/support-chat` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setMessages(resp.data.messages)})
+
+            }catch(err){
+                console.log(err)
+            }
+        }
+
+        fetchMessages()
+    },[])
+
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
             <div className="support-chat-header d-flex justify-content-between">
