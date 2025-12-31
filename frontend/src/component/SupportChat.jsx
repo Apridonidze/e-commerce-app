@@ -13,12 +13,12 @@ const SupportChat = () => {
     const [input, setInput] = useState('')
     const [messages , setMessages] = useState([])
 
-    const socket = io(BACKEND_URL)
+    const socket = io(BACKEND_URL, {withCredentials : true})
 
 
     useEffect(() => {
 
-        socket.emit("join", 1)
+        socket.emit("join", cookies.token)
         
     },[]) //function to recieve messages when user is online and once new message is created + join socket 
 
@@ -29,19 +29,6 @@ const SupportChat = () => {
         //send message via axios to server
     } //function to send messages to server
 
-    useEffect(() => {
-        const fetchMessages = async() => {
-            try{
-
-                await axios.get(`${BACKEND_URL}/support-chat` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) })
-
-            }catch(err){
-                console.log(err)
-            }
-        }
-
-        fetchMessages()
-    },[])
 
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
