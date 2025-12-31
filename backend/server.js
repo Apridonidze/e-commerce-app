@@ -17,7 +17,6 @@ const io = new Server (server, {cors: CorsOptions})
 
 const PORT = process.env.PORT || 8080
 
-
 require('./socket/chat.socket')(io);
 
 const LoginRouter = require('./routes/Login')
@@ -41,8 +40,6 @@ app.use('/manage-products', ProductsManagment)
 app.use('/reports', ReportsRouter)
 app.use('/feedback', FeedbackRouter)
 app.use('/support-chat', SupportChatRouter)
-
-//add websocket connection here in main file 
 
 server.listen(PORT , () => {
     console.log(`listening to port ${PORT}`)

@@ -4,6 +4,10 @@ function chatSocket (io) {
       //add messages send event
       //add message recive event
 
+      io.on('connection', (socket) => {
+        console.log('socket connected' )
+      })
+
 
     //create disconnect event
 }
