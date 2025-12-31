@@ -17,6 +17,9 @@ const io = new Server (server, {cors: CorsOptions})
 
 const PORT = process.env.PORT || 8080
 
+
+require('./socket/chat.socket')(io);
+
 const LoginRouter = require('./routes/Login')
 const SignRouter = require('./routes/Sign')
 const ProductsRouter = require('./routes/Products')
