@@ -64,4 +64,6 @@ InternalProducts.patch('/update-product-status/product_id=:id/user_id=:userId/st
     }
 })
 
+//develop faeture : to send user status changes in notifications and to emails
+
 module.exports = InternalProducts

@@ -16,7 +16,11 @@ const SupportChat = () => {
     const socket = io(BACKEND_URL)
 
 
-    useEffect(() => {},[]) //function to recieve messages when user is online and once new message is created + join socket 
+    useEffect(() => {
+
+        socket.emit("join", 1)
+        
+    },[]) //function to recieve messages when user is online and once new message is created + join socket 
 
     const handleMessageSend = async(e) => {
         e.preventDefault()

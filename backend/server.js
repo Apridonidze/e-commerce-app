@@ -10,6 +10,11 @@ app.use(cors(CorsOptions))
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 
+const http = require('http')
+const { Server } = require('socket.io')
+const server = http.createServer(app)
+const io = new Server (server, {cors: CorsOptions})
+
 const PORT = process.env.PORT || 8080
 
 const LoginRouter = require('./routes/Login')
@@ -36,6 +41,6 @@ app.use('/support-chat', SupportChatRouter)
 
 //add websocket connection here in main file 
 
-app.listen(PORT , () => {
+server.listen(PORT , () => {
     console.log(`listening to port ${PORT}`)
 })
