@@ -1,11 +1,12 @@
-const ValidateToken = require("../config/ValidateToken");
+const ValidateSocketToken = require("../config/ValidateSocketToken");
 
 function chatSocket (io) {
 
-      io.on('connection', (socket) => {
-        console.log('socket connected' )
+    io.use(ValidateSocketToken)
 
-      })
+    io.on('connection', (socket) => {
+        console.log('asd')
+    })
 
 }
 

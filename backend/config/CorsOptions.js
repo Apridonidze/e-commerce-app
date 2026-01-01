@@ -4,7 +4,8 @@ const CorsOptions = {
     credentials: true,
     origin : process.env.ORIGIN_URL,
     methods: ["GET" ,"POST", "PUT" , "DELETE"],
-    allowedHeaders :  ['Content-Type' , 'Authorization']
+    allowedHeaders :  ['Content-Type' , 'Authorization'],
+    transports: ["polling", "websocket"]
 }
 
 module.exports = CorsOptions

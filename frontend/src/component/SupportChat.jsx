@@ -17,18 +17,19 @@ const SupportChat = () => {
 
 
     useEffect(() => {
+        if (!socket) return;
 
-        socket.emit("join", cookies.token)
+        socket.on("connect", () => {
+            socket.emit("join", cookies.token);
+        });
+
+
+        return () => socket.off("connect");
+}, [socket]);
+
+    const handleMessageSend = () => {
         
-    },[]) //function to recieve messages when user is online and once new message is created + join socket 
-
-    const handleMessageSend = async(e) => {
-        e.preventDefault()
-
-
-        //send message via axios to server
-    } //function to send messages to server
-
+    }
 
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">

@@ -1,21 +1,24 @@
 const jwt = require('jsonwebtoken')
+const cookie = require('cookie')
 require('dotenv').config()
 
 
-function ValidateSocketToken (next, socket) {
+function ValidateSocketToken (socket,next) {
     try{
 
-        const authHeaders = socket.handshake.headers['authorization']
-        if(!authHeaders) return (next('Invalid Headers'))
+        const authHeaders = socket.handshake.headers.cookie;
+        const cookies = authHeaders.split('=')[1]
+        
+        if(!authHeaders) return next(new Error({errMessage : "Invalid Headers"}))
 
-        const token = authHeaders.split(' ')[1]
-        const validatedToken = jwt.verify(token , process.env.JWT_SECRET_KEY)
+        const validatedToken = jwt.verify(cookies , process.env.JWT_SECRET_KEY)
 
         socket.user = validatedToken
         next();
 
     }catch(err){
-        next(console.log(err))
+        
+        return next(new Error({errMessage : "Invalid Token", err : err}))
     }
 }
 
