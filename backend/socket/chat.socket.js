@@ -5,7 +5,9 @@ function chatSocket (io) {
     io.use(ValidateSocketToken)
 
     io.on('connection', (socket) => {
-        console.log('asd')
+        socket.on('join' ,() => {
+            console.log(socket.user)
+        })
     })
 
 }
