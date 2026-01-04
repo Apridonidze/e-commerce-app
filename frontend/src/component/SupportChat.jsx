@@ -21,6 +21,11 @@ const SupportChat = () => {
 
         socket.on("connect", () => {
             socket.emit("join", cookies.token);
+
+            socket.on('recieveMessage', (message) => {
+                
+            })//recieve message
+
         });
 
 
@@ -28,7 +33,9 @@ const SupportChat = () => {
 }, [socket]);
 
     const handleMessageSend = () => {
-        
+        if(!socket) return; // add error message heree 
+
+        socket.emit('newMessage', input) //send message
     }
 
     return(
