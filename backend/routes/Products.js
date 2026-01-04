@@ -3,7 +3,7 @@ const ProductsRouter = express.Router()
 
 const fs = require('fs')
 const multer = require('multer')
-const upload = multer({dest : '/uploads'})
+const upload = multer({dest : 'uploads/'})
 
 const ValidateToken = require('../config/ValidateToken')
 const NewProductSchema = require('../schemas/NewProductSchema')
