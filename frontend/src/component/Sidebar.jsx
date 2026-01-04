@@ -22,12 +22,13 @@ const Sidebar = () => {
             }catch(err){
                 console.log(err)
             }
-
         }
         
         return () => {fetchStatus()};
 
     },[])
+
+
 
     return(
         <div className="sidebar-container d-flex flex-column justify-content-between border position-sticky w-25 text-break" style={{maxHeight:"100vh"}}>
@@ -64,7 +65,7 @@ const Sidebar = () => {
             </div>
             <div className="sidebar-end"> 
                 
-                <User />
+                {cookies.token ? <User /> : <></>}
 
                 <div className="end-start">
                     <Link>Help</Link>
