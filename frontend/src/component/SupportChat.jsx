@@ -22,9 +22,17 @@ const SupportChat = () => {
         socket.on("connect", () => {
             socket.emit("join", cookies.token);
 
+            socket.on('join' , (message) => {
+                console.log(message)
+            })
+
             socket.on('recieveMessage', (message) => {
                 
             })//recieve message
+
+            socket.on('adminList' , (adminList) => {
+                console.log(adminList) //add state for it to display if admins are active or not in support chat
+            })
 
         });
 
@@ -32,10 +40,14 @@ const SupportChat = () => {
         return () => socket.off("connect");
 }, [socket]);
 
-    const handleMessageSend = () => {
+    const handleMessageSend = (e) => {
+
+        e.preventDefault()
+
         if(!socket) return; // add error message heree 
 
-        socket.emit('newMessage', input) //send message
+        socket.emit('sendMessage', input) //send message
+        setInput('')
     }
 
     return(

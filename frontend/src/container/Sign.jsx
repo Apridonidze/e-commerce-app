@@ -61,7 +61,7 @@ const Sign = () => {
         if(email.trim() == '' || password.trim() == email || password.trim() == email){isValid = false; setEmailErr(`This Field Can't Be Empty`) ; emailRef.current.classList.add('is-invalid'); emailRef.current.classList.remove('is-valid')}
         else if(emailRegex.test(email) === false){isValid = false ; emailRef.current.classList.add('is-invalid') ; emailRef.current.classList.remove('is-valid'); setEmailErr('Insert Valid Email!')}
         else {isValid = true ;emailRef.current.classList.add('is-valid') ; emailRef.current.classList.remove('is-invalid'); setEmailErr(''); data = {...data, email : email}}
-
+        
         if(countryCode.trim() == '') {isValid = false ;setCountryCodeErr('Select Your Country Code') ; countryRef.current.classList.add('is-invalid'), countryRef.current.classList.remove('is-valid'); phoneRef.current.classList.add('is-invalid'); phoneRef.current.classList.remove('is-valid')}
         else if (phone.trim().length <= 8){isValid = false ; setPhoneErr('Your Phone Number Length Should Be Atleast 8 Numbers Length');isValid = false;phoneRef.current.classList.add('is-invalid'), phoneRef.current.classList.remove('is-valid'); countryRef.current.classList.add('is-invalid'), countryRef.current.classList.remove('is-valid') }
         else if (phone.trim() == ''){isValid = false ; setPhoneErr(`This Field Can't Be Empty`); isValid = false; phoneErr.current.classList.add('is-invalid'), phoneErr.current.classList.remove('is-valid'); countryRef.current.classList.add('is-invalid'), countryRef.current.classList.remove('is-valid')}
