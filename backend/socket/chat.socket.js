@@ -19,8 +19,10 @@ function chatSocket (io) {
             const [isAdmin] = await db.query('select * from admin where id = ?', socket.user.userId)
             if(isAdmin.length === 0) return;
 
+            if(adminList.filter(admin => admin == isAdmin[0])) return adminList;
+    
             adminList.push(isAdmin[0])
-            //prevennt duplicated admin
+            
             io.emit('adminList' , adminList)
 
         })
