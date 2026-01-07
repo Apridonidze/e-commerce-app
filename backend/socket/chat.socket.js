@@ -9,28 +9,31 @@ function chatSocket (io) {
     io.use(ValidateSocketToken)//add admin status cheecking in middleware
 
     io.on('connection', (socket) => {
+        
+
         socket.on('join' ,async() => {
             
             //generate random conv_id on join and send it to user (not admin)
             
 
             const [isAdmin] = await db.query('select * from admin where id = ?', socket.user.userId)
-
-          
+            if(isAdmin.length === 0) return;
 
             adminList.push(isAdmin[0])
+            //prevennt duplicated admin
             io.emit('adminList' , adminList)
 
         })
 
-        socket.on('sendMessage' , async(message) => {
+        socket.on('sendMessage' , (message) => {
+            //filter message
 
+
+            socket.emit('sendMessage' , message)
             
         })
 
-        socket.emit('recieveMessage', () => {
-            
-        })
+        
     })
 
 }

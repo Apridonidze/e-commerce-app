@@ -46,10 +46,17 @@ const SupportChat = () => {
 
         if(!socket) return; // add error message heree 
 
-        socket.emit('sendMessage', input) //send message
+        //generate convId via socket.emit('generateConvId') and assign it to frontend
+        
+        socket.emit('sendMessage', input) //send message 
+        
         setInput('')
-    }
 
+        socket.on('sendMessage', (message) => {
+            setMessages(prev => [...prev , message])
+        })
+
+    }
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
             <div className="support-chat-header d-flex justify-content-between">
