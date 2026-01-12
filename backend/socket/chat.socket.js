@@ -11,9 +11,18 @@ function chatSocket (io) {
     io.on('connection', (socket) => {
         
 
-        socket.on('join' ,async(user) => {
+        socket.on('join' ,async() => {
             
+            const user = socket.user
+            const [checkAdmin] = await db.query('select * from admin where id = ?' , user.userId)
+            if(checkAdmin.length === 0) return adminList;
 
+            if(adminList.some(adm => adm.userId === user.userId)) return adminList;
+            else adminList.push(user)
+            
+            
+            socket.emit('adminsOnline' , adminList)
+            
             //check if user is admin 
             //avoid duplicates
             //add on dissconnect event in frontend
@@ -33,7 +42,6 @@ function chatSocket (io) {
             const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [convId])
             
             socket.emit('recieveMessage' , prevMessages.reverse())
-
            
         })
 
