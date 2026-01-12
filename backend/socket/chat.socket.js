@@ -11,32 +11,37 @@ function chatSocket (io) {
     io.on('connection', (socket) => {
         
 
-        socket.on('join' ,async() => {
+        socket.on('join' ,async(user) => {
             
-            //generate random conv_id on join and send it to user (not admin)
-            
-
-            const [isAdmin] = await db.query('select * from admin where id = ?', socket.user.userId)
-            if(isAdmin.length === 0) return;
-
-            if(adminList.filter(admin => admin == isAdmin[0])) return adminList;
-    
-            adminList.push(isAdmin[0])
-            
-            io.emit('adminList' , adminList)
-
+            //add admin filter hjjere
         })
 
-        socket.on('sendMessage' , (message) => {
-            //filter message
+        socket.on('generateConvId', async() => {
 
+            let convId;
+            const [isConvIdCreated] = await db.query('select * from support_messages where sender_id = ?' , socket.user.userId)
+            if(isConvIdCreated.length > 0) convId = isConvIdCreated[isConvIdCreated.length - 1].conversation_id; 
+            else convId = crypto.randomBytes(6).toString('hex');
 
-            socket.emit('sendMessage' , message)
-            
+            socket.emit('generateConvId' ,convId)
+
+            console.log(convId)
+
+           
         })
 
+        socket.on('sendMessage' , async(message) => {
+
+            
+            await db.query('insert into support_messages (conversation_id , sender_id ,content) values (?,?,?)' , [message.convId, socket.user.userId, message.message])
+
+            socket.emit('sendMessage' , message.message)
+            
+        })
         
     })
+
+    
 
 }
 
