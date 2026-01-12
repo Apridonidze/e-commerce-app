@@ -21,13 +21,7 @@ const SupportChat = () => {
     useEffect(() => {
         if (!socket || !cookies) return;
 
-        socket.on("connect", () => {
-            socket.emit("join", {userCookies: cookies.token , socketId : socket.id});
-            if(!convId)socket.emit('generateConvId')
-            
-        });
-
-         socket.on('adminList' , (adminList) => {
+        socket.on('adminList' , (adminList) => {
             console.log(adminList) //add state for it to display if admins are active or not in support chat
             //checka adminlist , if it return empty array set setIsAdminOnline to false , else to true to let users know if admin is online
         })
@@ -37,6 +31,15 @@ const SupportChat = () => {
             setConvId(convId)
         })
 
+        socket.on("connect", () => {
+            socket.emit("join", {userCookies: cookies.token , socketId : socket.id});
+            
+            if(!convId)socket.emit('generateConvId')
+            
+        });
+
+         
+
         socket.on('sendMessage', (message) => {
             setMessages(prev => [...prev , message])
         })
@@ -44,7 +47,7 @@ const SupportChat = () => {
 
 
         return () => {socket.off("connect"); socket.off("adminList"); socket.off("generateConvId"); socket.off("sendMessage")};
-    }, [socket]);
+    }, [socket, convId]);
 
     
 
@@ -52,7 +55,7 @@ const SupportChat = () => {
 
         e.preventDefault()
 
-        // if(!socket || !convId) return; // add disabled input and send button for this event.
+        if(!socket || !convId) return; // add disabled input and send button for this event.
         
         socket.emit('sendMessage', ({message: input , convId : convId})) //send message 
         

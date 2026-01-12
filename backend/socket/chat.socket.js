@@ -33,7 +33,7 @@ function chatSocket (io) {
 
             console.log(message)
             
-            await db.query('insert into support_messages (conversation_id , sender_id ,content) values (?,?,?)' , [message.convId, socket.user.userId, message.message])
+            await db.query('insert into support_messages (conversation_id , sender_id ,content) values (?,?,?) LIMIT 0, 15' , [message.convId, socket.user.userId, message.message])
 
             socket.emit('sendMessage' , message.message)
 
