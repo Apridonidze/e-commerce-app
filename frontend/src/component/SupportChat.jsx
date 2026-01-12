@@ -34,7 +34,7 @@ const SupportChat = () => {
         socket.on("connect", () => {
             socket.emit("join", {userCookies: cookies.token , socketId : socket.id});
             
-            if(!convId)socket.emit('generateConvId')
+            if(convId === undefined)socket.emit('generateConvId')
             
         });
 

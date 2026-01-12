@@ -30,14 +30,12 @@ function chatSocket (io) {
         })
 
         socket.on('sendMessage' , async(message) => {
-
-            console.log(message)
             
-            await db.query('insert into support_messages (conversation_id , sender_id ,content) values (?,?,?) LIMIT 0, 15' , [message.convId, socket.user.userId, message.message])
-
-            socket.emit('sendMessage' , message.message)
-
+            await db.query('insert into support_messages (conversation_id , sender_id ,content) values (?,?,?)' , [message.convId, socket.user.userId, message.message])
             
+            const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC  LIMIT 15' , [message.convId]) //change limit nubmbers with message_index (we will recieve id from frontend after scrolling)
+
+            socket.emit('sendMessage' , prevMessages)
         })
         
     })
