@@ -13,7 +13,7 @@ function chatSocket (io) {
 
         socket.on('join' ,async(user) => {
             
-            //add admin filter hjjere
+            
         })
 
         socket.on('generateConvId', async() => {
@@ -25,9 +25,12 @@ function chatSocket (io) {
 
             socket.emit('generateConvId' ,convId)
 
+            socket.join(convId)
 
            
         })
+
+        //add admin room join event here
 
         socket.on('sendMessage' , async(message) => {
             
@@ -37,10 +40,12 @@ function chatSocket (io) {
 
             socket.emit('sendMessage' , prevMessages)
         })
+
         
     })
 
     
+
 
 }
 

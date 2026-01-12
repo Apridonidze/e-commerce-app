@@ -34,14 +34,14 @@ const SupportChat = () => {
         socket.on("connect", () => {
             socket.emit("join", {userCookies: cookies.token , socketId : socket.id});
             
-            if(convId === undefined)socket.emit('generateConvId')
+            if(!convId)socket.emit('generateConvId')
             
         });
 
          
 
         socket.on('sendMessage', (message) => {
-            setMessages(prev => [...prev , message])
+            console.log(message)
         })
 
 
