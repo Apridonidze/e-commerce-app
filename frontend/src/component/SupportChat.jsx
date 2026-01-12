@@ -31,18 +31,21 @@ const SupportChat = () => {
             setConvId(convId)
         })
 
+        socket.on('recieveMessage', (message) => {
+            setMessages(message)
+        })
+
         socket.on("connect", () => {
-            socket.emit("join", {userCookies: cookies.token , socketId : socket.id});
+            socket.emit("join");
             
             if(!convId)socket.emit('generateConvId')
+                
             
         });
 
          
 
-        socket.on('sendMessage', (message) => {
-            console.log(message)
-        })
+        
 
 
 

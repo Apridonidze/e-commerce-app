@@ -13,7 +13,10 @@ function chatSocket (io) {
 
         socket.on('join' ,async(user) => {
             
-            
+
+            //check if user is admin 
+            //avoid duplicates
+            //add on dissconnect event in frontend
         })
 
         socket.on('generateConvId', async() => {
@@ -27,8 +30,13 @@ function chatSocket (io) {
 
             socket.join(convId)
 
+            const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [convId])
+            
+            socket.emit('recieveMessage' , prevMessages.reverse())
+
            
         })
+
 
         //add admin room join event here
 
@@ -37,15 +45,14 @@ function chatSocket (io) {
             await db.query('insert into support_messages (conversation_id , sender_id ,content) values (?,?,?)' , [message.convId, socket.user.userId, message.message])
             
             const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC  LIMIT 15' , [message.convId]) //change limit nubmbers with message_index (we will recieve id from frontend after scrolling)
-
-            socket.emit('sendMessage' , prevMessages)
+            
+            socket.emit('recieveMessage' , prevMessages.reverse())
         })
 
         
+
+        
     })
-
-    
-
 
 }
 
