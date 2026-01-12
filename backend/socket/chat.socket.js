@@ -25,17 +25,18 @@ function chatSocket (io) {
 
             socket.emit('generateConvId' ,convId)
 
-            console.log(convId)
 
            
         })
 
         socket.on('sendMessage' , async(message) => {
 
+            console.log(message)
             
             await db.query('insert into support_messages (conversation_id , sender_id ,content) values (?,?,?)' , [message.convId, socket.user.userId, message.message])
 
             socket.emit('sendMessage' , message.message)
+
             
         })
         

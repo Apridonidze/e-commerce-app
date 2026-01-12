@@ -19,11 +19,11 @@ const SupportChat = () => {
 
 
     useEffect(() => {
-        if (!socket) return;
+        if (!socket || !cookies) return;
 
         socket.on("connect", () => {
             socket.emit("join", {userCookies: cookies.token , socketId : socket.id});
-            socket.emit('generateConvId')
+            if(!convId)socket.emit('generateConvId')
             
         });
 
@@ -34,7 +34,6 @@ const SupportChat = () => {
 
 
         socket.on('generateConvId', (convId) => {
-            
             setConvId(convId)
         })
 
@@ -47,13 +46,13 @@ const SupportChat = () => {
         return () => {socket.off("connect"); socket.off("adminList"); socket.off("generateConvId"); socket.off("sendMessage")};
     }, [socket]);
 
-    console.log(convId)
+    
 
     const handleMessageSend = (e) => {
 
         e.preventDefault()
 
-        if(!socket || !convId) return; // add disabled input and send button for this event.
+        // if(!socket || !convId) return; // add disabled input and send button for this event.
         
         socket.emit('sendMessage', ({message: input , convId : convId})) //send message 
         
@@ -62,6 +61,7 @@ const SupportChat = () => {
     }
 
     console.log(convId)
+    
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
             <div className="support-chat-header d-flex justify-content-between">
