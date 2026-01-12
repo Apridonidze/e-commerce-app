@@ -17,14 +17,11 @@ function chatSocket (io) {
             const [checkAdmin] = await db.query('select * from admin where id = ?' , user.userId)
             if(checkAdmin.length === 0) return adminList;
 
-            if(adminList.some(adm => adm.userId === user.userId)) return adminList;
-            else adminList.push(user)
+            if(adminList.some(adm => adm.userId === user.userId)) return;
+            adminList.push(user)
+
+            io.emit('adminsOnline' , adminList)
             
-            
-            socket.emit('adminsOnline' , adminList)
-            
-            //check if user is admin 
-            //avoid duplicates
             //add on dissconnect event in frontend
         })
 

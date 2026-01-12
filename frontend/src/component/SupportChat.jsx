@@ -17,22 +17,14 @@ const SupportChat = () => {
 
     const socket = io(BACKEND_URL, {withCredentials : true})
 
+    const [admin , setadmin] = useState()
+
 
     useEffect(() => {
         if (!socket || !cookies) return;
 
-        socket.on('adminList' , (adminList) => {
-            console.log(adminList) //add state for it to display if admins are active or not in support chat
-            //checka adminlist , if it return empty array set setIsAdminOnline to false , else to true to let users know if admin is online
-        })
-
-
         socket.on('generateConvId', (convId) => {
             setConvId(convId)
-        })
-
-        socket.on('recieveMessage', (message) => {
-            setMessages(message)
         })
 
         socket.on("connect", () => {
@@ -40,19 +32,19 @@ const SupportChat = () => {
             
             if(!convId)socket.emit('generateConvId')
                 
-            
         });
 
-         
+        socket.on('recieveMessage', (message) => {
+            setMessages(message)
+        })
 
-        
+        socket.on('adminsOnline', (adminList) => {
+            console.log(adminList)
+        })
 
-
-
-        return () => {socket.off("connect"); socket.off("adminList"); socket.off("generateConvId"); socket.off("sendMessage")};
+        return () => {socket.off('adminsOnline') , socket.off('generateConvId') , socket.off('recieveMessage') , socket.off('connect')};
     }, [socket, convId]);
 
-    
 
     const handleMessageSend = (e) => {
 
