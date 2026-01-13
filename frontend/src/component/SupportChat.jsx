@@ -12,38 +12,39 @@ const SupportChat = () => {
 
     const [input, setInput] = useState('')
     const [messages , setMessages] = useState([])
-
     const [convId, setConvId] = useState() 
 
     const socket = io(BACKEND_URL, {withCredentials : true})
 
-    const [admin , setadmin] = useState()
-
-
+ 
     useEffect(() => {
         if (!socket || !cookies) return;
 
-        socket.on('generateConvId', (convId) => {
-            setConvId(convId)
-        })
-
         socket.on("connect", () => {
-            socket.emit("join");
+
+            socket.emit('join')
             
-            if(!convId)socket.emit('generateConvId')
+            if(!convId) socket.emit('generateConvId');
+            
+            socket.on('recieveConvId', ({convId, prevMessages}) => {
+                setConvId(convId)
+                setMessages(prevMessages)
+            })
                 
         });
 
-        socket.on('recieveMessage', (message) => {
-            setMessages(message)
-        })
-
         socket.on('adminsOnline', (adminList) => {
-            console.log(adminList)
+            console.log(`this are admins : ${adminList}`)
         })
 
-        return () => {socket.off('adminsOnline') , socket.off('generateConvId') , socket.off('recieveMessage') , socket.off('connect')};
-    }, [socket, convId]);
+        if(convId){
+            socket.emit('recieveMessage',({message, convId}) => {
+                console.log(message)
+            })
+        }
+
+        return () => {socket.off('adminsOnline');socket.off('recieveMessage') ;socket.off('connect')};
+    }, [socket, cookies]);
 
 
     const handleMessageSend = (e) => {
