@@ -16,6 +16,8 @@ const server = http.createServer(app)
 const PORT = process.env.PORT || 8080
 
 
+const SupportChatSocket = require('./socket/SupportChatSocket')
+
 const LoginRouter = require('./routes/Login')
 const SignRouter = require('./routes/Sign')
 const ProductsRouter = require('./routes/Products')
@@ -25,7 +27,8 @@ const AdminRouter = require('./routes/Admin')
 const ProductsManagment = require('./routes/ProductsManagment')
 const ReportsRouter = require('./routes/Reports')
 const FeedbackRouter = require('./routes/Feedback')
-const SupportChatRouter = require('./routes/SupportChat')
+
+SupportChatSocket(server)
 
 app.use('/login', LoginRouter)
 app.use('/sign', SignRouter)
@@ -36,7 +39,6 @@ app.use('/admin', AdminRouter)
 app.use('/manage-products', ProductsManagment)
 app.use('/reports', ReportsRouter)
 app.use('/feedback', FeedbackRouter)
-app.use('/support-chat', SupportChatRouter)
 
 server.listen(PORT , () => {
     console.log(`listening to port ${PORT}`)
