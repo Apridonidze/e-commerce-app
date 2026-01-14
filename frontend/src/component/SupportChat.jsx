@@ -32,7 +32,8 @@ const SupportChat = () => {
                 socketRef.current.close();
             }
             //else store data into messages
-};
+}       ;
+
 
         return () => socketRef.current?.close();
 
@@ -42,7 +43,7 @@ const SupportChat = () => {
 
         e.preventDefault();
 
-        socketRef.current.send(JSON.stringify({sender: cookies, text : input}))
+        socketRef.current.send(JSON.stringify({text : input , convId : convId}))
         setInput('')
     }
 
