@@ -1,10 +1,9 @@
 import axios from "axios"
 import { useCookies } from "react-cookie"
-import { useEffect , useState } from "react"
+import { useEffect , useRef, useState } from "react"
 
 import { BACKEND_URL } from "../../config"
 
-import { io } from "socket.io-client"
 
 const SupportChat = () => {
 
@@ -14,8 +13,19 @@ const SupportChat = () => {
     const [messages , setMessages] = useState([])
     const [convId, setConvId] = useState(123) 
 
-    
-  
+    const socketRef = useRef(null)
+
+    useEffect(() => {
+
+        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}`)
+        
+        socketRef.current.onopen = () => {
+            alert('connected')
+        }
+
+        return () => socketRef.current?.close();
+
+    },[])
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
             <div className="support-chat-header d-flex justify-content-between">

@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 8080
 
 
 const SupportChatSocket = require('./socket/SupportChatSocket')
+SupportChatSocket(server)
 
 const LoginRouter = require('./routes/Login')
 const SignRouter = require('./routes/Sign')
@@ -28,7 +29,6 @@ const ProductsManagment = require('./routes/ProductsManagment')
 const ReportsRouter = require('./routes/Reports')
 const FeedbackRouter = require('./routes/Feedback')
 
-SupportChatSocket(server)
 
 app.use('/login', LoginRouter)
 app.use('/sign', SignRouter)
