@@ -30,7 +30,7 @@ const Saved = ( { } ) => {
                 <span className='bg-white' >{'Saved Products'|| <Skeleton />}</span> 
             </div>
             <div className="products">
-                {saved.length < 1 ? <h1>No Saved Items Found.</h1> :saved?.map((prod , prodId) => (
+                {saved?.length < 1 ? <h1>No Saved Items Found.</h1> :saved?.map((prod , prodId) => (
                     <Product prod={prod} prodId={prodId} key={prodId} />
                 ))}
             </div>
