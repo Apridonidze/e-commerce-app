@@ -23,6 +23,17 @@ const SupportChat = () => {
             console.log('connected')
         }
 
+        socketRef.current.onmessage = (event) => {
+            
+            const data = JSON.parse(event.data);
+            
+            if (data.type === "token_error") {
+                alert("Token error: " + data.message);
+                socketRef.current.close();
+            }
+            //else store data into messages
+};
+
         return () => socketRef.current?.close();
 
     },[])

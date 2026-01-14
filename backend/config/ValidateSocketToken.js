@@ -2,16 +2,21 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 
-function ValidateSocketToken (token) {
+function ValidateSocketToken (token, ws) {
     try{
 
-        if(!token) throw new Error('No Token Provided')
+        if(!token) {ws.send(JSON.stringify({type : "token_error" , message : "no token provided"})); return true}
         
         const user = jwt.verify(token, process.env.JWT_SECRET_KEY)
-        return user;
+        if(!user) {ws.send(JSON.stringify({type : "token_error" , message : "unverified token"})); return false}
+        
+        ws.user = user
+
+        return true
 
     }catch(err){
-        throw new Error('Invalid Token')
+        ws.send(JSON.stringify({type : "token_error" , message : "invalid token"}))
+        return false;
     }
 }
 

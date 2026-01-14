@@ -14,13 +14,7 @@ function SupportChatSocket (server) {
         const query = url.parse(req.url, true).query;
         const token = query.token;
 
-        if(!token) return;//return error message
-
-        console.log('Token received:', token);
-        const user = ValidateSocketToken(token)
-        console.log(user)
-        //get users cookies from connection 
-        //add middleware to validate user cookies
+        if(!ValidateSocketToken('asdasd' , ws))return ;
         
         //check users role , if its admin add them to adminlist and send to frotnedn , else return
 
