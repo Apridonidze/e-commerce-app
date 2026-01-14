@@ -20,12 +20,21 @@ const SupportChat = () => {
         socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}`)
         
         socketRef.current.onopen = () => {
-            alert('connected')
+            console.log('connected')
         }
 
         return () => socketRef.current?.close();
 
     },[])
+
+    const handleMessageSend = (e) => {
+
+        e.preventDefault();
+
+        socketRef.current.send(JSON.stringify({sender: cookies, text : input}))
+        setInput('')
+    }
+
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
             <div className="support-chat-header d-flex justify-content-between">

@@ -10,7 +10,10 @@ function SupportChatSocket (server) {
     wss.on("connection" , (ws) => {
         console.log('SupportChatSocket initialized');
 
-        //add events here
+        ws.on('message' , (data) => {
+            const message = JSON.parse(data.toString())
+            console.log(message)
+        })
 
         ws.on('close', () => {
             console.log('WebSocket client disconnected');
