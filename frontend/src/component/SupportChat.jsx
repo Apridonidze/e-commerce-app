@@ -17,7 +17,7 @@ const SupportChat = () => {
 
     useEffect(() => {
 
-        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}`)
+        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}`)
         
         socketRef.current.onopen = () => {
             console.log('connected')
