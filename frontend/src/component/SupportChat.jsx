@@ -43,7 +43,7 @@ const SupportChat = () => {
 
         e.preventDefault();
 
-        socketRef.current.send(JSON.stringify({text : input , convId : convId}))
+        socketRef.current.send(JSON.stringify({type : 'support_chat_message',text : input , convId : convId}))
         setInput('')
     }
 
