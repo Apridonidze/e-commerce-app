@@ -12,55 +12,10 @@ const SupportChat = () => {
 
     const [input, setInput] = useState('')
     const [messages , setMessages] = useState([])
-    const [convId, setConvId] = useState() 
+    const [convId, setConvId] = useState(123) 
 
-    const socket = io(BACKEND_URL, {withCredentials : true})
-
- 
-    useEffect(() => {
-        if (!socket || !cookies) return;
-
-        socket.on("connect", () => {
-
-            socket.emit('join')
-            
-            if(!convId) socket.emit('generateConvId');
-            
-            socket.on('recieveConvId', ({convId, prevMessages}) => {
-                setConvId(convId)
-                setMessages(prevMessages)
-            })
-                
-        });
-
-        socket.on('adminsOnline', (adminList) => {
-            console.log(`this are admins : ${adminList}`)
-        })
-
-        if(convId){
-            socket.emit('recieveMessage',({message, convId}) => {
-                console.log(message)
-            })
-        }
-
-        return () => {socket.off('adminsOnline');socket.off('recieveMessage') ;socket.off('connect')};
-    }, [socket, cookies]);
-
-
-    const handleMessageSend = (e) => {
-
-        e.preventDefault()
-
-        if(!socket || !convId) return; // add disabled input and send button for this event.
-        
-        socket.emit('sendMessage', ({message: input , convId : convId})) //send message 
-        
-        setInput('')
-        
-    }
-
-    console.log(convId)
     
+  
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
             <div className="support-chat-header d-flex justify-content-between">

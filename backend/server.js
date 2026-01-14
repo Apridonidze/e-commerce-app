@@ -11,13 +11,10 @@ app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 
 const http = require('http')
-const { Server } = require('socket.io')
 const server = http.createServer(app)
-const io = new Server (server, {cors: CorsOptions})
 
 const PORT = process.env.PORT || 8080
 
-require('./socket/chat.socket')(io);
 
 const LoginRouter = require('./routes/Login')
 const SignRouter = require('./routes/Sign')
