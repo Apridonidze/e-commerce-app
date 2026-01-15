@@ -36,8 +36,15 @@ const SupportChat = () => {
                 alert(data.message)
                 socketRef.current.close();
             }
-            //else store data into messages
-}       ;
+
+            if(data.type === 'message_status'){
+                alert(data.message)
+            }
+
+
+
+
+        };
 
 
         return () => socketRef.current?.close();

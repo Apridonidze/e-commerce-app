@@ -11,9 +11,7 @@ function ValidateSocketToken (token, ws) {
         if(!user) {ws.send(JSON.stringify({type : "token_error" , message : "unverified token"})); return false}
         
         ws.user = user
-
-        return true
-
+        return true;
     }catch(err){
         ws.send(JSON.stringify({type : "token_error" , message : "invalid token"}))
         return false;
