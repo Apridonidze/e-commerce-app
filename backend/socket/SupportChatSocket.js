@@ -24,45 +24,40 @@ function SupportChatSocket (server) {
 
         const validatedUser = ValidateSocketToken(token , ws)
         if(!validatedUser) return;
-        
-        const isAdmin = null;
 
         try{
-            const [ AdminList ] = await db.query('select * from admin join users on users.id = admin.id where id = ?',[ws.user.userId])
-            if(AdminList.length < 1) isAdmin = false;
-            isAdmin = true
+
+            const [ AdminList ] = await db.query('select admin.id from admin join users on admin.id = users.id where admin.id = ?',[ws.user.userId])
+            
+            if(AdminList.length > 0) {
+                if(adminList.some(adm => adm === ws.user.userId)) adminList;
+                else adminList.push(ws.user.userId)
+            };
+
+            ws.send(JSON.stringify({type: 'recieve_admin_list' , adminList : adminList}))
 
         }catch(err){
-            ws.send(JSON.stringify({type : 'internal_error' , message : err}))
+            ws.send(JSON.stringify({type: 'internal_error', message : err}))
         }
-                        
-        //check users role , if its admin add them to adminlist and send to frotnedn , else return (avoid duplicates)
-        //if user is admin do not assign convid to them
         
-        if(isAdmin == false){
-            try{
+        try{
 
-                console.log('you are admin')
-                const [ convId ] = await db.query('select support_messages.conversation_id, support_messages.sender_id from support_messages join users on support_messages.sender_id = users.id where sender_id = ? ' , [ws.user.userId])
+            const [ convId ] = await db.query('select support_messages.conversation_id, support_messages.sender_id from support_messages join users on support_messages.sender_id = users.id where sender_id = ? ' , [ws.user.userId])
+            
+            if(convId.length > 0){ws.convId = uuid(2)}; 
+            
+            ws.convId = convId[0].conversation_id
+            const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
+            
+            ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
+            ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))//add who is sender (you or other)
+            
+            if(!rooms.some(CI => CI === ws.convId)) rooms.push(ws.convId)
                 
-                if(convId.length > 0){
-                    ws.convId = uuid(2)
-                }; 
-                
-                ws.convId = convId[0].conversation_id
-                const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
-
-                ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
-                ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))//add who is sender (you or other)
-                
-                if(!rooms.some(CI => CI === ws.convId)) rooms.push(ws.convId)
-                
-            }catch(err){
-                ws.send(JSON.stringify({type: 'internal_error' , message : err}))
-            }
+        }catch(err){
+            ws.send(JSON.stringify({type: 'internal_error' , message : err}))
         }
-
-        
+            
         ws.on('message' , async(data) => {
 
             //validate message
@@ -93,9 +88,9 @@ function SupportChatSocket (server) {
             //remove convId from roooms if one of the user disconnects from rooms
 
             rooms.filter(CI => CI !== ws.convId)
+            adminList.filter(adm => adm !== ws.user.userId)
 
-            console.log(rooms)
-
+            ws.send(JSON.stringify({type: 'recieve_admin_list' , adminList : adminList}))
             //check ws , if ws user id is admin remove from list else return
             //check which user disconnected, if its admin modify adminList by removing admin id from list
         });

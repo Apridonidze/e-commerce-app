@@ -15,6 +15,11 @@ const SupportChat = () => {
 
     const socketRef = useRef(null)
 
+
+    const handleScroll = (e) => {
+        console.log(e)
+    }
+
     useEffect(() => {
 
         socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}`)
@@ -50,10 +55,24 @@ const SupportChat = () => {
                 setConvId(data.convId)
             }
 
+            if(data.type === 'recieve_admin_list'){
+                console.log(data)
+            }
+
         };
 
+        const handleScroll = () => {
+            //add scrolling event to increase indexes of messages to load prev messages
+        }
 
-        return () => socketRef.current?.close();
+        //add useref for messages div to scroll down by default when page is loaded 
+
+        window.addEventListener('scroll' , handleScroll)
+
+
+
+
+        return () => {socketRef.current?.close() ; window.removeEventListener('scroll' , handleScroll)};
 
     },[])
 
@@ -72,13 +91,13 @@ const SupportChat = () => {
     }
 
     return(
-        <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
+        <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0" >
             <div className="support-chat-header d-flex justify-content-between">
                 <h4>Support Chat</h4>
                 
             </div>
 
-            <div className="support-chat-header d-flex flex-column">
+            <div className="support-chat-header d-flex flex-column" style={{maxHeight : "300px" , overflowY : 'scroll'}}>
                 {messages?.map((m , mId) => <span key={mId}>{m.content}</span>)}
             </div>
 
