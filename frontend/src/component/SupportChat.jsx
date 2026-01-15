@@ -11,7 +11,7 @@ const SupportChat = () => {
 
     const [input, setInput] = useState('')
     const [messages , setMessages] = useState([])
-    const [convId, setConvId] = useState(123) 
+    const [convId, setConvId] = useState() 
 
     const socketRef = useRef(null)
 
@@ -34,7 +34,6 @@ const SupportChat = () => {
             }
 
             if(data.type === 'internal_error'){
-                console.log(data.message)
                 socketRef.current.close();
             }
 
@@ -43,7 +42,7 @@ const SupportChat = () => {
             }
 
             if(data.type === 'recieve_support_chat_message'){
-                
+                console.log(data)
                 setMessages(data.message.reverse())
             }
 
@@ -58,11 +57,17 @@ const SupportChat = () => {
 
     },[])
 
+
     const handleMessageSend = (e) => {
 
         e.preventDefault();
 
-        socketRef.current.send(JSON.stringify({type : 'support_chat_message',text : input , convId : convId}))
+        //filter input
+
+        if(!convId) return;
+
+        socketRef.current.send(JSON.stringify({type : 'support_chat_message', text : input , convId : convId}))
+
         setInput('')
     }
 

@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-const db= require('../config/db')
 
 function ValidateSocketToken (token, ws) {
     try{

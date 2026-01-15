@@ -22,17 +22,26 @@ function SupportChatSocket (server) {
         if(!validatedUser) return;
         
         
-        const [ convId ] = await db.query('select support_messages.conversation_id, support_messages.sender_id from support_messages join users on support_messages.sender_id = users.id where sender_id = ? ' , [ws.user.userId])
-        if(convId.length > 0){
-            ws.convId = uuid(2)
-        }; 
-        ws.convId = convId[0].conversation_id
-
-        ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
-        
         //check users role , if its admin add them to adminlist and send to frotnedn , else return (avoid duplicates)
-        //if its admin then after admin chooses your message
+        //if user is admin do not assign convid to them
+        
+        try{
 
+            const [ convId ] = await db.query('select support_messages.conversation_id, support_messages.sender_id from support_messages join users on support_messages.sender_id = users.id where sender_id = ? ' , [ws.user.userId])
+            
+            if(convId.length > 0){
+                ws.convId = uuid(2)
+            }; 
+            ws.convId = convId[0].conversation_id
+
+            ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
+
+        }catch(err){
+            ws.send(JSON.stringify({type: 'internal_error' , message : err}))
+        }
+        
+        
+        
 
         ws.on('message' , async(data) => {
 
@@ -48,7 +57,7 @@ function SupportChatSocket (server) {
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
                     ws.send(JSON.stringify({type : 'message_status' , status : true ,message : "Message Sent Successfully"}))
 
-                    const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [123])//replace 123 with convid
+                    const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
                     ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))
                     
                 }catch(err){
@@ -60,7 +69,7 @@ function SupportChatSocket (server) {
 
         ws.on('close', () => {
             console.log('WebSocket client disconnected');
-
+            //check ws , if ws user id is admin remove from list else return
             //check which user disconnected, if its admin modify adminList by removing admin id from list
         });
     })
