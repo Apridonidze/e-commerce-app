@@ -33,8 +33,11 @@ function SupportChatSocket (server) {
                 ws.convId = uuid(2)
             }; 
             ws.convId = convId[0].conversation_id
+            const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
 
             ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
+            ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))
+                    
 
         }catch(err){
             ws.send(JSON.stringify({type: 'internal_error' , message : err}))
