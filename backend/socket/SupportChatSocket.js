@@ -8,6 +8,8 @@ const { v4: uuid } = require('uuid')
 
 require('dotenv').config();
 
+const rooms = []
+const adminList = []
 
 function SupportChatSocket (server) {
     
@@ -36,15 +38,16 @@ function SupportChatSocket (server) {
             const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
 
             ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
-            ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))
-                    
+            ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))//add who is sender (you or other)
+            
+            if(!rooms.some(CI => CI === ws.convId)) rooms.push(ws.convId)
+            
 
         }catch(err){
             ws.send(JSON.stringify({type: 'internal_error' , message : err}))
         }
         
-        
-        
+        console.log(rooms)
 
         ws.on('message' , async(data) => {
 
@@ -61,7 +64,7 @@ function SupportChatSocket (server) {
                     ws.send(JSON.stringify({type : 'message_status' , status : true ,message : "Message Sent Successfully"}))
 
                     const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
-                    ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))
+                    ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))//add who is sender (you or other)
                     
                 }catch(err){
                     ws.send(JSON.stringify({type : 'internal_error' , status : false ,message : "Message Sent Failed"}))
@@ -72,6 +75,13 @@ function SupportChatSocket (server) {
 
         ws.on('close', () => {
             console.log('WebSocket client disconnected');
+
+            //remove convId from roooms if one of the user disconnects from rooms
+
+            rooms.filter(CI => CI !== ws.convId)
+
+            console.log(rooms)
+
             //check ws , if ws user id is admin remove from list else return
             //check which user disconnected, if its admin modify adminList by removing admin id from list
         });
