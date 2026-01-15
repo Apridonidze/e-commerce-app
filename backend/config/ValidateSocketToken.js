@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-
+const db= require('../config/db')
 
 function ValidateSocketToken (token, ws) {
     try{
@@ -13,7 +13,7 @@ function ValidateSocketToken (token, ws) {
         ws.user = user
         return true;
     }catch(err){
-        ws.send(JSON.stringify({type : "token_error" , message : "invalid token"}))
+        ws.send(JSON.stringify({type : "internal_error" , message : err}))
         return false;
     }
 }

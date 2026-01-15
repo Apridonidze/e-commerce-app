@@ -22,8 +22,6 @@ const SupportChat = () => {
         socketRef.current.onopen = () => {
             console.log('connected')
             
-
-            
         }
 
         socketRef.current.onmessage = (event) => {
@@ -36,7 +34,7 @@ const SupportChat = () => {
             }
 
             if(data.type === 'internal_error'){
-                alert(data.message)
+                console.log(data.message)
                 socketRef.current.close();
             }
 
@@ -46,9 +44,12 @@ const SupportChat = () => {
 
             if(data.type === 'recieve_support_chat_message'){
                 
-                setMessages(data.message)
+                setMessages(data.message.reverse())
             }
 
+            if(data.type === 'recieve_convid'){
+                setConvId(data.convId)
+            }
 
         };
 
