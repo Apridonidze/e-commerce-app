@@ -21,6 +21,9 @@ const SupportChat = () => {
         
         socketRef.current.onopen = () => {
             console.log('connected')
+            
+
+            
         }
 
         socketRef.current.onmessage = (event) => {
@@ -38,10 +41,13 @@ const SupportChat = () => {
             }
 
             if(data.type === 'message_status'){
-                alert(data.message)
+                console.log(data.message)
             }
 
-
+            if(data.type === 'recieve_support_chat_message'){
+                
+                setMessages(data.message)
+            }
 
 
         };
