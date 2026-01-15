@@ -31,6 +31,11 @@ const SupportChat = () => {
                 alert("Token error: " + data.message);
                 socketRef.current.close();
             }
+
+            if(data.type === 'internal_error'){
+                alert(data.message)
+                socketRef.current.close();
+            }
             //else store data into messages
 }       ;
 

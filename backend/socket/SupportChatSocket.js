@@ -35,11 +35,17 @@ function SupportChatSocket (server) {
 
             console.log(message)
 
-            //check if message type is support_chat_message , if so trigger this event (with else if statemeent)
-            //place queries into try/catch block
+            try{
+                if(message.type ==  'support_chat_message'){
+                    await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
+                    console.log('message sent successfully')
+                }
+            }catch(err){
+                ws.send(JSON.stringify({error : 'internal_error' , message : err}))
+            }
+
             //send error or success message with ws.send({JSON.strifingy})
-            await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
-            console.log('message sent successfully')
+            
         })
 
         ws.on('close', () => {

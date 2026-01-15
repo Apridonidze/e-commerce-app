@@ -59,11 +59,12 @@ InternalProducts.patch('/update-product-status/product_id=:id/user_id=:userId/st
         await db.query("update table cart set status = ? where id = ? and product_id = ?" , [status, clientId , prodId])
         return res.status(200).json({message : 'Users Product Updated Successfully' , data : {status : status , clientId : clientId , productId : prodId}})
 
+        //send user mail as status of users product changes 
+
     }catch(err){
         return res.status(500).json({errMessage : "Internal Error While Updating Products Status" , err : err})
     }
 })
 
-//develop faeture : to send user status changes in notifications and to emails
 
 module.exports = InternalProducts
