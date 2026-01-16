@@ -12,7 +12,9 @@ function ValidateSocketToken (token, ws) {
         ws.user = user
         return true;
     }catch(err){
+
         ws.send(JSON.stringify({type : "internal_error" , message : err}))
+        ws.close()
         return false;
     }
 }

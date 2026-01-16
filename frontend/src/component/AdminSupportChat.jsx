@@ -13,8 +13,9 @@ const AdminSupportChat = () => {
 
         socketRef.current.onopen = () => {
             console.log('connected to websocket')
+            //check for admin  access , if not permited close connection redirect user to 403 page (create reusable component for this and reuise for adminpanel)
         }
-
+        return () => {socketRef.current?.close()}
     },[])
 
     return(

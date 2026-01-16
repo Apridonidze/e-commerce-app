@@ -27,8 +27,13 @@ function SupportChatSocket (server) {
         //else it will be client so no need for this
 
         const validatedUser = ValidateSocketToken(token , ws)
-        if(!validatedUser) return;
+        if(!validatedUser) return; //close connection if user is not validated
 
+        if(gainAdminAccess){
+            const validateAdmin = null//create middleware for admin;
+    
+        }
+        
         try{
 
             const [ AdminList ] = await db.query('select admin.id from admin join users on admin.id = users.id where admin.id = ?',[ws.user.userId])
