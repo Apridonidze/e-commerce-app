@@ -39,6 +39,8 @@ function SupportChatSocket (server) {
         }catch(err){
             ws.send(JSON.stringify({type: 'internal_error', message : err}))
         }
+
+        //add anothjjer try catch block to get rooms for admin if message is sent and rooms does not contain empty message (admins must recieve this information once theyt are in admin-dashboard/admin-support-chat url)
         
         try{
 
@@ -47,7 +49,7 @@ function SupportChatSocket (server) {
             if(convId.length > 0){ws.convId = uuid(2)}; 
             
             ws.convId = convId[0].conversation_id
-            
+            // add checking here if user is joinend to room already from ws.rooms if not return error, else return messages
             const [query] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
             const prevMessages = query.map(msg => ({
                 sender_id : msg.sender_id,
@@ -62,18 +64,22 @@ function SupportChatSocket (server) {
             if(!rooms.some(CI => CI === ws.convId)) rooms.push(ws.convId)
                 
         }catch(err){
-            ws.send(JSON.stringify({type: 'internal_error' , message : err}))
+            ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Recieve Failed", errMessage : err}))
         }
             
         ws.on('message' , async(data) => {
 
-            //validate message
             const message = JSON.parse(data.toString())
+
+
+            //validate message
+
+            //check if user is joined to room , if so send message , else return error mesasge and rejoin user to room
 
             if(message.type ==  'support_chat_message'){
 
                 //validate message if now valid send error message
-                //if not validated return ws.send(JSON.stringify({type : 'internal_error' , status : false ,message : "Message Sent Failed"}))
+                //if not validated return ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"}))
                 try{
 
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
@@ -91,9 +97,14 @@ function SupportChatSocket (server) {
                     
                 }catch(err){
                     console.log(err)
-                    ws.send(JSON.stringify({type : 'internal_error' , status : false ,message : "Message Sent Failed", errMessage : err}))
+                    ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed", errMessage : err}))
                 }
               }
+
+              
+              //for admin add rooms joining by clicking one of the chats in support chat sidebar
+              //send rooms to admin sidebar with convids so every user is displayed in sidebar
+              //if new messsage appears that is not seen yet , display it as a New Message with seenders profile 
             
         })
 
@@ -106,7 +117,6 @@ function SupportChatSocket (server) {
             adminList.filter(adm => adm !== ws.user.userId)
 
             ws.send(JSON.stringify({type: 'recieve_admin_list' , adminList : adminList}))
-            //check ws , if ws user id is admin remove from list else return
             //check which user disconnected, if its admin modify adminList by removing admin id from list
         });
     })

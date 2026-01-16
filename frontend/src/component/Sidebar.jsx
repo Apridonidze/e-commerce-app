@@ -50,12 +50,20 @@ const Sidebar = () => {
                     </div> : <></>}
                 </div>
                 <div className="center-bottom col-12 h-auto">
-                    {isAdmin !== null && isAdmin ? <div className="text d-flex flex-column">
-                        <Link to='/admin-dashboard'>Admin Dashboard</Link>
-                        <Link to='/admin-dashboard#manage-products'>Manage Products</Link>
-                        <Link to='/admin-dashboard#reports'>Reports</Link>
-                        <Link to='/admin-dashboard/admin-support-chat'>Reports</Link>
-                    </div> : <></>}
+                    {isAdmin !== null && isAdmin ? 
+                        <div className="text d-flex flex-column gap-3">
+                            <div className="text-top d-flex flex-column">
+                                {/* addd lable here for admin dashboard */}
+                                <Link to='/admin-dashboard'>Admin Dashboard</Link>
+                                <Link to='/admin-dashboard#manage-products'>Manage Products</Link>
+                                <Link to='/admin-dashboard#reports'>Reports</Link>
+                            </div>
+                            <div className="text-bottom">
+                                {/* add lable here for support chat */}
+                                <Link to='/admin-dashboard/admin-support-chat'>Support Chat</Link>
+                            </div>
+                        </div> : <></>
+                    }
                 </div>
                 <div className="center-auth col-12 h-auto">
                     {!cookies.token ? <div className="text d-flex flex-column">
