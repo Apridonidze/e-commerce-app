@@ -37,6 +37,7 @@ const SupportChat = () => {
             }
 
             if(data.type === 'internal_error'){
+                console.log(data)
                 socketRef.current.close();
             }
 
@@ -58,6 +59,7 @@ const SupportChat = () => {
             }
 
         };
+
 
         return () => {socketRef.current?.close() };
 
@@ -82,6 +84,8 @@ const SupportChat = () => {
         setInput('')
     }
 
+console.log(messages)
+
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0" tabIndex={1}>
             <div className="support-chat-header d-flex justify-content-between">
@@ -90,7 +94,7 @@ const SupportChat = () => {
             </div>
 
             <div className="support-chat-header d-flex flex-column" style={{maxHeight : "300px" , overflowY : 'scroll'}} ref={messagesRef}>
-                {messages?.map((m , mId) => <span key={mId}>{m.content}</span>)}
+                {messages?.map((m , mId) => <span key={mId} className={m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'}>{m.content}</span>)}
             </div>
 
             <div className="support-chat-header">

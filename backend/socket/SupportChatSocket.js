@@ -47,8 +47,15 @@ function SupportChatSocket (server) {
             if(convId.length > 0){ws.convId = uuid(2)}; 
             
             ws.convId = convId[0].conversation_id
-            const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
             
+            const [query] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
+            const prevMessages = query.map(msg => ({
+                sender_id : msg.sender_id,
+                sender_name : msg.sender_id === ws.user.userId ? 'You' : 'Support',
+                content : msg.content,
+                created_at : msg.created_at,
+            }))
+
             ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
             ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))//add who is sender (you or other)
             
@@ -72,13 +79,21 @@ function SupportChatSocket (server) {
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
                     ws.send(JSON.stringify({type : 'message_status' , status : true ,message : "Message Sent Successfully"}))
 
-                    const [prevMessages] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
-                    ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))//add who is sender (you or other)
+                    const [query] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
+                    const prevMessages = query.map(msg => ({
+                        sender_id : msg.sender_id,
+                        sender_name : msg.sender_id === ws.user.userId ? 'You' : 'Support',
+                        content : msg.content,
+                        created_at : msg.created_at,
+                    }))
+
+                    ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))
                     
                 }catch(err){
-                    ws.send(JSON.stringify({type : 'internal_error' , status : false ,message : "Message Sent Failed"}))
+                    console.log(err)
+                    ws.send(JSON.stringify({type : 'internal_error' , status : false ,message : "Message Sent Failed", errMessage : err}))
                 }
-            }
+              }
             
         })
 
