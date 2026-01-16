@@ -21,6 +21,10 @@ function SupportChatSocket (server) {
 
         const query = url.parse(req.url, true).query;
         const token = query.token;
+        const gainAdminAccess = query.gainAdminAccess
+
+        //validate admin is gainAdminAccess is true
+        //else it will be client so no need for this
 
         const validatedUser = ValidateSocketToken(token , ws)
         if(!validatedUser) return;
@@ -46,7 +50,7 @@ function SupportChatSocket (server) {
 
             const [ convId ] = await db.query('select support_messages.conversation_id, support_messages.sender_id from support_messages join users on support_messages.sender_id = users.id where sender_id = ? ' , [ws.user.userId])
             
-            if(convId.length > 0){ws.convId = uuid(2)}; 
+            if(convId.length === 0){ws.convId = uuid(2)}; 
             
             ws.convId = convId[0].conversation_id
             // add checking here if user is joinend to room already from ws.rooms if not return error, else return messages

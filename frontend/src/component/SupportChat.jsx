@@ -84,13 +84,11 @@ const SupportChat = () => {
         setInput('')
     }
 
-console.log(messages)
-
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0" tabIndex={1}>
             <div className="support-chat-header d-flex justify-content-between">
                 <h4>Support Chat</h4>
-                
+                {/* add if admins are active here */}
             </div>
 
             <div className="support-chat-header d-flex flex-column" style={{maxHeight : "300px" , overflowY : 'scroll'}} ref={messagesRef}>
