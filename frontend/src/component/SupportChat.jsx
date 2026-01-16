@@ -1,6 +1,5 @@
-import axios from "axios"
 import { useCookies } from "react-cookie"
-import { useEffect , useRef, useState } from "react"
+import { useLayoutEffect, useEffect , useRef, useState } from "react"
 
 import { BACKEND_URL } from "../../config"
 
@@ -15,10 +14,9 @@ const SupportChat = () => {
 
     const socketRef = useRef(null)
 
+    const messagesRef = useRef(null)
 
-    const handleScroll = (e) => {
-        console.log(e)
-    }
+    
 
     useEffect(() => {
 
@@ -61,20 +59,14 @@ const SupportChat = () => {
 
         };
 
-        const handleScroll = () => {
-            //add scrolling event to increase indexes of messages to load prev messages
-        }
-
-        //add useref for messages div to scroll down by default when page is loaded 
-
-        window.addEventListener('scroll' , handleScroll)
-
-
-
-
-        return () => {socketRef.current?.close() ; window.removeEventListener('scroll' , handleScroll)};
+        return () => {socketRef.current?.close() };
 
     },[])
+
+
+    useLayoutEffect(() => {
+        if (messagesRef.current) {messagesRef.current.scrollTop = messagesRef.current.scrollHeight;};
+    }, [messages]);
 
 
     const handleMessageSend = (e) => {
@@ -91,13 +83,13 @@ const SupportChat = () => {
     }
 
     return(
-        <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0" >
+        <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0" tabIndex={1}>
             <div className="support-chat-header d-flex justify-content-between">
                 <h4>Support Chat</h4>
                 
             </div>
 
-            <div className="support-chat-header d-flex flex-column" style={{maxHeight : "300px" , overflowY : 'scroll'}}>
+            <div className="support-chat-header d-flex flex-column" style={{maxHeight : "300px" , overflowY : 'scroll'}} ref={messagesRef}>
                 {messages?.map((m , mId) => <span key={mId}>{m.content}</span>)}
             </div>
 
