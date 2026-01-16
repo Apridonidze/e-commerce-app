@@ -62,7 +62,7 @@ const Main = () => {
                     <button className="btn btn-warning" onClick={() => setOffset(prev => prev + 15)}>Load More...</button>
                 </div>
                 
-                {/* {!cookies ? <></> : toggleChat ? <SupportChat /> : <></>} uncomment this line after testing/development is done */}
+                {/* {!cookies ? <></> : toggleChat ? <SupportChat /> : <></>} uncomment this line after testing/development is done, if the toggleChat is false then return component that just says support chat to untoggle component */}
                 {!cookies ? <></> : !toggleChat ? <SupportChat /> : <></> }
             </div>
         </div>

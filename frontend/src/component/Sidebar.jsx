@@ -54,6 +54,7 @@ const Sidebar = () => {
                         <Link to='/admin-dashboard'>Admin Dashboard</Link>
                         <Link to='/admin-dashboard#manage-products'>Manage Products</Link>
                         <Link to='/admin-dashboard#reports'>Reports</Link>
+                        <Link to='/admin-dashboard/admin-support-chat'>Reports</Link>
                     </div> : <></>}
                 </div>
                 <div className="center-auth col-12 h-auto">
