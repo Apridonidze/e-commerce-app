@@ -36,6 +36,7 @@ function SupportChatSocket (server) {
             try{
 
                 //load rooms 
+                //create middleware for it
 
             }catch(err){
                 console.log(err)
@@ -86,15 +87,12 @@ function SupportChatSocket (server) {
                 //validate message if now valid send error message
                 //if not validated return ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"}))
                 try{
-                    
-                    
 
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
                     ws.send(JSON.stringify({type : 'message_status' , status : true ,message : "Message Sent Successfully"}))
 
                     if(!rooms.some(CI => CI === ws.convId)) rooms.push(ws.convId)
 
-                    
                     const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
                     if(!loadMessages) return;
                     
@@ -103,6 +101,7 @@ function SupportChatSocket (server) {
                     console.log(rooms)
 //check for rooms sizes , if > 0 then check admins support queues of support chats and give convid to admin that has least convids, (if all same give it to the first admin) then send this convid to admins that will be delivered to support chat sidebra (of admin support chat)
                 }catch(err){
+                    //close connection
                     console.log(err) //remove in future
                     ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed", errMessage : err}))
                 }
@@ -112,13 +111,10 @@ function SupportChatSocket (server) {
         ws.on('close', () => {
             console.log('WebSocket client disconnected');
 
-            //remove convId from roooms if one of the user disconnects from rooms
-
             rooms.filter(CI => CI !== ws.convId)
             adminList.filter(adm => adm !== ws.user.userId)
 
             ws.send(JSON.stringify({type: 'recieve_admin_list' , adminList : adminList}))
-            //check which user disconnected, if its admin modify adminList by removing admin id from list
         });
     })
 }
