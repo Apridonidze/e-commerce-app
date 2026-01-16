@@ -31,6 +31,15 @@ function SupportChatSocket (server) {
             const validateAdmin = ValidateSocketAdmin(ws.user , ws)
             if(!validateAdmin)return;
             
+
+            try{
+
+
+
+            }catch(err){
+                console.log(err)
+            }
+
         }
         
         try{
@@ -47,6 +56,7 @@ function SupportChatSocket (server) {
         }catch(err){
             ws.send(JSON.stringify({type: 'internal_error', message : err}))
         }
+
 
         //add anothjjer try catch block to get rooms for admin if message is sent and rooms does not contain empty message (admins must recieve this information once theyt are in admin-dashboard/admin-support-chat url)
         
@@ -68,8 +78,6 @@ function SupportChatSocket (server) {
 
             ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
             ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))//add who is sender (you or other)
-            
-            if(!rooms.some(CI => CI === ws.convId)) rooms.push(ws.convId)
                 
         }catch(err){
             ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Recieve Failed", errMessage : err}))
@@ -80,15 +88,13 @@ function SupportChatSocket (server) {
             const message = JSON.parse(data.toString())
 
 
-            //validate message
-
-            //check if user is joined to room , if so send message , else return error mesasge and rejoin user to room
-
             if(message.type ==  'support_chat_message'){
 
                 //validate message if now valid send error message
                 //if not validated return ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"}))
                 try{
+                    
+                    if(!rooms.some(CI => CI === ws.convId)) rooms.push(ws.convId)
 
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
                     ws.send(JSON.stringify({type : 'message_status' , status : true ,message : "Message Sent Successfully"}))
@@ -128,7 +134,6 @@ function SupportChatSocket (server) {
             //check which user disconnected, if its admin modify adminList by removing admin id from list
         });
     })
-
 }
 
 module.exports = SupportChatSocket
