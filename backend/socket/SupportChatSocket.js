@@ -1,7 +1,7 @@
 const url  = require('url');
 const { WebSocketServer } = require('ws');
 
-const ValidateSocketToken = require('../config/ValidateSocketToken');
+const ValidateSocketToken = require('../socket.config/ValidateSocketToken');
 const db = require('../config/db')
 
 const { v4: uuid } = require('uuid')
@@ -23,15 +23,13 @@ function SupportChatSocket (server) {
         const token = query.token;
         const gainAdminAccess = query.gainAdminAccess
 
-        //validate admin is gainAdminAccess is true
-        //else it will be client so no need for this
 
         const validatedUser = ValidateSocketToken(token , ws)
         if(!validatedUser) return; //close connection if user is not validated
 
         if(gainAdminAccess){
             const validateAdmin = null//create middleware for admin;
-    
+            if(!validateAdmin) return;
         }
         
         try{
