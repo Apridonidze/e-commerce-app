@@ -9,7 +9,7 @@ const AdminSupportChat = () => {
     const socketRef = useRef(null);
 
     useEffect(() => {
-        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}?gainAdminAccess=${true}`)
+        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}&gainAdminAccess=${true}`)
 
         socketRef.current.onopen = () => {
             console.log('connected to websocket')
