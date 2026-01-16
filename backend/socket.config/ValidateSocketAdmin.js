@@ -1,6 +1,6 @@
 const db = require('../config/db')
 
-async function ValidateSocketAdmin (user, ws) {
+async function ValidateSocketAdmin (user, ws, adminList) {
     try{
 
         const [isAdmin] = await db.query('select * from admin where id = ?',[user.userId])  

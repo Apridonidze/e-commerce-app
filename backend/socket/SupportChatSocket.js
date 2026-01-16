@@ -7,6 +7,7 @@ const db = require('../config/db')
 
 const { v4: uuid } = require('uuid');
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
+const handleAdminRooms = require('../socket.config/handleAdminRooms');
 
 require('dotenv').config();
 
@@ -29,18 +30,11 @@ function SupportChatSocket (server) {
         if(!validatedUser) return;
 
         if(gainAdminAccess){
-            const validateAdmin = ValidateSocketAdmin(ws.user , ws)
+            const validateAdmin = ValidateSocketAdmin(ws.user , ws , adminList)
             
             if(!validateAdmin)return;
             
-            try{
-
-                //load rooms 
-                //create middleware for it
-
-            }catch(err){
-                console.log(err)
-            }
+            //load rooms for admin
 
         }
         
@@ -99,7 +93,8 @@ function SupportChatSocket (server) {
                     ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : loadMessages}))
 
                     console.log(rooms)
-//check for rooms sizes , if > 0 then check admins support queues of support chats and give convid to admin that has least convids, (if all same give it to the first admin) then send this convid to admins that will be delivered to support chat sidebra (of admin support chat)
+
+                    const assingToAdmin = handleAdminRooms(ws.user , ws)
                 }catch(err){
                     //close connection
                     console.log(err) //remove in future
