@@ -5,7 +5,8 @@ const ValidateSocketToken = require('../socket.config/ValidateSocketToken');
 const ValidateSocketAdmin = require('../socket.config/ValidateSocketAdmin')
 const db = require('../config/db')
 
-const { v4: uuid } = require('uuid')
+const { v4: uuid } = require('uuid');
+const handleMessageLoad = require('../socket.config/handleMessageLoad');
 
 require('dotenv').config();
 
@@ -29,12 +30,12 @@ function SupportChatSocket (server) {
 
         if(gainAdminAccess){
             const validateAdmin = ValidateSocketAdmin(ws.user , ws)
+            
             if(!validateAdmin)return;
             
-
             try{
 
-
+                //load rooms 
 
             }catch(err){
                 console.log(err)
@@ -58,8 +59,6 @@ function SupportChatSocket (server) {
         }
 
 
-        //add anothjjer try catch block to get rooms for admin if message is sent and rooms does not contain empty message (admins must recieve this information once theyt are in admin-dashboard/admin-support-chat url)
-        
         try{
 
             const [ convId ] = await db.query('select support_messages.conversation_id, support_messages.sender_id from support_messages join users on support_messages.sender_id = users.id where sender_id = ? ' , [ws.user.userId])
@@ -68,16 +67,10 @@ function SupportChatSocket (server) {
             
             ws.convId = convId[0].conversation_id
             // add checking here if user is joinend to room already from ws.rooms if not return error, else return messages
-            const [query] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
-            const prevMessages = query.map(msg => ({
-                sender_id : msg.sender_id,
-                sender_name : msg.sender_id === ws.user.userId ? 'You' : 'Support',
-                content : msg.content,
-                created_at : msg.created_at,
-            }))
-
+            const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
+            if(!loadMessages) return;
+                    
             ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
-            ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))//add who is sender (you or other)
                 
         }catch(err){
             ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Recieve Failed", errMessage : err}))
@@ -94,32 +87,26 @@ function SupportChatSocket (server) {
                 //if not validated return ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"}))
                 try{
                     
-                    if(!rooms.some(CI => CI === ws.convId)) rooms.push(ws.convId)
+                    
 
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
                     ws.send(JSON.stringify({type : 'message_status' , status : true ,message : "Message Sent Successfully"}))
 
-                    const [query] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC LIMIT 15' , [ws.convId])
-                    const prevMessages = query.map(msg => ({
-                        sender_id : msg.sender_id,
-                        sender_name : msg.sender_id === ws.user.userId ? 'You' : 'Support',
-                        content : msg.content,
-                        created_at : msg.created_at,
-                    }))
+                    if(!rooms.some(CI => CI === ws.convId)) rooms.push(ws.convId)
 
-                    ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : prevMessages}))
                     
+                    const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
+                    if(!loadMessages) return;
+                    
+                    ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : loadMessages}))
+
+                    console.log(rooms)
+//check for rooms sizes , if > 0 then check admins support queues of support chats and give convid to admin that has least convids, (if all same give it to the first admin) then send this convid to admins that will be delivered to support chat sidebra (of admin support chat)
                 }catch(err){
-                    console.log(err)
+                    console.log(err) //remove in future
                     ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed", errMessage : err}))
                 }
               }
-
-              
-              //for admin add rooms joining by clicking one of the chats in support chat sidebar
-              //send rooms to admin sidebar with convids so every user is displayed in sidebar
-              //if new messsage appears that is not seen yet , display it as a New Message with seenders profile 
-            
         })
 
         ws.on('close', () => {

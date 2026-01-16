@@ -60,7 +60,6 @@ const SupportChat = () => {
 
         };
 
-
         return () => {socketRef.current?.close() };
 
     },[])
