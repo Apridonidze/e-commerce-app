@@ -31,24 +31,12 @@ function SupportChatSocket (server) {
         if(!validatedUser) return;
 
         if(gainAdminAccess){
-            const validateAdmin = ValidateSocketAdmin(ws.user , ws , adminList)
             
+            const validateAdmin = ValidateSocketAdmin(ws.user , ws , adminList)
             if(!validateAdmin)return;
             
-            try{
-
-                const myRooms = await db.query('select admin_rooms from admin where id = ?',[ws.user.userId])
-                if(myRooms.length < 1) ws.send(JSON.stringify({type: 'recieve_conv_ids' , convIds : []}))
-                
-                const roomsQuery = await myRooms.map((rooms) => {
-                    handleConvLoad(ws.user , rooms, ws)
-                })
-                
-
-            }catch(err){
-                // ws.close()
-                ws.send(JSON.stringify({type: 'internal_error' , message : err})) //change err with hard coded error message
-            }
+            const loadConvIds = handleConvLoad(ws.user, ws)
+            if(!loadConvIds) return;
         }
         
         try{
