@@ -8,6 +8,7 @@ const db = require('../config/db')
 const { v4: uuid } = require('uuid');
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
 const handleAdminRooms = require('../socket.config/handleAdminRooms');
+const handleConvLoad = require('../socket.config/handleConvLoad');
 
 require('dotenv').config();
 
@@ -34,8 +35,20 @@ function SupportChatSocket (server) {
             
             if(!validateAdmin)return;
             
-            //load rooms for admin
+            try{
 
+                const myRooms = await db.query('select admin_rooms from admin where id = ?',[ws.user.userId])
+                if(myRooms.length < 1) ws.send(JSON.stringify({type: 'recieve_conv_ids' , convIds : []}))
+                
+                const roomsQuery = await myRooms.map((rooms) => {
+                    handleConvLoad(ws.user , rooms, ws)
+                })
+                
+
+            }catch(err){
+                // ws.close()
+                ws.send(JSON.stringify({type: 'internal_error' , message : err})) //change err with hard coded error message
+            }
         }
         
         try{

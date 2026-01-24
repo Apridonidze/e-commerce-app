@@ -18,6 +18,15 @@ const AdminSupportChat = () => {
 
             //give admins possiblity to remove convid and room after they are done helping client with websocket
         }
+
+        socketRef.current.onmessage = (event) => {
+            const response = JSON.parse(event.data)
+
+            if(response.type === 'recieve_conv_ids'){
+                console.log(response)
+            }
+        }
+
         return () => {socketRef.current?.close()}
     },[])
 
