@@ -41,10 +41,14 @@ const AdminSupportChatSidebar = ({ setTargetConvId, targetConvId }) => {
         return () => {socketRef.current?.close()}
     },[])
 
-    console.log('rooms' , rooms)
     return(
-        <div className="admin-support-chat-sidebar">
-            
+        <div className="admin-support-chat-sidebar border" style={{minHeight: '100vh'}}>
+            {rooms.length === 0 ? 'no messages yet' : rooms?.map((room,roomId) => (
+                <div className="message d-flex gap-3 border w-100 align-items-center" key={roomId}>
+                    <span className="border fs-2 text-secondary rounded-5 text-center" style={{width: "55px", height: '55px'}}><i class="fa-solid fa-user"></i></span>
+                    <span>{room.fullname} <br /> {room.content} <br />{room.created_at}</span>
+                </div>
+            ))}
         </div>
     )
 }
