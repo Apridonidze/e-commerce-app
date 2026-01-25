@@ -40,15 +40,23 @@ const AdminSupportChatSidebar = ({ setTargetConvId, targetConvId }) => {
     
         return () => {socketRef.current?.close()}
     },[])
-
+    
     return(
         <div className="admin-support-chat-sidebar border" style={{minHeight: '100vh'}}>
-            {rooms.length === 0 ? 'no messages yet' : rooms?.map((room,roomId) => (
-                <div className="message d-flex gap-3 border w-100 align-items-center" key={roomId}>
-                    <span className="border fs-2 text-secondary rounded-5 text-center" style={{width: "55px", height: '55px'}}><i class="fa-solid fa-user"></i></span>
-                    <span>{room.fullname} <br /> {room.content} <br />{room.created_at}</span>
-                </div>
-            ))}
+
+            <div className="row">
+                <span className="d-flex align-items-top gap-3"><i class="fa-solid fa-arrow-left"></i>
+                <h4>Support Chat</h4></span>
+            </div>
+
+            <div className="row w-100">
+                {rooms.length === 0 ? 'no messages yet' : rooms?.map((room,roomId) => (
+                    <div className="message d-flex gap-3 border align-items-center justify-content-start" style={{cursor : 'pointer'}} key={roomId} onClick={() => setTargetConvId(room.conversation_id)}>
+                        <span className="border fs-2 text-secondary rounded-5 text-center m-auto" style={{width: "75px", height: '55px'}}><i class="fa-solid fa-user"></i></span>
+                        <span>{room.fullname} <br /> {room.content} <br />{room.created_at} </span>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

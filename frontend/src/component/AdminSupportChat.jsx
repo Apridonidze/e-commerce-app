@@ -43,7 +43,7 @@ const AdminSupportChat = () => {
     return(
         <div className="admin-support-chat-container d-flex">
             <AdminSupportChatSidebar setTargetConvId={setTargetConvId} targetConvId={targetConvId}/>
-            Admin Support Chat
+            
         </div>
     )
 }
