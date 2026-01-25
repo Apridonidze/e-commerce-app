@@ -2,12 +2,18 @@ import { useEffect, useRef } from 'react';
 import { BACKEND_URL } from '../../config';
 import { useCookies } from 'react-cookie';
 
+import AdminSupportChatSidebar from './AdminSupportChatSidebar'
+import { useState } from 'react';
+
+
 
 const AdminSupportChat = () => {
 
     const [ cookies ] = useCookies(['token'])
     const socketRef = useRef(null);
 
+    const [targetConvId, setTargetConvId] = useState(null)
+    
     useEffect(() => {
         socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}&gainAdminAccess=${true}`)
 
@@ -36,6 +42,7 @@ const AdminSupportChat = () => {
 
     return(
         <div className="admin-support-chat-container">
+            <AdminSupportChatSidebar />
             Admin Support Chat
         </div>
     )

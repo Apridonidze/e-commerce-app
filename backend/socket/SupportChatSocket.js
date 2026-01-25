@@ -62,7 +62,7 @@ function SupportChatSocket (server) {
             if(convId.length === 0){ws.convId = uuid(2)}; 
             
             ws.convId = convId[0].conversation_id
-            // add checking here if user is joinend to room already from ws.rooms if not return error, else return messages
+            
             const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
             if(!loadMessages) return;
                     
