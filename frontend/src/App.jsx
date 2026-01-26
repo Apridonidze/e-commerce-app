@@ -7,7 +7,7 @@ import Login from './container/Login'
 import Sign from './container/Sign'
 import Dashboard from './container/Dashboard'
 import AdminDashboard from './container/AdminDashboard'
-import AdminSupportChatContainer from './component/AdminSupportChatContainer'
+import AdminSupportChatContainer from './container/AdminSupportChatContainer'
 
 
 const App = () => {

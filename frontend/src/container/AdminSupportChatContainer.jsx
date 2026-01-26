@@ -2,8 +2,9 @@ import { useEffect, useRef } from 'react';
 import { BACKEND_URL } from '../../config';
 import { useCookies } from 'react-cookie';
 
-import AdminSupportChatSidebar from './AdminSupportChatSidebar'
+import AdminSupportChatSidebar from '../component/AdminSupportChatSidebar'
 import { useState } from 'react';
+import AdminSupportChat from '../component/AdminSupportChat';
 
 
 
@@ -38,8 +39,8 @@ const AdminSupportChatContainer = () => {
 
     return(
         <div className="admin-support-chat-container d-flex">
-            <AdminSupportChatSidebar setTargetConvId={setTargetConvId} targetConvId={targetConvId}/>
-            test
+            <AdminSupportChatSidebar setTargetConvId={setTargetConvId} />
+            <AdminSupportChat targetConvId={targetConvId}/>
         </div>
     )
 }
