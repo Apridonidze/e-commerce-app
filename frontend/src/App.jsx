@@ -7,7 +7,7 @@ import Login from './container/Login'
 import Sign from './container/Sign'
 import Dashboard from './container/Dashboard'
 import AdminDashboard from './container/AdminDashboard'
-import AdminSupportChat from './component/AdminSupportChat'
+import AdminSupportChatContainer from './component/AdminSupportChatContainer'
 
 
 const App = () => {
@@ -18,7 +18,7 @@ const App = () => {
     {path : '/reports' , element : <></>},
     {path : '/dashboard' , element : <Dashboard />},
     {path : '/admin-dashboard' , element : <AdminDashboard/>},
-    {path : '/admin-dashboard/admin-support-chat' , element  :<AdminSupportChat />},
+    {path : '/admin-dashboard/admin-support-chat' , element  :<AdminSupportChatContainer />},
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
     {path : '*' , element : <Landing />}, /**add error page */

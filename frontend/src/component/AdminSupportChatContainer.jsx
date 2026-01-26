@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 
 
-const AdminSupportChat = () => {
+const AdminSupportChatContainer = () => {
 
     const [ cookies ] = useCookies(['token'])
     const socketRef = useRef(null);
@@ -27,10 +27,6 @@ const AdminSupportChat = () => {
         socketRef.current.onmessage = (event) => {
             const response = JSON.parse(event.data)
 
-            if(response.type === 'recieve_conv_ids'){
-                console.log(response)
-            }
-
             if(response.type === 'admin_access'){
                 console.log(response)
             }
@@ -43,9 +39,9 @@ const AdminSupportChat = () => {
     return(
         <div className="admin-support-chat-container d-flex">
             <AdminSupportChatSidebar setTargetConvId={setTargetConvId} targetConvId={targetConvId}/>
-            
+            test
         </div>
     )
 }
 
-export default AdminSupportChat;
+export default AdminSupportChatContainer;

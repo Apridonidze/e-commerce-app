@@ -16,7 +16,6 @@ import CreateProduct from "../component/CreateProduct"
 
 import Pendings from "../component/Pendings"
 import Products from "../component/Products"
-import AdminSupportChat from "../component/AdminSupportChat"
 
 const AdminDashboard = () => {
 
@@ -90,7 +89,6 @@ const AdminDashboard = () => {
                             <Pendings pendings={pendings}/>
                             <OnWayProducts onway={onway}/>
                             <DeliveredProducts delivered={delivered}/>
-                            <AdminSupportChat />
                             
                         </section>
 
