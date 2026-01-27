@@ -54,7 +54,6 @@ function SupportChatSocket (server) {
             ws.send(JSON.stringify({type: 'internal_error', message : err}))
         }
 
-
         try{
 
             const [ convId ] = await db.query('select support_messages.conversation_id, support_messages.sender_id from support_messages join users on support_messages.sender_id = users.id where sender_id = ? order by support_messages.message_id limit 1' , [ws.user.userId])
