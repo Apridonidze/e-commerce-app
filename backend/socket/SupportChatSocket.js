@@ -73,7 +73,7 @@ function SupportChatSocket (server) {
             if(message.type ==  'support_chat_message'){
 
                 //validate message if now valid send error message
-                
+
                 try{
 
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
@@ -85,8 +85,10 @@ function SupportChatSocket (server) {
                     const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
                     if(!loadMessages) return;
                     
-                    const loadRooms = handleRooms(ws.user , ws )
-                    if(!loadRooms) return;
+                    if(ws.adminUser){
+                        const loadRooms = handleRooms(ws.user , ws )
+                        if(!loadRooms) return;
+                    }return
 
 
                 }catch(err){
