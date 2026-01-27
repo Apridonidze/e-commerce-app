@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 import AdminSupportChatSidebar from '../component/AdminSupportChatSidebar'
 import { useState } from 'react';
 import AdminSupportChat from '../component/AdminSupportChat';
+import SupportChat from '../component/SupportChat';
 
 
 
@@ -40,7 +41,7 @@ const AdminSupportChatContainer = () => {
     return(
         <div className="admin-support-chat-container d-flex">
             <AdminSupportChatSidebar setTargetConvId={setTargetConvId} />
-            <AdminSupportChat targetConvId={targetConvId}/>
+            <SupportChat />
         </div>
     )
 }

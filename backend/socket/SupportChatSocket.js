@@ -5,7 +5,7 @@ const ValidateSocketToken = require('../socket.config/ValidateSocketToken');
 const ValidateSocketAdmin = require('../socket.config/ValidateSocketAdmin')
 const db = require('../config/db')
 
-const { v4: uuid } = require('uuid');
+const { v4: uuid } = require("uuid");
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
 const handleAdminRooms = require('../socket.config/handleAdminRooms');
 const handleConvLoad = require('../socket.config/handleConvLoad');
@@ -57,18 +57,18 @@ function SupportChatSocket (server) {
 
         try{
 
-            const [ convId ] = await db.query('select support_messages.conversation_id, support_messages.sender_id from support_messages join users on support_messages.sender_id = users.id where sender_id = ? ' , [ws.user.userId])
+            const [ convId ] = await db.query('select support_messages.conversation_id, support_messages.sender_id from support_messages join users on support_messages.sender_id = users.id where sender_id = ? order by support_messages.message_id limit 1' , [ws.user.userId])
             
-            if(convId.length === 0){ws.convId = uuid(2)}; 
-            
-            ws.convId = convId[0].conversation_id
-            
-            const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
-            if(!loadMessages) return;
+
+            convId.length === 0 ? ws.convId = uuid().slice(0,8) : ws.convId = convId[0].conversation_id 
                     
             ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
-                
+
+            const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
+            if(!loadMessages) return;
+            
         }catch(err){
+            console.log(err)
             ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Recieve Failed", errMessage : err}))
         }
             
@@ -93,13 +93,13 @@ function SupportChatSocket (server) {
                     
                     ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : loadMessages}))
 
-                    console.log(rooms)
+                    console.log('message recieved')
 
-                    const assingToAdmin = handleAdminRooms(ws.user , ws)
+                    // const assingToAdmin = handleAdminRooms(ws.user , ws)
                 }catch(err){
                     //close connection
                     console.log(err) //remove in future
-                    ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed", errMessage : err}))
+                    ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"}))
                 }
               }
         })

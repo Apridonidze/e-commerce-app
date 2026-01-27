@@ -52,6 +52,7 @@ const SupportChat = () => {
 
             if(data.type === 'recieve_convid'){
                 setConvId(data.convId)
+                console.log(data)
             }
 
             if(data.type === 'recieve_admin_list'){
@@ -74,9 +75,7 @@ const SupportChat = () => {
 
         e.preventDefault();
 
-        //filter input
-
-        if(!convId) return;
+        if(input.trim() === '') return;
 
         socketRef.current.send(JSON.stringify({type : 'support_chat_message', text : input , convId : convId}))
 
