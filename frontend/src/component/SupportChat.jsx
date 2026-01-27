@@ -45,7 +45,7 @@ const SupportChat = () => {
                 console.log(data.message)
             }
 
-            if(data.type === 'recieve_support_chat_message'){
+            if(data.type === 'receive_support_chat_message'){
                 console.log(data)
                 setMessages(data.message.reverse())
             }

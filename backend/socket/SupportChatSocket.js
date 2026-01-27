@@ -9,10 +9,10 @@ const { v4: uuid } = require("uuid");
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
 const handleRooms = require('../socket.config/handleRooms');
 const handleConvLoad = require('../socket.config/handleConvLoad');
+const rooms = require('../socket.config/rooms')
 
 require('dotenv').config();
 
-const rooms = new Map();
 const adminList = []
 
 function SupportChatSocket (server) {
@@ -64,11 +64,10 @@ function SupportChatSocket (server) {
             if (!rooms.has(ws.convId)) {rooms.set(ws.convId, new Set());}
             rooms.get(ws.convId).add(ws);
 
-
             ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
 
-            // const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
-            // if(!loadMessages) return;
+            const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
+            if(!loadMessages) return;
             
         }catch(err){
             console.log(err)

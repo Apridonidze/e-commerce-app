@@ -1,4 +1,5 @@
 const db = require('../config/db')
+const rooms = require('../socket.config/rooms')
 
 async function handleMessageLoad (user, convId , ws) {
 
@@ -20,12 +21,12 @@ async function handleMessageLoad (user, convId , ws) {
 
 
 
-        // const clients = rooms.get(convId);
+        const clients = rooms.get(convId);
             
-        // if (!clients) return;
-        //     for (const client of clients) {
-        //         if (client.readyState === client.OPEN) {client.send(JSON.stringify({type: 'receive_support_chat_message', message : message}))};
-        //     }
+        if (!clients) return;
+            for (const client of clients) {
+                if (client.readyState === client.OPEN) {client.send(JSON.stringify({type: 'receive_support_chat_message', message : message}))};
+            }
 
 
         return true
