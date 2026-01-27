@@ -73,7 +73,7 @@ function SupportChatSocket (server) {
             if(message.type ==  'support_chat_message'){
 
                 //validate message if now valid send error message
-                //if not validated return ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"}))
+                
                 try{
 
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
@@ -85,8 +85,6 @@ function SupportChatSocket (server) {
                     const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
                     if(!loadMessages) return;
                     
-                    
-                    
                     const loadRooms = handleRooms(ws.user , ws )
                     if(!loadRooms) return;
 
@@ -97,6 +95,9 @@ function SupportChatSocket (server) {
                     ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"}))
                 }
               }
+
+
+              //add onmessage for admin to end conversation
         })
 
         ws.on('close', () => {
