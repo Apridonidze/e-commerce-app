@@ -7,7 +7,7 @@ const db = require('../config/db')
 
 const { v4: uuid } = require("uuid");
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
-const handleAdminRooms = require('../socket.config/handleAdminRooms');
+const handleRooms = require('../socket.config/handleRooms');
 const handleConvLoad = require('../socket.config/handleConvLoad');
 
 require('dotenv').config();
@@ -64,10 +64,11 @@ function SupportChatSocket (server) {
             if (!rooms.has(ws.convId)) {rooms.set(ws.convId, new Set());}
             rooms.get(ws.convId).add(ws);
 
+
             ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
 
-            const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
-            if(!loadMessages) return;
+            // const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
+            // if(!loadMessages) return;
             
         }catch(err){
             console.log(err)
@@ -85,18 +86,15 @@ function SupportChatSocket (server) {
                 //if not validated return ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"}))
                 try{
 
-                   
+                    console.log(message)
 
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
                     ws.send(JSON.stringify({type : 'message_status' , status : true ,message : "Message Sent Successfully"}))
 
+
                     const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
                     if(!loadMessages) return;
                     
-                    ws.send(JSON.stringify({type : "recieve_support_chat_message" , message : loadMessages}))
-
-                    console.log('message recieved')
-
                     // const assingToAdmin = handleAdminRooms(ws.user , ws)
                 }catch(err){
                     //close connection
