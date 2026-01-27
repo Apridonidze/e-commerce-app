@@ -1,16 +1,24 @@
-const rooms = require('../socket.config/rooms')
 const db = require('../config/db')
 
 async function handleRooms (user , ws) {
     try{
 
+        const [roomsQuery] = await db.query('select admin.rooms from admin where id = ?',[user.userId])
+        const myRooms = roomsQuery.filter((r) => r.rooms !== null)
+        const filteredRooms = myRooms.map(r => {return JSON.parse(r.rooms)}).flat()
+
+        if(myRooms.length < 1) ws.send(JSON.stringify({type : 'recieve_conv_ids' , rooms : []}))
+        
+        const [rooms] = await db.query('SELECT users.fullname, support_messages.content, support_messages.created_at,support_messages.conversation_id  FROM support_messages join users on users.id = support_messages.sender_id  WHERE conversation_id IN (?) order by message_id desc limit 1',[filteredRooms]);
+        ws.send(JSON.stringify({type: "recieve_conv_ids" , rooms : rooms}))
+
         return true;
+
     }catch(err){
-        console.log(err)
+        ws.send(JSON.stringify({type: 'internal_error' , message : "Error While Fetching Clients Messages"}))
+        ws.close()
         return false;
-        //close connection and return error
-    } 
-//check for rooms sizes , if > 0 then check admins support queues of support chats and give convid to admin that has least convids, (if all same give it to the first admin) then send this convid to admins that will be delivered to support chat sidebra (of admin support chat)
+    }
 }
 
 

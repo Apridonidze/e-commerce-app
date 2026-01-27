@@ -83,17 +83,21 @@ function SupportChatSocket (server) {
                 //if not validated return ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"}))
                 try{
 
-                    console.log(message)
-
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
                     ws.send(JSON.stringify({type : 'message_status' , status : true ,message : "Message Sent Successfully"}))
 
 
                     const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
                     if(!loadMessages) return;
+
+                    let isAssigned = false
+                    
+                    console.log(isAssigned)
                     
                     const assingToAdmin = handleRooms(ws.user , ws )
                     if(!assingToAdmin) return;
+
+                    console.log(isAssigned)
 
                 }catch(err){
                     //close connection
