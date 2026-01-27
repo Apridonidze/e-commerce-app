@@ -11,12 +11,10 @@ const handleMessageLoad = require('../socket.config/handleMessageLoad');
 const handleRooms = require('../socket.config/handleRooms');
 const handleConvId = require('../socket.config/handleConvId');
 
-const onlineAdmins = require('../ws.store/onlineAdmins')
 const rooms = require('../ws.store/rooms');
+const onlineAdmins = require('../ws.store/onlineAdmins');
 
 require('dotenv').config();
-
-const adminList = []
 
 function SupportChatSocket (server) {
     
@@ -42,7 +40,7 @@ function SupportChatSocket (server) {
 
         if(gainAdminAccess){
             
-            const validateAdmin = ValidateSocketAdmin(ws.user , ws , adminList)
+            const validateAdmin = ValidateSocketAdmin(ws.user , ws )
             if(!validateAdmin)return;
             
             const loadRooms = handleRooms(ws.user , ws )
@@ -85,7 +83,6 @@ function SupportChatSocket (server) {
                 }
               }
 
-
               //add onmessage for admin to end conversation
         })
 
@@ -100,9 +97,13 @@ function SupportChatSocket (server) {
                 if (clients.size === 0) {rooms.delete(ws.convId);}
             }
 
-            adminList.filter(adm => adm !== ws.user.userId)
+            if (ws.adminUser?.userId) {    // <-- optional chaining
+                const admins = onlineAdmins.get(ws.adminUser.userId);
+                if (admins) admins.delete(ws.adminUser.userId);
+                console.log(admins);
+            }
+            //filter admins and send to fronend as ws.send(JSON.stringify({type: 'recieve_admin_list' , onlineAdmin: onlineAdmin}))
 
-            ws.send(JSON.stringify({type: 'recieve_admin_list' , adminList : adminList}))
         });
     })
 }
