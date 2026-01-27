@@ -6,6 +6,7 @@ const ValidateSocketAdmin = require('../socket.config/ValidateSocketAdmin')
 const db = require('../config/db')
 
 const { v4: uuid } = require("uuid");
+const asignToAdmin = require('../socket.config/asignToAdmin');
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
 const handleRooms = require('../socket.config/handleRooms');
 const rooms = require('../socket.config/rooms');
@@ -82,13 +83,16 @@ function SupportChatSocket (server) {
                     const generateConvId = handleConvId(ws.user ,ws)
                     if(!generateConvId) return
 
+                    const asignConvToAdmin = asignToAdmin(ws.convId , ws)
+                    if(!asignConvToAdmin) return;
+
                     const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
                     if(!loadMessages) return;
                     
                     if(ws.adminUser){
                         const loadRooms = handleRooms(ws.user , ws )
                         if(!loadRooms) return;
-                    }return
+                    } return;
 
 
                 }catch(err){

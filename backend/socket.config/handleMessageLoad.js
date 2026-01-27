@@ -31,6 +31,7 @@ async function handleMessageLoad (user, convId , ws) {
         return true
     }catch(err){
         console.log(err)
+        //return error message via ws
         return false
     }
 }
