@@ -8,7 +8,6 @@ const db = require('../config/db')
 const { v4: uuid } = require("uuid");
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
 const handleRooms = require('../socket.config/handleRooms');
-const handleConvLoad = require('../socket.config/handleConvLoad');
 const rooms = require('../socket.config/rooms')
 
 require('dotenv').config();
@@ -35,8 +34,8 @@ function SupportChatSocket (server) {
             const validateAdmin = ValidateSocketAdmin(ws.user , ws , adminList)
             if(!validateAdmin)return;
             
-            const loadConvIds = handleConvLoad(ws.user, ws)
-            if(!loadConvIds) return;
+            const loadRooms = handleRooms(ws.user , ws)
+            if(!loadRooms) return;
         }
         
         try{
@@ -93,7 +92,9 @@ function SupportChatSocket (server) {
                     const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
                     if(!loadMessages) return;
                     
-                    // const assingToAdmin = handleAdminRooms(ws.user , ws)
+                    const assingToAdmin = handleRooms(ws.user , ws )
+                    if(!assingToAdmin) return;
+
                 }catch(err){
                     //close connection
                     console.log(err) //remove in future
