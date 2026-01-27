@@ -8,7 +8,8 @@ const db = require('../config/db')
 const { v4: uuid } = require("uuid");
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
 const handleRooms = require('../socket.config/handleRooms');
-const rooms = require('../socket.config/rooms')
+const rooms = require('../socket.config/rooms');
+const handleConvId = require('../socket.config/handleConvId');
 
 require('dotenv').config();
 
@@ -29,15 +30,24 @@ function SupportChatSocket (server) {
         const validatedUser = ValidateSocketToken(token , ws)
         if(!validatedUser) return;
 
+        const generateConvId = handleConvId(ws.user ,ws)
+        if(!generateConvId) return
+
+        const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
+        if(!loadMessages) return;
+        
+
         if(gainAdminAccess){
             
             const validateAdmin = ValidateSocketAdmin(ws.user , ws , adminList)
             if(!validateAdmin)return;
             
-            const loadRooms = handleRooms(ws.user , ws)
+            const loadRooms = handleRooms(ws.user , ws )
             if(!loadRooms) return;
         }
         
+        
+
         try{
 
             const [ AdminList ] = await db.query('select admin.id from admin join users on admin.id = users.id where admin.id = ?',[ws.user.userId])
@@ -53,24 +63,7 @@ function SupportChatSocket (server) {
             ws.send(JSON.stringify({type: 'internal_error', message : err}))
         }
 
-        try{
-
-            const [ convId ] = await db.query('select support_messages.conversation_id, support_messages.sender_id from support_messages join users on support_messages.sender_id = users.id where sender_id = ? order by support_messages.message_id limit 1' , [ws.user.userId])
-
-            convId.length === 0 ? ws.convId = uuid().slice(0,8) : ws.convId = convId[0].conversation_id 
-
-            if (!rooms.has(ws.convId)) {rooms.set(ws.convId, new Set());}
-            rooms.get(ws.convId).add(ws);
-
-            ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
-
-            const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
-            if(!loadMessages) return;
-            
-        }catch(err){
-            console.log(err)
-            ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Recieve Failed", errMessage : err}))
-        }
+        
             
         ws.on('message' , async(data) => {
 
@@ -86,18 +79,17 @@ function SupportChatSocket (server) {
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
                     ws.send(JSON.stringify({type : 'message_status' , status : true ,message : "Message Sent Successfully"}))
 
+                    const generateConvId = handleConvId(ws.user ,ws)
+                    if(!generateConvId) return
 
                     const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
                     if(!loadMessages) return;
-
-                    let isAssigned = false
                     
-                    console.log(isAssigned)
                     
-                    const assingToAdmin = handleRooms(ws.user , ws )
-                    if(!assingToAdmin) return;
+                    
+                    const loadRooms = handleRooms(ws.user , ws )
+                    if(!loadRooms) return;
 
-                    console.log(isAssigned)
 
                 }catch(err){
                     //close connection

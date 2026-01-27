@@ -28,7 +28,6 @@ async function handleMessageLoad (user, convId , ws) {
                 if (client.readyState === client.OPEN) {client.send(JSON.stringify({type: 'receive_support_chat_message', message : message}))};
             }
 
-
         return true
     }catch(err){
         console.log(err)
