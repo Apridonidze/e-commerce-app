@@ -12,7 +12,7 @@ const handleConvLoad = require('../socket.config/handleConvLoad');
 
 require('dotenv').config();
 
-const rooms = []
+const rooms = new Map();
 const adminList = []
 
 function SupportChatSocket (server) {
@@ -58,10 +58,12 @@ function SupportChatSocket (server) {
         try{
 
             const [ convId ] = await db.query('select support_messages.conversation_id, support_messages.sender_id from support_messages join users on support_messages.sender_id = users.id where sender_id = ? order by support_messages.message_id limit 1' , [ws.user.userId])
-            
 
             convId.length === 0 ? ws.convId = uuid().slice(0,8) : ws.convId = convId[0].conversation_id 
-                    
+
+            if (!rooms.has(ws.convId)) {rooms.set(ws.convId, new Set());}
+            rooms.get(ws.convId).add(ws);
+
             ws.send(JSON.stringify({type: 'recieve_convid' , convId : ws.convId}))
 
             const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
@@ -83,10 +85,10 @@ function SupportChatSocket (server) {
                 //if not validated return ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"}))
                 try{
 
+                   
+
                     await db.query('insert into support_messages (conversation_id, sender_id , content) values (?,?,?)', [message.convId , ws.user.userId , message.text])
                     ws.send(JSON.stringify({type : 'message_status' , status : true ,message : "Message Sent Successfully"}))
-
-                    if(!rooms.some(CI => CI === ws.convId)) rooms.push(ws.convId)
 
                     const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
                     if(!loadMessages) return;
@@ -107,7 +109,14 @@ function SupportChatSocket (server) {
         ws.on('close', () => {
             console.log('WebSocket client disconnected');
 
-            rooms.filter(CI => CI !== ws.convId)
+            
+            const clients = rooms.get(ws.convId);
+
+            if (clients) {
+                clients.delete(ws);
+                if (clients.size === 0) {rooms.delete(ws.convId);}
+            }
+
             adminList.filter(adm => adm !== ws.user.userId)
 
             ws.send(JSON.stringify({type: 'recieve_admin_list' , adminList : adminList}))
