@@ -1,4 +1,5 @@
 const db = require('../config/db')
+const onlineAdmins = require('../ws.store/onlineAdmins')
 
 async function ValidateSocketAdmin (user, ws, adminList) {
     try{
@@ -7,8 +8,10 @@ async function ValidateSocketAdmin (user, ws, adminList) {
         if(isAdmin.length === 0) {ws.send(JSON.stringify({type : "admin_access" , status : 403 , admin_access : false})) ; ws.adminUser = null;return false};
         
         ws.adminUser = user
-
         ws.send(JSON.stringify({type : "admin_access" , status : 200 , admin_access : true}))
+
+        if(!onlineAdmins.has(ws.adminUser.userId)) {onlineAdmins.set(ws.adminUser.userId , new Set())}
+
         return true;
 
     }catch(err){

@@ -9,8 +9,10 @@ const { v4: uuid } = require("uuid");
 const asignToAdmin = require('../socket.config/asignToAdmin');
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
 const handleRooms = require('../socket.config/handleRooms');
-const rooms = require('../ws.store/rooms');
 const handleConvId = require('../socket.config/handleConvId');
+
+const onlineAdmins = require('../ws.store/onlineAdmins')
+const rooms = require('../ws.store/rooms');
 
 require('dotenv').config();
 
@@ -45,26 +47,7 @@ function SupportChatSocket (server) {
             
             const loadRooms = handleRooms(ws.user , ws )
             if(!loadRooms) return;
-        }
-        
-        
-
-        try{
-
-            const [ AdminList ] = await db.query('select admin.id from admin join users on admin.id = users.id where admin.id = ?',[ws.user.userId])
-            
-            if(AdminList.length > 0) {
-                if(adminList.some(adm => adm === ws.user.userId)) adminList;
-                else adminList.push(ws.user.userId)
-            };
-
-            ws.send(JSON.stringify({type: 'recieve_admin_list' , adminList : adminList}))
-
-        }catch(err){
-            ws.send(JSON.stringify({type: 'internal_error', message : err}))
-        }
-
-        
+        }        
             
         ws.on('message' , async(data) => {
 
