@@ -9,7 +9,7 @@ const { v4: uuid } = require("uuid");
 const asignToAdmin = require('../socket.config/asignToAdmin');
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
 const handleRooms = require('../socket.config/handleRooms');
-const rooms = require('../socket.config/rooms');
+const rooms = require('../ws.store/rooms');
 const handleConvId = require('../socket.config/handleConvId');
 
 require('dotenv').config();
