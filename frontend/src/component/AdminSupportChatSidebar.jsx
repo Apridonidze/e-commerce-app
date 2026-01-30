@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { BACKEND_URL } from "../../config";
 
+import { Link } from "react-router-dom";
 const AdminSupportChatSidebar = ({ setTargetConvId }) => {
 
     const [ cookies ] = useCookies(['token'])
@@ -45,7 +46,7 @@ const AdminSupportChatSidebar = ({ setTargetConvId }) => {
         <div className="admin-support-chat-sidebar border" >
 
             <div className="row">
-                <span className="d-flex align-items-top gap-3"><i class="fa-solid fa-arrow-left"></i>
+                <span className="d-flex align-items-top gap-3"> <Link to='/'><i class="fa-solid fa-arrow-left"></i></Link>
                 <h4>Support Chat</h4></span>
             </div>
 
