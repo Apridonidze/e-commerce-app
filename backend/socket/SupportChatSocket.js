@@ -83,8 +83,10 @@ function SupportChatSocket (server) {
                     await db.query('insert into support_messages (conversation_id, sender_id , content, status) values (?,?,?,?)', [message.convId , ws.user.userId , message.text, "Delivered"])
                     ws.send(JSON.stringify({type : 'message_status' , status : 'Delivered' ,message : "Message Sent Successfully"}))
 
-                    const generateConvId = handleConvId(ws.user ,ws)
-                    if(!generateConvId) return
+                    if(!message.convId){
+                        const generateConvId = handleConvId(ws.user ,ws)
+                        if(!generateConvId) return
+                    }
 
                     const asignConvToAdmin = asignToAdmin(ws.convId , ws)
                     if(!asignConvToAdmin) return;

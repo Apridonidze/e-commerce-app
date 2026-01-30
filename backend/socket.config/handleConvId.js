@@ -2,6 +2,7 @@ const handleMessageLoad = require('../socket.config/handleMessageLoad')
 
 const db = require('../config/db')
 const rooms = require('../ws.store/rooms')
+const { v4: uuid } = require("uuid");
 
 async function handleConvId (user ,ws) {
     try{
