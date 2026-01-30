@@ -1,4 +1,5 @@
 import { BACKEND_URL } from "../../config"
+import { useState } from "react"
 
 import { useRef, useEffect } from "react"
 import { useCookies } from "react-cookie"
@@ -7,6 +8,11 @@ const AdminSupportChat = ({ targetConvId }) => {
 
     const [cookies] = useCookies(['token'])
     const socketRef = useRef(null)
+    const messagesRef = useRef(null)
+    const [messages, setMessages] = useState([])
+
+    const [convId, setConvId] = useState(null)
+    const [input,setInput] = useState('');
 
     useEffect(() => {
     
@@ -35,7 +41,7 @@ const AdminSupportChat = ({ targetConvId }) => {
 
               if(data.type === 'conv_info'){
                 console.log(data)
-                //set convid
+                setConvId(data.convId)
             }
     
             if(data.type === 'message_status'){
@@ -44,6 +50,7 @@ const AdminSupportChat = ({ targetConvId }) => {
     
             if(data.type === 'receive_support_chat_message'){
                 console.log(data)
+                setMessages(data.message.reverse())
             }
 
           
@@ -53,14 +60,33 @@ const AdminSupportChat = ({ targetConvId }) => {
         return () => {socketRef.current?.close() };
     
     },[targetConvId])
+
+
+     const handleMessageSend = (e) => {
+
+        e.preventDefault();
+
+        if(input.trim() === '') return;
+
+        socketRef.current.send(JSON.stringify({type : 'support_chat_message', text : input , convId : convId}))
+
+        setInput('')
+    }
     
     return(
-        <div className="admin-support-chat">
-            <div className="admin-support-char-header row"></div>
-            <div className="admin-support-char-main row">
-                {targetConvId}
+        <div className="admin-support-chat d-flex flex-column w-100">
+            <div className="admin-support-char-header row">names</div>
+            <div className="support-chat-header d-flex flex-column w-auto border"  ref={messagesRef}>
+                {messages?.map((m , mId) => <span key={mId} className={m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'}>{m.content}</span>)}
             </div>
-            <div className="admin-support-char-footer row"></div>
+            <div className="admin-support-char-footer row">
+                <form onSubmit={(e) => handleMessageSend(e)}>
+                    <div className="input-group">
+                        <input type="text" className="form-control" placeholder="Send Message..." onChange={(e) => setInput(e.target.value)} value={input}/>
+                        <input type="submit" className="btn btn-primary" value='Send'/>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

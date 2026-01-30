@@ -39,8 +39,7 @@ const AdminSupportChatContainer = () => {
     return(
         <div className="admin-support-chat-container d-flex">
             <AdminSupportChatSidebar setTargetConvId={setTargetConvId} />
-            <AdminSupportChat targetConvId={targetConvId}/>
-             {/*check if {targetConvId} is not null , if so then return empty page, if targetConvid === true return adminsupportchat */}
+            {targetConvId ? <AdminSupportChat targetConvId={targetConvId}/> : 'No chats targeted'}
         </div>
     )
 }

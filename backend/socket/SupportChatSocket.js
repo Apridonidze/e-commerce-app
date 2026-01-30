@@ -59,7 +59,7 @@ function SupportChatSocket (server) {
             if(message.type === 'join_conv'){
 
                 ws.convId = message.convId
-                ws.send(JSON.stringify({ type: 'conv_info', message: `Joined conversation ${message.convId}` }));
+                ws.send(JSON.stringify({ type: 'conv_info', message: `Joined conversation ${message.convId}`, convId : message.convId }));
 
                 const joinConversation = handleJoinConv(ws.adminUser, ws.convId ,ws);
                 if(!joinConversation) return;
@@ -69,7 +69,6 @@ function SupportChatSocket (server) {
 
             if(message.type ==  'support_chat_message'){
 
-                //validate message if now valid send error message
 
                 try{
 
