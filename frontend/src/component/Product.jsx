@@ -38,15 +38,15 @@ const Product = ( { prod ,prodId , key } ) => {
         }
     }
 
+    console.log(`data:image/jpeg;base64,${JSON.parse(prod.images)[0]}`)
+
     return(
         <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" key={prodId} >
 
             <div className="product-wrapper">
 
                 <div className="product-top w-100 h-auto" >
-                        {prod.images ? prod.images?.map((img, imgId) => (
-                            <img className="w-100 h-100 rounded-1" src={`data:image/jpeg;base64,${img}`} key={imgId} style={{maxHeight:'200px'}}/>
-                        )) : prod.images === null ? <img src="" className="bg-grey w-100 h-100 border" style={{maxHeight: '200px'}}  alt="No Image Provided"/> : <Skeleton />}
+                    {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxHeight:'200px'}}/> || <Skeleton />}
                 </div>
                     
                 <div className="product-main">
