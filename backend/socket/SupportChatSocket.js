@@ -10,6 +10,7 @@ const asignToAdmin = require('../socket.config/asignToAdmin');
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
 const handleRooms = require('../socket.config/handleRooms');
 const handleConvId = require('../socket.config/handleConvId');
+const handleJoinConv = require('../socket.config/handleJoinConv')
 
 const rooms = require('../ws.store/rooms');
 const onlineAdmins = require('../ws.store/onlineAdmins');
@@ -60,10 +61,8 @@ function SupportChatSocket (server) {
                 ws.convId = message.convId
                 ws.send(JSON.stringify({ type: 'conv_info', message: `Joined conversation ${message.convId}` }));
 
-                const loadMessages = handleMessageLoad(ws.user , message.convId, ws)
-                if(!loadMessages) return;
-
-                console.log(rooms)
+                const joinConversation = handleJoinConv(ws.adminUser, ws.convId ,ws);
+                if(!joinConversation) return;
 
             }
 
