@@ -176,7 +176,7 @@ const CreateProduct = () => {
         }
 
     }
-
+    //add list that shows images that has been in list of upload
     return(
         <div className="create-product-container position-fixed bg-white" style={{zIndex : 2}}>
             <div className="create-products-top">

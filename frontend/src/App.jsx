@@ -24,7 +24,7 @@ const App = () => {
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
     {path : '*' , element : <></>}, /**add 404 page for this and button to go back to main page */
-
+    //add page for each product
     //add feedbacks send page
     //add report send page
     //add credit cart fillout form
