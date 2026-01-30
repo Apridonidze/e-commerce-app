@@ -15,7 +15,7 @@ const SupportChat = () => {
     const socketRef = useRef(null)
 
     const messagesRef = useRef(null)
-
+    const [lastStatus , setLastStatus] = useState('Delivered')
     
 
     useEffect(() => {
@@ -42,7 +42,7 @@ const SupportChat = () => {
             }
 
             if(data.type === 'message_status'){
-                console.log(data.message)
+                setLastStatus(data.status)
             }
 
             if(data.type === 'receive_support_chat_message'){

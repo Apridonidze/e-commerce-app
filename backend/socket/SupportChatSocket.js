@@ -67,6 +67,14 @@ function SupportChatSocket (server) {
             }
 
 
+            if(message.type === 'message_status'){
+                
+                await db.query('UPDATE support_messages SET status = ? WHERE sender_id != ? AND conversation_id = ?',[message.status, ws.user.userId, message.convId]);
+                ws.send(JSON.stringify({type: 'message_status' , status : 'Seen', message: "Message Seen"}))
+
+            }
+
+
             if(message.type ==  'support_chat_message'){
 
 
@@ -95,9 +103,7 @@ function SupportChatSocket (server) {
                     console.log(err) //remove in future
                     ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"}))
                 }
-              }
-
-                
+              }                
 
               //add onmessage for admin to end conversation
         })

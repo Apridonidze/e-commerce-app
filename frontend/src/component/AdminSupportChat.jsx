@@ -13,6 +13,7 @@ const AdminSupportChat = ({ targetConvId }) => {
 
     const [convId, setConvId] = useState(null)
     const [input,setInput] = useState('');
+    const [lastStatus, setLastStatus] = useState('Delivered')
 
     useEffect(() => {
     
@@ -45,21 +46,31 @@ const AdminSupportChat = ({ targetConvId }) => {
             }
     
             if(data.type === 'message_status'){
-                console.log(data.message)
+                
+                setLastStatus(data.status)
+                
             }
     
             if(data.type === 'receive_support_chat_message'){
                 console.log(data)
                 setMessages(data.message.reverse())
             }
-
-          
     
         };
+      
     
         return () => {socketRef.current?.close() };
     
-    },[targetConvId])
+    },[])
+
+
+    useEffect(() => {
+        
+        if(messages[messages.length - 1] && messages[messages.length - 1].status === 'Delivered'){
+            socketRef.current.send(JSON.stringify({type : "message_status" , status : 'Seen' , convId : convId}))
+        }
+        
+    },[messages])
 
 
      const handleMessageSend = (e) => {
@@ -77,7 +88,7 @@ const AdminSupportChat = ({ targetConvId }) => {
         <div className="admin-support-chat d-flex flex-column w-100">
             <div className="admin-support-char-header row">names</div>
             <div className="support-chat-header d-flex flex-column w-auto border"  ref={messagesRef}>
-                {messages?.map((m , mId) => <span key={mId} className={m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'}>{m.content}</span>)}
+                {messages?.map((m , mId) => <span key={mId} className={m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'}>{m.content} {m.status}</span>)}
             </div>
             <div className="admin-support-char-footer row">
                 <form onSubmit={(e) => handleMessageSend(e)}>
