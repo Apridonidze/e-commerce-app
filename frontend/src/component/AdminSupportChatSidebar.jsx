@@ -51,9 +51,9 @@ const AdminSupportChatSidebar = ({ setTargetConvId }) => {
 
             <div className="row w-100">
                 {rooms.length === 0 ? 'no messages yet' : rooms?.map((room,roomId) => (
-                    <div className="message d-flex gap-3 border align-items-center justify-content-start" style={{cursor : 'pointer'}} key={roomId} onClick={() => setTargetConvId(room.conversation_id)}>
+                    <div className="message d-flex gap-3 border align-items-center justify-content-start" style={{fontWeight : room.sender_id !== 'You' ? 'bolder' : "lighter" , cursor : 'pointer'}} key={roomId} onClick={() => setTargetConvId(room.conversation_id)}>
                         <span className="border fs-2 text-secondary rounded-5 text-center m-auto" style={{width: "75px", height: '55px'}}><i class="fa-solid fa-user"></i></span>
-                        <span>{room.fullname} <br /> {room.content} <br />{room.created_at} </span>
+                        <span><span className="fw-bolder">{room.fullname}</span> <br /> {room.sender_id} : {room.content} <br />{room.created_at} </span>
                     </div>
                 ))}
             </div>

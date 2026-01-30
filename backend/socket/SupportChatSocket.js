@@ -5,7 +5,6 @@ const ValidateSocketToken = require('../socket.config/ValidateSocketToken');
 const ValidateSocketAdmin = require('../socket.config/ValidateSocketAdmin')
 const db = require('../config/db')
 
-const { v4: uuid } = require("uuid");
 const asignToAdmin = require('../socket.config/asignToAdmin');
 const handleMessageLoad = require('../socket.config/handleMessageLoad');
 const handleRooms = require('../socket.config/handleRooms');

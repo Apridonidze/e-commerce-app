@@ -4,10 +4,14 @@ import { Link, NavLink } from 'react-router-dom'
 import { useEffect , useState } from 'react'
 import { BACKEND_URL } from '../../config'
 import User from './User'
+import { useRef } from 'react'
 const Sidebar = () => {
 
     const [ cookies ] = useCookies(['token'])
     const [ isAdmin, setIsAdmin ] = useState(null)
+    const [ messagesCount , setMessagesCount] = useState(0)
+
+    const socketRef = useRef(null)
 
     useEffect(() => {
 
@@ -26,6 +30,40 @@ const Sidebar = () => {
         
         return () => {fetchStatus()};
 
+    },[])
+
+
+    useEffect(() => {
+
+        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}&gainAdminAccess=${true}`)
+        
+        socketRef.current.onopen = () => {
+            console.log('connected')
+            
+        }
+
+
+        socketRef.current.onmessage = (event) => {
+            const data = JSON.parse(event.data)
+
+
+            if(data.type === 'recieve_conv_ids'){
+                const count = data.rooms.filter(msg => msg.sender_id !== 'You' && msg.status === 'Delivered').length
+
+                setMessagesCount(count)
+            }
+
+            if (data.type === "token_error") {
+                socketRef.current.close();
+            }
+
+            if(data.type === 'internal_error'){
+                socketRef.current.close();
+            }
+
+        }
+
+        return () => {socketRef.current?.close() };
     },[])
 
 
@@ -60,7 +98,7 @@ const Sidebar = () => {
                             </div>
                             <div className="text-bottom">
                                 {/* add lable here for support chat */}
-                                <Link to='/admin-dashboard/admin-support-chat'>Support Chat</Link>
+                                <Link to='/admin-dashboard/admin-support-chat'>Support Chat <span>{messagesCount}</span></Link>
                             </div>
                         </div> : <></>
                     }
