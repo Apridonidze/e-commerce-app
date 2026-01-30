@@ -5,7 +5,7 @@ async function asignToAdmin (convId, ws) {
 
     try{
         
-        console.log(onlineAdmins)
+        
 
         const [query] = await db.query('select admin.rooms from admin')
         const rooms = query.map(r => JSON.parse(r.rooms)?.rooms || []).flat();

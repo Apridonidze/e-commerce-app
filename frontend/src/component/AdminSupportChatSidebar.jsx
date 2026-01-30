@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { BACKEND_URL } from "../../config";
 
-const AdminSupportChatSidebar = ({ setTargetConvId, targetConvId }) => {
+const AdminSupportChatSidebar = ({ setTargetConvId }) => {
 
     const [ cookies ] = useCookies(['token'])
     const socketRef = useRef(null);
@@ -12,7 +12,7 @@ const AdminSupportChatSidebar = ({ setTargetConvId, targetConvId }) => {
     
     useEffect(() => {
         
-        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}&gainAdminAccess=${true}`)
+        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}&gainAdminAccess=${true}&conversation_id=${null}`)
     
         socketRef.current.onopen = () => {
 
@@ -42,7 +42,7 @@ const AdminSupportChatSidebar = ({ setTargetConvId, targetConvId }) => {
     },[])
     
     return(
-        <div className="admin-support-chat-sidebar border" style={{minHeight: '100vh'}}>
+        <div className="admin-support-chat-sidebar border" >
 
             <div className="row">
                 <span className="d-flex align-items-top gap-3"><i class="fa-solid fa-arrow-left"></i>

@@ -21,7 +21,7 @@ function SupportChatSocket (server) {
     const wss = new WebSocketServer({ server })
     
     wss.on("connection" , async(ws, req) => {
-
+        
         console.log('SupportChatSocket initialized');
 
         const query = url.parse(req.url, true).query;
@@ -31,8 +31,10 @@ function SupportChatSocket (server) {
         const validatedUser = ValidateSocketToken(token , ws)
         if(!validatedUser) return;
 
-        const generateConvId = handleConvId(ws.user ,ws)
-        if(!generateConvId) return
+        if(!gainAdminAccess){
+            const generateConvId = handleConvId(ws.user ,ws)
+            if(!generateConvId) return
+        }
 
         const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
         if(!loadMessages) return;
@@ -45,11 +47,25 @@ function SupportChatSocket (server) {
             
             const loadRooms = handleRooms(ws.user , ws )
             if(!loadRooms) return;
-        }        
-            
+        }
+        
+
+        
         ws.on('message' , async(data) => {
 
             const message = JSON.parse(data.toString())
+
+            if(message.type === 'join_conv'){
+
+                ws.convId = message.convId
+                ws.send(JSON.stringify({ type: 'conv_info', message: `Joined conversation ${message.convId}` }));
+
+                const loadMessages = handleMessageLoad(ws.user , message.convId, ws)
+                if(!loadMessages) return;
+
+                console.log(rooms)
+
+            }
 
 
             if(message.type ==  'support_chat_message'){
@@ -83,6 +99,8 @@ function SupportChatSocket (server) {
                 }
               }
 
+                
+
               //add onmessage for admin to end conversation
         })
 
@@ -97,12 +115,13 @@ function SupportChatSocket (server) {
                 if (clients.size === 0) {rooms.delete(ws.convId);}
             }
 
-            if (ws.adminUser?.userId) {    // <-- optional chaining
+            if (ws.adminUser?.userId) {
                 const admins = onlineAdmins.get(ws.adminUser.userId);
                 if (admins) admins.delete(ws.adminUser.userId);
                 console.log(admins);
+
+                //send adminlist via ws
             }
-            //filter admins and send to fronend as ws.send(JSON.stringify({type: 'recieve_admin_list' , onlineAdmin: onlineAdmin}))
 
         });
     })
