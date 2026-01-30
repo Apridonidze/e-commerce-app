@@ -90,7 +90,7 @@ const SupportChat = () => {
             </div>
 
             <div className="support-chat-header d-flex flex-column" style={{maxHeight : "300px" , overflowY : 'scroll'}} ref={messagesRef}>
-                {messages?.map((m , mId) => <span key={mId} className={m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'}>{m.content}</span>)}
+                {messages?.map((m , mId) => <span key={mId} className={m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'}>{m.content} {m.status}</span>)}
             </div>
 
             <div className="support-chat-header">

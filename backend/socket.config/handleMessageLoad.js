@@ -6,16 +6,15 @@ async function handleMessageLoad (user, convId , ws) {
  
     try{
 
-        const [query] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC' , [convId])
+        const [query] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at, support_messages.status from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC' , [convId])
 
         const message = query.map(msg => ({
                     sender_id : msg.sender_id,
                     sender_name : msg.sender_id === user.userId ? 'You' : 'Support',
                     content : msg.content,
                     created_at : msg.created_at,
+                    status : msg.sender_id === user.userId ? msg.status : 'Seen'
         }))
-
-        
 
         //check prevmessages length if length === 0 then return [] as a message
 
