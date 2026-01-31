@@ -86,28 +86,22 @@ const Category = ({ setCategory, category, setProducts, fetchProducts,offset }) 
     };
 {/* <button onClick={() => {setCategory(null);fetchProducts(offset,null)}}>Clear Filters</button> */}
     return(
-       <div className="category-sidebar border p-3">
-      <h5 className="mb-3">Categories</h5>
-      <ul className="list-unstyled">
-        {categories.map((cat, index) => (
-          <li key={cat.slug} className="mb-2">
-            <button
-              className="btn btn-light w-100 text-start d-flex justify-content-between align-items-center"
-              onClick={() => toggleSubmenu(index)}
-            >
-              {cat.name}
-              <span>{openIndex === index ? "-" : "+"}</span>
-            </button>
-            <ul className={`list-unstyled ps-3 mt-1 ${openIndex === index ? 'd-block' : 'd-none'}`}>
-              {cat.subcategories.map((sub, i) => (
-                <li key={i}>
-                  <button className="btn btn-link p-1 text-start" onClick={() => setCategory(sub)}>{sub}</button>
-                </li>
-              ))}
+        <div className="category-sidebar border p-3">
+            <h5 className="mb-3">Categories</h5>
+            
+            <ul className="list-unstyled">
+                {categories.map((cat, index) => (
+                    <li key={cat.slug} className="mb-2">
+                        <button className="btn btn-light w-100 text-start d-flex justify-content-between align-items-center" onClick={() => toggleSubmenu(index)}>{cat.name} <span>{openIndex === index ? "-" : "+"}</span> </button>
+                        
+                        <ul className={`list-unstyled ps-3 mt-1 ${openIndex === index ? 'd-block' : 'd-none'}`}>
+                            {cat.subcategories.map((sub, i) => (
+                            <li key={i}> <button className="btn btn-link p-1 text-start" onClick={() => setCategory(sub)}>{sub}</button></li>
+                            ))}
+                        </ul>
+                    </li>
+                ))}
             </ul>
-          </li>
-        ))}
-      </ul>
     </div>
     )
 }
