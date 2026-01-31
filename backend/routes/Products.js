@@ -60,6 +60,7 @@ ProductsRouter.get('/' , async (req,res) => {
         const offset = parseInt(req.query.offset);
         const category = req.query.category;
 
+        console.log(category)
         if(category){
             const [ filteredProducts ] = await db.query('select products.products_id, products.images, products.title, products.description, products.category, products.subcategory, products.price, products.amount from products where subcategory = ? order by products.date limit ? , ?' , [category,offset , offset + limit])
 

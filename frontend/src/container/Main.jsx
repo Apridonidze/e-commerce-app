@@ -24,7 +24,8 @@ const Main = () => {
     const fetchProducts = async(offset, category) => {
         try{
 
-            await axios.get(`${BACKEND_URL}/products`, { params : {offset, category} ,headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setProducts(prev => [...prev, ...resp.data.products])})
+            const resp = await axios.get(`${BACKEND_URL}/products`, { params : {offset, category} ,headers : {Authorization : `Bearer ${cookies.token}`}})
+            setProducts(resp.data.products)
 
         }catch(err){
             console.log(err)
@@ -44,8 +45,11 @@ const Main = () => {
     }
     
     useEffect(() => {
-        return () => {fetchProducts(offset,category) ; fetchUser()}
-    },[offset,category])
+
+        fetchProducts(offset,category);
+
+        return () => {fetchProducts() ; fetchUser()}
+    },[category, offset])
 
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
@@ -62,8 +66,8 @@ const Main = () => {
                     <button className="btn btn-warning" onClick={() => setOffset(prev => prev + 15)}>Load More...</button>
                 </div>
                 
-                {!cookies ? <></> : toggleChat ? <SupportChat /> : <></>} uncomment this line after testing/development is done, if the toggleChat is false then return component that just says support chat to untoggle component
-                {/* {!cookies ? <></> : !toggleChat ? <SupportChat /> : <></> } */}
+                {/* {!cookies ? <></> : toggleChat ? <SupportChat /> : <></>} uncomment this line after testing/development is done, if the toggleChat is false then return component that just says support chat to untoggle component */}
+                {!cookies ? <></> : !toggleChat ? <SupportChat /> : <></> }
             </div>
         </div>
     )
