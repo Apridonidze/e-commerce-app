@@ -84,7 +84,6 @@ const Category = ({ setCategory, category, setProducts, fetchProducts,offset }) 
     const toggleSubmenu = (index) => {
         setOpenIndex(openIndex === index ? null : index);
     };
-{/* <button onClick={() => {setCategory(null);fetchProducts(offset,null)}}>Clear Filters</button> */}
     return(
         <div className="category-sidebar border p-3">
             <h5 className="mb-3">Categories</h5>
@@ -92,21 +91,22 @@ const Category = ({ setCategory, category, setProducts, fetchProducts,offset }) 
             <ul className="list-unstyled">
                 {categories.map((cat, index) => (
                     <li key={cat.slug} className="mb-2">
-                        <button className="btn btn-light w-100 text-start d-flex justify-content-between align-items-center" onClick={() => toggleSubmenu(index)}>{cat.name} <span>{openIndex === index ? "-" : "+"}</span> </button>
-                        
-                        <ul className={`list-unstyled ps-3 mt-1 ${openIndex === index ? 'd-block' : 'd-none'}`}>
-                            {cat.subcategories.map((sub, i) => (
-                            <li key={i}> <button className="btn btn-link p-1 text-start" onClick={() => setCategory(sub)}>{sub}</button></li>
-                            ))}
-                        </ul>
-                    </li>
-                ))}
+                    <button className="btn btn-light w-100 text-start d-flex justify-content-between align-items-center" onClick={() => toggleSubmenu(index)}>{cat.name} <span>{openIndex === index ? "-" : "+"}</span></button>
+                    
+                    <ul className={`list-unstyled ps-3 mt-1 ${openIndex === index ? 'd-block' : 'd-none'}`}>
+                        {cat.subcategories.map((sub, i) => (
+                            <li key={i} className="mb-1">
+                                <button className="btn p-1 text-start" style={{ border: category === sub ? '1px solid red' : '1px solid blue'}} onClick={() => setCategory(sub)}>{sub}</button>
+                            </li>
+                    ))}
+                    </ul>
+                </li>))}
             </ul>
+
+            <button onClick={() => {setCategory(null);fetchProducts(offset,null)}} style={{border: category ? '1px solid green' : '1px solid blue'}}>Clear Filters</button> 
     </div>
     )
 }
-
-//highlight the selected category
 
 
 export default Category 
