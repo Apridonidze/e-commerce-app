@@ -17,6 +17,8 @@ const ProductPage = () => {
             try{
 
                 const product = await axios.get(`${BACKEND_URL}/products/${prodId}`)
+                const feedback = await axios.get(`${BACKEND_URL}/feedback/platform-feedback`)
+                console.log(feedback)
                 console.log(product)
                 // const product_feedback
 
