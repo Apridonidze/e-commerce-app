@@ -98,9 +98,10 @@ const Main = () => {
 
                 <div className="products row">
                     {products?.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}/>) || <Skeleton />}
-                    <button className="btn btn-warning" onClick={() => setOffset(prev => prev + 15)}>Load More...</button>
+                    <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>
                 </div>
                 
+                {/* add btn here that toggles support chat */}
                 {/* {!cookies ? <></> : toggleChat ? <SupportChat /> : <></>} uncomment this line after testing/development is done, if the toggleChat is false then return component that just says support chat to untoggle component */}
                 {!cookies ? <></> : !toggleChat ? <SupportChat /> : <></> }
             </div>

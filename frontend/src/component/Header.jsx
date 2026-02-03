@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react"
 import { BACKEND_URL } from "../../config";
 
-const Header = ({ setProducts, fetchProducts, offset,category }) => {
+const Header = ({ setProducts }) => {
 
     const [dataList,setDataList] = useState([]);
     const [searchItem, setSearchItem] = useState('');
