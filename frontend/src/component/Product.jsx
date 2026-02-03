@@ -5,9 +5,12 @@ import { useCookies } from "react-cookie"
 import Skeleton from "react-loading-skeleton"
 
 import { BACKEND_URL } from "../../config"
+import { Navigate, useNavigate } from "react-router-dom"
 
 
 const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
+
+
 
     //check if amount is equal to 0 , if so toggle style of disable
 
@@ -15,6 +18,8 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
 
     const [isSaved, setIsSaved] = useState(false);
     const [isInCart, setIsInCart] = useState(false);
+
+    const navigator = useNavigate()
 
     const handleSave = async(e) => {
 
@@ -83,7 +88,7 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
     },[savedIds, cartIds])
 
     return(
-        <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" key={prodId} >
+        <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" onClick={() => {navigator(`product/${prod.products_id}`)}} style={{cursor: 'pointer'}} key={prodId} >
 
             <div className="product-wrapper">
 
