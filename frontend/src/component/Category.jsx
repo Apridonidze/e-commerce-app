@@ -91,7 +91,7 @@ const Category = ({ setCategory, category, setProducts, fetchProducts,offset }) 
             <ul className="list-unstyled">
                 {categories.map((cat, index) => (
                     <li key={cat.slug} className="mb-2">
-                    <button className="btn btn-light w-100 text-start d-flex justify-content-between align-items-center" onClick={() => toggleSubmenu(index)}>{cat.name} <span>{openIndex === index ? "-" : "+"}</span></button>
+                    <button className="btn btn-light  text-start d-flex justify-content-between align-items-center" onClick={() => toggleSubmenu(index)}>{cat.name} <span>{openIndex === index ? "-" : "+"}</span></button>
                     
                     <ul className={`list-unstyled ps-3 mt-1 ${openIndex === index ? 'd-block' : 'd-none'}`}>
                         {cat.subcategories.map((sub, i) => (
@@ -102,7 +102,7 @@ const Category = ({ setCategory, category, setProducts, fetchProducts,offset }) 
                     </ul>
                 </li>))}
             </ul>
-
+                    {/* disable button when category is not chooosed */}
             <button onClick={() => {setCategory(null);fetchProducts(offset,null)}} style={{border: category ? '1px solid green' : '1px solid blue'}}>Clear Filters</button> 
     </div>
     )

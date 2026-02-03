@@ -38,8 +38,6 @@ const Product = ( { prod ,prodId , key } ) => {
         }
     }
 
-    console.log(`data:image/jpeg;base64,${JSON.parse(prod.images)[0]}`)
-
     return(
         <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" key={prodId} >
 

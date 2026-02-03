@@ -32,6 +32,8 @@ const App = () => {
     //add page for each page with likes , orders , comments  and data
   ])
 
+  //add localstorage theme get method, and style project based on its references (e.g : dark, light)
+
   return(
     <div className="app-container">
       <RouterProvider router={router}/>

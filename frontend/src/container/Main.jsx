@@ -21,6 +21,9 @@ const Main = () => {
 
     const [toggleChat, setToggleChat] = useState(false)
 
+    const [savedIds , setSavedIds] = useState([])
+    const [cartIds , setCartIds] = useState([])
+
     const fetchProducts = async(offset, category) => {
         try{
 
@@ -43,14 +46,46 @@ const Main = () => {
             setToggleChat(false)
         }
     }
+
+
+    const fetchProductsData = async () => {
+        try{
+
+            const savedIds = await axios.get(`${BACKEND_URL}/products/saved-products`, {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
+
+            const savedResp = savedIds.data.products
+            const cartResp = cartIds.data.products
+
+            const mappedSaveIds = savedResp.map((id) => {return id.product_id})
+            const mappedCartIds = cartResp.map((id) => {return id.product_id})
+
+            setSavedIds(mappedSaveIds)
+            setCartIds(mappedCartIds)
+
+        }catch(err){
+            console.log(err)
+        }
+    } 
     
     useEffect(() => {
 
         fetchProducts(offset,category);
 
-        return () => {fetchProducts() ; fetchUser()}
+        return () => {fetchProducts()}
     },[category, offset])
 
+
+    useEffect(() => {
+
+        fetchUser();
+        fetchProductsData();
+
+        return () => {fetchProductsData (); fetchUser()}
+
+    }, []);
+    
+    
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
             <div className="main-start col">

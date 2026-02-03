@@ -8,24 +8,25 @@ const Header = ({ setProducts, fetchProducts, offset,category }) => {
     const [dataList,setDataList] = useState([]);
     const [searchItem, setSearchItem] = useState('');
 
+    const regexContainsSpecial = /[^\w\s]/;
+
 
     const fetchDataList = async() => {
 
-            if(searchItem.trim().length < 1 || searchItem.trim() === "" || searchItem === "" || searchItem.trim() === undefined || searchItem.trim() === null) {
-                fetchProducts(offset,category)
-            }
-            
-            try{
-                await axios.get(`${BACKEND_URL}/products/item-data-list?searchItem=${searchItem}`).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
-            }catch(err){
-                console.log(err)
-            }
-        
-            }
+        if(searchItem.trim().length < 1 || searchItem.trim() === "" || searchItem === "" || searchItem.trim() === undefined || searchItem.trim() === null || searchItem.length > 30 || regexContainsSpecial.test(searchItem)) {return}
+
+
+        try{
+            await axios.get(`${BACKEND_URL}/products/item-data-list?searchItem=${searchItem}`).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
+        }catch(err){
+            console.log(err)
+        }
+    
+    }
 
     useEffect(() => {
         fetchDataList()
-    },[searchItem]) //optimize seraching
+    },[searchItem]) 
 
 
     return(
