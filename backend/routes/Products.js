@@ -130,7 +130,7 @@ ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
 
 })
 
-ProductsRouter.post('/saved-products/:id' , ValidateToken , async (req, res) => {
+ProductsRouter.post('/saved-products/:id' , ValidateToken , RateLimiter, async (req, res) => {
     const ProductId = req.params.id
 
     try{
@@ -154,7 +154,7 @@ ProductsRouter.post('/saved-products/:id' , ValidateToken , async (req, res) => 
 })
 
 
-ProductsRouter.delete('/saved-products/:id' , ValidateToken , isAdmin,  async (req, res) => {
+ProductsRouter.delete('/saved-products/:id' , ValidateToken ,RateLimiter,  async (req, res) => {
     const ProductId = req.params.id
 
     try{

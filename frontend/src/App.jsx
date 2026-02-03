@@ -11,6 +11,7 @@ import AdminSupportChatContainer from './container/AdminSupportChatContainer'
 import Pendings from './component/Pendings'
 import OnWayProducts from './component/OnWayProducts'
 import DeliveredProducts from './component/DeliveredProducts'
+import ProductPage from './container/ProductPage'
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
     {path : '/' , element : <Main />},
     {path : '/landing-page' , element : <Landing />},
     {path : '/dashboard' , element : <Dashboard />},
+    {path : '/product/:id' , element : <ProductPage />},
     {path : '/admin-dashboard' , element : <AdminDashboard/>},
     {path : '/admin-dashboard/pending-products' , element : <Pendings/>},
     {path : '/admin-dashboard/onway-products' , element : <OnWayProducts/>},
