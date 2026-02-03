@@ -96,7 +96,7 @@ const Main = () => {
             </div>
             <div className="main-end col " style={{minHeight : '100vh'}}>
 
-                <Header setProducts={setProducts} fetchProducts={fetchProducts} offset={offset} category={category}/>
+                <Header />
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
 
                 <div className="products row">
