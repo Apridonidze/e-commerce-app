@@ -30,7 +30,7 @@ CartRouter.post('/:id' , ValidateToken , async (req, res) => {
         const [ isAlreadyInCart ] = await db.query('select product_id from cart where id = ? and product_id = ?' , [req.user.userId , productId])
         if(isAlreadyInCart.length !== 0) return res.status(400).json({message : "You Already Have This Item In Your Cart"})
         
-        await db.query('insert into cart (id, product_id, status) values (?,?,?)' , [req.user.userId , productId , 'none'])
+        await db.query('insert into cart (id, product_id) values (?,?)' , [req.user.userId , productId])
         return res.status(200).json({message : "Prodcut Added In Cart Successfully"})
 
     }catch(err){
@@ -41,7 +41,21 @@ CartRouter.post('/:id' , ValidateToken , async (req, res) => {
 
 
 CartRouter.delete('/:id' , ValidateToken , async (req, res) => {
-    
+    try{
+
+        const productId = req.params.id
+
+        if(!Number(productId)) return res.status(400).json({message : "Invalid Product Id"})
+
+        const [ isInCart ] = await db.query('select product_id from cart where id = ? and product_id = ?' , [req.user.userId , productId])
+        if(isInCart.length === 0) return res.status(400).json({message : "You Do Not Have This Item In Your Cart"})
+        
+        await db.query('delete from cart where id = ? and product_id = ?' , [req.user.userId , productId])
+        return res.status(200).json({message : "Product Removed From Cart Successfully"})
+
+    }catch(err){
+        return res.status(500).json({errMessage : "Internal Error" , err : err})
+    }
 })
 
 CartRouter.post('/order-cart-items' , ValidateToken , async (req,res) => {
@@ -50,14 +64,17 @@ CartRouter.post('/order-cart-items' , ValidateToken , async (req,res) => {
         const now = new Date()
         const date = now.toLocaleDateString('en-GB')
 
-        const [ cartItems ] = await db.query('select * from cart where id = ? and status = ?' , [req.user.userId , 'none'])
+        const [ cartItems ] = await db.query('select * from cart where id = ?' , [req.user.userId])
         if(cartItems.length < 1) return res.status(400).json({message : "No Items In Cart To Order"})
 
         const productIds = cartItems.map(item => item.product_id)
-        const updateStatus = productIds.map(prod => db.query('update cart set status = ? set date = ? where product_id = ? and id = ?' , ['pending' , date ,prod , req.user.userId]))
-        const resp = updateStatus[0][0]
 
-        return res.status(200).json({message : "Your Items Has Been Ordered Successfully, Wait For Delivery", products : resp})
+        //move this product ids and data to order table, with user id , cart items array, date and edfault status 'pending' and remove this data from cart (since we should move it to orders table)
+
+        // const updateStatus = productIds.map(prod => db.query('update cart set status = ? set date = ? where product_id = ? and id = ?' , ['pending' , date ,prod , req.user.userId]))
+        // const resp = updateStatus[0][0]
+
+        // return res.status(200).json({message : "Your Items Has Been Ordered Successfully, Wait For Delivery", products : resp})
 
     }catch(err){
         return res.status(500).json({errMessage : "Internal Error" , err : err})

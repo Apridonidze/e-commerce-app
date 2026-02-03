@@ -40,6 +40,17 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
         }
     }
 
+    const handleDeleteFromCart = async(e) => {
+        try{
+
+            await axios.delete(`${BACKEND_URL}/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(false)})
+
+        }catch(err){
+            setIsInCart(false)
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
 
         const id = prod.products_id
@@ -85,8 +96,8 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
             
             <div className="buttons position-relative w-100 h-100 align-items-center ">
                 
-                <button className="btn btn-warning" disabled={isSaved ? true : false} onClick={() => handleSave(prod.products_id)}>Save</button>
-                <button className="btn btn-warning" disabled={isInCart ? true : false} onClick={() => handleAddToCart(prod.products_id)}>Add to Cart</button>
+                <button className="btn btn-warning" onClick={() => handleSave(prod.products_id)}>Save</button>
+                <button className="btn btn-warning" onClick={() => {isInCart ? handleDeleteFromCart(prod.products_id) : handleAddToCart(prod.products_id)}}>Add to Cart</button>
             </div>
           
         </div>
