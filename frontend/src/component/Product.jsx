@@ -29,6 +29,19 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
 
     }
 
+    const handleUnsave = async(e) => {
+
+        try{
+
+            await axios.delete(`${BACKEND_URL}/products/saved-products/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsSaved(false)})
+            
+        }catch(err){
+            setIsSaved(true)
+            console.log(err)
+        }
+
+    }
+
     const handleAddToCart = async(e) => {
         try{
 
@@ -46,7 +59,7 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
             await axios.delete(`${BACKEND_URL}/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(false)})
 
         }catch(err){
-            setIsInCart(false)
+            setIsInCart(true)
             console.log(err)
         }
     }
@@ -96,7 +109,7 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
             
             <div className="buttons position-relative w-100 h-100 align-items-center ">
                 
-                <button className="btn btn-warning" onClick={() => handleSave(prod.products_id)}>Save</button>
+                <button className="btn btn-warning" onClick={() => {isSaved ? handleUnsave(prod.products_id) : handleSave(prod.products_id)}}>Save</button>
                 <button className="btn btn-warning" onClick={() => {isInCart ? handleDeleteFromCart(prod.products_id) : handleAddToCart(prod.products_id)}}>Add to Cart</button>
             </div>
           
