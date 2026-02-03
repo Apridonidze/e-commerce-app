@@ -39,6 +39,11 @@ CartRouter.post('/:id' , ValidateToken , async (req, res) => {
 
 })
 
+
+CartRouter.delete('/:id' , ValidateToken , async (req, res) => {
+    
+})
+
 CartRouter.post('/order-cart-items' , ValidateToken , async (req,res) => {
     try{
         //check if items amount are not 

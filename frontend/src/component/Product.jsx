@@ -42,24 +42,21 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
 
     useEffect(() => {
 
-        const id =prod.products_id
-
-        console.log('id' ,id)
+        const id = prod.products_id
 
         const checkStatus = () => {
 
-            if(savedIds.length > 0 && savedIds?.includes(id)) setIsSaved(true)
+            if(!savedIds.includes(id)) setIsSaved(true)
 
-            if(savedIds.length > 0 && savedIds?.includes(id)) setIsInCart(true)
-   
+            if(!cartIds.includes(id)) setIsInCart(true)
+
+            return;
+
         }
 
         return () => {checkStatus()}
         
     },[savedIds, cartIds])
-
-
-
 
     return(
         <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" key={prodId} >
@@ -87,8 +84,9 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
             </div>
             
             <div className="buttons position-relative w-100 h-100 align-items-center ">
-                <button className="btn btn-warning" onClick={() => handleSave(prod.products_id)}>Save</button>
-                <button className="btn btn-warning" onClick={() => handleAddToCart(prod.products_id)}>Add to Cart</button>
+                
+                <button className="btn btn-warning" disabled={isSaved ? true : false} onClick={() => handleSave(prod.products_id)}>Save</button>
+                <button className="btn btn-warning" disabled={isInCart ? true : false} onClick={() => handleAddToCart(prod.products_id)}>Add to Cart</button>
             </div>
           
         </div>
