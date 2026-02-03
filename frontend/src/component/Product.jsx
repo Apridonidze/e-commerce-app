@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 
 import Skeleton from "react-loading-skeleton"
@@ -7,7 +7,7 @@ import Skeleton from "react-loading-skeleton"
 import { BACKEND_URL } from "../../config"
 
 
-const Product = ( { prod ,prodId , key } ) => {
+const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
 
     //check if amount is equal to 0 , if so toggle style of disable
 
@@ -20,9 +20,10 @@ const Product = ( { prod ,prodId , key } ) => {
 
         try{
 
-            await axios.post(`${BACKEND_URL}/products/saved-products/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+            await axios.post(`${BACKEND_URL}/products/saved-products/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsSaved(true)})
             
         }catch(err){
+            setIsSaved(false)
             console.log(err)
         }
 
@@ -31,12 +32,34 @@ const Product = ( { prod ,prodId , key } ) => {
     const handleAddToCart = async(e) => {
         try{
 
-            await axios.post(`${BACKEND_URL}/cart/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+            await axios.post(`${BACKEND_URL}/cart/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(true)})
 
         }catch(err){
+            setIsInCart(false)
             console.log(err)
         }
     }
+
+    useEffect(() => {
+
+        const id =prod.products_id
+
+        console.log('id' ,id)
+
+        const checkStatus = () => {
+
+            if(savedIds.length > 0 && savedIds?.includes(id)) setIsSaved(true)
+
+            if(savedIds.length > 0 && savedIds?.includes(id)) setIsInCart(true)
+   
+        }
+
+        return () => {checkStatus()}
+        
+    },[savedIds, cartIds])
+
+
+
 
     return(
         <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" key={prodId} >

@@ -35,7 +35,22 @@ const Main = () => {
         }
     }
 
-    const fetchUser = async() => {
+    
+
+
+   
+    
+    useEffect(() => {
+
+        fetchProducts(offset,category);
+
+        return () => {fetchProducts()}
+    },[category, offset])
+
+
+    useEffect(() => {
+
+        const fetchUser = async() => {
         try{
             await Promise.all([
                 axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setToggleChat(true)}),
@@ -46,9 +61,9 @@ const Main = () => {
             setToggleChat(false)
         }
     }
+        
 
-
-    const fetchProductsData = async () => {
+         const fetchProductsData = async () => {
         try{
 
             const savedIds = await axios.get(`${BACKEND_URL}/products/saved-products`, {headers : {Authorization : `Bearer ${cookies.token}`}})
@@ -63,23 +78,11 @@ const Main = () => {
             setSavedIds(mappedSaveIds)
             setCartIds(mappedCartIds)
 
+
         }catch(err){
             console.log(err)
         }
     } 
-    
-    useEffect(() => {
-
-        fetchProducts(offset,category);
-
-        return () => {fetchProducts()}
-    },[category, offset])
-
-
-    useEffect(() => {
-
-        fetchUser();
-        fetchProductsData();
 
         return () => {fetchProductsData (); fetchUser()}
 
@@ -97,7 +100,7 @@ const Main = () => {
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
 
                 <div className="products row">
-                    {products?.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}/>) || <Skeleton />}
+                    {products?.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} savedIds={savedIds} cartIds={cartIds}/>) || <Skeleton />}
                     <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>
                 </div>
                 

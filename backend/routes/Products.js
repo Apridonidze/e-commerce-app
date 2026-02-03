@@ -118,7 +118,7 @@ ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
     
     try{
         
-        const [ saved_products ] = await db.query('select * from saved_products join products on saved_products.product_id = products.id join users on users.id = products.id where products.products_id = ?' , [req.user.userId])
+        const [ saved_products ] = await db.query('select * from saved_products join products on saved_products.product_id = products.products_id where saved_products.id = ?' , [req.user.userId])
         
         if(saved_products.length < 1) return res.status(204).json({message : 'No Saved Products Found' , products : []})
 
