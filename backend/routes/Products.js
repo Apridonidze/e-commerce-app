@@ -83,13 +83,13 @@ ProductsRouter.get('/' , async (req,res) => {
 
 ProductsRouter.get('/similar-products' , async(req,res) => {
     
-    const {category, subcategory} = req.query
+    const {category, subcategory, id} = req.query
 
     try{
 
-        //check for categories
+        //check category and subcategoryt in zod
 
-        const [products] = await db.query('select products_id, images , title	, description ,price , amount, category, subcategory from products where category like ? and subcategory like ?' , [category, subcategory])
+        const [products] = await db.query('select products_id, images , title	, description ,price , amount, category, subcategory from products where category like ? and subcategory like ? and products_id != ?' , [category, subcategory, id])
 
         if(products.length < 1) return res.status(204)
 
@@ -102,9 +102,9 @@ ProductsRouter.get('/similar-products' , async(req,res) => {
     
 })
 
-ProductsRouter.get('/:id', async (req,res) => {
+ProductsRouter.get('/product-details', async (req,res) => {
 
-    const id = req.params.id
+    const { id } = req.query;
   
     try{
 

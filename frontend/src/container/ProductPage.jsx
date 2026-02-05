@@ -6,13 +6,20 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 import { BACKEND_URL } from '../../config';
 import Skeleton from 'react-loading-skeleton';
+import Product from '../component/Product';
+import { useCookies } from 'react-cookie';
 const ProductPage = () => {
 
-    const prodId = useParams().id
+    const [cookies] = useCookies(['token'])
+
+    const { id } = useParams()
 
     const [product,setProduct] = useState();
     const [feedback, setFeedback] = useState([]);
     const [similarProducts, setSimilarProducts] = useState([]);
+
+    const [savedIds, setSavedIds] = useState([])
+    const [cartIds, setCartIds] = useState([])
 
     useEffect(() => {
 
@@ -20,8 +27,8 @@ const ProductPage = () => {
 
             try{
 
-                const product = await axios.get(`${BACKEND_URL}/products/${prodId}`)
-                const feedback = await axios.get(`${BACKEND_URL}/feedback/product-feedback/${prodId}`)
+                const product = await axios.get(`${BACKEND_URL}/products/product-details`, {params : {id : id}})
+                const feedback = await axios.get(`${BACKEND_URL}/feedback/product-feedback/${id}`)
                 
                 setProduct(product.data.product)
                 setFeedback(feedback.data.feedback)
@@ -40,9 +47,9 @@ const ProductPage = () => {
 
                 //add checking responses
 
-                const products = await axios.get(`${BACKEND_URL}/products/similar-products`, {params : {category : category , subcategory : subcategory}})
-                console.log(products)    
-            // setSimilarProducts(products.data.products)
+                const products = await axios.get(`${BACKEND_URL}/products/similar-products`, {params : {category : category , subcategory : subcategory , id : id}})
+                console.log(products.data.products) //remove    
+                setSimilarProducts(products.data.products)
 
             }catch(err){
                 // add erorr handling here based on statuses 500, 400 and 204 , 404
@@ -50,11 +57,35 @@ const ProductPage = () => {
             }
         }
 
-        return () => fetchProduct()
+        const fetchProductsData = async () => {
+            try{
 
-    },[])
+                const savedIds = await axios.get(`${BACKEND_URL}/products/saved-products`, {headers : {Authorization : `Bearer ${cookies.token}`}})
+                const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-    // add post feedback function
+                const savedResp = savedIds.data.products
+                const cartResp = cartIds.data.products
+
+                console.log(savedIds)
+
+                // debug
+                // doc
+
+                // const mappedSaveIds = savedResp.map((id) => {return id.product_id})
+                // const mappedCartIds = cartResp.map((id) => {return id.product_id})
+
+                // setSavedIds(mappedSaveIds)
+                // setCartIds(mappedCartIds)
+
+
+            }catch(err){
+                console.log(err)
+            }
+        } 
+
+        return () => {fetchProduct(), fetchProductsData()}
+
+    },[id])
     
     const imagesArray = product && JSON.parse(product.images);
     
@@ -129,7 +160,9 @@ const ProductPage = () => {
                         <h3>Similar Products:</h3>
                     </div>
                     <div className="similar-products-main">
-                        
+                        {similarProducts.length !== 0 ? similarProducts?.map((prod, prodId) => (
+                            <Product prod={prod} prodId={prodId} key={prodId} savedIds={savedIds} cartIds={cartIds}/>
+                        )) : 'No Similar Products Found'}
                     </div>
                 </div>
                 {/* add loading skeletons for products  */}
