@@ -65,12 +65,11 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
 
         }catch(err){
 
-            if(err.status === 400){setIsInCart(true)}
             setIsInCart(true)
             console.log(err)
         }
     }
-
+    //add 429, 400 status code handling for this events
     useEffect(() => {
 
         const id = prod.products_id
