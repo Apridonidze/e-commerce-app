@@ -81,6 +81,27 @@ ProductsRouter.get('/' , async (req,res) => {
     }
 })
 
+ProductsRouter.get('/similar-products' , async(req,res) => {
+    
+    const {category, subcategory} = req.query
+
+    try{
+
+        //check for categories
+
+        const [products] = await db.query('select products_id, images , title	, description ,price , amount, category, subcategory from products where category like ? and subcategory like ?' , [category, subcategory])
+
+        if(products.length < 1) return res.status(204)
+
+        return res.status(200).json({message : "Products Found" , products: products})
+
+    }catch(err){
+        console.log(err)
+        return res.status(500).json({errMessage : 'Internal Error', err : err})
+    }
+    
+})
+
 ProductsRouter.get('/:id', async (req,res) => {
 
     const id = req.params.id

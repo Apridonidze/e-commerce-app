@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 import { BACKEND_URL } from '../../config';
 import Skeleton from 'react-loading-skeleton';
-Skeleton
 const ProductPage = () => {
 
     const prodId = useParams().id
@@ -27,7 +26,7 @@ const ProductPage = () => {
                 setProduct(product.data.product)
                 setFeedback(feedback.data.feedback)
 
-                fetchSimilarProducts(product.data.product.subcategory)
+                fetchSimilarProducts(product.data.product.category, product.data.product.subcategory)
 
             }catch(err){
                 console.log(err)
@@ -36,13 +35,14 @@ const ProductPage = () => {
         }
 
 
-        const fetchSimilarProducts = async (category) => {
+        const fetchSimilarProducts = async (category,subcategory) => {
             try{
 
                 //add checking responses
 
-                const products = await axios.get(`${BACKEND_URL}/similar-products/${category}`)
-                setSimilarProducts(products.data.products)
+                const products = await axios.get(`${BACKEND_URL}/products/similar-products`, {params : {category : category , subcategory : subcategory}})
+                console.log(products)    
+            // setSimilarProducts(products.data.products)
 
             }catch(err){
                 // add erorr handling here based on statuses 500, 400 and 204 , 404
