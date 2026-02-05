@@ -14,8 +14,8 @@ import Reports from "../component/Reports"
 import Feedbacks from "../component/Feedbacks"
 import CreateProduct from "../component/CreateProduct"
 
-import Pendings from "../component/Pendings"
-import Products from "../component/Products"
+import Pendings from "../component/Pendings";
+import Products from "../component/Products"; 
 
 const AdminDashboard = () => {
 
@@ -56,12 +56,12 @@ const AdminDashboard = () => {
             }
 
         }
-        
+        // refactor and add error handling 
         return () => {fetchStatus()};
 
     },[])
     //create function for responding messages
-    
+
     useEffect(() => {
         if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
     }, [hash]);

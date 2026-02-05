@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Category from "../component/Category"
 import Header from "../component/Header"
-import Products from "../component/Products"
+import SupportChatContainer from "../component/SupportChatContainer"
 import Sidebar from "../component/Sidebar"
 import axios from "axios"
 import { BACKEND_URL } from "../../config"
@@ -124,9 +124,8 @@ const Main = () => {
                     <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>
                 </div>
                 
-                {/* add btn here that toggles support chat */}
-                {/* {!cookies ? <></> : toggleChat ? <SupportChat /> : <></>} uncomment this line after testing/development is done, if the toggleChat is false then return component that just says support chat to untoggle component */}
-                {!cookies ? <></> : !toggleChat ? <SupportChat /> : <></> }
+                {!cookies ? <></> : <SupportChatContainer />}
+                
             </div>
         </div>
     )

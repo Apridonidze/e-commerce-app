@@ -4,7 +4,7 @@ import { useLayoutEffect, useEffect , useRef, useState } from "react"
 import { BACKEND_URL } from "../../config"
 
 
-const SupportChat = () => {
+const SupportChat = ({ setCount }) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -56,7 +56,7 @@ const SupportChat = () => {
             }
 
             if(data.type === 'recieve_admin_list'){
-                console.log(data)
+                setCount(data.list.length)
             }
 
         };
@@ -83,7 +83,7 @@ const SupportChat = () => {
     }
 
     return(
-        <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0" tabIndex={1}>
+        <div className="support-chat-container" tabIndex={1}>
             <div className="support-chat-header d-flex justify-content-between">
                 <h4>Support Chat</h4>
                 {/* add if admins are active here */}

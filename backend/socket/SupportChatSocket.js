@@ -21,8 +21,6 @@ function SupportChatSocket (server) {
     const wss = new WebSocketServer({ server })
     
     wss.on("connection" , async(ws, req) => {
-        
-        console.log('SupportChatSocket initialized');
 
         const query = url.parse(req.url, true).query;
         const token = query.token;
@@ -49,6 +47,8 @@ function SupportChatSocket (server) {
             if(!loadRooms) return;
         }
         
+
+        ws.send(JSON.stringify({type : 'recieve_admin_list' , list : [Object.fromEntries(onlineAdmins)]}))
 
         
         ws.on('message' , async(data) => {
@@ -123,10 +123,10 @@ function SupportChatSocket (server) {
             if (ws.adminUser?.userId) {
                 const admins = onlineAdmins.get(ws.adminUser.userId);
                 if (admins) admins.delete(ws.adminUser.userId);
-                console.log(admins);
 
-                //send adminlist via ws
             }
+            
+            ws.send(JSON.stringify({type : 'recieve_admin_list' , list : [Object.fromEntries(onlineAdmins)]}))
 
         });
     })
