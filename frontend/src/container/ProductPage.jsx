@@ -11,8 +11,9 @@ const ProductPage = () => {
 
     const prodId = useParams().id
 
-    const [product,setProduct] = useState()
-    const [feedback, setFeedback] = useState([])
+    const [product,setProduct] = useState();
+    const [feedback, setFeedback] = useState([]);
+    const [similarProducts, setSimilarProducts] = useState([]);
 
     useEffect(() => {
 
@@ -26,18 +27,27 @@ const ProductPage = () => {
                 setProduct(product.data.product)
                 setFeedback(feedback.data.feedback)
 
-                console.log(feedback)
-                
+                fetchSimilarProducts(product.data.product.subcategory)
 
             }catch(err){
                 console.log(err)
                 // add erorr handling here based on statuses 500, 400 and 204 , 404
             }
-
         }
 
-        const fetchSimilarProducts = async () => {
 
+        const fetchSimilarProducts = async (category) => {
+            try{
+
+                //add checking responses
+
+                const products = await axios.get(`${BACKEND_URL}/similar-products/${category}`)
+                setSimilarProducts(products.data.products)
+
+            }catch(err){
+                // add erorr handling here based on statuses 500, 400 and 204 , 404
+                console.log(err)
+            }
         }
 
         return () => fetchProduct()
@@ -48,8 +58,6 @@ const ProductPage = () => {
     
     const imagesArray = product && JSON.parse(product.images);
     
-    console.log(product)
-    console.log(feedback)
 
     return(
         <div className="main-container container-fluid row border">
