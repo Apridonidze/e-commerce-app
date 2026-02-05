@@ -93,13 +93,12 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
             <div className="product-wrapper">
 
                 <div className="product-top w-100 h-auto" >
-                    {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxHeight:'200px'}}/> || <Skeleton />}
+                {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxHeight:'200px'}}/> || <Skeleton />}
                 </div>
                     
                 <div className="product-main">
 
                     <h5>{prod.title || <Skeleton count={1} width={'12vw'}/>}</h5>
-                    <h5>{prod.description || <Skeleton count={2}/>}</h5>
                     <h5>{`${prod.category} / ${prod.subcategory}` || <Skeleton count={2}/>}</h5>
 
                 </div>

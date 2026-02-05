@@ -159,7 +159,7 @@ const CreateProduct = () => {
 
             for(let img of images){
                 formData.append('images', img)
-            }
+            } //add several images upload and display on component for user (to be visible for them )
 
             Object.entries(data).forEach(([key,value]) => {
                 formData.append(key,value)
@@ -171,7 +171,7 @@ const CreateProduct = () => {
 
             }catch(err){
                 console.log(err)
-            }
+            }//refactor
 
         }
 

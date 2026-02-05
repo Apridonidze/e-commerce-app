@@ -44,7 +44,6 @@ ProductsRouter.post('/' , ValidateToken, isAdmin , RateLimiter ,upload.fields([{
 
         if(isAlreadyAdded.length > 0) return res.status(400).json({errMessage : 'Product Already Exists'})
 
-
         await db.query('insert into products (id, images, title, description , category , subcategory , price, amount , date) values (?,?,?,?,?,?,?,?,?)' , [req.user.userId , [JSON.stringify(base64)] , parsedRequest.name , parsedRequest.description , parsedRequest.category , parsedRequest.subCategory, parsedRequest.price, parsedRequest.amount , parsedRequest.date])
         return res.status(200).json({message : 'product added succsefully' , productDetails : `${product.name}${product.description}${product.category}${product.subCategory}`})
 
@@ -53,6 +52,10 @@ ProductsRouter.post('/' , ValidateToken, isAdmin , RateLimiter ,upload.fields([{
     }
 
 })
+
+
+// add delete for products(admin)
+//add update for procuts (admin)
 
 ProductsRouter.get('/' , async (req,res) => {
     try{
@@ -84,7 +87,7 @@ ProductsRouter.get('/:id', async (req,res) => {
   
     try{
 
-        const [ products ] = await db.query('select * from products where id = ?' , id)
+        const [ products ] = await db.query('select * from products where products_id = ?' , id)
 
         if(products.length === 0) return res.status(404).json({message : 'Product Not Found' , product : products[0]})
         
@@ -192,5 +195,6 @@ ProductsRouter.delete('/saved-products/:id' , ValidateToken ,RateLimiter,  async
     }
 
 })
+
 
 module.exports = ProductsRouter

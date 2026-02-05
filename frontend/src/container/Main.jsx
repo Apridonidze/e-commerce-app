@@ -10,6 +10,8 @@ import Product from "../component/Product"
 import Skeleton from "react-loading-skeleton"
 import SupportChat from "../component/SupportChat"
 
+// cleanup this section
+
 const Main = () => {
 
     const [ cookies ] = useCookies(['token'])
@@ -88,6 +90,9 @@ const Main = () => {
 
     }, []);
     
+    // cleanup section before return and maybe refactor if possible
+    //add error messages to api fetching functions for 500, 400, 204 status codes
+
     
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
