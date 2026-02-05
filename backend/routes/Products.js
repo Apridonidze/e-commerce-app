@@ -14,6 +14,23 @@ const RateLimiter = require('../config/RateLimiter')
 const isAdmin = require('../config/isAdmin')
 const SearchSchema = require('../schemas/SearchSchema')
 
+
+ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
+    
+    try{
+        
+        const [ saved_products ] = await db.query('select * from saved_products join products on saved_products.product_id = products.products_id where saved_products.id = ?' , [req.user.userId])
+        
+        if(saved_products.length === 0) return res.status(204).json({message : 'No Saved Products Found' , products : []})
+
+        return res.status(200).json({message : 'Saved Products Found' , products  : saved_products})
+
+    }catch(err){
+        return res.status(500).json({errMessage : 'Internal Error' , err : err})
+    }
+
+})
+
 ProductsRouter.post('/' , ValidateToken, isAdmin , RateLimiter ,upload.fields([{name :'images', maxCount : 20}]), async (req,res) => {
 
     const product = req.body
@@ -154,21 +171,7 @@ ProductsRouter.get('/admin-products' ,ValidateToken , isAdmin, async (req,res) =
     }
 })
 
-ProductsRouter.get('/saved-products' , ValidateToken , async(req,res) => {
-    
-    try{
-        
-        const [ saved_products ] = await db.query('select * from saved_products join products on saved_products.product_id = products.products_id where saved_products.id = ?' , [req.user.userId])
-        
-        if(saved_products.length < 1) return res.status(204).json({message : 'No Saved Products Found' , products : []})
 
-        return res.status(200).json({message : 'Saved Products Found' , products  : saved_products})
-
-    }catch(err){
-        return res.status(500).json({errMessage : 'Internal Error' , err : err})
-    }
-
-})
 
 ProductsRouter.post('/saved-products/:id' , ValidateToken , RateLimiter, async (req, res) => {
     const ProductId = req.params.id

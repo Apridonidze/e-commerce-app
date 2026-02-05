@@ -63,25 +63,33 @@ const ProductPage = () => {
                 const savedIds = await axios.get(`${BACKEND_URL}/products/saved-products`, {headers : {Authorization : `Bearer ${cookies.token}`}})
                 const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
 
+                if(savedIds.status === 204){
+                    setSavedIds([]);
+
+                    return;
+                }
+
+                if(cartIds.status === 204){
+                    setCartIds([]);
+                    return
+                }
+
                 const savedResp = savedIds.data.products
                 const cartResp = cartIds.data.products
 
-                console.log(savedIds)
+                const mappedSaveIds = savedResp.map((id) => {return id.product_id})
+                const mappedCartIds = cartResp.map((id) => {return id.product_id})
 
-                // debug
-                // doc
-
-                // const mappedSaveIds = savedResp.map((id) => {return id.product_id})
-                // const mappedCartIds = cartResp.map((id) => {return id.product_id})
-
-                // setSavedIds(mappedSaveIds)
-                // setCartIds(mappedCartIds)
-
+                setSavedIds(mappedSaveIds)
+                setCartIds(mappedCartIds)
 
             }catch(err){
+
+                
+
                 console.log(err)
             }
-        } 
+        }
 
         return () => {fetchProduct(), fetchProductsData()}
 

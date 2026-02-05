@@ -65,31 +65,46 @@ const Main = () => {
     }
         
 
-         const fetchProductsData = async () => {
-        try{
+        const fetchProductsData = async () => {
+            try{
 
-            const savedIds = await axios.get(`${BACKEND_URL}/products/saved-products`, {headers : {Authorization : `Bearer ${cookies.token}`}})
-            const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
+                const savedIds = await axios.get(`${BACKEND_URL}/products/saved-products`, {headers : {Authorization : `Bearer ${cookies.token}`}})
+                const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-            const savedResp = savedIds.data.products
-            const cartResp = cartIds.data.products
+                if(savedIds.status === 204){
+                    setSavedIds([]);
 
-            const mappedSaveIds = savedResp.map((id) => {return id.product_id})
-            const mappedCartIds = cartResp.map((id) => {return id.product_id})
+                    return;
+                }
 
-            setSavedIds(mappedSaveIds)
-            setCartIds(mappedCartIds)
+                if(cartIds.status === 204){
+                    setCartIds([]);
+                    return
+                }
 
+                const savedResp = savedIds.data.products
+                const cartResp = cartIds.data.products
 
-        }catch(err){
-            console.log(err)
+                const mappedSaveIds = savedResp.map((id) => {return id.product_id})
+                const mappedCartIds = cartResp.map((id) => {return id.product_id})
+
+                setSavedIds(mappedSaveIds)
+                setCartIds(mappedCartIds)
+
+            }catch(err){
+
+                
+
+                console.log(err)
+            }
         }
-    } 
 
         return () => {fetchProductsData (); fetchUser()}
 
     }, []);
     
+    console.log(savedIds)
+    console.log(cartIds)
     // cleanup section before return and maybe refactor if possible
     //add error messages to api fetching functions for 500, 400, 204 status codes
 

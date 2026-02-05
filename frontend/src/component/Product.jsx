@@ -64,6 +64,8 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
             await axios.delete(`${BACKEND_URL}/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(false)})
 
         }catch(err){
+
+            if(err.status === 400){setIsInCart(true)}
             setIsInCart(true)
             console.log(err)
         }
@@ -74,6 +76,8 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
         const id = prod.products_id
 
         const checkStatus = () => {
+
+            if(!savedIds || !cartIds) return;
 
             if(!savedIds.includes(id)) setIsSaved(true)
 
@@ -88,9 +92,9 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
     },[savedIds, cartIds])
 
     return(
-        <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}} style={{cursor: 'pointer'}} key={key} >
+        <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" style={{cursor: 'pointer'}} key={key} >
 
-            <div className="product-wrapper">
+            <div className="product-wrapper" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
 
                 <div className="product-top w-100 h-auto" >
                 {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxHeight:'200px'}}/> || <Skeleton />}
@@ -113,8 +117,8 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
             
             <div className="buttons position-relative w-100 h-100 align-items-center ">
                 
-                <button className="btn btn-warning" onClick={() => {isSaved ? handleUnsave(prod.products_id) : handleSave(prod.products_id)}}>Save</button>
-                <button className="btn btn-warning" onClick={() => {isInCart ? handleDeleteFromCart(prod.products_id) : handleAddToCart(prod.products_id)}}>Add to Cart</button>
+                <button className="btn btn-warning" onClick={() => {!isSaved ? handleUnsave(prod.products_id) : handleSave(prod.products_id)}}>{!isSaved ? 'Unsave' : 'Save'}</button>
+                <button className="btn btn-warning" onClick={() => {!isInCart ? handleDeleteFromCart(prod.products_id) : handleAddToCart(prod.products_id)}}>{!isInCart ? 'Remove From Cart' : 'Add To Cart'}</button>
             </div>
           
         </div>

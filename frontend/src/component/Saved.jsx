@@ -6,7 +6,7 @@ import { useEffect,useState } from "react"
 import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 
-const Saved = ( { } ) => {
+const Saved = ( { cartIds,savedIds } ) => {
 
     const [cookies] = useCookies(['token'])
     const [saved , setSaved] = useState([])
@@ -31,7 +31,7 @@ const Saved = ( { } ) => {
             </div>
             <div className="products">
                 {saved?.length < 1 ? <h1>No Saved Items Found.</h1> :saved?.map((prod , prodId) => (
-                    <Product prod={prod} prodId={prodId} key={prodId} />
+                    <Product prod={prod} prodId={prodId} key={prodId} savedIds={savedIds} cartIds={cartIds}/>
                 ))}
             </div>
         </>
