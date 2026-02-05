@@ -9,11 +9,11 @@ const SupportChatContainer = () =>{
 
     return(
         <div className="support-chat-container position-fixed border border-1 bg-white w-25 bottom-0 end-0">
-            <div className="support-chat-header">
+            <div className="support-chat-header d-flex justify-content-between border-bottom" onClick={() => setToggleChat(!toggleChat)} style={{cursor: 'pointer'}}>
                 <h3>Support Chat</h3>
                 <span>{count} Online Admins</span>
             </div>
-            <SupportChat setCount={setCount}/>
+            {toggleChat ? <SupportChat setCount={setCount}/> : <></> }
         </div>
     )
 }

@@ -84,10 +84,6 @@ const SupportChat = ({ setCount }) => {
 
     return(
         <div className="support-chat-container" tabIndex={1}>
-            <div className="support-chat-header d-flex justify-content-between">
-                <h4>Support Chat</h4>
-                {/* add if admins are active here */}
-            </div>
 
             <div className="support-chat-header d-flex flex-column" style={{maxHeight : "300px" , overflowY : 'scroll'}} ref={messagesRef}>
                 {messages?.map((m , mId) => <span key={mId} className={m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'}>{m.content} {m.status}</span>)}
