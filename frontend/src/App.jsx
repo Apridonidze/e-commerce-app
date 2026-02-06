@@ -32,14 +32,13 @@ const App = () => {
     //add page for each product with likes , orders , comments  and data
     //add feedbacks send page
     //add credit cart fillout form
+    // add faq page
     //add  which pages should be used with cookies rest left empty
   ])
 
   // add footer component and display it on each page
 
   //add localstorage theme get method, and style project based on its references (e.g : dark, light)
-
-  //add folder to hold skeletons for components such as like : Product.jsx , ProductPage.jsx, Feedback.jsx, etc
   
   return(
     <div className="app-container">

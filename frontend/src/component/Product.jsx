@@ -5,12 +5,10 @@ import { useCookies } from "react-cookie"
 import Skeleton from "react-loading-skeleton"
 
 import { BACKEND_URL } from "../../config"
-import { Navigate, replace, useNavigate } from "react-router-dom"
+import {  useNavigate } from "react-router-dom"
 
 
-const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
-
-
+const Product = ( { prod ,prodId , key, savedIds, cartIds, setSavedIds, setCartIds } ) => {
 
     //check if amount is equal to 0 , if so toggle style of disable
 
@@ -25,11 +23,12 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
 
         try{
 
-            await axios.post(`${BACKEND_URL}/products/saved-products/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsSaved(true)})
+            await axios.post(`${BACKEND_URL}/products/saved-products/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsSaved(true); setSavedIds(prev => [...prev, prod.products_id])})
             
         }catch(err){
             setIsSaved(false)
             console.log(err)
+            return;
         }
 
     }
@@ -38,7 +37,7 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds } ) => {
 
         try{
 
-            await axios.delete(`${BACKEND_URL}/products/saved-products/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsSaved(false)})
+            await axios.delete(`${BACKEND_URL}/products/saved-products/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsSaved(false); savedIds.filter(id => id !== prod.products_id)})
             
         }catch(err){
             setIsSaved(true)

@@ -93,8 +93,8 @@ const Main = () => {
 
             }catch(err){
 
-                
-
+                setSavedIds([]);
+                setCartIds([]);
                 console.log(err)
             }
         }
@@ -103,8 +103,6 @@ const Main = () => {
 
     }, []);
     
-    console.log(savedIds)
-    console.log(cartIds)
     // cleanup section before return and maybe refactor if possible
     //add error messages to api fetching functions for 500, 400, 204 status codes
 
@@ -120,7 +118,7 @@ const Main = () => {
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
 
                 <div className="products row">
-                    {products?.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} savedIds={savedIds} cartIds={cartIds}/>) || <Skeleton />}
+                    {products?.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} savedIds={savedIds} cartIds={cartIds} setSavedIds={setSavedIds} setCartIds={setCartIds}/>) || <Skeleton />}
                     <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>
                 </div>
                 

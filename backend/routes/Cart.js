@@ -31,7 +31,7 @@ CartRouter.post('/:id' , ValidateToken , async (req, res) => {
         if(isAlreadyInCart.length !== 0) return res.status(400).json({message : "You Already Have This Item In Your Cart"})
         
         await db.query('insert into cart (id, product_id) values (?,?)' , [req.user.userId , productId])
-        return res.status(200).json({message : "Prodcut Added In Cart Successfully"})
+        return res.status(200).json({message : "Product Added In Cart Successfully"})
 
     }catch(err){
         return res.status(500).json({errMessage : "Internal Error" , err : err})
@@ -60,16 +60,16 @@ CartRouter.delete('/:id' , ValidateToken , async (req, res) => {
 
 CartRouter.post('/order-cart-items' , ValidateToken , async (req,res) => {
     try{
-        //check if items amount are not 
+
+        const { order } = req.query
+
         const now = new Date()
         const date = now.toLocaleDateString('en-GB')
 
-        const [ cartItems ] = await db.query('select * from cart where id = ?' , [req.user.userId])
-        if(cartItems.length < 1) return res.status(400).json({message : "No Items In Cart To Order"})
-
-        const productIds = cartItems.map(item => item.product_id)
-
-        //move this product ids and data to order table, with user id , cart items array, date and edfault status 'pending' and remove this data from cart (since we should move it to orders table)
+        const [ cartItems ] = await db.query('select * from cart where id = ? and product_id in ?' , [req.user.userId]) ; //add query here 
+        if(cartItems.length < 1) return res.status(400).json({message : "No Items In Cart To Order"}) //
+        
+        await db.query('delete from cart where id = ?', [req.user.userId]) //delete this cart items from this table and move them into ordered_products with pending status 
 
         // const updateStatus = productIds.map(prod => db.query('update cart set status = ? set date = ? where product_id = ? and id = ?' , ['pending' , date ,prod , req.user.userId]))
         // const resp = updateStatus[0][0]

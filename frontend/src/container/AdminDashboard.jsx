@@ -84,8 +84,7 @@ const AdminDashboard = () => {
                         <AdminList admins={admins} user={user}/>
 
                         <section id="manage-products">
-                            {/* get last 5 products from database not to load it */}
-                            {/* add skeletons for each of them */}
+                            {/* remove this and just map the arrays with item component */}
                             <CreateProduct />
                             <Products latestProducts={latestProducts}/>
                             <Pendings pendings={pendings}/>

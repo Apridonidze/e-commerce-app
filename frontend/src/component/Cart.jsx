@@ -4,7 +4,8 @@ import { useEffect, useState} from "react"
 import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 import Product from "./Product"
-const DashboardCart = () => {
+import Item from "./Item"
+const DashboardCart = ({ cartIds,savedIds }) => {
 
     const [cookies] = useCookies(['token'])
     
@@ -31,7 +32,7 @@ const DashboardCart = () => {
             <div className="dasboard-center">
                 {cart.map((prod , prodId) => (
                     
-                    <Product prod={prod} prodId={prodId} key={prodId}/>
+                    <Item prod={prod} prodId={prodId} key={prodId} cartIds={cartIds} savedIds={savedIds}/>
                 ))}
             </div>
             <div className="dasboard-end">
