@@ -8,43 +8,16 @@ import { BACKEND_URL } from "../../config"
 import {  useNavigate } from "react-router-dom"
 
 
-const Product = ( { prod ,prodId , key, savedIds, cartIds, setSavedIds, setCartIds } ) => {
+const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
 
     //check if amount is equal to 0 , if so toggle style of disable
 
     const [ cookies ] = useCookies(['token'])
 
-    const [isSaved, setIsSaved] = useState(false);
     const [isInCart, setIsInCart] = useState(false);
 
     const navigator = useNavigate()
 
-    const handleSave = async(e) => {
-
-        try{
-
-            await axios.post(`${BACKEND_URL}/products/saved-products/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsSaved(true); setSavedIds(prev => [...prev, prod.products_id])})
-            
-        }catch(err){
-            setIsSaved(false)
-            console.log(err)
-            return;
-        }
-
-    }
-
-    const handleUnsave = async(e) => {
-
-        try{
-
-            await axios.delete(`${BACKEND_URL}/products/saved-products/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsSaved(false); savedIds.filter(id => id !== prod.products_id)})
-            
-        }catch(err){
-            setIsSaved(true)
-            console.log(err)
-        }
-
-    }
 
     const handleAddToCart = async(e) => {
         try{
@@ -75,10 +48,9 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds, setSavedIds, setCartI
 
         const checkStatus = () => {
 
-            if(!savedIds || !cartIds) return;
+            if(!cartIds) return;
 
-            if(!savedIds.includes(id)) setIsSaved(true)
-
+       
             if(!cartIds.includes(id)) setIsInCart(true)
 
             return;
@@ -87,7 +59,7 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds, setSavedIds, setCartI
 
         return () => {checkStatus()}
         
-    },[savedIds, cartIds])
+    },[cartIds])
 
     return(
         <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" style={{cursor: 'pointer'}} key={key} >
@@ -114,8 +86,6 @@ const Product = ( { prod ,prodId , key, savedIds, cartIds, setSavedIds, setCartI
             </div>
             
             <div className="buttons position-relative w-100 h-100 align-items-center ">
-                
-                <button className="btn btn-warning" onClick={() => {!isSaved ? handleUnsave(prod.products_id) : handleSave(prod.products_id)}}>{!isSaved ? 'Unsave' : 'Save'}</button>
                 <button className="btn btn-warning" onClick={() => {!isInCart ? handleDeleteFromCart(prod.products_id) : handleAddToCart(prod.products_id)}}>{!isInCart ? 'Remove From Cart' : 'Add To Cart'}</button>
             </div>
           

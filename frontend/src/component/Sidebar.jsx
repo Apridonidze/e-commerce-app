@@ -83,7 +83,6 @@ const Sidebar = () => {
                     {cookies?.token ? <div className="text d-flex flex-column">
                         <Link to='/dashboard'>Dashboard</Link>
                         <Link to='/dashboard#cart-items'>Cart</Link>
-                        <Link to='/dashboard#saved-items'>Saved</Link>
                     </div> : <></>}
                 </div>
                 <div className="center-bottom col-12 h-auto">

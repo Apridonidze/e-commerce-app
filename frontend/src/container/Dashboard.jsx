@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 
 import User from "../component/User"
 import CreateProduct from '../component/CreateProduct'
-import Saved from '../component/Saved'
 import Header from '../component/Header'
 import Sidebar from '../component/Sidebar'
 import Cart from '../component/Cart'
@@ -21,7 +20,6 @@ const Dashboard = () => {
     
     const { hash } = useLocation();
 
-    const [savedIds, setSavedIds] = useState([])
     const [cartIds, setCartIds] = useState([])
 
     useEffect(() => {
@@ -40,27 +38,19 @@ const Dashboard = () => {
         const fetchProductsData = async () => {
             try{
 
-                const savedIds = await axios.get(`${BACKEND_URL}/products/saved-products`, {headers : {Authorization : `Bearer ${cookies.token}`}})
                 const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-                if(savedIds.status === 204){
-                    setSavedIds([]);
-
-                    return;
-                }
+                
 
                 if(cartIds.status === 204){
                     setCartIds([]);
                     return
                 }
 
-                const savedResp = savedIds.data.products
                 const cartResp = cartIds.data.products
 
-                const mappedSaveIds = savedResp.map((id) => {return id.product_id})
                 const mappedCartIds = cartResp.map((id) => {return id.product_id})
 
-                setSavedIds(mappedSaveIds)
                 setCartIds(mappedCartIds)
 
             }catch(err){
@@ -84,8 +74,7 @@ const Dashboard = () => {
             </div>
             <div className="dashboard-end col">
                 <User />
-                <section id='cart-items'><Cart cartIds={cartIds} savedIds={savedIds}/></section>
-                <section id='saved-items'><Saved cartIds={cartIds} savedIds={savedIds}/></section>
+                <section id='cart-items'><Cart cartIds={cartIds} /></section>
             </div>
         </div>
     )

@@ -8,8 +8,7 @@ import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 import Product from "../component/Product"
 import Skeleton from "react-loading-skeleton"
-import SupportChat from "../component/SupportChat"
-
+import StatusMessage from "../alerts/StatusMessage"
 // cleanup this section
 
 const Main = () => {
@@ -23,7 +22,6 @@ const Main = () => {
 
     const [toggleChat, setToggleChat] = useState(false)
 
-    const [savedIds , setSavedIds] = useState([])
     const [cartIds , setCartIds] = useState([])
 
     const fetchProducts = async(offset, category) => {
@@ -68,32 +66,26 @@ const Main = () => {
         const fetchProductsData = async () => {
             try{
 
-                const savedIds = await axios.get(`${BACKEND_URL}/products/saved-products`, {headers : {Authorization : `Bearer ${cookies.token}`}})
                 const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-                if(savedIds.status === 204){
-                    setSavedIds([]);
-
-                    return;
-                }
-
+           
                 if(cartIds.status === 204){
                     setCartIds([]);
                     return
                 }
 
-                const savedResp = savedIds.data.products
+            
                 const cartResp = cartIds.data.products
 
-                const mappedSaveIds = savedResp.map((id) => {return id.product_id})
+              
                 const mappedCartIds = cartResp.map((id) => {return id.product_id})
 
-                setSavedIds(mappedSaveIds)
+           
                 setCartIds(mappedCartIds)
 
             }catch(err){
 
-                setSavedIds([]);
+             
                 setCartIds([]);
                 console.log(err)
             }
@@ -109,6 +101,7 @@ const Main = () => {
     
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
+            <StatusMessage />
             <div className="main-start col">
                 <Sidebar /> 
             </div>
@@ -118,7 +111,7 @@ const Main = () => {
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
 
                 <div className="products row">
-                    {products?.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} savedIds={savedIds} cartIds={cartIds} setSavedIds={setSavedIds} setCartIds={setCartIds}/>) || <Skeleton />}
+                    {products?.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}  cartIds={cartIds} setCartIds={setCartIds}/>) || <Skeleton />}
                     <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>
                 </div>
                 

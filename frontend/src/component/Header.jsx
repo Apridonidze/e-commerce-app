@@ -13,7 +13,9 @@ const Header = ({ setProducts }) => {
 
     const fetchDataList = async() => {
 
-        if(searchItem.trim().length < 1 || searchItem.trim() === "" || searchItem === "" || searchItem.trim() === undefined || searchItem.trim() === null || searchItem.length > 30 || regexContainsSpecial.test(searchItem)) {return}
+        if(searchItem.trim().length < 1 || searchItem.trim() === "" || searchItem === "" || 
+        searchItem.trim() === undefined || searchItem.trim() === null || searchItem.length > 30 || 
+        regexContainsSpecial.test(searchItem))return;
 
 
         try{
@@ -30,12 +32,12 @@ const Header = ({ setProducts }) => {
 
 
     return(
-        <div className="header-container  d-flex justify-content-between">
+        <div className="header-container  d-flex justify-content-between" >
 
             <div className="header-start">
                 <div className="input-group  align-items-center ">
                     <i className="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" className='form-control' list="searchlist" onChange={(e) => setSearchItem(e.target.value)} value={searchItem}/>
+                    <input type="text" className='form-control' list="searchlist" onChange={(e) => setSearchItem(e.target.value)} value={searchItem} tabIndex={1}/>
                     <datalist id="searchlist">
                         {dataList?.map((dl, dlId) => <option key={dlId} value={dl.title} />)}
                     </datalist>
