@@ -30,9 +30,9 @@ const DashboardCart = ({ cartIds }) => {
                 <h3>Cart</h3>
             </div>
             <div className="dasboard-center">
-                {cart.map((prod , prodId) => (
+                {cart?.map((prod , prodId) => (
                     
-                    <Item prod={prod} prodId={prodId} key={prodId} cartIds={cartIds} />
+                    <Item prod={prod} prodId={prodId} key={prodId} setCart={setCart} cartIds={cartIds} />
                 ))}
             </div>
             <div className="dasboard-end">

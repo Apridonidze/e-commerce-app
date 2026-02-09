@@ -8,6 +8,10 @@ import { BACKEND_URL } from "../../config"
 import {  useNavigate } from "react-router-dom"
 
 
+import cartMinus from '../assets/icons/cart-minus-solid.png'
+import cartPlus from '../assets/icons/cart-plus-solid.png'
+
+
 const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
 
     //check if amount is equal to 0 , if so toggle style of disable
@@ -48,10 +52,10 @@ const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
 
         const checkStatus = () => {
 
-            if(!cartIds) return;
+            if(!cartIds) setIsInCart(false);
 
        
-            if(!cartIds.includes(id)) setIsInCart(true)
+            if(cartIds.includes(id)) setIsInCart(true)
 
             return;
 
@@ -86,7 +90,7 @@ const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
             </div>
             
             <div className="buttons position-relative w-100 h-100 align-items-center ">
-                <button className="btn btn-warning" onClick={() => {!isInCart ? handleDeleteFromCart(prod.products_id) : handleAddToCart(prod.products_id)}}>{!isInCart ? 'Remove From Cart' : 'Add To Cart'}</button>
+                <img src={isInCart ? cartMinus : cartPlus} alt="cart-icon" onClick={() => {isInCart ? handleDeleteFromCart(prod.products_id) : handleAddToCart(prod.products_id)}}/>
             </div>
           
         </div>

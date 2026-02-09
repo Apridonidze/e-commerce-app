@@ -16,11 +16,11 @@ import { useLocation } from 'react-router-dom'
 const Dashboard = () => {
 
     const [ cookies ] = useCookies(['token'])
-    const [toggleCreateProduct, setToggleCreateProduct] = useState(false)
+    const [ toggleCreateProduct, setToggleCreateProduct ] = useState(false)
     
     const { hash } = useLocation();
 
-    const [cartIds, setCartIds] = useState([])
+    const [ cartIds, setCartIds ] = useState([])
 
     useEffect(() => {
         if (hash) {
@@ -39,9 +39,7 @@ const Dashboard = () => {
             try{
 
                 const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
-
                 
-
                 if(cartIds.status === 204){
                     setCartIds([]);
                     return
@@ -55,8 +53,6 @@ const Dashboard = () => {
 
             }catch(err){
 
-                
-
                 console.log(err)
             }
         }
@@ -67,12 +63,13 @@ const Dashboard = () => {
 
     return(
         <div className="dashboard-container container-fluid d-flex">
-
+            
             {toggleCreateProduct && <><div className="create-prodcut-bg position-fixed w-100 h-100 bg-dark opacity-50" onClick={() => {setToggleCreateProduct(false) ; document.body.classList.remove('overflow-hidden')}} style={{zIndex : 1}}></div> <CreateProduct /></>}
             <div className="dashboard-start col">
                 <Sidebar />
             </div>
             <div className="dashboard-end col">
+                <Header />
                 <User />
                 <section id='cart-items'><Cart cartIds={cartIds} /></section>
             </div>
