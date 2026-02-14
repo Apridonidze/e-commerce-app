@@ -5,7 +5,7 @@ import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 import Product from "./Product"
 import Item from "./Item"
-const DashboardCart = ({ cartIds }) => {
+const DashboardCart = ({  }) => {
 
     const [cookies] = useCookies(['token'])
     
@@ -14,6 +14,7 @@ const DashboardCart = ({ cartIds }) => {
     useEffect(() => {
         const fetchCartItems = async() => {
             try{
+                // refactor
                 await axios.get(`${BACKEND_URL}/cart` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setCart(resp.data.products)})
             }catch(err){
                 console.log(err)
@@ -30,10 +31,10 @@ const DashboardCart = ({ cartIds }) => {
                 <h3>Cart</h3>
             </div>
             <div className="dasboard-center">
-                {cart?.map((prod , prodId) => (
+                {cart ? cart.map((prod , prodId) => (
                     
-                    <Item prod={prod} prodId={prodId} key={prodId} setCart={setCart} cartIds={cartIds} />
-                ))}
+                    <Item prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} />
+                )) : 'lading'}
             </div>
             <div className="dasboard-end">
                 <button>Order Items</button>

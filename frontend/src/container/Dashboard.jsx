@@ -20,7 +20,6 @@ const Dashboard = () => {
     
     const { hash } = useLocation();
 
-    const [ cartIds, setCartIds ] = useState([])
 
     useEffect(() => {
         if (hash) {
@@ -32,35 +31,6 @@ const Dashboard = () => {
         return
     }, [hash]);
 
-
-    useEffect(() => {
-
-        const fetchProductsData = async () => {
-            try{
-
-                const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
-                
-                if(cartIds.status === 204){
-                    setCartIds([]);
-                    return
-                }
-
-                const cartResp = cartIds.data.products
-
-                const mappedCartIds = cartResp.map((id) => {return id.product_id})
-
-                setCartIds(mappedCartIds)
-
-            }catch(err){
-
-                console.log(err)
-            }
-        }
-        
-        return () => fetchProductsData()
-
-    },[])
-
     return(
         <div className="dashboard-container container-fluid d-flex">
             
@@ -71,7 +41,7 @@ const Dashboard = () => {
             <div className="dashboard-end col">
                 <Header />
                 <User />
-                <section id='cart-items'><Cart cartIds={cartIds} /></section>
+                <section id='cart-items'><Cart /></section>
             </div>
         </div>
     )

@@ -14,7 +14,7 @@ CartRouter.get('/' , ValidateToken , async(req,res) => {
         return res.status(200).json({message : 'Found Items In Your Cart' , products : cartItems})
 
     }catch(err){
-        return res.status(500).json({errMessage : 'Internal Error While Fetching cart items' , err : err})
+    return res.status(500).json({errMessage : 'Internal Error While Fetching cart items' , err : err})
     }
 })
 

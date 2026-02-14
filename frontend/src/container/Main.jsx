@@ -34,11 +34,6 @@ const Main = () => {
             console.log(err)
         }
     }
-
-    
-
-
-   
     
     useEffect(() => {
 
