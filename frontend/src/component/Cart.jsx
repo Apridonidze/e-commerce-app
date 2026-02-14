@@ -25,6 +25,16 @@ const DashboardCart = ({  }) => {
 
     },[])
 
+    const orderItems = async() => {
+        try{
+
+            
+
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     return(
         <>
             <div className="dasboard-start">
@@ -34,10 +44,10 @@ const DashboardCart = ({  }) => {
                 {cart ? cart.map((prod , prodId) => (
                     
                     <Item prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} />
-                )) : 'lading'}
+                )) : 'loading'}
             </div>
             <div className="dasboard-end">
-                <button>Order Items</button>
+                <button onClick={orderItems}>Order Items</button>
             </div>
         </>
     )
