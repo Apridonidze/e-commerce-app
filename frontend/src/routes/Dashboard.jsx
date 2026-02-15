@@ -34,6 +34,7 @@ const Dashboard = () => {
             <div className="dashboard-end col">
                 <Header />
                 <User />
+                <CardDetails />
                 <section id='cart-items'><Cart /></section>
             </div>
         </div>
