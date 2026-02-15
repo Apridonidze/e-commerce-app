@@ -1,7 +1,7 @@
 import { useCookies } from "react-cookie";
 import { useEffect, useRef, useState } from "react";
 
-import { BACKEND_URL } from "../../config";
+import { BACKEND_URL } from "../../../config";
 
 import { Link } from "react-router-dom";
 const AdminSupportChatSidebar = ({ setTargetConvId }) => {

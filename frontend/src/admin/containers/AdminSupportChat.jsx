@@ -1,4 +1,4 @@
-import { BACKEND_URL } from "../../config"
+import { BACKEND_URL } from "../../../config"
 import { useState } from "react"
 
 import { useRef, useEffect } from "react"

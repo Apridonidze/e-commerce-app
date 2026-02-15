@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 
 import User from "../component/User"
-import CreateProduct from '../component/CreateProduct'
+import CreateProduct from '../admin/components/products/CreateProduct'
 import Header from '../layout/Header'
 import Sidebar from '../component/Sidebar'
 import Cart from '../component/Cart'

@@ -7,15 +7,15 @@ import { BACKEND_URL } from "../../config"
 
 import Sidebar from "../component/Sidebar"
 import User from "../component/User"
-import AdminList from "../component/AdminList"
-import OnWayProducts from "../component/OnWayProducts"
-import DeliveredProducts from "../component/DeliveredProducts"
+import AdminList from "../admin/components/AdminList"
+import OnWayProducts from "../admin/components/products/OnWayProducts"
+import DeliveredProducts from "../admin/components/products/DeliveredProducts"
 import Reports from "../component/Reports"
 import Feedbacks from "../component/Feedbacks"
-import CreateProduct from "../component/CreateProduct"
+import CreateProduct from "../admin/components/products/CreateProduct"
 
-import Pendings from "../component/Pendings";
-import Products from "../component/Products"; 
+import Pendings from "../admin/components/products/Pendings";
+import Products from "../admin/components/products/Products"; 
 
 const AdminDashboard = () => {
 
