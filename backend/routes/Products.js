@@ -70,7 +70,7 @@ ProductsRouter.get('/' , async (req,res) => {
         if(category){
             const [ filteredProducts ] = await db.query('select products.products_id, products.images, products.title, products.description, products.category, products.subcategory, products.price, products.amount from products where subcategory = ? order by products.date limit ? , ?' , [category,offset , offset + limit])
 
-            if(filteredProducts.length < 1) return res.status(200).json({message : "No Products In That Category" , products : []}) //change 200 status code with 204
+            if(filteredProducts.length < 1) return res.status(204).json({message : "No Products In That Category" , products : []}) //change 200 status code with 204
             
             return res.status(200).json({message : "Products Found With This Category" , products : filteredProducts})
 

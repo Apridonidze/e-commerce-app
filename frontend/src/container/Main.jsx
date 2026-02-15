@@ -15,23 +15,61 @@ const Main = () => {
 
     const [ cookies ] = useCookies(['token'])
 
+    const [products, setProducts] = useState([])
     const [offset, setOffset] = useState(0)
     const [category, setCategory] = useState(null);
-    
-    const [products, setProducts] = useState([])
-
-    const [toggleChat, setToggleChat] = useState(false)
-
     const [cartIds , setCartIds] = useState([])
 
+
+    useEffect(() => {
+
+        const fetchUser = async() => {
+            try{
+
+                const user = await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}});
+                if(user.status === 404) console.log('not found'); //add error message
+
+            }catch(err){
+                console.log(err)
+            }
+        }
+        
+
+        const fetchProductsData = async () => {
+            try{
+
+                const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
+           
+                if(cartIds.status === 204){setCartIds([]); return}
+            
+                const cartResp = cartIds.data.products              
+                const mappedCartIds = cartResp.map((id) => {return id.product_id})
+           
+                setCartIds(mappedCartIds)
+
+            }catch(err){
+                setCartIds([]);
+                console.log(err)
+            }
+        }
+
+        return () => {fetchProductsData (); fetchUser()}
+
+    }, []);
+
+    
     const fetchProducts = async(offset, category) => {
         try{
 
-            const resp = await axios.get(`${BACKEND_URL}/products`, { params : {offset, category} ,headers : {Authorization : `Bearer ${cookies.token}`}})
-            setProducts(resp.data.products)
+            const product = await axios.get(`${BACKEND_URL}/products`, { params : {offset, category} ,headers : {Authorization : `Bearer ${cookies.token}`}})
+            
+            if(product.status === 204) setProducts([])
+            setProducts(product.data.products)
 
         }catch(err){
+            setProducts([])
             console.log(err)
+            //toggle allert message and pass errors
         }
     }
     
@@ -43,56 +81,8 @@ const Main = () => {
     },[category, offset])
 
 
-    useEffect(() => {
-
-        const fetchUser = async() => {
-        try{
-            await Promise.all([
-                axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setToggleChat(true)}),
-                axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setToggleChat(false)})
-            ])
-        }catch(err){
-            console.log(err)
-            setToggleChat(false)
-        }
-    }
-        
-
-        const fetchProductsData = async () => {
-            try{
-
-                const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
-
-           
-                if(cartIds.status === 204){
-                    setCartIds([]);
-                    return
-                }
-
-            
-                const cartResp = cartIds.data.products
-
-              
-                const mappedCartIds = cartResp.map((id) => {return id.product_id})
-
-           
-                setCartIds(mappedCartIds)
-
-            }catch(err){
-
-             
-                setCartIds([]);
-                console.log(err)
-            }
-        }
-
-        return () => {fetchProductsData (); fetchUser()}
-
-    }, []);
-    
     // cleanup section before return and maybe refactor if possible
     //add error messages to api fetching functions for 500, 400, 204 status codes
-
     
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
