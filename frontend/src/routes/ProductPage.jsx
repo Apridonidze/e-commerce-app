@@ -1,11 +1,9 @@
-import Sidebar from '../component/Sidebar'
-import Header from '../layout/Header'
-;
+import Sidebar from '../layout/Sidebar'
+import Header from '../layout/Header';
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 import { BACKEND_URL } from '../../config';
-import Skeleton from 'react-loading-skeleton';
 import Product from '../component/Product';
 import { useCookies } from 'react-cookie';
 const ProductPage = () => {

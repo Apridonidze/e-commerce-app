@@ -5,17 +5,17 @@ import { Navigate, useLocation } from "react-router-dom"
 
 import { BACKEND_URL } from "../../config"
 
-import Sidebar from "../component/Sidebar"
+import Sidebar from "../layout/Sidebar"
 import User from "../component/User"
 import AdminList from "../admin/components/AdminList"
 import OnWayProducts from "../admin/components/products/OnWayProducts"
 import DeliveredProducts from "../admin/components/products/DeliveredProducts"
-import Reports from "../component/Reports"
-import Feedbacks from "../component/Feedbacks"
+import Reports from "../component/ReportDetails"
+import Feedbacks from "../component/FeedbackDetails"
 import CreateProduct from "../admin/components/products/CreateProduct"
 
-import Pendings from "../admin/components/products/Pendings";
-import Products from "../admin/components/products/Products"; 
+import Pendings from "../admin/components/products/PendingProducts";
+import Products from "../admin/components/products/LatestProducts"; 
 
 const AdminDashboard = () => {
 

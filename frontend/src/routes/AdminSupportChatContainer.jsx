@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from 'react';
 import { BACKEND_URL } from '../../config';
 import { useCookies } from 'react-cookie';
 
-import AdminSupportChat from '../component/AdminSupportChat';
-import AdminSupportChatSidebar from '../component/AdminSupportChatSidebar'
+import AdminSupportChat from '../admin/containers/AdminSupportChat';
+import AdminSupportChatSidebar from '../admin/containers/AdminSupportChatSidebar'
 
 
 

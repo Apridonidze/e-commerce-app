@@ -1,10 +1,13 @@
 import axios from 'axios'
+
 import { useCookies } from 'react-cookie'
-import { Link, NavLink } from 'react-router-dom'
-import { useEffect , useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useEffect , useState, useRef } from 'react'
 import { BACKEND_URL } from '../../config'
-import User from './User'
-import { useRef } from 'react'
+
+import User from '../component/User'
+
+
 const Sidebar = () => {
 
     const [ cookies ] = useCookies(['token'])

@@ -3,20 +3,14 @@ import { useEffect, useState } from "react"
 
 
 import User from "../component/User"
-import CreateProduct from '../admin/components/products/CreateProduct'
 import Header from '../layout/Header'
-import Sidebar from '../component/Sidebar'
+import Sidebar from '../layout/Sidebar'
 import Cart from '../component/Cart'
 
-import { BACKEND_URL } from '../../config'
-import { useCookies } from 'react-cookie'
 import { useLocation } from 'react-router-dom'
 
 
 const Dashboard = () => {
-
-    const [ cookies ] = useCookies(['token'])
-    const [ toggleCreateProduct, setToggleCreateProduct ] = useState(false)
     
     const { hash } = useLocation();
 
@@ -34,7 +28,6 @@ const Dashboard = () => {
     return(
         <div className="dashboard-container container-fluid d-flex">
             
-            {toggleCreateProduct && <><div className="create-prodcut-bg position-fixed w-100 h-100 bg-dark opacity-50" onClick={() => {setToggleCreateProduct(false) ; document.body.classList.remove('overflow-hidden')}} style={{zIndex : 1}}></div> <CreateProduct /></>}
             <div className="dashboard-start col">
                 <Sidebar />
             </div>

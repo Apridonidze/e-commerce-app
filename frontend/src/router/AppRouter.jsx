@@ -2,16 +2,16 @@ import { RouterProvider, createBrowserRouter} from 'react-router-dom'
 
 
 import Main from '../routes/Main'
-// import Landing from './routes/Landing'
-// import Login from './routes/Login'
-// import Sign from './routes/Sign'
-// import Dashboard from './routes/Dashboard'
-// import AdminDashboard from './routes/AdminDashboard'
-// import AdminSupportChatContainer from './routes/AdminSupportChatContainer'
-// import Pendings from './component/Pendings'
-// import OnWayProducts from './component/OnWayProducts'
-// import DeliveredProducts from './component/DeliveredProducts'
-// import ProductPage from './routes/ProductPage'
+import Landing from '../routes/Landing'
+import Login from '../routes/Login'
+import Sign from '../routes/Sign'
+import Dashboard from '../routes/Dashboard'
+import AdminDashboard from '../routes/AdminDashboard'
+import AdminSupportChatContainer from '../routes/AdminSupportChatContainer'
+import Pendings from '../admin/components/products/PendingProducts'
+import OnWayProducts from '../admin/components/products/OnWayProducts'
+import DeliveredProducts from '../admin/components/products/DeliveredProducts'
+import ProductPage from '../routes/ProductPage'
 
 
 const AppRouter = () => {

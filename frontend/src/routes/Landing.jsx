@@ -1,5 +1,5 @@
-import LandingHeader from "../component/LandingHeader"
-import Sidebar from "../component/Sidebar"
+import LandingHeader from "../layout/LandingHeader"
+import Sidebar from "../layout/Sidebar"
 
 const Landing = () => {
     return(

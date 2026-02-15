@@ -2,14 +2,10 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 
-import Skeleton from "react-loading-skeleton"
+import Skeleton from "react-loading-skeleton" // reloacte to skeletons 
 
 import { BACKEND_URL } from "../../config"
 import {  useNavigate } from "react-router-dom"
-
-
-import cartMinus from '../assets/icons/cart-minus-solid.png'
-import cartPlus from '../assets/icons/cart-plus-solid.png'
 
 
 const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
@@ -90,7 +86,7 @@ const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
             </div>
             
             <div className="buttons position-relative w-100 h-100 align-items-center ">
-                <img src={isInCart ? cartMinus : cartPlus} alt="cart-icon" onClick={() => {isInCart ? handleDeleteFromCart(prod.products_id) : handleAddToCart(prod.products_id)}}/>
+                <img src='' alt="cart-icon" onClick={() => {isInCart ? handleDeleteFromCart(prod.products_id) : handleAddToCart(prod.products_id)}}/> {/* add src based on isInCart variable */}
             </div>
           
         </div>

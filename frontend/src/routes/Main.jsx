@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react"
+import { useCookies } from "react-cookie"
+import axios from "axios"
+
+import { BACKEND_URL } from "../../config"
+
 import Category from "../component/Category"
 import Header from "../layout/Header"
 import SupportChatContainer from "../component/SupportChatContainer"
-import Sidebar from "../component/Sidebar"
-import axios from "axios"
-import { BACKEND_URL } from "../../config"
-import { useCookies } from "react-cookie"
+import Sidebar from "../layout/Sidebar"
 import Product from "../component/Product"
-import Skeleton from "react-loading-skeleton"
 import StatusMessage from "../alerts/StatusMessage"
 // cleanup this section
+
+
+import Skeleton from "react-loading-skeleton" //relocate skeletons for folder
 
 const Main = () => {
 
@@ -19,7 +23,6 @@ const Main = () => {
     const [offset, setOffset] = useState(0)
     const [category, setCategory] = useState(null);
     const [cartIds , setCartIds] = useState([])
-
 
     useEffect(() => {
 
