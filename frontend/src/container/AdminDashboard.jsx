@@ -34,6 +34,8 @@ const AdminDashboard = () => {
     const [ reports , setReports ] = useState([])
     const [ feedback, setFeedback ] = useState([])
 
+    const [toggleCreateNew, setToggleCreateNew] = useState(false);
+
     useEffect(() => {
 
         const fetchStatus = async() => {
@@ -60,7 +62,6 @@ const AdminDashboard = () => {
         return () => {fetchStatus()};
 
     },[])
-    //create function for responding messages
 
     useEffect(() => {
         if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
@@ -69,10 +70,10 @@ const AdminDashboard = () => {
     return(
         <div className="admin-dashboard-container">
             {isAdmin !== null && !isAdmin ? <Navigate to='/'/> : <>
+
+                {toggleCreateNew ? <div><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct /></div> : <></> }
             
                 <div className="row">
-
-                    {/** toggle component on button click <CreateProduct /> */}
                         
                     <div className="admin-dashboard-start col">
                         <Sidebar />
@@ -84,8 +85,8 @@ const AdminDashboard = () => {
                         <AdminList admins={admins} user={user}/>
 
                         <section id="manage-products">
-                            {/* remove this and just map the arrays with item component */}
-                            <CreateProduct />
+
+                            <button onClick={() => setToggleCreateNew(!toggleCreateNew)}>Add</button>
                             <Products latestProducts={latestProducts}/>
                             <Pendings pendings={pendings}/>
                             <OnWayProducts onway={onway}/>
