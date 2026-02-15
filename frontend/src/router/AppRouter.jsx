@@ -1,20 +1,20 @@
 import { RouterProvider, createBrowserRouter} from 'react-router-dom'
 
 
-import Main from './container/Main'
-import Landing from './container/Landing'
-import Login from './container/Login'
-import Sign from './container/Sign'
-import Dashboard from './container/Dashboard'
-import AdminDashboard from './container/AdminDashboard'
-import AdminSupportChatContainer from './container/AdminSupportChatContainer'
+import Main from './routes/Main'
+import Landing from './routes/Landing'
+import Login from './routes/Login'
+import Sign from './routes/Sign'
+import Dashboard from './routes/Dashboard'
+import AdminDashboard from './routes/AdminDashboard'
+import AdminSupportChatContainer from './routes/AdminSupportChatContainer'
 import Pendings from './component/Pendings'
 import OnWayProducts from './component/OnWayProducts'
 import DeliveredProducts from './component/DeliveredProducts'
-import ProductPage from './container/ProductPage'
+import ProductPage from './routes/ProductPage'
 
 
-const App = () => {
+const AppRouter = () => {
 
   const router = createBrowserRouter([
     {path : '/' , element : <Main />},
@@ -47,4 +47,4 @@ const App = () => {
   )
 }
 
-export default App
+export default AppRouter;

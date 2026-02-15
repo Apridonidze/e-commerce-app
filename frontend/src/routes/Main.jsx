@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Category from "../component/Category"
-import Header from "../component/Header"
+import Header from "../layout/Header"
 import SupportChatContainer from "../component/SupportChatContainer"
 import Sidebar from "../component/Sidebar"
 import axios from "axios"

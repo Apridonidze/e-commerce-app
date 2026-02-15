@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 
 import User from "../component/User"
 import CreateProduct from '../component/CreateProduct'
-import Header from '../component/Header'
+import Header from '../layout/Header'
 import Sidebar from '../component/Sidebar'
 import Cart from '../component/Cart'
 
