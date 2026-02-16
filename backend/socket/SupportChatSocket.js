@@ -1,18 +1,18 @@
 const url  = require('url');
 const { WebSocketServer } = require('ws');
 
-const ValidateSocketToken = require('../socket.config/ValidateSocketToken');
-const ValidateSocketAdmin = require('../socket.config/ValidateSocketAdmin')
-const db = require('../config/db')
+const ValidateSocketToken = require('./socket.middlewares/ValidateSocketToken');
+const ValidateSocketAdmin = require('./socket.middlewares/ValidateSocketAdmin')
+const db = require('../middlewares/db')
 
-const asignToAdmin = require('../socket.config/asignToAdmin');
-const handleMessageLoad = require('../socket.config/handleMessageLoad');
-const handleRooms = require('../socket.config/handleRooms');
-const handleConvId = require('../socket.config/handleConvId');
-const handleJoinConv = require('../socket.config/handleJoinConv')
+const asignToAdmin = require('./socket.middlewares/asignToAdmin');
+const handleMessageLoad = require('./socket.middlewares/handleMessageLoad');
+const handleRooms = require('./socket.middlewares/handleRooms');
+const handleConvId = require('./socket.middlewares/handleConvId');
+const handleJoinConv = require('./socket.middlewares/handleJoinConv')
 
-const rooms = require('../ws.store/rooms');
-const onlineAdmins = require('../ws.store/onlineAdmins');
+const rooms = require('./socket.stores/rooms');
+const onlineAdmins = require('./socket.stores/onlineAdmins');
 
 require('dotenv').config();
 

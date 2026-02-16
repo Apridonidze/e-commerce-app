@@ -1,5 +1,5 @@
-const db = require('../config/db')
-const rooms = require('../ws.store/rooms')
+const db = require('../../middlewares/db')
+const rooms = require('../socket.stores/rooms')
 
 async function handleMessageLoad (user, convId , ws) {
 

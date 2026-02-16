@@ -1,4 +1,4 @@
-const db = require('../config/db')
+const db = require('../../middlewares/db')
 
 async function handleRooms (user , ws) {
     try{

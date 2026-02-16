@@ -1,4 +1,4 @@
-const rooms = require('../ws.store/rooms');
+const rooms = require('../socket.stores/rooms');
 const handleMessageLoad = require('./handleMessageLoad');
 
 function handleJoinConv (admin, convId ,ws) {
