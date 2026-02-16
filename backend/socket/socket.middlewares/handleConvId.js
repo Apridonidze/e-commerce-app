@@ -1,4 +1,4 @@
-const handleMessageLoad = require('../socket.config/handleMessageLoad')
+const handleMessageLoad = require('./handleMessageLoad')
 
 const db = require('../../middlewares/db')
 const rooms = require('../socket.stores/rooms')

@@ -23,5 +23,5 @@ const routes = require('./routes')
 app.use('/api', routes)
 
 server.listen(PORT , () => {
-    console.log(`listening to port ${PORT}`)
+    console.log(`Listening To Port: ${PORT}`)
 })
