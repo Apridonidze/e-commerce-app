@@ -1,3 +1,4 @@
+const add = require('./add')
 const count = require('./count.order')
 const list = require('./list')
 const pending = require('./pending.order')
@@ -7,4 +8,4 @@ const update = require('./update')
 const remove = require('./remove')
 const removeAdmin = require('./remove.admin')
 
-module.exports = {count, list,pending, onway, delivered, update,remove,removeAdmin}
+module.exports = {add, count, list,pending, onway, delivered, update,remove,removeAdmin}
