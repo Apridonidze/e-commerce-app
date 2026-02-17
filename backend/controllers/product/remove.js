@@ -1,8 +1,8 @@
 const db = require('../../middlewares/db')
 
-async function add(req,res) {
+async function remove(req,res) {
 
    
 }
 
-module.exports = add;
+module.exports = remove;
