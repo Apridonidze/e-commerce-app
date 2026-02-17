@@ -10,7 +10,6 @@ const orderRoutes = require('./orders.route')
 const feedbackRoutes = require('./feedback.route')
 const cardRoutes = require('./card.route')
 const manageOrdersRoutes = require('./manage.orders.route')
-const OrdersRoutes = require('./orders.route')
 
 router.use('/auth' , authRoutes)
 router.use('/users', usersRoutes)
