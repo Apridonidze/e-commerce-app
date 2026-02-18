@@ -3,7 +3,6 @@ import { useEffect, useState} from "react"
 
 import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
-import Product from "./Product"
 import Item from "./Item"
 const DashboardCart = ({  }) => {
 
@@ -15,7 +14,7 @@ const DashboardCart = ({  }) => {
         const fetchCartItems = async() => {
             try{
                 // refactor
-                await axios.get(`${BACKEND_URL}/cart` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setCart(resp.data.products)})
+                await axios.get(`${BACKEND_URL}/api/cart` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setCart(resp.data.products)})
             }catch(err){
                 console.log(err)
             }

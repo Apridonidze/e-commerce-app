@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useEffect, useState } from "react"
 
 
@@ -6,6 +5,7 @@ import User from "../component/User"
 import Header from '../layout/Header'
 import Sidebar from '../layout/Sidebar'
 import Cart from '../component/Cart'
+import CardDetails from '../component/CardDetails'
 
 import { useLocation } from 'react-router-dom'
 
