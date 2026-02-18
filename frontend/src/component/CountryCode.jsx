@@ -198,11 +198,11 @@ const CountryCode = ( { setCountryCode, countryRef } ) => {
 ]
 
     return(
-            <select className="form-control" name="countryCode" id="countryCode" onChange={(e) => setCountryCode(e.target.value)} ref={countryRef}>
-                {countryCode.map((code,codeId) => (
-                    <option key={codeId} value={code.code}>{code.flag} {code.code}</option>
-                ))}
-            </select>
+        <select className="form-control" name="countryCode" id="countryCode" onChange={(e) => setCountryCode(e.target.value)} ref={countryRef}>
+            {countryCode.map((code,codeId) => (
+                <option key={codeId} value={code.code}>{code.flag} {code.code}</option>
+            ))}
+        </select>
     )
 }
 

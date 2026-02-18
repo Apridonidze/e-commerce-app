@@ -10,7 +10,7 @@ const Item = ({ prod, prodId, key, setCart, cart }) => {
     const handleDeleteFromCart = async(e) => {
         try{
 
-            await axios.delete(`${BACKEND_URL}/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setCart()})
+            await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setCart()})
             setCart(cart.filter(c => c.product_id !== prod.product_id))
             
 

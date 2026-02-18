@@ -30,7 +30,7 @@ async function sign(req,res) {
             
         const [createUser] = await db.query('INSERT INTO users (fullname, email, country_code, phone, password) VALUES (?, ?, ?, ?, ?)',[userinputs.name ,userinputs.email, userinputs.phoneNumber.split(' ')[0],userinputs.phoneNumber.split(' ')[1], hasshedPassword]);
         
-        const payload = {userId : createUser.insertId, userEmail : userinputs.email }
+        const payload = {userId : createUser.insertId, userEmail : userinputs.email, role: 'user' }
         const token = jwt.sign(payload , process.env.JWT_SECRET_KEY , {expiresIn : "30d"})
 
         return res.status(200).json({message : 'User Created Successfully' , token : token})

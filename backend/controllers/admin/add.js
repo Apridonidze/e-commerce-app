@@ -8,6 +8,8 @@ async function add (req,res) {
         const [ adminQuery ] = await db.query('insert into admin (id) values (?)' , newAdmId)
         return res.status(200).json({message : 'New Admin Successfully Added To List' , adminUser : adminQuery})
 
+        //create new user from here and sign token for them
+
     }catch(err){
         return res.status(500).json({errMessage : "Internal Error" , err : err})
     }

@@ -19,7 +19,7 @@ const Header = ({ setProducts }) => {
 
 
         try{
-            await axios.get(`${BACKEND_URL}/products/item-data-list?searchItem=${searchItem}`).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
+            await axios.get(`${BACKEND_URL}/api/products/item-data-list?searchItem=${searchItem}`).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
         }catch(err){
             console.log(err)
         }

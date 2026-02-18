@@ -23,7 +23,7 @@ const Sidebar = () => {
             try{
 
                 await Promise.all([
-                    axios.get(`${BACKEND_URL}/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)})
+                    axios.get(`${BACKEND_URL}/api/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)})
                 ])
 
             }catch(err){

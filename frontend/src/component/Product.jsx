@@ -22,7 +22,7 @@ const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
     const handleAddToCart = async(e) => {
         try{
 
-            await axios.post(`${BACKEND_URL}/cart/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(true)})
+            await axios.post(`${BACKEND_URL}/api/cart/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(true)})
 
         }catch(err){
             setIsInCart(false)
@@ -33,7 +33,7 @@ const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
     const handleDeleteFromCart = async(e) => {
         try{
 
-            await axios.delete(`${BACKEND_URL}/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(false)})
+            await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(false)})
 
         }catch(err){
 
