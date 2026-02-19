@@ -16,55 +16,12 @@ import Skeleton from "react-loading-skeleton" //relocate skeletons for folder
 
 const Main = () => {
 
-    const [ cookies, setCookies, removeCookies ] = useCookies(['token'])
+    const [ cookies ] = useCookies(['token'])
 
     const [products, setProducts] = useState([])
     const [offset, setOffset] = useState(0)
     const [category, setCategory] = useState(null);
-    const [cartIds , setCartIds] = useState([])
 
-    //do noot decleare some functions that require autohrization if user does not have cookeis
-
-    useEffect(() => {
-
-        const fetchUser = async() => {
-
-            if(!cookies.token) return; 
-
-            try{
-
-                const user = await axios.get(`${BACKEND_URL}/api/auth/me` , {headers : {Authorization : `Bearer ${cookies.token}`}});
-                
-                if(user.status === 404)return removeCookies(cookies.token , {path : '/'})
-
-                try{
-
-                    const cartIds = await axios.get(`${BACKEND_URL}/api/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
-           
-                    if(cartIds.status === 204){setCartIds([]); return}
-                
-                    const cartResp = cartIds.data.products              
-                    const mappedCartIds = cartResp.map((id) => {return id.product_id})
-            
-                    setCartIds(mappedCartIds)
-
-                }catch(err){
-                    setCartIds([]);
-                    console.log(err);
-                    //add alert heere
-                }
-
-                return;
-
-            }catch(err){
-                console.log(err)
-                //add alert here
-            }
-        }
-
-        return () => {fetchUser()}
-
-    }, []);
     
     const fetchProducts = async(offset, category) => {
 
