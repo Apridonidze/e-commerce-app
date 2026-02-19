@@ -1,13 +1,14 @@
+import axios from "axios";
+import { BACKEND_URL } from "../../config";
 import { useState, useEffect, createContext } from "react";
 import { useCookies } from "react-cookie";
 
-const UserProvider = () => {
+const UserProvider = ({children}) => {
     
     const [ cookies, setCookies, removeCookies ] = useCookies(['token'])
     const UserContext = createContext();
 
     const [user,setUser] = useState(null)
-    const [isAdmin, setIsAdmin] = useState(null)
     const [cartIds , setCartIds] = useState([])
 
     useEffect(() => {
@@ -21,6 +22,9 @@ const UserProvider = () => {
                 const user = await axios.get(`${BACKEND_URL}/api/auth/me` , {headers : {Authorization : `Bearer ${cookies.token}`}});
                 
                 if(user.status === 404)return removeCookies(cookies.token , {path : '/'})
+                    
+                let data = user.data.user
+                setUser({...data, role : user.data.role})
 
                 try{
 
@@ -52,7 +56,7 @@ const UserProvider = () => {
     }, []);
 
     return(
-        <UserContext.Provider >{children}</UserContext.Provider>
+        <UserContext.Provider value={{ user, cartIds }}>{children}</UserContext.Provider>
     )
 }
 
