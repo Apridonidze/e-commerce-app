@@ -25,8 +25,8 @@ const ProductPage = () => {
 
             try{
 
-                const product = await axios.get(`${BACKEND_URL}/products/product-details`, {params : {id : id}})
-                const feedback = await axios.get(`${BACKEND_URL}/feedback/product-feedback/${id}`)
+                const product = await axios.get(`${BACKEND_URL}/api/product/product-details`, {params : {id : id}})
+                const feedback = await axios.get(`${BACKEND_URL}/api/feedback/product-feedback/${id}`)
                 
                 setProduct(product.data.product)
                 setFeedback(feedback.data.feedback)
@@ -45,7 +45,7 @@ const ProductPage = () => {
 
                 //add checking responses
 
-                const products = await axios.get(`${BACKEND_URL}/products/similar-products`, {params : {category : category , subcategory : subcategory , id : id}})
+                const products = await axios.get(`${BACKEND_URL}/api/product/similar-products`, {params : {category : category , subcategory : subcategory , id : id}})
                 console.log(products.data.products) //remove    
                 setSimilarProducts(products.data.products)
 
@@ -58,7 +58,6 @@ const ProductPage = () => {
         const fetchProductsData = async () => {
             try{
 
-                const savedIds = await axios.get(`${BACKEND_URL}/products/saved-products`, {headers : {Authorization : `Bearer ${cookies.token}`}})
                 const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
 
                 if(savedIds.status === 204){

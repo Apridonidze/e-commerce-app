@@ -16,8 +16,7 @@ const Sidebar = () => {
 
     useEffect(() => {
 
-        let user = jwtDecode(cookies.token)
-        if(user.role === 'user')return; 
+        
 
         setIsAdmin(true)
 

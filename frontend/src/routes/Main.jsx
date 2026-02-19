@@ -50,14 +50,15 @@ const Main = () => {
 
                 }catch(err){
                     setCartIds([]);
-                    console.log(err)
+                    console.log(err);
+                    //add alert heere
                 }
 
                 return;
 
             }catch(err){
-                user = false;
                 console.log(err)
+                //add alert here
             }
         }
 
@@ -87,6 +88,8 @@ const Main = () => {
 
         return () => {fetchProducts()}
     },[category, offset])
+
+    //cleanup
     
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
