@@ -7,7 +7,11 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 async function sign(req,res) {
+
+    console.log(req.body)
+
     const inputValidateResp = SignSchema(req.body.data)
+    
 
     if(!inputValidateResp.success) return res.status(400).json('Invalid Input')
         
@@ -18,7 +22,6 @@ async function sign(req,res) {
         const [isFullnameInserted] = await db.query('select * from users where fullname = ? ' , [userinputs.name]);
         const [emailInserted] = await db.query('select * from users where email = ? ' , [userinputs.email])
         const [phoneNumberInserted] = await db.query('select * from users where country_code = ? and phone = ?' , [userinputs.phoneNumber.split(' ')[0],userinputs.phoneNumber.split(' ')[1]])
-        //refactor this section , fetch data once and check then
 
         const hasshedPassword = await bcrypt.hash(userinputs.password , 10)
 

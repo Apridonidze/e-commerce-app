@@ -55,7 +55,7 @@ const Sign = () => {
         else if(name.trim().length <= 1){isValid = false; setNameErr('Enter Your Full Name (name , surname)'); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
         else if(regexContainsSpecial.test(name) === true){isValid = false; setNameErr('Your Full Name Should Not Contain Special Characters'); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
         else if(NumberRegex.test(name) === true){isValid = false; setNameErr('Your Full name Should Not Contain Numbers'); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
-        else if (name.split(' ').length < 2){isValid = false; setNameErr('Enter Your Full Name'); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
+        else if (name.split(' ').length < 2){isValid = false; setNameErr('Enter Your Full Name (Exp: John Smith)'); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')}
         else {isValid = true; setNameErr('') ;nameRef.current.classList.add('is-valid') ;nameRef.current.classList.remove('is-invalid'); data = {...data,name:name}}
 
         if(email.trim() == '' || password.trim() == email || password.trim() == email){isValid = false; setEmailErr(`This Field Can't Be Empty`) ; emailRef.current.classList.add('is-invalid'); emailRef.current.classList.remove('is-valid')}
@@ -77,28 +77,23 @@ const Sign = () => {
         if(confrimPass.trim() == '' || confrimPass.trim() == null || confrimPass.trim() == undefined){isValid = false; setConfrimPassErr(`This Field Can't Be Empty`) ; submitPasswordRef.current.classList.add('is-invalid'); submitPasswordRef.current.classList.remove('is-valid')}
         else if (confrimPass !== password){isValid = false; setConfrimPassErr('Input Does Not Match Password');submitPasswordRef.current.classList.add('is-invalid');submitPasswordRef.current.classList.remove('is-valid')}
         else {isValid = true; setConfrimPassErr('') ; submitPasswordRef.current.classList.remove('is-invalid'); submitPasswordRef.current.classList.add('is-valid')}
+        
+        if(!isValid) return;
 
-       if(isValid) {
+        try{
 
-            try{
-
-                await axios.post(`${BACKEND_URL}/sign` , {data}).then(resp => {
-                    console.log(resp);
-                    setCookies('token' , resp.data.token , {path : '/' , maxAge :  2592000})
-                    navigator('/' , {replace : true})
-                })
-
-
-            }catch(err){
+            await axios.post(`${BACKEND_URL}/api/auth/sign` , {data}).then(resp => {
+                console.log(resp);
+                setCookies('token' , resp.data.token , {path : '/' , maxAge :  2592000})
+                navigator('/' , {replace : true})
+            })
                 
-                if(err.status === 400 & err.response.data.state === 'name') console.log(err); isValid = false ; setNameErr(`Name Already In Use`); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')
-                if(err.status === 400 & err.response.data.state === 'email') console.log(err); isValid = false ; setEmailErr(`Email Already In Use`); emailRef.current.classList.add('is-invalid');emailRef.current.classList.remove('is-valid')
-                if(err.status === 400 & err.response.data.state === 'phone') console.log(err); isValid = false ; setPhoneErr(`Phone Number Already In Use`); phoneRef.current.classList.add('is-invalid');phoneRef.current.classList.remove('is-valid')
-                console.log(err)
-            }
-
-       }
-
+        }catch(err){
+            if(err.status === 400 & err.response.data.state === 'name') console.log(err); isValid = false ; setNameErr(`Name Already In Use`); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')
+            if(err.status === 400 & err.response.data.state === 'email') console.log(err); isValid = false ; setEmailErr(`Email Already In Use`); emailRef.current.classList.add('is-invalid');emailRef.current.classList.remove('is-valid')
+            if(err.status === 400 & err.response.data.state === 'phone') console.log(err); isValid = false ; setPhoneErr(`Phone Number Already In Use`); phoneRef.current.classList.add('is-invalid');phoneRef.current.classList.remove('is-valid')
+            console.log(err)
+        }
     }
 
     return(

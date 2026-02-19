@@ -1,37 +1,23 @@
-import axios from 'axios'
-
 import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
 import { useEffect , useState, useRef } from 'react'
 import { BACKEND_URL } from '../../config'
-
+import { jwtDecode } from 'jwt-decode'
 import User from '../component/User'
 
 
 const Sidebar = () => {
 
     const [ cookies ] = useCookies(['token'])
-    const [ isAdmin, setIsAdmin ] = useState(null)
+    const [ isAdmin, setIsAdmin ] = useState(false)
     const [ messagesCount , setMessagesCount] = useState(0)
 
     const socketRef = useRef(null)
 
     useEffect(() => {
 
-        const fetchStatus = async() => {
-
-            try{
-
-                await Promise.all([
-                    axios.get(`${BACKEND_URL}/api/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)})
-                ])
-
-            }catch(err){
-                console.log(err)
-            }
-        }
-        
-        return () => {fetchStatus()};
+        // let user = jwtDecode(cookies.token)
+        // console.log(user)
 
     },[])
 
