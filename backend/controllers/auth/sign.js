@@ -8,11 +8,8 @@ require('dotenv').config()
 
 async function sign(req,res) {
 
-    console.log(req.body)
-
     const inputValidateResp = SignSchema(req.body.data)
     
-
     if(!inputValidateResp.success) return res.status(400).json('Invalid Input')
         
     try{

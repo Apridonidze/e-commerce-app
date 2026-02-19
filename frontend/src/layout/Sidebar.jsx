@@ -16,13 +16,10 @@ const Sidebar = () => {
 
     useEffect(() => {
 
-        // let user = jwtDecode(cookies.token)
-        // console.log(user)
+        let user = jwtDecode(cookies.token)
+        if(user.role === 'user')return; 
 
-    },[])
-
-
-    useEffect(() => {
+        setIsAdmin(true)
 
         socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}&gainAdminAccess=${true}`)
         
@@ -30,7 +27,6 @@ const Sidebar = () => {
             console.log('connected')
             
         }
-
 
         socketRef.current.onmessage = (event) => {
             const data = JSON.parse(event.data)
