@@ -18,6 +18,8 @@ async function sign(req,res) {
         const [isFullnameInserted] = await db.query('select * from users where fullname = ? ' , [userinputs.name]);
         const [emailInserted] = await db.query('select * from users where email = ? ' , [userinputs.email])
         const [phoneNumberInserted] = await db.query('select * from users where country_code = ? and phone = ?' , [userinputs.phoneNumber.split(' ')[0],userinputs.phoneNumber.split(' ')[1]])
+        //refactor this section , fetch data once and check then
+
         const hasshedPassword = await bcrypt.hash(userinputs.password , 10)
 
         let errorList = {}
@@ -40,7 +42,7 @@ async function sign(req,res) {
         if(err.code === 'ER_DUP_ENTRY'){
             if(err.message.includes('users.fullname'))return res.status(400).json({errMessage : 'This Name Is Already In Use' , state : 'name' , err : err})
             if(err.message.includes('users.email'))return res.status(400).json({errMessage : 'This Email Is Already In Use' , state : 'email' , err : err})
-        }
+        } // impelemnt this in other functions and remove checking in logic before inserting since we will have this error handling
 
         return res.status(500).json({errMessage : 'Internal Error'  , err : err})
     }
