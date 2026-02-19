@@ -22,11 +22,6 @@ const Sidebar = () => {
         setIsAdmin(true)
 
         socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}&gainAdminAccess=${true}`)
-        
-        socketRef.current.onopen = () => {
-            console.log('connected')
-            
-        }
 
         socketRef.current.onmessage = (event) => {
             const data = JSON.parse(event.data)
@@ -37,14 +32,9 @@ const Sidebar = () => {
                 setMessagesCount(count)
             }
 
-            if (data.type === "token_error") {
+            if (data.type === "token_error" || data.type === 'internal_error') {
                 socketRef.current.close();
             }
-
-            if(data.type === 'internal_error'){
-                socketRef.current.close();
-            }
-
         }
 
         return () => {socketRef.current?.close() };
