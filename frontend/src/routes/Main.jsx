@@ -71,4 +71,7 @@ const Main = () => {
     )
 }   
 
+
+//TODO : loadmore button if products.length & 15 === 0 
+
 export default Main

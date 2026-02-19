@@ -51,4 +51,8 @@ const User = () => {
     )
 }
 //add logout button at the end of div
+
+//TODO : remove fetchUser function from top since we will have usercontext.jsx
+//TODO : create skeletons for each sections here separately
+
 export default User

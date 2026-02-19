@@ -93,4 +93,6 @@ const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
     )
 }
 
+//TODO : when product cart status is updated remove/add it from usercontext where user cart items ids are reserved
+
 export default Product

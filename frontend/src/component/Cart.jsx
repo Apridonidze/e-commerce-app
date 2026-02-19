@@ -52,4 +52,7 @@ const DashboardCart = ({  }) => {
     )
 }
 
+//TODO : remove fetch cart items from here and import it from usercontext.jsx
+//TODO : create loading skeleton for compoentn
+
 export default DashboardCart

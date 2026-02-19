@@ -18,4 +18,8 @@ const SupportChatContainer = () =>{
     )
 }
 
+
+//TODO : make support-chat-header like a small button and move title to support chat with admin count (move count,setCount to supportchat)
+//TODO : add classlists .show .hide every time button is clicked and toggle header and SupportChat compoennt separately 
+
 export default SupportChatContainer
