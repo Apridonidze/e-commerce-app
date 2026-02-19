@@ -11,6 +11,8 @@ async function isAdmin ( req , res , next) {
         const [ isAdmin ] = await db.query('select id from admin where id = ?' , id)
         if(isAdmin.length < 1) return res.status(403).json({message : "Access Declined" , isAdmin : false})
 
+            //refactor use joins for this
+
         next();
 
     }catch(err){

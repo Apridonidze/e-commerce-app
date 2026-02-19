@@ -1,3 +1,5 @@
+const db = require('../../middlewares/db')
+
 async function pending(req,res) {
      try{
     

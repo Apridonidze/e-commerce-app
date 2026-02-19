@@ -1,4 +1,6 @@
-async function add(req,res) {
+const db = require('../../middlewares/db')
+
+async function addProdReport(req,res) {
     try{
         const productId = req.params.id
         const data = req.body.data
@@ -15,4 +17,4 @@ async function add(req,res) {
 }
 
 
-module.exports = add
+module.exports = addProdReport

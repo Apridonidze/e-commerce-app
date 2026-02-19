@@ -1,3 +1,5 @@
+const db = require('../../middlewares/db')
+
 async function addPlatformReport(req,res) {
     try{
 

@@ -1,7 +1,7 @@
+const db = require('../../middlewares/db')
+
 async function add (req,res) {
     try{
-
-        
         
         const [ adminQuery ] = await db.query('insert into admin (id) values (?)' , newAdmId)
         return res.status(200).json({message : 'New Admin Successfully Added To List' , adminUser : adminQuery})
