@@ -1,24 +1,21 @@
 import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
-import { useEffect , useState, useRef } from 'react'
+import { useEffect , useState, useRef, useContext } from 'react'
 import { BACKEND_URL } from '../../config'
-import { jwtDecode } from 'jwt-decode'
 import User from '../component/User'
+import { UserContext } from '../context/UserContext'
 
 
 const Sidebar = () => {
 
     const [ cookies ] = useCookies(['token'])
-    const [ isAdmin, setIsAdmin ] = useState(false)
     const [ messagesCount , setMessagesCount] = useState(0)
-
     const socketRef = useRef(null)
+    
+    const { user, cartIds } = useContext(UserContext)
 
     useEffect(() => {
 
-        
-
-        setIsAdmin(true)
 
         socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}&gainAdminAccess=${true}`)
 
@@ -60,7 +57,7 @@ const Sidebar = () => {
                     </div> : <></>}
                 </div>
                 <div className="center-bottom col-12 h-auto">
-                    {isAdmin !== null && isAdmin ? 
+                    {user !== null && user.role === 'admin' ? 
                         <div className="text d-flex flex-column gap-3">
                             <div className="text-top d-flex flex-column">
                                 <Link to='/admin-dashboard'>Admin Dashboard</Link>

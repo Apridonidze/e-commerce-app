@@ -3,10 +3,13 @@ import { BACKEND_URL } from "../../config";
 import { useState, useEffect, createContext } from "react";
 import { useCookies } from "react-cookie";
 
-const UserProvider = ({children}) => {
+
+export const UserContext = createContext();
+
+
+export const UserProvider = ({children}) => {
     
     const [ cookies, setCookies, removeCookies ] = useCookies(['token'])
-    const UserContext = createContext();
 
     const [user,setUser] = useState(null)
     const [cartIds , setCartIds] = useState([])
@@ -59,5 +62,3 @@ const UserProvider = ({children}) => {
         <UserContext.Provider value={{ user, cartIds }}>{children}</UserContext.Provider>
     )
 }
-
-export default UserProvider
