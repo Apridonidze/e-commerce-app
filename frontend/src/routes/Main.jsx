@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"
-import { useCookies } from "react-cookie"
 import axios from "axios"
+import { useCookies } from "react-cookie"
+
+import { useEffect, useState } from "react"
 
 import { BACKEND_URL } from "../../config"
 
@@ -10,8 +11,6 @@ import SupportChatContainer from "../component/SupportChatContainer"
 import Sidebar from "../layout/Sidebar"
 import Product from "../component/Product"
 import StatusMessage from "../alerts/StatusMessage"
-// cleanup this section
-
 
 import Skeleton from "react-loading-skeleton" //relocate skeletons for folder
 
@@ -24,47 +23,53 @@ const Main = () => {
     const [category, setCategory] = useState(null);
     const [cartIds , setCartIds] = useState([])
 
+    //do noot decleare some functions that require autohrization if user does not have cookeis
+
     useEffect(() => {
 
         const fetchUser = async() => {
+
+            if(!cookies.token) return; 
+
             try{
 
-                const user = await axios.get(`${BACKEND_URL}/users` , {headers : {Authorization : `Bearer ${cookies.token}`}});
-                if(user.status === 404) console.log('not found'); //add error message
+                const user = await axios.get(`${BACKEND_URL}/api/auth/me` , {headers : {Authorization : `Bearer ${cookies.token}`}});
+                
+                if(user.status === 404) return; //reset cookies 
 
-            }catch(err){
-                console.log(err)
-            }
-        }
-        
+                try{
 
-        const fetchProductsData = async () => {
-            try{
-
-                const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
+                    const cartIds = await axios.get(`${BACKEND_URL}/api/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
            
-                if(cartIds.status === 204){setCartIds([]); return}
+                    if(cartIds.status === 204){setCartIds([]); return}
+                
+                    const cartResp = cartIds.data.products              
+                    const mappedCartIds = cartResp.map((id) => {return id.product_id})
             
-                const cartResp = cartIds.data.products              
-                const mappedCartIds = cartResp.map((id) => {return id.product_id})
-           
-                setCartIds(mappedCartIds)
+                    setCartIds(mappedCartIds)
+
+                }catch(err){
+                    setCartIds([]);
+                    console.log(err)
+                }
+
+                return;
 
             }catch(err){
-                setCartIds([]);
+                user = false;
                 console.log(err)
             }
         }
 
-        return () => {fetchProductsData (); fetchUser()}
+        return () => {fetchUser()}
 
     }, []);
-
     
     const fetchProducts = async(offset, category) => {
+
         try{
 
-            const product = await axios.get(`${BACKEND_URL}/products`, { params : {offset, category} ,headers : {Authorization : `Bearer ${cookies.token}`}})
+            const product = await axios.get(`${BACKEND_URL}/api/product`, { params : {offset, category} })
             
             if(product.status === 204) setProducts([])
             setProducts(product.data.products)
@@ -82,10 +87,6 @@ const Main = () => {
 
         return () => {fetchProducts()}
     },[category, offset])
-
-
-    // cleanup section before return and maybe refactor if possible
-    //add error messages to api fetching functions for 500, 400, 204 status codes
     
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
