@@ -16,7 +16,7 @@ import Skeleton from "react-loading-skeleton" //relocate skeletons for folder
 
 const Main = () => {
 
-    const [ cookies ] = useCookies(['token'])
+    const [ cookies, setCookies, removeCookies ] = useCookies(['token'])
 
     const [products, setProducts] = useState([])
     const [offset, setOffset] = useState(0)
@@ -35,7 +35,7 @@ const Main = () => {
 
                 const user = await axios.get(`${BACKEND_URL}/api/auth/me` , {headers : {Authorization : `Bearer ${cookies.token}`}});
                 
-                if(user.status === 404) return; //reset cookies 
+                if(user.status === 404)return removeCookies(cookies.token , {path : '/'})
 
                 try{
 
