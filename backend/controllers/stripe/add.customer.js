@@ -1,1 +1,5 @@
-function createCustomer(){}
+function createCustomer(){
+    
+}
+
+module.exports = createCustomer

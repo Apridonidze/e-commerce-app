@@ -1,1 +1,5 @@
-function createSetup(){}
+function createSetup(){
+    
+}
+
+module.exports = createSetup
