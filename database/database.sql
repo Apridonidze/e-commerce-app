@@ -24,4 +24,6 @@ create table feedback (id int , feedback_id int primary key auto_increment , con
 -- cretea table for support messages --
 create table support_messages (message_id int primary key auto_increment, conversation_id varchar(12) , sender_id int, content varchar(500), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, foreign key (sender_id) references users(id));
 
+-- ON DELETE CASCADE add this to every tables that require foreign keys
+
 -- update tables after structure is finshed
