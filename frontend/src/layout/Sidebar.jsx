@@ -12,7 +12,7 @@ const Sidebar = () => {
     const [ messagesCount , setMessagesCount] = useState(0)
     const socketRef = useRef(null)
     
-    const { user, cartIds } = useContext(UserContext)
+    const { user } = useContext(UserContext)
 
     useEffect(() => {
 
@@ -21,7 +21,6 @@ const Sidebar = () => {
 
         socketRef.current.onmessage = (event) => {
             const data = JSON.parse(event.data)
-
 
             if(data.type === 'recieve_conv_ids'){
                 const count = data.rooms.filter(msg => msg.sender_id !== 'You' && msg.status === 'Delivered').length

@@ -7,8 +7,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 const User = () => {
 
-    const { user, cartIds } = useContext(UserContext)
-    
+    const { user } = useContext(UserContext)
 
     return(
         <section id="user">

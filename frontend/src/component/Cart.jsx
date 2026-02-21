@@ -1,34 +1,22 @@
-import axios from "axios"
-import { useEffect, useState} from "react"
+import { useContext, useState } from "react"
+import { UserContext } from "../context/UserContext"
 
-import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 import Item from "./Item"
+import { useEffect } from "react"
 const DashboardCart = ({  }) => {
 
     const [cookies] = useCookies(['token'])
-    
     const [cart , setCart] = useState([])
 
-    useEffect(() => {
-        const fetchCartItems = async() => {
-            try{
-                // refactor
-                await axios.get(`${BACKEND_URL}/api/cart` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setCart(resp.data.products)})
-            }catch(err){
-                console.log(err)
-            }
-        }
-
-        return () => {fetchCartItems()};
-
-    },[])
-
+    const { cartIds } = useContext(UserContext)
+    
+    useEffect(() => {setCart(cartIds)},[cartIds])
+    
     const orderItems = async() => {
         try{
 
-            
-
+            //add api call to for ordering
         }catch(err){
             console.log(err)
         }
