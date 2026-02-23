@@ -12,6 +12,7 @@ export const UserProvider = ({children}) => {
     const [ cookies, setCookies, removeCookies ] = useCookies(['token'])
 
     const [user,setUser] = useState(null)
+    const [customerId, setCustomerId] = useState();
     const [cartIds , setCartIds] = useState([])
 
     useEffect(() => {
@@ -28,6 +29,19 @@ export const UserProvider = ({children}) => {
                     
                 let data = user.data.user
                 setUser({...data, role : user.data.role})
+
+                try{
+
+                    const customerId = await axios.get(`${BACKEND_URL}/api/stripe/my-customer-id` , {headers : {Authorization : `Bearer ${cookies.token}`}})
+                    setCustomerId(customerId.data.customerId)
+
+                    console.log('asdjknsadjk')
+
+                }catch(err){
+                    setCustomerId()
+                    console.log(err)
+                    return
+                }
 
                 try{
 
@@ -59,7 +73,7 @@ export const UserProvider = ({children}) => {
     }, []);
 
     return(
-        <UserContext.Provider value={{ user, cartIds }}>{children}</UserContext.Provider>
+        <UserContext.Provider value={{ user, cartIds, customerId }}>{children}</UserContext.Provider>
     )
 }
 
