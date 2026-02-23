@@ -5,7 +5,7 @@ const route = require('../controllers/stripe')
 
 const ValidateToken = require('../middlewares/ValidateToken')
 
-router.get('/my-customer-id' , route.me)
+router.get('/my-customer-id' , ValidateToken,  route.me)
 router.post('/create-setup-intent' , route.createSetup)
 router.post('/create-customer-intent' , ValidateToken , route.createCustomer)
 
