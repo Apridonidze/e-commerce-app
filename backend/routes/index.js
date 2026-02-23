@@ -18,7 +18,7 @@ router.use('/product', productRoutes)
 router.use('/cart', cartRoutes)
 router.use('/order', orderRoutes)
 router.use('/feedback', feedbackRoutes)
-router.use('/card-details', stripeRoutes)
+router.use('/stripe', stripeRoutes)
 router.use('/order', orderRoutes)
 router.use('/manage-orders', manageOrdersRoutes)
 

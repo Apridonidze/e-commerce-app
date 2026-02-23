@@ -10,10 +10,19 @@ import CardDetails from '../component/CardDetails'
 import { useLocation } from 'react-router-dom'
 
 
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js"
+
+import { STRIPE_PUBLIC_KEY } from '../../config'
+const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
+
+
+
 const Dashboard = () => {
     
     const { hash } = useLocation();
 
+    const [toggleCard,setToggleCard] = useState(false)
 
     useEffect(() => {
         if (hash) {
@@ -34,11 +43,19 @@ const Dashboard = () => {
             <div className="dashboard-end col">
                 <Header />
                 <User />
-                <CardDetails />
+                
+                <div className="row">
+                    <div className="col"><h1>Card Details</h1></div>
+                    <div className="col"><button onClick={() => setToggleCard(true)}>Add Cart</button></div>
+                </div>
+
+                {toggleCard ? <Elements stripe={stripePromise}><CardDetails /></Elements> : <></>}
+
                 <section id='cart-items'><Cart /></section>
             </div>
         </div>
     )
 }
+// add edit/add cart button toggle based on if user has added card details previous 
 
 export default Dashboard
