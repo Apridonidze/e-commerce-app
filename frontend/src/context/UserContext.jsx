@@ -62,3 +62,6 @@ export const UserProvider = ({children}) => {
         <UserContext.Provider value={{ user, cartIds }}>{children}</UserContext.Provider>
     )
 }
+
+// import user stripe customer id 
+// toggle add/edit card in dashboard based on if user has stripe id or not

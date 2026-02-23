@@ -2,9 +2,6 @@ import axios from "axios";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { BACKEND_URL } from "../../config";
 
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-
 const CardDetails = () => {
 
     const stripe = useStripe();
@@ -15,9 +12,7 @@ const CardDetails = () => {
         e.preventDefault();
         
         try{
-            const { data } = await axios.post("/create-setup-intent", {
-            customerId: "cus_xxx"
-            });
+            const { data } = await axios.post(`${BACKEND_URL}/api/stripe/create-setup-intent`, {customerId: "cus_xxx"});
 
             const cardElement = elements.getElement(CardElement);
 
