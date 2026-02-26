@@ -4,6 +4,7 @@ import { BACKEND_URL } from "../../config";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useCookies } from "react-cookie";
+import { useRef } from "react";
 
 const CardDetails = () => {
 
@@ -14,6 +15,8 @@ const CardDetails = () => {
 
     const { customerId } = useContext(UserContext)
 
+    const submitRef = useRef(null)
+
     const handleSaveCard = async (e) => {
         e.preventDefault();
         
@@ -23,10 +26,17 @@ const CardDetails = () => {
             const cardElement = elements.getElement(CardElement);
 
             const result = await stripe.confirmCardSetup(data.clientSecret, {payment_method: {card: cardElement}});
+            submitRef.current.disabled = true;
 
-            console.log(result)
+            switch(result.type){
+                case result.type === 'validation_error' : 
+                    console.log(result.message)
+                break;
+                case result.type === 'card_declined' : 
+                    console.log(result.message)
+                break;
+            }
 
-            console.log("Saved!", result.setupIntent.payment_method);
         }catch(err){
             console.log(err)
         }
@@ -40,7 +50,7 @@ const CardDetails = () => {
         <div className="bg-white">
             <form onSubmit={handleSaveCard}>
                 <CardElement />
-                <button type="submit">Save Card Details</button>    
+                <button type="submit" ref={submitRef}>Save Card Details</button>    
             </form>
         </div>
     );
