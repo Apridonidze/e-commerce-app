@@ -3,8 +3,11 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { BACKEND_URL } from "../../config";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { useCookies } from "react-cookie";
 
 const CardDetails = () => {
+
+    const [ cookies ] = useCookies(['token'])
 
     const stripe = useStripe();
     const elements = useElements();
@@ -15,7 +18,7 @@ const CardDetails = () => {
         e.preventDefault();
         
         try{
-            const { data } = await axios.post(`${BACKEND_URL}/api/stripe/create-setup-intent`, {customerId: customerId});
+            const { data } = await axios.post(`${BACKEND_URL}/api/stripe/create-setup-intent`, {customerId: customerId} , {headers : {Authorization : `Bearer ${cookies.token}`}});
 
             const cardElement = elements.getElement(CardElement);
 

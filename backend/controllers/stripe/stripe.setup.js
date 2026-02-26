@@ -16,6 +16,7 @@ async function createSetup(req,res){
         res.status(200).json({message : "Stripe Setup Created", clientSecret : setup.client_secret})
 
     }catch(err){
+        console.log(err)
         return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
 }
