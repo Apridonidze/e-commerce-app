@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended : true}))
 const http = require('http')
 const server = http.createServer(app)
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8081
 
 const SupportChatSocket = require('./socket/SupportChatSocket')
 SupportChatSocket(server)

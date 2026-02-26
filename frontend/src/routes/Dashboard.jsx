@@ -29,6 +29,7 @@ const Dashboard = () => {
     const [toggleCard,setToggleCard] = useState(false)
 
     const { customerId } = useContext(UserContext)
+    const { user } = useContext(UserContext)
 
     useEffect(() => {
         if (hash) {
@@ -43,17 +44,14 @@ const Dashboard = () => {
     const generateCustomerId = async () => {
         try{
 
-            const GenerateCustomerId = await axios.post(`${BACKEND_URL}/api/stripe/create-customer-intent`, {} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const GenerateCustomerId = await axios.post(`${BACKEND_URL}/api/stripe/create-customer-intent`, {email : user.email} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-            console.log(GenerateCustomerId.data.stripe_customer_id) 
-            console.log('asdasdsadasdjansjkdnasjkdsajkdnjasd') 
-
+            console.log(GenerateCustomerId)
             // GenerateCustomerId.data.stripe_customer_id
             // setToggleCard(true)
 
         }catch(err){
             console.log(err)
-            console.log('asdasdsadasdjansjkdnasjkdsajkdnjasd') 
 
             // setToggleCard(false)
         }

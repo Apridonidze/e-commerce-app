@@ -9,7 +9,7 @@ async function me(req,res) {
         const [ isAdmin ] = await db.query('select id from admin where id = ?' , id)
 
         if(user.length < 1) return res.status(404).json({errMessage : "User Not Found" , user : null})
-        return res.status(200).json({message : 'User Found' , user : user[0] , role : isAdmin.length === 0 ? 'user' : 'admin'})
+    return res.status(200).json({message : 'User Found' , user : user[0] , role : isAdmin.length === 0 ? 'user' : 'admin'})
 
 
     }catch(err){

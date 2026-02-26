@@ -30,12 +30,12 @@ export const UserProvider = ({children}) => {
                 let data = user.data.user
                 setUser({...data, role : user.data.role})
 
+                console.log(user)
+
                 try{
 
-                    const customerId = await axios.get(`${BACKEND_URL}/api/stripe/my-customer-id` , {headers : {Authorization : `Bearer ${cookies.token}`}})
-                    setCustomerId(customerId.data.customerId)
-
-                    console.log('asdjknsadjk')
+                    const customer = await axios.get(`${BACKEND_URL}/api/stripe/my-customer-id` , {headers : {Authorization : `Bearer ${cookies.token}`}})
+                    setCustomerId(customer.data.customerId)
 
                 }catch(err){
                     setCustomerId()

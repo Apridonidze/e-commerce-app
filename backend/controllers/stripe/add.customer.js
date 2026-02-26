@@ -9,7 +9,7 @@ async function createCustomer(req,res){
     try{
 
         const { email } = req.body
-        const userId = req.user.userId
+        const userId = req.user?.userId
 
         const customer = await stripe.customers.create({email})
 

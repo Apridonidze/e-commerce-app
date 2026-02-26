@@ -21,6 +21,8 @@ const CardDetails = () => {
 
             const result = await stripe.confirmCardSetup(data.clientSecret, {payment_method: {card: cardElement}});
 
+            console.log(result)
+
             console.log("Saved!", result.setupIntent.payment_method);
         }catch(err){
             console.log(err)
