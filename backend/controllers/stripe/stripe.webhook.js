@@ -34,7 +34,6 @@ async function webHook(req,res){
             const paymentIntent = event.data.object
             console.log('Payment succeeded:', paymentIntent.id)
             
-            // save payments to db
             res.status(200).json({success : true , message : 'Payment Succeeded'})
 
             break;
