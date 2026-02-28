@@ -67,7 +67,7 @@ const Dashboard = () => {
                 
                 <div className="row">
                     <div className="col"><h1>Card Details</h1></div>
-                    <div className="col">{customerId ? <button onClick={() => generateCustomerId()}>Edit Card</button> :  <button onClick={() => setToggleCard(true)}>Add Card</button>}</div>
+                    <div className="col">{customerId ? <button onClick={() => setToggleCard(true)}>Edit Card</button> :  <button  onClick={() => generateCustomerId()}>Add Card</button>}</div>
                 </div>
 
                 {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}

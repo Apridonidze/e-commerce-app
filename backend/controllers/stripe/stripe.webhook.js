@@ -40,16 +40,16 @@ async function webHook(req,res){
 
         case 'setup_intent.succeeded' : 
 
-        const setupIntent = event.data.object;
+            const setupIntent = event.data.object;
 
-        const paymentMethodId = setupIntent.payment_method;
-        const customerId = setupIntent.customer;
+            const paymentMethodId = setupIntent.payment_method;
+            const customerId = setupIntent.customer;
 
-        const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
+            const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
 
-        await db.query('INSERT INTO saved_cards (customer_id, payment_method_id, brand, last4) VALUES (?, ?, ?, ?)',[customerId,paymentMethodId,paymentMethod.card.brand,paymentMethod.card.last4]);
-        
-        res.status(200).json({success : true , message : 'Card Details Saved Successfully'})
+            await db.query('INSERT INTO saved_cards (customer_id, payment_method_id, brand, last4) VALUES (?, ?, ?, ?)',[customerId,paymentMethodId,paymentMethod.card.brand,paymentMethod.card.last4]);
+            
+            res.status(200).json({success : true , message : 'Card Details Saved Successfully'})
 
         break;
 
