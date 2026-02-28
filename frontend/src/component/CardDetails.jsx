@@ -28,13 +28,11 @@ const CardDetails = () => {
             const result = await stripe.confirmCardSetup(data.clientSecret, {payment_method: {card: cardElement}});
             submitRef.current.disabled = true;
 
-            switch(result.type){
-                case result.type === 'validation_error' : 
-                    console.log(result.message)
-                break;
-                case result.type === 'card_declined' : 
-                    console.log(result.message)
-                break;
+            if (result.error) {
+                console.log(result.error.message);
+                submitRef.current.disabled = false;
+            } else {
+                console.log("Card saved successfully!");
             }
 
         }catch(err){
