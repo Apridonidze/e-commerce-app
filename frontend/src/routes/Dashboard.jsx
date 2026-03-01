@@ -26,8 +26,10 @@ const Dashboard = () => {
     const [cookies] = useCookies(['token'])
     const [toggleCard,setToggleCard] = useState(false)
 
-    const { customerId } = useContext(UserContext)
+    const { cardDetails } = useContext(UserContext)
     const { user } = useContext(UserContext)
+
+    console.log(cardDetails)
 
     useEffect(() => {
         if (hash) {
@@ -67,7 +69,7 @@ const Dashboard = () => {
                 
                 <div className="row">
                     <div className="col"><h1>Card Details</h1></div>
-                    <div className="col">{customerId ? <button onClick={() => setToggleCard(true)}>Edit Card</button> :  <button  onClick={() => generateCustomerId()}>Add Card</button>}</div>
+                    <div className="col">{<button onClick={() => {cardDetails?.customer_id ? setToggleCard(true) :  generateCustomerId()}}>{cardDetails?.last4 ? 'Edit Card' : 'Add Card'}</button>}</div>
                 </div>
 
                 {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
@@ -77,6 +79,6 @@ const Dashboard = () => {
         </div>
     )
 }
-// add edit/add cart button toggle based on if user has added    card details previous 
+// add edit/add cart button toggle based on if user has added card details previous 
 
 export default Dashboard

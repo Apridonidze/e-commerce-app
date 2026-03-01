@@ -6,6 +6,10 @@ require('dotenv').config()
 const cors = require('cors')
 const CorsOptions = require('./middlewares/CorsOptions')
 
+const webhook = require('./controllers/stripe')
+
+app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }) , webhook.webhook)
+
 app.use(cors(CorsOptions))
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))

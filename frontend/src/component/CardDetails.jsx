@@ -13,7 +13,7 @@ const CardDetails = () => {
     const stripe = useStripe();
     const elements = useElements();
 
-    const { customerId } = useContext(UserContext)
+    const { cardDetails } = useContext(UserContext)
 
     const submitRef = useRef(null)
 
@@ -21,12 +21,12 @@ const CardDetails = () => {
         e.preventDefault();
         
         try{
-            const { data } = await axios.post(`${BACKEND_URL}/api/stripe/create-setup-intent`, {customerId: customerId} , {headers : {Authorization : `Bearer ${cookies.token}`}});
+            const { data } = await axios.post(`${BACKEND_URL}/api/stripe/create-setup-intent`, {customerId: cardDetails.customer_id} , {headers : {Authorization : `Bearer ${cookies.token}`}});
 
             const cardElement = elements.getElement(CardElement);
 
-            const result = await stripe.confirmCardSetup(data.clientSecret, {payment_method: {card: cardElement}});
             submitRef.current.disabled = true;
+            const result = await stripe.confirmCardSetup(data.clientSecret, {payment_method: {card: cardElement}});
 
             if (result.error) {
                 console.log(result.error.message);
@@ -38,9 +38,6 @@ const CardDetails = () => {
         }catch(err){
             console.log(err)
         }
-        
-// /api/stripe/create-setup-intent
-// /api/stripe/create-customer-intent
 
     }
 

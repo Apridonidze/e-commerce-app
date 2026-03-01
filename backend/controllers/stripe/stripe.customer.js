@@ -13,8 +13,8 @@ async function createCustomer(req,res){
 
         const customer = await stripe.customers.create({email})
 
-        await db.query('insert into stripe_users (user_id , stripe_user_id) values (?,?)' , [userId, customer.id])
-        res.status(200).json({message : "Stripe User Generated", stripe_customer_id : customer.id})
+        await db.query('insert into stripe_users (user_id , customer_id) values (?,?)' , [userId, customer.id])
+        return res.status(200).json({message : "Stripe User Generated", stripe_customer_id : customer.id})
 
     }catch(err){
         return res.status(500).json({errMessage : "Internal Error" , err : err})

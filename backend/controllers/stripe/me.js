@@ -4,15 +4,15 @@ async function me (req,res) {
     try{
         const userId = req.user.userId
 
-        const [ customerId ] = await db.query('select * from stripe_users where user_id = ?' , userId)
+        const [ details ] = await db.query('select * from stripe_users where stripe_users.user_id = ?' , userId)
 
-        if(customerId.length === 0) return res.status(204)
+        if(details.length === 0) return res.status(204)
         
-        res.status(200).json({message : "Stripe Customer Id Fetched" , customerId : customerId[0]})
+        return res.status(200).json({message : "Stripe Customer Id Fetched" , details : details[0]})
 
     }catch(err){
         console.log(err)
-        return res.status(500).json({errMessage : "Internal Error" , err : err})
+        return res.status(500).json({errMessage : "Internal Error while fetchging card" , err : err})
     }
 }
 
