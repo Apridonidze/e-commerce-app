@@ -167,7 +167,7 @@ const CreateProduct = () => {
 
             try{
 
-                await axios.post(`${BACKEND_URL}/products`, formData , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+                await axios.post(`${BACKEND_URL}/api/product`, formData , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
 
             }catch(err){
                 console.log(err)

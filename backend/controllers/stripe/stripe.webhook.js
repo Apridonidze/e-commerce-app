@@ -52,7 +52,7 @@ async function webHook(req,res){
             default:
                 console.log(`Unhandled event type ${event.type}`)
                 // return 400 status error
-                }
+            }
 
         return res.status(200).json({ received: true })
 

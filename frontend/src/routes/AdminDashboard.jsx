@@ -43,15 +43,13 @@ const AdminDashboard = () => {
             try{
 
                 await Promise.all([
-                    axios.get(`${BACKEND_URL}/api/users` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) , setUser(resp.data.user)}),
-                    axios.get(`${BACKEND_URL}/api/admin` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsAdmin(resp.data.isAdmin)}),
                     axios.get(`${BACKEND_URL}/api/admin/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setAdmins(resp.data.adminList)}),
-                    axios.get(`${BACKEND_URL}/api//products/admin-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setLatestProducts(prev => [...prev, ...resp.data.products])}),
+                    axios.get(`${BACKEND_URL}/api/products/admin-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setLatestProducts(prev => [...prev, ...resp.data.products])}),
                     axios.get(`${BACKEND_URL}/api/manage-orders/pending-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setPendings(prev => [...prev, ...resp.data.products])}),
                     axios.get(`${BACKEND_URL}/api/manage-orders/on-way-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setOnway(prev => [...prev, ...resp.data.products])}),
                     axios.get(`${BACKEND_URL}/api/manage-orders/delivered-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setDelivered(prev => [...prev, ...resp.data.products])}),
                     axios.get(`${BACKEND_URL}/api/reports/product-reports` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setReports(prev => [...prev, ...resp.data.reports])}),
-                    axios.get(`${BACKEND_URL}/api/feedback` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setFeedback(prev => [...prev, ...resp.data.feedback])}),
+                    // axios.get(`${BACKEND_URL}/api/feedback` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setFeedback(prev => [...prev, ...resp.data.feedback])}),
             ])
             }catch(err){
                 console.log(err)

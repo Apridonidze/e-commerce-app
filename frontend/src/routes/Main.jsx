@@ -14,7 +14,11 @@ import StatusMessage from "../alerts/StatusMessage"
 
 import Skeleton from "react-loading-skeleton" //relocate skeletons for folder
 
+import { useContext } from "react"
+import { ProductContext } from "../context/ProductContext"
 const Main = () => {
+
+    const { prevProducts } = useContext(ProductContext)
 
     const [ cookies ] = useCookies(['token'])
 
@@ -33,13 +37,15 @@ const Main = () => {
             setProducts(product.data.products)
 
         }catch(err){
-            setProducts([])
+            setProducts(prevProducts)
             console.log(err)
             //toggle allert message and pass errors
         }
     }
     
     useEffect(() => {
+
+        setProducts(prevProducts)
 
         fetchProducts(offset,category);
 
