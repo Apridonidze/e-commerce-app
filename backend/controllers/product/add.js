@@ -1,10 +1,11 @@
+const fs = require('fs')
 const db = require('../../middlewares/db')
 const NewProductSchema = require('../../schemas/NewProductSchema')
 
 async function add(req,res) {
 
-    const data = req.body.data
-    
+    const data = req.body;    
+
     const parsedRequest = {
         name : data.name.toString(),
         description : data.description.toString(),
@@ -22,7 +23,7 @@ async function add(req,res) {
 
     try{
         
-        const files = req.files?.images;
+        const files = req.files;
         const filesBuffer = await Promise.all(files.map(file => fs.promises.readFile(file.path)));
         const base64 = filesBuffer.map(buffer => buffer.toString("base64"))
 

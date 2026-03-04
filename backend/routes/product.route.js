@@ -5,7 +5,9 @@ const productRoute = require('../controllers/product');
 const ValidateToken = require('../middlewares/ValidateToken');
 const isAdmin = require('../middlewares/isAdmin');
 
-router.post('/' , ValidateToken, isAdmin , productRoute.add)
+const uploader = require('../middlewares/uploader')
+
+router.post('/' , ValidateToken, isAdmin , uploader.array("images", 5) , productRoute.add)
 router.put('/:id' , ValidateToken, isAdmin , productRoute.edit)
 router.delete('/:id' , ValidateToken, isAdmin , productRoute.remove)
 router.get('/', productRoute.list)

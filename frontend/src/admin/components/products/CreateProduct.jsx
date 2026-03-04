@@ -157,28 +157,25 @@ const CreateProduct = () => {
 
             const formData = new FormData();
 
-            for(let img of images){
-                formData.append('images', img)
-            } //add several images upload and display on component for user (to be visible for them )
+            images.forEach(img => {
+                formData.append('images', img);
+            });
 
-            Object.entries(data).forEach(([key,value]) => {
-                formData.append(key,value)
-            })
+            Object.entries(data).forEach(([key, value]) => {
+                formData.append(key, value);
+            });
 
-            try{
+            try {
+            const response = await axios.post(`${BACKEND_URL}/api/product`,formData,{headers: {Authorization: `Bearer ${cookies.token}`,"Content-Type": "multipart/form-data"}});
+            console.log(response.data);
 
-                await axios.post(`${BACKEND_URL}/api/product`, {formData , data } , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
-
-            }catch(err){
-                console.log(err)
-            }//refactor
-
+            } catch (err) {
+                console.log(err);
+            }
         }
-
     }
 
-    //debug image upload
-    //add list that shows images that has been in list of upload
+    
     return(
         <div className="create-product-container position-fixed bg-white" style={{left : '40vw' }} tabIndex={9999}>
             <div className="create-products-top">
@@ -187,8 +184,12 @@ const CreateProduct = () => {
             <div className="create-products-main">
                 <form onSubmit={handleUploadProduct} enctype="multipart/form-data">
 
+                    <div className="images-container">
+                        {images.map((img, imgId) => {return <img src={URL.createObjectURL(img)} style={{maxWidth: '200px' , height : 'auto', cursor : 'pointer'}} alt={img.name} key={imgId} onClick={(e) => {const newImages = images.filter((_, id) => id !== imgId) ; setImages(newImages)}}/>})}
+                    </div>
+
                     <div className="form-floating">
-                        <input type="file" multiple  className="form-control" onChange={(e) => setImages(e.target.files)}  accept="image/*" ref={imageRef}/>
+                        <input type="file" multiple  className="form-control" onChange={(e) => {const files = Array.from(e.target.files); setImages(prev => [...prev, ...files])}}  accept="image/*" ref={imageRef}/>
                         <span>{imageErr}</span>
                     </div>
 
