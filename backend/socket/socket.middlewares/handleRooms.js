@@ -28,7 +28,6 @@ async function handleRooms (user , ws) {
         return true;
 
     }catch(err){
-        console.log(err)
         ws.send(JSON.stringify({type: 'internal_error' , message : "Error While Fetching Clients Messages"}))
         ws.close()
         return false;

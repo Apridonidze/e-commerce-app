@@ -68,7 +68,7 @@ const Main = () => {
 
                 <div className="products row">
                     {products?.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId}  cartIds={cartIds} setCartIds={setCartIds}/>) || <Skeleton />}
-                    <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>
+                    {products?.length % 15 !== 0 || products.length === 0 ? <></> : <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>}
                 </div>
                 
                 {!cookies ? <></> : <SupportChatContainer />}
