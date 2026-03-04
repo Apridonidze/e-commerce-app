@@ -66,8 +66,8 @@ const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
 
             <div className="product-wrapper" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
 
-                <div className="product-top w-100 h-auto" >
-                {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxHeight:'200px'}}/> || <Skeleton />}
+                <div className="product-top w-100 h-auto d-flex justify-content-center" >
+                {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'200px'}}/> || <Skeleton />}
                 </div>
                     
                 <div className="product-main">

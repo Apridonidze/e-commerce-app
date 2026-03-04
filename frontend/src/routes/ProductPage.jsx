@@ -16,7 +16,6 @@ const ProductPage = () => {
     const [feedback, setFeedback] = useState([]);
     const [similarProducts, setSimilarProducts] = useState([]);
 
-    const [savedIds, setSavedIds] = useState([])
     const [cartIds, setCartIds] = useState([])
 
     useEffect(() => {
@@ -39,7 +38,6 @@ const ProductPage = () => {
             }
         }
 
-
         const fetchSimilarProducts = async (category,subcategory) => {
             try{
 
@@ -55,45 +53,15 @@ const ProductPage = () => {
             }
         }
 
-        const fetchProductsData = async () => {
-            try{
+        
 
-                const cartIds = await axios.get(`${BACKEND_URL}/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
-
-                if(savedIds.status === 204){
-                    setSavedIds([]);
-
-                    return;
-                }
-
-                if(cartIds.status === 204){
-                    setCartIds([]);
-                    return
-                }
-
-                const savedResp = savedIds.data.products
-                const cartResp = cartIds.data.products
-
-                const mappedSaveIds = savedResp.map((id) => {return id.product_id})
-                const mappedCartIds = cartResp.map((id) => {return id.product_id})
-
-                setSavedIds(mappedSaveIds)
-                setCartIds(mappedCartIds)
-
-            }catch(err){
-
-                
-
-                console.log(err)
-            }
-        }
-
-        return () => {fetchProduct(), fetchProductsData()}
+        return () => {fetchProduct()}
 
     },[id])
     
     const imagesArray = product && JSON.parse(product.images);
-    
+
+    console.log(imagesArray)
 
     return(
         <div className="main-container container-fluid row border">
