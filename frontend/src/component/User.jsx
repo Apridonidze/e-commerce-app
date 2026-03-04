@@ -20,6 +20,7 @@ const User = () => {
                 <h1>{user?.email || <Skeleton />}</h1>
                 <h1>{[user?.country_code , ' ' , user?.phone]|| <Skeleton />}</h1>
                     {/* add logout btn */}
+                    {/* add adress info add/edit button */}
             </div>
 
         </section>

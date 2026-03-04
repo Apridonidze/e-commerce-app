@@ -167,7 +167,7 @@ const CreateProduct = () => {
 
             try{
 
-                await axios.post(`${BACKEND_URL}/api/product`, formData , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+                await axios.post(`${BACKEND_URL}/api/product`, {formData , data } , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
 
             }catch(err){
                 console.log(err)
@@ -176,6 +176,8 @@ const CreateProduct = () => {
         }
 
     }
+
+    //debug image upload
     //add list that shows images that has been in list of upload
     return(
         <div className="create-product-container position-fixed bg-white" style={{left : '40vw' }} tabIndex={9999}>

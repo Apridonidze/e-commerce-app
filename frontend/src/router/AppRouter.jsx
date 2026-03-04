@@ -29,7 +29,7 @@ const AppRouter = () => {
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
     {path : '*' , element : <></>}, /**add 404 page for this and button to go back to main page */
-    //add page for each product with likes , orders , comments  and data
+    
     //add feedbacks send page
     //add credit cart fillout form
     // add faq page

@@ -16,6 +16,7 @@ import Skeleton from "react-loading-skeleton" //relocate skeletons for folder
 
 import { useContext } from "react"
 import { ProductContext } from "../context/ProductContext"
+
 const Main = () => {
 
     const { prevProducts } = useContext(ProductContext)

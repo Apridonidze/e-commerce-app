@@ -78,12 +78,10 @@ const Sidebar = () => {
             </div>
             <div className="sidebar-end"> 
                 
-                {cookies.token ? <User /> : <></>}
-
                 <div className="end-start">
-                    <Link>Help</Link>
+                    <Link>FAQ</Link>
                     <Link>Feedback</Link>
-                    <Link>Settings</Link>
+                    <Link>Report</Link>
                 </div>
                 <div className="end-bottom">
                     <span>Terms</span>
