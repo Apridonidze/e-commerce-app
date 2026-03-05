@@ -65,10 +65,6 @@ const ProductPage = () => {
     
     const imagesArray = product && JSON.parse(product.images)
 
-    const handleFeedback = () => {
-
-    }
-
     const handleAddToCart = async(e) => {
         try{
 
@@ -88,6 +84,15 @@ const ProductPage = () => {
         }catch(err){
 
             setIsInCart(true)
+            console.log(err)
+        }
+    }
+
+    const handleFeedback = async() => {
+        try{
+
+        }catch(err){
+
             console.log(err)
         }
     }
@@ -125,7 +130,6 @@ const ProductPage = () => {
                     </div>
                 </div>
 
-
                 {/* add loading skeleton for this component also */}
 
                 <div className="feedback">
@@ -135,11 +139,16 @@ const ProductPage = () => {
                     <div className="feedback-main">
 
                         <div className="feedback-input d-flex">
-                            <div className="form-floating">
-                                <input type="text" className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
-                                <label htmlFor="fb-input">Leave Your Feedback...</label>
-                            </div>
-                            <button onClick={() => handleFeedback()} className='btn btn-primary'>Post</button>
+                            {cookies.token ? 
+                            <> 
+                                <div className="form-floating">
+                                    <input type="text" className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
+                                    <label htmlFor="fb-input">Leave Your Feedback...</label>
+                                </div>
+                                
+                                <button onClick={() => handleFeedback()} className='btn btn-primary'>Post</button>
+
+                            </> : <></>}
                         </div>
 
                         {feedback?.length > 0 ? feedback.map((f,fId) => {
