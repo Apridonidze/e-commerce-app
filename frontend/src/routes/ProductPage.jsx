@@ -8,6 +8,7 @@ import Product from '../component/Product';
 import { useCookies } from 'react-cookie';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
+import FeedbackInput from '../component/FeedbackInput';
 const ProductPage = () => {
 
     const [cookies] = useCookies(['token'])
@@ -18,9 +19,10 @@ const ProductPage = () => {
     const [feedback, setFeedback] = useState([]);
     const [similarProducts, setSimilarProducts] = useState([]);
     const [isInCart , setIsInCart] = useState(false)
+    const [toggleFeedback, setToggleFeedback] = useState(false)
+
     const { cartIds } = useContext(UserContext)
 
-    const [feedbackData, setFeedbackData] = useState({content: '', stars : 0})
 
     useEffect(() => {
 
@@ -89,17 +91,6 @@ const ProductPage = () => {
         }
     }
 
-    const handleFeedback = async() => {
-        try{
-
-            const postFeedback = await axios.post(`${BACKEND_URL}/api/feedback/product-feedback/${product.products_id}` , feedbackData , {headers : {Authorization : `Bearer ${cookies.token}`}})
-
-        }catch(err){
-
-            console.log(err)
-        }
-    }
-
     return(
         <div className="main-container container-fluid row border">
             <div className="main-start col">
@@ -108,6 +99,8 @@ const ProductPage = () => {
             <div className="main-end col " >
 
                 <Header />
+
+                {toggleFeedback ? <div className="feedback-container"><div className="feedback-bg"></div> <FeedbackInput /></div> : <></>}
 
 
                 <div className="product-container row">
@@ -145,11 +138,11 @@ const ProductPage = () => {
                             {cookies.token ? 
                             <> 
                                 <div className="form-floating">
-                                    <input type="text" onChange={(e) => setFeedbackData({...feedbackData, content : e.target.value})} className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
+                                    <input type="text" onClick={() => setToggleFeedback(true)} className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
                                     <label htmlFor="fb-input">Leave Your Feedback...</label>
                                 </div>
                                 
-                                <button onClick={() => handleFeedback()} className='btn btn-primary'>Post</button>
+                                <button onClick={() => setToggleFeedback(true)} className='btn btn-primary'>Post</button>
 
                             </> : <></>}
                         </div>
