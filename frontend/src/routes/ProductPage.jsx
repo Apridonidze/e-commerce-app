@@ -18,8 +18,9 @@ const ProductPage = () => {
     const [feedback, setFeedback] = useState([]);
     const [similarProducts, setSimilarProducts] = useState([]);
     const [isInCart , setIsInCart] = useState(false)
-
     const { cartIds } = useContext(UserContext)
+
+    const [feedbackData, setFeedbackData] = useState({content: '', stars : 0})
 
     useEffect(() => {
 
@@ -91,6 +92,8 @@ const ProductPage = () => {
     const handleFeedback = async() => {
         try{
 
+            const postFeedback = await axios.post(`${BACKEND_URL}/api/feedback/product-feedback/${product.products_id}` , feedbackData , {headers : {Authorization : `Bearer ${cookies.token}`}})
+
         }catch(err){
 
             console.log(err)
@@ -142,7 +145,7 @@ const ProductPage = () => {
                             {cookies.token ? 
                             <> 
                                 <div className="form-floating">
-                                    <input type="text" className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
+                                    <input type="text" onChange={(e) => setFeedbackData({...feedbackData, content : e.target.value})} className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
                                     <label htmlFor="fb-input">Leave Your Feedback...</label>
                                 </div>
                                 

@@ -10,6 +10,7 @@ async function addByProdId(req,res) {
         return res.status(200).json({message : "Feedback Sent Succesfully" , feedbackId : newFeedback.insertId})
 
     }catch(err){
+        console.log(err)
         return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
 }
