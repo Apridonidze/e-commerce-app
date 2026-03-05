@@ -6,6 +6,8 @@ import axios from 'axios';
 import { BACKEND_URL } from '../../config';
 import Product from '../component/Product';
 import { useCookies } from 'react-cookie';
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 const ProductPage = () => {
 
     const [cookies] = useCookies(['token'])
@@ -15,8 +17,9 @@ const ProductPage = () => {
     const [product,setProduct] = useState();
     const [feedback, setFeedback] = useState([]);
     const [similarProducts, setSimilarProducts] = useState([]);
+    const [isInCart , setIsInCart] = useState(false)
 
-    const [cartIds, setCartIds] = useState([])
+    const { cartIds } = useContext(UserContext)
 
     useEffect(() => {
 
@@ -53,15 +56,15 @@ const ProductPage = () => {
             }
         }
 
-        
+        if(cartIds.includes(product?.products_id)) setIsInCart(true)
+        setIsInCart(false)
 
         return () => {fetchProduct()}
 
     },[id])
     
-    const imagesArray = product && JSON.parse(product.images);
+    const imagesArray = product && JSON.parse(product.images)
 
-    console.log(imagesArray)
 
     return(
         <div className="main-container container-fluid row border">
@@ -91,7 +94,6 @@ const ProductPage = () => {
                             <h5>Avaliable : {product?.amount} Pieces</h5>
                         </div>
                         <div className="d">
-                            <button>Save</button>
                             <button>Add To Cart</button>
                         </div>
                     </div>
