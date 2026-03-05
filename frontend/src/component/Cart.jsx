@@ -1,17 +1,38 @@
-import { useContext, useState } from "react"
-import { UserContext } from "../context/UserContext"
+import { useState } from "react"
 
 import { useCookies } from "react-cookie"
 import Item from "./Item"
 import { useEffect } from "react"
-const DashboardCart = ({  }) => {
+import axios from "axios"
+import { BACKEND_URL } from "../../config"
+
+
+const Cart = () => {
 
     const [cookies] = useCookies(['token'])
     const [cart , setCart] = useState([])
-
-    const { cartIds } = useContext(UserContext)
     
-    useEffect(() => {setCart(cartIds)},[cartIds])
+    useEffect(() => {
+
+        const fetchCartItems = async() => {
+            try{
+
+                const cartItems = await axios.get(`${BACKEND_URL}/api`, {headers : {Authorization : `Bearer ${cookies.token}`}})
+                
+                if(cartItems.status === 204)return setCart([]);
+
+                setCart(cartItems.data.products)
+
+            }catch(err){
+                // toggle error message
+                setCart([])
+                console.log(err)
+            }
+        }
+
+        return () => fetchCartItems
+
+    },[])
     
     const orderItems = async() => {
         try{
@@ -23,24 +44,23 @@ const DashboardCart = ({  }) => {
     }
 
     return(
-        <>
-            <div className="dasboard-start">
+        <div className="cart-container">
+            <div className="cart-start">
                 <h3>Cart</h3>
             </div>
-            <div className="dasboard-center">
-                {cart ? cart.map((prod , prodId) => (
+            <div className="cart-center">
+                {cart?.length !== 0 ? cart.map((prod , prodId) => (
                     
                     <Item prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} />
-                )) : 'loading'}
+                )) : 'no cart items'}
             </div>
-            <div className="dasboard-end">
+            <div className="cart-end">
                 <button onClick={orderItems}>Order Items</button>
             </div>
-        </>
+        </div >
     )
 }
 
-//TODO : remove fetch cart items from here and import it from usercontext.jsx
 //TODO : create loading skeleton for compoentn
 
-export default DashboardCart
+export default Cart

@@ -66,7 +66,6 @@ const Dashboard = () => {
                 
                 <div className="row">
                     <div className="col"><h1>Card Details</h1></div>
-                    {/* {user_id: 4, customer_id: "cus_U4E3C8DuepnSTT", payment_method_id: "pm_1T65mkDhDPlvJFNzNAEXcw1x", brand: "visa", last4: "4242"} */}
                     <div className="col">{<button onClick={() => {cardDetails?.customer_id ? setToggleCard(true) :  generateCustomerId()}}>{cardDetails?.last4 ? 'Edit Card' : 'Add Card'}</button>}</div>
                 </div>
 
