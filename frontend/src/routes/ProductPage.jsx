@@ -65,6 +65,32 @@ const ProductPage = () => {
     
     const imagesArray = product && JSON.parse(product.images)
 
+    const handleFeedback = () => {
+
+    }
+
+    const handleAddToCart = async(e) => {
+        try{
+
+            await axios.post(`${BACKEND_URL}/api/cart/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(true)})
+
+        }catch(err){
+            setIsInCart(false)
+            console.log(err)
+        }
+    }
+
+    const handleDeleteFromCart = async(e) => {
+        try{
+
+            await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(false)})
+
+        }catch(err){
+
+            setIsInCart(true)
+            console.log(err)
+        }
+    }
 
     return(
         <div className="main-container container-fluid row border">
@@ -94,7 +120,7 @@ const ProductPage = () => {
                             <h5>Avaliable : {product?.amount} Pieces</h5>
                         </div>
                         <div className="d">
-                            <button>Add To Cart</button>
+                            {isInCart ? <button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button> : <button onClick={() => handleAddToCart(product.products_id)}>Add To Cart</button>}
                         </div>
                     </div>
                 </div>
@@ -113,7 +139,7 @@ const ProductPage = () => {
                                 <input type="text" className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
                                 <label htmlFor="fb-input">Leave Your Feedback...</label>
                             </div>
-                            <input type="submit" className='btn btn-primary' value='Post'/>
+                            <button onClick={() => handleFeedback()} className='btn btn-primary'>Post</button>
                         </div>
 
                         {feedback?.length > 0 ? feedback.map((f,fId) => {
