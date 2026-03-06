@@ -91,6 +91,8 @@ const ProductPage = () => {
         }
     }
 
+    console.log(feedback)
+
     return(
         <div className="main-container container-fluid row border">
             <div className="main-start col">
@@ -129,7 +131,7 @@ const ProductPage = () => {
 
                 <div className="feedback">
                     <div className="feedback-header">
-                        <h3>Product Reviews: </h3>
+                        <h3>{feedback?.length} Product Review</h3>
                     </div>
                     <div className="feedback-main">
 
@@ -146,13 +148,11 @@ const ProductPage = () => {
                             </> : <></>}
                         </div>
 
-                        {feedback?.length > 0 ? feedback.map((f,fId) => {
-                            <div className="feedback" key={fId}>
-                                {f.fullname}
-                                {f.content}
-                                {f.stars}
-                            </div>
-                        }) : 'No Reviews'}
+                        <div className="feedback-footer">
+                            {feedback?.length > 0 ? feedback.map((fb,fbId) => (
+                                <span key={fbId}>{fb.fullname} {fb.content} {fb.stars}</span>
+                            )) : 'No review'}
+                        </div>
 
                         {/* add feedback skeleton here */}
                     </div>

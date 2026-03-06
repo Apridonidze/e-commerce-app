@@ -5,7 +5,7 @@ async function addByProdId(req,res) {
         const data = req.body
         const prodId = req.params.id
         
-        const [ newFeedback ] = await db.query('insert into feedback (id, content, stars, product_id) values (?,?,?,?)' , [req.user.userId , data.content, data.star, prodId])
+        const [ newFeedback ] = await db.query('insert into feedback (id, content, stars, product_id, type) values (?, ?, ?, ?, ?)' , [req.user.userId , data.content, data.star, prodId, 'product'])
         return res.status(200).json({message : "Feedback Sent Succesfully" , feedbackId : newFeedback.insertId})
 
     }catch(err){
