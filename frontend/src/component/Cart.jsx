@@ -17,11 +17,11 @@ const Cart = () => {
         const fetchCartItems = async() => {
             try{
 
-                const cartItems = await axios.get(`${BACKEND_URL}/api`, {headers : {Authorization : `Bearer ${cookies.token}`}})
+                const cartItems = await axios.get(`${BACKEND_URL}/api/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
                 
                 if(cartItems.status === 204)return setCart([]);
 
-                setCart(cartItems.data.products)
+                setCart(cartItems.data.cartItems)
 
             }catch(err){
                 // toggle error message
@@ -30,7 +30,7 @@ const Cart = () => {
             }
         }
 
-        return () => fetchCartItems
+        return () => fetchCartItems()
 
     },[])
     
@@ -42,6 +42,7 @@ const Cart = () => {
             console.log(err)
         }
     }
+
 
     return(
         <div className="cart-container">

@@ -5,7 +5,6 @@ async function add(req,res) {
 
         const productId = req.params.id
 
-
         if(!Number(productId)) return res.status(400).json({message : "Invalid Product Id"})
 
         const [ isAlreadyInCart ] = await db.query('select product_id from cart where id = ? and product_id = ?' , [req.user.userId , productId])

@@ -60,14 +60,11 @@ const ProductPage = () => {
             }
         }
 
-        if(cartIds.includes(product?.products_id)) setIsInCart(true)
-        setIsInCart(false)
+        cartIds.includes(product?.products_id) ? setIsInCart(true): setIsInCart(false)
 
         return () => {fetchProduct()}
 
     },[id])
-
-    console.log(cartIds.includes(product?.products_id))
     
     const imagesArray = product && JSON.parse(product.images)
 
@@ -93,8 +90,6 @@ const ProductPage = () => {
             console.log(err)
         }
     }
-
-    console.log(feedback)
 
     return(
         <div className="main-container container-fluid row border">
@@ -125,7 +120,7 @@ const ProductPage = () => {
                             <h5>Avaliable : {product?.amount} Pieces</h5>
                         </div>
                         <div className="d">
-                            {!isInCart ? <button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button> : <button onClick={() => handleAddToCart(product.products_id)}>Add To Cart</button>}
+                            {isInCart ? <button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button> : <button onClick={() => handleAddToCart(product.products_id)}>Add To Cart</button>}
                         </div>
                     </div>
                 </div>
