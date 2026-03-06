@@ -100,8 +100,7 @@ const ProductPage = () => {
 
                 <Header />
 
-                {toggleFeedback ? <div className="feedback-container"><div className="feedback-bg"></div> <FeedbackInput /></div> : <></>}
-
+                {toggleFeedback ? <div><div className="feedback-bg bg-dark opacity-25 w-100 h-100" onClick={() => setToggleFeedback(false)} style={{position : 'absolute' , left : '0px' , top : '0px'}} tabIndex={99}></div> <FeedbackInput /></div> : <></>}
 
                 <div className="product-container row">
                     <div className="product-start col">

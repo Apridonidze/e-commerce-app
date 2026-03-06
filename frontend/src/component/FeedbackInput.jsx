@@ -28,7 +28,7 @@ const FeedbackInput = () => {
     }
 
     return(
-        <div className="feedback-input-container">
+        <div className="feedback-input-container bg-white" style={{position : 'relative' , left : '0vw'}} tabIndex={100}>
             <input type="text" onChange={(e) => setFeedbackData({...feedbackData, content : e.target.value})} className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
             <button onClick={() => handleFeedback()} className='btn btn-primary'>Post</button>
         </div>
