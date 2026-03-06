@@ -2,11 +2,10 @@ const db = require('../../middlewares/db')
 
 async function addByProdId(req,res) {
     try{
-        const data = req.body.data
+        const data = req.body
         const prodId = req.params.id
-        // validate data in zod schema
-
-        const [ newFeedback ] = await db.query('insert into feedback (id, content, stars, product_id) values (?,?,?,?)' , [req.user.userId , data.content, data.stars, prodId])
+        
+        const [ newFeedback ] = await db.query('insert into feedback (id, content, stars, product_id) values (?,?,?,?)' , [req.user.userId , data.content, data.star, prodId])
         return res.status(200).json({message : "Feedback Sent Succesfully" , feedbackId : newFeedback.insertId})
 
     }catch(err){

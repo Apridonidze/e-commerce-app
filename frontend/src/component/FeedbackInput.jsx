@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useCookies } from "react-cookie"
 import { useParams } from "react-router-dom"
 
@@ -13,24 +13,47 @@ const FeedbackInput = () => {
 
     const { id } = useParams()
 
+    const postRef = useRef(null)
 
     const handleFeedback = async() => {
-        try{
 
-            //check feedbackData to have content and stars, if not return disabled button else trigger api call
+        !feedbackData.star || !feedbackData.content ? postRef.current.disabled = true : postRef.current.disabled = false;
+        //add erorr message if we do not have feedback.star and feedback.content
+
+        try{
 
             const postFeedback = await axios.post(`${BACKEND_URL}/api/feedback/product-feedback/${id}` , feedbackData , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-        }catch(err){
+            console.log(postFeedback)
+            //toggle success message
 
+        }catch(err){
+            //toggle eerror message
             console.log(err)
         }
     }
 
+    useEffect(() => {
+
+        if(!postRef?.current) return
+
+        !feedbackData.star || !feedbackData.content ? postRef.current.disabled = true : postRef.current.disabled = false 
+
+    } ,[feedbackData])
+
     return(
         <div className="feedback-input-container bg-white" style={{position : 'relative' , left : '0vw'}} tabIndex={100}>
             <input type="text" onChange={(e) => setFeedbackData({...feedbackData, content : e.target.value})} className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
-            <button onClick={() => handleFeedback()} className='btn btn-primary'>Post</button>
+
+           <div className="d d-flex">
+                <span onClick={() => setFeedbackData({...feedbackData, star : 1})}>*</span>
+                <span onClick={() => setFeedbackData({...feedbackData, star : 2})}>*</span>
+                <span onClick={() => setFeedbackData({...feedbackData, star : 3})}>*</span>
+                <span onClick={() => setFeedbackData({...feedbackData, star : 4})}>*</span>
+                <span onClick={() => setFeedbackData({...feedbackData, star : 5})}>*</span>
+           </div>
+
+            <button ref={postRef} onClick={() => handleFeedback()} className='btn btn-primary'>Post</button>
         </div>
     )
 }
