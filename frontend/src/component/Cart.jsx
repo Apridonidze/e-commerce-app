@@ -7,10 +7,9 @@ import axios from "axios"
 import { BACKEND_URL } from "../../config"
 
 
-const Cart = ({ setToggleOrder }) => {
+const Cart = ({ setToggleOrder, setCart, cart }) => {
 
     const [cookies] = useCookies(['token'])
-    const [cart , setCart] = useState([])
     
     useEffect(() => {
 

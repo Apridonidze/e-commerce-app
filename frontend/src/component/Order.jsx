@@ -1,4 +1,4 @@
-const Order = () => {
+const Order = ({ cart }) => {
 
     const orderItems = async() => {
         try{
