@@ -7,7 +7,7 @@ import axios from "axios"
 import { BACKEND_URL } from "../../config"
 
 
-const Cart = () => {
+const Cart = ({ setToggleOrder }) => {
 
     const [cookies] = useCookies(['token'])
     const [cart , setCart] = useState([])
@@ -34,14 +34,7 @@ const Cart = () => {
 
     },[])
     
-    const orderItems = async() => {
-        try{
-
-            //add api call to for ordering
-        }catch(err){
-            console.log(err)
-        }
-    }
+    
 
 
     return(
@@ -56,7 +49,7 @@ const Cart = () => {
                 )) : 'no cart items'}
             </div>
             <div className="cart-end">
-                <button onClick={orderItems}>Order Items</button>
+                {cart.length === 0 ? <button disabled>Order Items</button> : <button onClick={() => setToggleOrder(true)}>Order Items</button>}
             </div>
         </div >
     )

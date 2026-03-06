@@ -17,10 +17,9 @@ router.use('/admin', adminRoutes)
 router.use('/product', productRoutes)
 router.use('/cart', cartRoutes)
 router.use('/order', orderRoutes)
+router.use('/manage-orders', manageOrdersRoutes)
 router.use('/feedback', feedbackRoutes)
 router.use('/stripe', stripeRoutes)
-router.use('/order', orderRoutes)
-router.use('/manage-orders', manageOrdersRoutes)
 
 
 module.exports = router

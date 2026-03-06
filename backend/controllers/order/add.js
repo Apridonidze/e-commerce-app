@@ -3,12 +3,12 @@ const db = require('../../middlewares/db')
 async function add(req,res) {
     try{
 
-        const { order } = req.query
 
         const now = new Date()
         const date = now.toLocaleDateString('en-GB')
 
-        const [ cartItems ] = await db.query('select * from cart where id = ? and product_id in ?' , [req.user.userId]) ; //add query here 
+        const [ cartItems ] = await db.query('select * from cart where id = ? and product_id in ?' , [req.user.userId]) ;
+        console.log(cartItems)
         if(cartItems.length < 1) return res.status(400).json({message : "No Items In Cart To Order"}) //
         
         await db.query('delete from cart where id = ?', [req.user.userId]) //delete this cart items from this table and move them into ordered_products with pending status 
@@ -19,6 +19,7 @@ async function add(req,res) {
         // return res.status(200).json({message : "Your Items Has Been Ordered Successfully, Wait For Delivery", products : resp})
 
     }catch(err){
+        console.log(err)
         return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
 }

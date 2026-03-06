@@ -16,6 +16,7 @@ import { UserContext } from "../context/UserContext"
 import axios from "axios"
 import { useCookies } from "react-cookie"
 import CardHolder from "../component/CardHolder"
+
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
 
@@ -26,6 +27,8 @@ const Dashboard = () => {
 
     const [cookies] = useCookies(['token'])
     const [toggleCard,setToggleCard] = useState(false)
+
+    const [toggleOrder,setToggleOrder] = useState(false)
 
     const { user } = useContext(UserContext)
 
@@ -68,7 +71,7 @@ const Dashboard = () => {
 
                 {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
 
-                <section id='cart-items'><Cart /></section>
+                <section id='cart-items'><Cart setToggleOrder={setToggleOrder}/></section>
             </div>
         </div>
     )
