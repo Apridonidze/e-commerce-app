@@ -9,6 +9,7 @@ import { useCookies } from 'react-cookie';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import FeedbackInput from '../component/FeedbackInput';
+
 const ProductPage = () => {
 
     const [cookies] = useCookies(['token'])
@@ -65,6 +66,8 @@ const ProductPage = () => {
         return () => {fetchProduct()}
 
     },[id])
+
+    console.log(cartIds.includes(product?.products_id))
     
     const imagesArray = product && JSON.parse(product.images)
 
@@ -122,7 +125,7 @@ const ProductPage = () => {
                             <h5>Avaliable : {product?.amount} Pieces</h5>
                         </div>
                         <div className="d">
-                            {isInCart ? <button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button> : <button onClick={() => handleAddToCart(product.products_id)}>Add To Cart</button>}
+                            {!isInCart ? <button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button> : <button onClick={() => handleAddToCart(product.products_id)}>Add To Cart</button>}
                         </div>
                     </div>
                 </div>
@@ -148,7 +151,7 @@ const ProductPage = () => {
                             </> : <></>}
                         </div>
 
-                        <div className="feedback-footer">
+                        <div className="feedback-footer d-flex flex-column">
                             {feedback?.length > 0 ? feedback.map((fb,fbId) => (
                                 <span key={fbId}>{fb.fullname} {fb.content} {fb.stars}</span>
                             )) : 'No review'}
