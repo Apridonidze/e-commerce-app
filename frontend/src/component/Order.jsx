@@ -18,6 +18,8 @@ const Order = ({ setCart, cart }) => {
             console.log(err)
         }
     }
+
+    console.log(cart)
  
     return(
         <div className="order-container bg-white position-relative" style={{right : '25vw', bottom : '25vw'}}>

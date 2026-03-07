@@ -32,9 +32,6 @@ const Cart = ({ setToggleOrder, setCart, cart }) => {
         return () => fetchCartItems()
 
     },[])
-    
-    
-
 
     return(
         <div className="cart-container">

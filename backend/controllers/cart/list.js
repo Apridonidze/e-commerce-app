@@ -3,7 +3,7 @@ const db = require('../../middlewares/db')
 async function list(req,res) {
     try{
         
-        const [ cartItems ] = await db.query('select * from cart join products on cart.product_id = products.products_id where cart.id = ?' , [req.user.userId])
+        const [ cartItems ] = await db.query('select cart.*, products.products_id, products.title, products.images, products.description, products.category,products.subcategory, products.price from cart join products on cart.product_id = products.products_id where cart.id = ?' , [req.user.userId])
         if(cartItems.length < 1) return res.status(204)
         
         return res.status(200).json({message : 'Found Items In Your Cart' , cartItems : cartItems})

@@ -26,7 +26,6 @@ const ProductPage = () => {
 
     const { cartIds } = useContext(UserContext)
 
-
     useEffect(() => {
 
         const fetchProduct = async() => {
@@ -73,7 +72,7 @@ const ProductPage = () => {
     const handleAddToCart = async(e) => {
         try{
 
-            await axios.post(`${BACKEND_URL}/api/cart/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(true)})
+            await axios.post(`${BACKEND_URL}/api/cart/${e}` , {amount} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(true)})
 
         }catch(err){
             setIsInCart(false)
