@@ -46,6 +46,7 @@ const Cart = ({ setToggleOrder, setCart, cart }) => {
                     
                     <Item prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} />
                 )) : 'no cart items'}
+                {/* display only first 5 cart items */}
             </div>
             <div className="cart-end">
                 {cart.length === 0 ? <button disabled>Order Items</button> : <button onClick={() => setToggleOrder(true)}>Order Items</button>}

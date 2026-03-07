@@ -22,6 +22,8 @@ const ProductPage = () => {
     const [isInCart , setIsInCart] = useState(false)
     const [toggleFeedback, setToggleFeedback] = useState(false)
 
+    const [amount,setAmount] = useState(0)
+
     const { cartIds } = useContext(UserContext)
 
 
@@ -119,7 +121,12 @@ const ProductPage = () => {
                             <h4>{product?.price}</h4>
                             <h5>Avaliable : {product?.amount} Pieces</h5>
                         </div>
-                        <div className="d">
+                        <div className="d d-flex flex-column g-3">
+                            <div className="d">
+                                <button onClick={() => setAmount(prev => { if(prev - 1 <= 0) return 0;return prev - 1})}>-</button>
+                                <span>{amount}</span>
+                                <button onClick={() => setAmount(prev => { if(prev + 1 > product?.amount)return prev; return prev + 1})}>+</button>
+                            </div>
                             {isInCart ? <button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button> : <button onClick={() => handleAddToCart(product.products_id)}>Add To Cart</button>}
                         </div>
                     </div>
