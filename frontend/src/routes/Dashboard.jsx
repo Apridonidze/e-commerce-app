@@ -77,7 +77,7 @@ const Dashboard = () => {
 
                 <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
 
-                {toggleOrder ? <div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}><div className="card-details-background"></div> <Order cart={cart}/></div> : <></>}
+                {toggleOrder ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div> : <></>}
 
             </div>
         </div>

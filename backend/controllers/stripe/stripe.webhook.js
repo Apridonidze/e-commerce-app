@@ -31,7 +31,7 @@ async function webHook(req,res){
                 
                 break
 
-            case 'payment_intent.succeeded':
+            case 'payment_intent.succeeded':z
                 const paymentIntent = event.data.object
                 
                 break;

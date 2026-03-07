@@ -22,7 +22,7 @@ const Item = ({ prod, prodId, key, setCart, cart }) => {
     return(
         <div className="item-container d-flex">
             <div className="item-start">
-                {/* {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod?.images)[0]}`} style={{maxHeight:'80px' , maxWidth : '80px'}}/>} */}
+                {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod?.images)[0]}`} style={{maxHeight:'80px' , maxWidth : '80px'}}/>}
             </div>
             <div className="item-main">
                 <h5>{prod?.title}</h5>
