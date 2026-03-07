@@ -127,7 +127,7 @@ const ProductPage = () => {
                                 <span>{amount}</span>
                                 <button onClick={() => setAmount(prev => { if(prev + 1 > product?.amount)return prev; return prev + 1})}>+</button>
                             </div>
-                            {isInCart ? <button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button> : <button onClick={() => handleAddToCart(product.products_id)}>Add To Cart</button>}
+                            {isInCart ? <button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button> : amount === 0 ? <button disabled>Add To Cart</button> : <button onClick={() => handleAddToCart(product.products_id)}>Add To Cart</button>}
                         </div>
                     </div>
                 </div>
