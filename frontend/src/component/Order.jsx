@@ -19,12 +19,8 @@ const Order = ({ cart }) => {
     }
  
     return(
-        <div className="order-container">
+        <div className="order-container bg-white">
             <h1>Choose Items to be delivered</h1>
-            {/* display cart items with checkboxes */}
-            {/* once the order price is higher than 40gel make order button avaliable else disable it */}
-            {/* for avalaible button trigger orderItems function */}
-            {/* add alerts messages  */}
         </div>
     )
 }
