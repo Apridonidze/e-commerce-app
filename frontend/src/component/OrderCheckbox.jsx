@@ -23,7 +23,7 @@ const OrderCheckbox = ({ prod, prodId, key, setCart, cart }) => {
 
             <div className="checkbox-start d-flex justify-content-between">
                 <div className="d">
-                    <input type="checkbox" />
+                    <input type="checkbox"  />
                     {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod?.images)[0]}`} style={{maxHeight:'80px' , maxWidth : '80px'}}/>}
                 </div>
                 <div className="d">
