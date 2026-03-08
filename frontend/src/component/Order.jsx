@@ -13,6 +13,8 @@ const Order = ({ setCart, cart }) => {
     const checkboxRef = useRef([null])
     const selectAllRef = useRef(null)
 
+    const [toggleOrder , setToggleOrder] = useState(false)
+
     const orderItems = async() => {
         try{
 
@@ -92,6 +94,10 @@ const Order = ({ setCart, cart }) => {
             {cart?.map((prod,prodId) => (
                 <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef}/>
             ))}
+
+            <div className="order-bottom">
+                <button className="btn btn-primary" disabled={totalPrice < 40 ? true : false}>Order Items</button>
+            </div>
         </div>
     )
 }
