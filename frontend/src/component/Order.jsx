@@ -98,6 +98,7 @@ const Order = ({ setCart, cart }) => {
                 </div>
 
             </div>
+            
             {cart?.map((prod,prodId) => (
                 <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef}/>
             ))}

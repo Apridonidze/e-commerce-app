@@ -7,20 +7,15 @@ async function add(req,res) {
         const address = req.body.address
         const totalPrice = req.body.totalPrice
 
-        console.log(address, totalPrice, items)
+        const [order] = await db.query('insert into orders (user_id, total_price, status, address) values (?, ?, ?, ?)', [req.user.userId, totalPrice, 'Pending' , address])
+        await Promise.all(items.map((item) => {
+            db.query('insert into ordered_items (order_id, product_id, amount, price) values (?, ?, ?, ?)' , [order.insertId, item.id, item.amount, item.price])
+        }))
+        await db.query('delete from cart where id = ?' , req.user.userId)
 
-        const now = new Date()
-
-
-        
-
-        // const updateStatus = productIds.map(prod => db.query('update cart set status = ? set date = ? where product_id = ? and id = ?' , ['pending' , date ,prod , req.user.userId]))
-        // const resp = updateStatus[0][0]
-
-        // return res.status(200.json({message : "Your Items Has Been Ordered Successfully, Wait For Delivery", products : resp})
+        return res.status(200).json({message : "Your Items Has Been Ordered Successfully, Wait For Delivery"})
 
     }catch(err){
-        console.log(err)
         return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
 }
