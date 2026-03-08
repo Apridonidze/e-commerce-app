@@ -2,13 +2,16 @@ import { useCookies } from "react-cookie"
 import { BACKEND_URL } from "../../config"
 import axios from "axios"
 import OrderCheckbox from "./OrderCheckbox"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const Order = ({ setCart, cart }) => {
 
     const [cookies] = useCookies(['token'])
     const [selectedItems, setSelectedItems] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
+
+    const checkboxRef = useRef([null])
+    const selectAllRef = useRef(null)
 
     const orderItems = async() => {
         try{
@@ -27,12 +30,17 @@ const Order = ({ setCart, cart }) => {
         const checked = e.target.checked
 
         if(checked && cart.length !== 0){
+
             let items = cart.map((cart, _) => (cart.price * cart.amount))
             let total = items.reduce((sum, item) => sum + item, 0);
             setTotalPrice(total)
+
+            checkboxRef?.current.filter(c => c !== null).map((c) => c.checked = true)
+            
         }
 
         else {
+            checkboxRef?.current.filter(c => c !== null).map((c) => c.checked = false)
             return setTotalPrice(0)
         }
 
@@ -56,10 +64,15 @@ const Order = ({ setCart, cart }) => {
 
         let total = selectedItems.reduce((sum, item) => sum + item.price, 0);
         setTotalPrice(total)
-        
-    },[selectedItems])
 
- 
+        if(selectedItems.length === cart.length){
+            selectAllRef.current.checked = true
+        }else {
+            selectAllRef.current.checked = false
+        }
+        
+    },[selectedItems, selectAllRef])
+
     return(
         <div className="order-container bg-white position-relative" style={{right : '25vw', bottom : '25vw'}}>
             
@@ -72,12 +85,12 @@ const Order = ({ setCart, cart }) => {
                     <h4>Total Price : {totalPrice}</h4>
 
                     <label htmlFor="selectAll">Select All ({cart.length})</label>
-                    <input type="checkbox" id="selectAll" name="selectAll" onChange={(e) => handleSelectAll(e)}/>
+                    <input type="checkbox" id="selectAll" name="selectAll" ref={selectAllRef} onChange={(e) => handleSelectAll(e)}/>
                 </div>
 
             </div>
             {cart?.map((prod,prodId) => (
-                <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox} />
+                <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef}/>
             ))}
         </div>
     )
