@@ -48,7 +48,7 @@ const SubmitOrder = ({ setToggleOrder, orderItems, setAddress, address }) => {
                 <span className="text text-danger">{error}</span>
             </div>
 
-            <button onClick={() => setToggleOrder(false)}>Cancle Ordering</button>
+            <button onClick={() => {setToggleOrder(false) , setAddress('')}}>Cancle Ordering</button>
             <button ref={btnRef} onClick={orderItems}>Ordaser</button>
         </div>
     )

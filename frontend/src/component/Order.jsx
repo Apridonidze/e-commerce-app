@@ -83,7 +83,7 @@ const Order = ({ setCart, cart }) => {
     return(
         <div className="order-container bg-white position-relative" style={{right : '25vw', bottom : '25vw'}}>
 
-            {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => setToggleOrder(false)}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
+            {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setToggleOrder(false), setAddress('')}}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
             
             <div className="order-top">
                 <div className="top-start">
