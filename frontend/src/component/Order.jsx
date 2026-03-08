@@ -21,7 +21,7 @@ const Order = ({ setCart, cart }) => {
 
             setToggleOrder(false)
 
-            const order = await axios.post(`${BACKEND_URL}/api/order` , {selectedItems} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const order = await axios.post(`${BACKEND_URL}/api/order` , {selectedItems, totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
             console.log(order)
 

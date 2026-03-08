@@ -4,12 +4,10 @@ async function add(req,res) {
     try{
 
         const items = req.body.selectedItems
+        const totalPrice = req.body.totalPrice
 
         const now = new Date()
-        const date = now.toLocaleDateString('en-GB')
 
-        const item = items.map((item) => item.id)
-        console.log(item)
         
 
         // const updateStatus = productIds.map(prod => db.query('update cart set status = ? set date = ? where product_id = ? and id = ?' , ['pending' , date ,prod , req.user.userId]))
