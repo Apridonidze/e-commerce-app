@@ -22,6 +22,22 @@ const Order = ({ setCart, cart }) => {
         }
     }
 
+    const handleSelectAll = (e) => {
+
+        const checked = e.target.checked
+
+        if(checked && cart.length !== 0){
+            let items = cart.map((cart, _) => (cart.price * cart.amount))
+            let total = items.reduce((sum, item) => sum + item, 0);
+            setTotalPrice(total)
+        }
+
+        else {
+            return setTotalPrice(0)
+        }
+
+    }
+
     const handleCheckbox = (e, amount, price) => {
 
         const id = e.target.id
@@ -56,12 +72,12 @@ const Order = ({ setCart, cart }) => {
                     <h4>Total Price : {totalPrice}</h4>
 
                     <label htmlFor="selectAll">Select All ({cart.length})</label>
-                    <input type="checkbox" id="selectAll" name="selectAll" />
+                    <input type="checkbox" id="selectAll" name="selectAll" onChange={(e) => handleSelectAll(e)}/>
                 </div>
 
             </div>
             {cart?.map((prod,prodId) => (
-                <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox}/>
+                <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox} />
             ))}
         </div>
     )
