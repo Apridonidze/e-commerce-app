@@ -3,6 +3,7 @@ import { BACKEND_URL } from "../../config"
 import axios from "axios"
 import OrderCheckbox from "./OrderCheckbox"
 import { useEffect, useRef, useState } from "react"
+import SubmitOrder from "./SubmitOrder"
 
 const Order = ({ setCart, cart }) => {
 
@@ -18,11 +19,15 @@ const Order = ({ setCart, cart }) => {
     const orderItems = async() => {
         try{
 
-            const order = await axios.post(`${BACKEND_URL}/api/order` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            setToggleOrder(false)
+
+            const order = await axios.post(`${BACKEND_URL}/api/order` , {selectedItems} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
             console.log(order)
 
         }catch(err){
+
+            //toggle error message
             console.log(err)
         }
     }
@@ -77,6 +82,8 @@ const Order = ({ setCart, cart }) => {
 
     return(
         <div className="order-container bg-white position-relative" style={{right : '25vw', bottom : '25vw'}}>
+
+            {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => setToggleOrder(false)}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems}/> </div> : <></>}
             
             <div className="order-top">
                 <div className="top-start">
