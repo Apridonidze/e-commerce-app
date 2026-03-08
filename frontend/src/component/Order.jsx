@@ -10,6 +10,7 @@ const Order = ({ setCart, cart }) => {
     const [cookies] = useCookies(['token'])
     const [selectedItems, setSelectedItems] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
+    const [address, setAddress] = useState('');
 
     const checkboxRef = useRef([null])
     const selectAllRef = useRef(null)
@@ -83,7 +84,7 @@ const Order = ({ setCart, cart }) => {
     return(
         <div className="order-container bg-white position-relative" style={{right : '25vw', bottom : '25vw'}}>
 
-            {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => setToggleOrder(false)}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems}/> </div> : <></>}
+            {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => setToggleOrder(false)}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
             
             <div className="order-top">
                 <div className="top-start">
@@ -99,7 +100,7 @@ const Order = ({ setCart, cart }) => {
 
             </div>
             {cart?.map((prod,prodId) => (
-                <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef}/>
+                <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox}  checkboxRef={checkboxRef}/>
             ))}
 
             <div className="order-bottom">
@@ -108,6 +109,5 @@ const Order = ({ setCart, cart }) => {
         </div>
     )
 }
-// disable button if items overall price is lower than 40 gel
 
 export default Order
