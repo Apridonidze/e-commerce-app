@@ -35,9 +35,9 @@ const OrderList = () => {
     return(
         <div className="order-list-container">
             My Orders
-            {orders?.map((order,orderId) => (
+            {orders?.length > 1 ? orders?.map((order,orderId) => (
                 <OrderDetails order={order} orderId={orderId} key={orderId}/>
-            ))}
+            )) : "No Items Ordered"}
         </div>
     )
 }
