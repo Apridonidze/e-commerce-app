@@ -17,6 +17,7 @@ import axios from "axios"
 import { useCookies } from "react-cookie"
 import CardHolder from "../component/CardHolder"
 import Order from "../component/Order"
+import OrderList from "../component/OrderList"
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
@@ -74,11 +75,11 @@ const Dashboard = () => {
                 <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId}/>
 
                 {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
-
-                <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
-
                 {toggleOrder ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div> : <></>}
 
+                <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
+                <section id='order-list'><OrderList /></section>
+                
             </div>
         </div>
     )
