@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie"
 
 import { BACKEND_URL } from "../../config"
 
-const OrderCheckbox = ({ prod, prodId, key, setCart, cart }) => {
+const OrderCheckbox = ({ prod, prodId, key, setCart, cart, handleCheckbox }) => {
 
     const [cookies] = useCookies(['token'])
 
@@ -23,7 +23,7 @@ const OrderCheckbox = ({ prod, prodId, key, setCart, cart }) => {
 
             <div className="checkbox-start d-flex justify-content-between">
                 <div className="d">
-                    <input type="checkbox"  />
+                    <input type="checkbox" id={prod?.product_id} onChange={(e) => handleCheckbox(e, prod?.amount, prod?.price)}/>
                     {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod?.images)[0]}`} style={{maxHeight:'80px' , maxWidth : '80px'}}/>}
                 </div>
                 <div className="d">
@@ -32,7 +32,7 @@ const OrderCheckbox = ({ prod, prodId, key, setCart, cart }) => {
                 </div>
                 <div className="d">
                     <h3>{prod?.amount} Pieces In Cart</h3>
-                    <small>{prod.price}GEL</small>
+                    <small>{prod?.price * prod?.amount}GEL</small>
                 </div>
             </div>
 

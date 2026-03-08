@@ -21,7 +21,22 @@ const Order = ({ setCart, cart }) => {
         }
     }
 
-    // create function handleSelect and pass down to each OrderCheckbox.jsx compoennt to define ids of selected products and amounts for orders.
+    const handleCheckbox = (e, amount, price) => {
+
+        const id = e.target.id
+        const checked = e.target.checked;
+
+        if (checked) {
+            setSelectedItems((prev) => [...prev, {id , amount, price : price * amount}]);
+        } else {
+            setSelectedItems((prev) => prev.filter((item) => item.id !== id));
+        }
+
+    }
+
+
+
+    //add useeffect function that has seletceditems variable as dependencie and display total price, total units of products and based on it display order button
  
     return(
         <div className="order-container bg-white position-relative" style={{right : '25vw', bottom : '25vw'}}>
@@ -29,7 +44,7 @@ const Order = ({ setCart, cart }) => {
             {/* display total price of order */}
             {/* display total amount of ordered items pieces */}
             {cart?.map((prod,prodId) => (
-                <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} />
+                <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox}/>
             ))}
         </div>
     )
