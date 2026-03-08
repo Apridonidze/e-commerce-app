@@ -2,12 +2,13 @@ import { useCookies } from "react-cookie"
 import { BACKEND_URL } from "../../config"
 import axios from "axios"
 import OrderCheckbox from "./OrderCheckbox"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const Order = ({ setCart, cart }) => {
 
     const [cookies] = useCookies(['token'])
     const [selectedItems, setSelectedItems] = useState([])
+    const [totalPrice, setTotalPrice] = useState(0)
 
     const orderItems = async() => {
         try{
@@ -34,15 +35,31 @@ const Order = ({ setCart, cart }) => {
 
     }
 
+    useEffect(() => {
 
 
-    //add useeffect function that has seletceditems variable as dependencie and display total price, total units of products and based on it display order button
+        let total = selectedItems.reduce((sum, item) => sum + item.price, 0);
+        setTotalPrice(total)
+        
+    },[selectedItems])
+
  
     return(
         <div className="order-container bg-white position-relative" style={{right : '25vw', bottom : '25vw'}}>
-            <h1>Choose Items to be delivered</h1>
-            {/* display total price of order */}
-            {/* display total amount of ordered items pieces */}
+            
+            <div className="order-top">
+                <div className="top-start">
+                    <h3>Choose Products To Be Ordered</h3>
+                </div>
+
+                <div className="top-end d-flex">
+                    <h4>Total Price : {totalPrice}</h4>
+
+                    <label htmlFor="selectAll">Select All ({cart.length})</label>
+                    <input type="checkbox" id="selectAll" name="selectAll" />
+                </div>
+
+            </div>
             {cart?.map((prod,prodId) => (
                 <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox}/>
             ))}
