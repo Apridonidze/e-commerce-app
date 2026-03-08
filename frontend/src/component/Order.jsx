@@ -96,7 +96,7 @@ const Order = ({ setCart, cart }) => {
             ))}
 
             <div className="order-bottom">
-                <button className="btn btn-primary" disabled={totalPrice < 40 ? true : false}>Order Items</button>
+                <button className="btn btn-primary" onClick={() => setToggleOrder(true)} disabled={totalPrice < 40 ? true : false}>Order Items</button>
             </div>
         </div>
     )
