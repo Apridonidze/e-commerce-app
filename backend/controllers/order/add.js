@@ -4,9 +4,13 @@ async function add(req,res) {
     try{
 
         const items = req.body.selectedItems
+        const address = req.body.address
         const totalPrice = req.body.totalPrice
 
+        console.log(address, totalPrice, items)
+
         const now = new Date()
+
 
         
 

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const SubmitOrder = ({ setToggleOrder, orderItems, setAddress, address }) => {
 
@@ -17,10 +17,6 @@ const SubmitOrder = ({ setToggleOrder, orderItems, setAddress, address }) => {
         const value = e.target.value
         setAddress(value)
 
-        if(!value) btnRef.current.disabled = true
-
-        
-
         if(!validateAddress(value)){
             setError('Invalid Address Form , Form Must Be : StreetNumber StreetName, City')
             
@@ -38,8 +34,10 @@ const SubmitOrder = ({ setToggleOrder, orderItems, setAddress, address }) => {
 
             setError('')
         }
-
     }
+
+    useEffect(() => {btnRef.current.disabled = true},[])
+
 
     return(
         <div className="submit-order-container position-relative">
@@ -51,7 +49,7 @@ const SubmitOrder = ({ setToggleOrder, orderItems, setAddress, address }) => {
             </div>
 
             <button onClick={() => setToggleOrder(false)}>Cancle Ordering</button>
-            <button disabled ref={btnRef} onClick={() => orderItems()}>Order</button>
+            <button ref={btnRef} onClick={orderItems}>Ordaser</button>
         </div>
     )
 }

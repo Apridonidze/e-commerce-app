@@ -21,8 +21,7 @@ const Order = ({ setCart, cart }) => {
         try{
 
             setToggleOrder(false)
-
-            const order = await axios.post(`${BACKEND_URL}/api/order` , {selectedItems, totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const order = await axios.post(`${BACKEND_URL}/api/order` , {selectedItems, address , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
             console.log(order)
 
@@ -100,7 +99,7 @@ const Order = ({ setCart, cart }) => {
 
             </div>
             {cart?.map((prod,prodId) => (
-                <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox}  checkboxRef={checkboxRef}/>
+                <OrderCheckbox prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef}/>
             ))}
 
             <div className="order-bottom">
