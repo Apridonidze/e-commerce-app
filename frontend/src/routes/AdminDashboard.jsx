@@ -34,6 +34,8 @@ const AdminDashboard = () => {
 
     const [toggleCreateNew, setToggleCreateNew] = useState(false);
 
+    const config = {headers: { Authorization: `Bearer ${cookies.token}`}}
+
     useEffect(() => {
 
         const fetchStatus = async() => {
@@ -41,14 +43,13 @@ const AdminDashboard = () => {
             try{
 
                 const [ adminsRes, productsRes, pendingRes, onWayRes, deliveredRes, reportsRes ] = await Promise.all([
-                    axios.get(`${BACKEND_URL}/api/admin/admin-list`, {headers: { Authorization: `Bearer ${cookies.token}` }}),
-                    axios.get(`${BACKEND_URL}/api/products/admin-products`, {headers: { Authorization: `Bearer ${cookies.token}` }}),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/pending-items`, {headers: { Authorization: `Bearer ${cookies.token}` }}),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/on-way-items`, {headers: { Authorization: `Bearer ${cookies.token}` }}),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/delivered-items`, {headers: { Authorization: `Bearer ${cookies.token}` }}),
-                    axios.get(`${BACKEND_URL}/api/reports/product-reports`, {headers: { Authorization: `Bearer ${cookies.token}` }})
+                    axios.get(`${BACKEND_URL}/api/admin/admin-list`, config),
+                    axios.get(`${BACKEND_URL}/api/manage-orders/pending-order`, config),
+                    axios.get(`${BACKEND_URL}/api/manage-orders/onway-order`, config),
+                    axios.get(`${BACKEND_URL}/api/manage-orders/delivered-order`, config),
+                    axios.get(`${BACKEND_URL}/api/reports/product-reports`, config)
                 ]);
-
+                    
                 setAdmins(adminsRes.data.adminList);
                 setLatestProducts(productsRes.data.products);
                 setPendings(pendingRes.data.products);

@@ -3,12 +3,13 @@ const db = require('../../middlewares/db')
 async function delivered(req,res) {
     try{
 
-        const [ DeliveredProducts ] = await db.query('select products.* , cart.* , users.id , users.fullname , users.email from cart join products on cart.product_id = products.products_id join users on products.id = users.id where cart.status = ?' , 'on way')
+        const [ DeliveredProducts ] = await db.query()
         if(DeliveredProducts.length < 1) return res.status(204)
 
         return res.status(200).json({message : "Delivered Products Found" , products: DeliveredProducts})
 
     }catch(err){
+        console.log(err)
         return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
 }

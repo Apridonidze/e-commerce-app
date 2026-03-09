@@ -7,7 +7,6 @@ const ValidateToken = require('../middlewares/ValidateToken')
 const isAdmin = require('../middlewares/isAdmin')
 
 router.get('/', ValidateToken, isAdmin, manageOrdersRoute.list)
-router.get('/order-count', ValidateToken, isAdmin, manageOrdersRoute.count)
 router.get('/pending-order', ValidateToken, isAdmin, manageOrdersRoute.pending)
 router.get('/onway-order', ValidateToken, isAdmin, manageOrdersRoute.onway)
 router.get('/delivered-order', ValidateToken, isAdmin, manageOrdersRoute.delivered)

@@ -9,6 +9,7 @@ async function list (req,res) {
 
         return res.status(200).json({message : 'Admins Found' , adminList : AdminList , onlineAdmins})
 
+
     }catch(err){
         return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
