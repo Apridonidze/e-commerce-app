@@ -6,16 +6,11 @@ import { useLocation } from "react-router-dom"
 import { BACKEND_URL } from "../../config"
 
 import Sidebar from "../layout/Sidebar"
-import User from "../component/User"
 import AdminList from "../admin/components/AdminList"
-import OnWayProducts from "../admin/components/products/OnWayProducts"
-import DeliveredProducts from "../admin/components/products/DeliveredProducts"
 import Reports from "../component/ReportDetails"
 import Feedbacks from "../component/FeedbackDetails"
-import CreateProduct from "../admin/components/products/CreateProduct"
-
-import Pendings from "../admin/components/products/PendingProducts";
-import Products from "../admin/components/products/LatestProducts"; 
+import CreateProduct from "../admin/components/CreateProduct"
+import AdminItem from "../admin/components/AdminItem"
 
 const AdminDashboard = () => {
 
@@ -38,34 +33,31 @@ const AdminDashboard = () => {
 
     useEffect(() => {
 
-        const fetchStatus = async() => {
+    const fetchStatus = async () => {
+        try {
 
-            try{
+            const requests = [
+                axios.get(`${BACKEND_URL}/api/admin/admin-list`, config),
+                axios.get(`${BACKEND_URL}/api/manage-orders/pending-order`, config),
+                axios.get(`${BACKEND_URL}/api/manage-orders/onway-order`, config),
+                axios.get(`${BACKEND_URL}/api/manage-orders/delivered-order`, config),
+            ];
 
-                const [ adminsRes, productsRes, pendingRes, onWayRes, deliveredRes, reportsRes ] = await Promise.all([
-                    axios.get(`${BACKEND_URL}/api/admin/admin-list`, config),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/pending-order`, config),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/onway-order`, config),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/delivered-order`, config),
-                    axios.get(`${BACKEND_URL}/api/reports/product-reports`, config)
-                ]);
-                    
-                setAdmins(adminsRes.data.adminList);
-                setLatestProducts(productsRes.data.products);
-                setPendings(pendingRes.data.products);
-                setOnway(onWayRes.data.products);
-                setDelivered(deliveredRes.data.products);
-                setReports(reportsRes.data.reports);
-                
-            }catch(err){
-                console.log(err)
-            }
+            const [adminsRes, pendingRes, onWayRes, deliveredRes] = await Promise.all(requests);
 
+            setAdmins(adminsRes.data.adminList);
+            setPendings(pendingRes.data.products);
+            setOnway(onWayRes.data.products);
+            setDelivered(deliveredRes.data.products);
+
+        } catch (error) {
+            console.error("Dashboard fetch error:", error);
         }
-        // refactor and add error handling , decleare valid api routes 
-        return () => {fetchStatus()};
+    };
 
-    },[])
+    fetchStatus();
+
+}, []);
 
     useEffect(() => {
         if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
@@ -84,16 +76,15 @@ const AdminDashboard = () => {
 
                     <div className="admin-dashboard-end col">
 
-                        <User />
                         <AdminList admins={admins} />
 
                         <section id="manage-products">
 
                             <button onClick={() => setToggleCreateNew(!toggleCreateNew)}>Add</button>
-                            <Products latestProducts={latestProducts}/>
-                            <Pendings pendings={pendings}/>
-                            <OnWayProducts onway={onway}/>
-                            <DeliveredProducts delivered={delivered}/>
+
+                            {pendings?.map((item, itemId) => (
+                                <AdminItem item={item} itemId={itemId} key={key}/>
+                            ))}
                             
                         </section>
 
