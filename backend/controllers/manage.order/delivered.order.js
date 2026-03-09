@@ -3,7 +3,7 @@ const db = require('../../middlewares/db')
 async function delivered(req,res) {
     try{
 
-        const [ DeliveredProducts ] = await db.query()
+        const [ DeliveredProducts ] = await db.query('select orders.*, users.fullname, users.email from orders join users on orders.user_id = users.id where orders.status = ?' , ['Delivered'])
         if(DeliveredProducts.length < 1) return res.status(204)
 
         return res.status(200).json({message : "Delivered Products Found" , products: DeliveredProducts})
