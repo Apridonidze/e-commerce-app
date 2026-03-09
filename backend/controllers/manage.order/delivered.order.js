@@ -7,7 +7,7 @@ async function delivered(req,res) {
         if(DeliveredProducts.length < 1) return res.status(204)
 
         return res.status(200).json({message : "Delivered Products Found" , products: DeliveredProducts})
-
+    
     }catch(err){
         console.log(err)
         return res.status(500).json({errMessage : "Internal Error" , err : err})

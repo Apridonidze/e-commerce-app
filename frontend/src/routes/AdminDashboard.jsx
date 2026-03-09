@@ -6,11 +6,9 @@ import { useLocation } from "react-router-dom"
 import { BACKEND_URL } from "../../config"
 
 import Sidebar from "../layout/Sidebar"
-import AdminList from "../admin/components/AdminList"
-import Reports from "../component/ReportDetails"
-import Feedbacks from "../component/FeedbackDetails"
-import CreateProduct from "../admin/components/CreateProduct"
+import AdminList from '../admin/components/AdminList'
 import AdminItem from "../admin/components/AdminItem"
+import CreateProduct from "../admin/components/CreateProduct"
 
 const AdminDashboard = () => {
 
@@ -33,35 +31,36 @@ const AdminDashboard = () => {
 
     useEffect(() => {
 
-    const fetchStatus = async () => {
-        try {
+        const fetchStatus = async () => {
+            try {
 
-            const requests = [
-                axios.get(`${BACKEND_URL}/api/admin/admin-list`, config),
-                axios.get(`${BACKEND_URL}/api/manage-orders/pending-order`, config),
-                axios.get(`${BACKEND_URL}/api/manage-orders/onway-order`, config),
-                axios.get(`${BACKEND_URL}/api/manage-orders/delivered-order`, config),
-            ];
+                const requests = [
+                    axios.get(`${BACKEND_URL}/api/admin/admin-list`, config),
+                    axios.get(`${BACKEND_URL}/api/manage-orders/pending-order`, config),
+                    axios.get(`${BACKEND_URL}/api/manage-orders/onway-order`, config),
+                    axios.get(`${BACKEND_URL}/api/manage-orders/delivered-order`, config),
+                ];
 
-            const [adminsRes, pendingRes, onWayRes, deliveredRes] = await Promise.all(requests);
+                const [adminsRes, pendingRes, onWayRes, deliveredRes] = await Promise.all(requests);
 
-            setAdmins(adminsRes.data.adminList);
-            setPendings(pendingRes.data.products);
-            setOnway(onWayRes.data.products);
-            setDelivered(deliveredRes.data.products);
+                setAdmins(adminsRes.data.adminList);
+                setPendings(pendingRes.data.products);
+                setOnway(onWayRes.data.products);
+                setDelivered(deliveredRes.data.products);
 
-        } catch (error) {
-            console.error("Dashboard fetch error:", error);
-        }
-    };
+            } catch (error) {
+                console.error("Dashboard fetch error:", error);
+            }
+        };
 
-    fetchStatus();
+        fetchStatus();
 
-}, []);
+    }, []);
 
     useEffect(() => {
         if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
     }, [hash]);
+
 
     return(
         <div className="admin-dashboard-container">
@@ -82,15 +81,24 @@ const AdminDashboard = () => {
 
                             <button onClick={() => setToggleCreateNew(!toggleCreateNew)}>Add</button>
 
-                            {pendings?.map((item, itemId) => (
-                                <AdminItem item={item} itemId={itemId} key={key}/>
-                            ))}
-                            
+                            {pendings?.length > 0 ? delivered?.map((item, itemId) => (
+                                <AdminItem item={itemId} prodId={prodId} key={key}/>
+                            )) : "no pending items"} 
+
+                            {onway?.length > 0 ? delivered?.map((item, itemId) => (
+                                <AdminItem item={itemId} prodId={prodId} key={key}/>
+                            )) : "no onway items"} 
+
+                            {delivered?.length > 0 ? delivered?.map((item, itemId) => (
+                                <AdminItem item={itemId} prodId={prodId} key={key}/>
+                            )) : "no delivered items"} 
+
+
                         </section>
 
                         <section id="reports">
-                            <Reports reports={reports}/>
-                            <Feedbacks feedback={feedback}/>
+                            {/* <Reports reports={reports}/>
+                            <Feedbacks feedback={feedback}/> */}
                         </section>
 
                     </div>

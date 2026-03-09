@@ -8,9 +8,6 @@ import Sign from '../routes/Sign'
 import Dashboard from '../routes/Dashboard'
 import AdminDashboard from '../routes/AdminDashboard'
 import AdminSupportChatContainer from '../routes/AdminSupportChatContainer'
-import Pendings from '../admin/components/products/PendingProducts'
-import OnWayProducts from '../admin/components/products/OnWayProducts'
-import DeliveredProducts from '../admin/components/products/DeliveredProducts'
 import ProductPage from '../routes/ProductPage'
 
 
@@ -22,9 +19,9 @@ const AppRouter = () => {
     {path : '/dashboard' , element : <Dashboard />},
     {path : '/product/:id' , element : <ProductPage />},
     {path : '/admin-dashboard' , element : <AdminDashboard/>},
-    {path : '/admin-dashboard/pending-products' , element : <Pendings/>},
-    {path : '/admin-dashboard/onway-products' , element : <OnWayProducts/>},
-    {path : '/admin-dashboard/delivered-products' , element : <DeliveredProducts/>},
+    // {path : '/admin-dashboard/pending-products' , element : <Pendings/>},
+    // {path : '/admin-dashboard/onway-products' , element : <OnWayProducts/>},
+    // {path : '/admin-dashboard/delivered-products' , element : <DeliveredProducts/>},
     {path : '/admin-dashboard/admin-support-chat' , element  :<AdminSupportChatContainer />},
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
