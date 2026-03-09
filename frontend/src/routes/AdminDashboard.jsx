@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
-import { Navigate, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 import { BACKEND_URL } from "../../config"
 
@@ -22,8 +22,6 @@ const AdminDashboard = () => {
     const { hash } = useLocation();
     const [ cookies ] = useCookies(['token'])
 
-    const [ user, setUser ] = useState(null)
-    const [ isAdmin, setIsAdmin ] = useState(null)
     const [ admins, setAdmins ] = useState(null)
 
     const [ latestProducts, setLatestProducts] = useState([])
@@ -42,21 +40,28 @@ const AdminDashboard = () => {
 
             try{
 
-                await Promise.all([
-                    axios.get(`${BACKEND_URL}/api/admin/admin-list` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setAdmins(resp.data.adminList)}),
-                    axios.get(`${BACKEND_URL}/api/products/admin-products` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setLatestProducts(prev => [...prev, ...resp.data.products])}),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/pending-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setPendings(prev => [...prev, ...resp.data.products])}),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/on-way-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setOnway(prev => [...prev, ...resp.data.products])}),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/delivered-items` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setDelivered(prev => [...prev, ...resp.data.products])}),
-                    axios.get(`${BACKEND_URL}/api/reports/product-reports` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setReports(prev => [...prev, ...resp.data.reports])}),
-                    // axios.get(`${BACKEND_URL}/api/feedback` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setFeedback(prev => [...prev, ...resp.data.feedback])}),
-            ])
+                const [ adminsRes, productsRes, pendingRes, onWayRes, deliveredRes, reportsRes ] = await Promise.all([
+                    axios.get(`${BACKEND_URL}/api/admin/admin-list`, {headers: { Authorization: `Bearer ${cookies.token}` }}),
+                    axios.get(`${BACKEND_URL}/api/products/admin-products`, {headers: { Authorization: `Bearer ${cookies.token}` }}),
+                    axios.get(`${BACKEND_URL}/api/manage-orders/pending-items`, {headers: { Authorization: `Bearer ${cookies.token}` }}),
+                    axios.get(`${BACKEND_URL}/api/manage-orders/on-way-items`, {headers: { Authorization: `Bearer ${cookies.token}` }}),
+                    axios.get(`${BACKEND_URL}/api/manage-orders/delivered-items`, {headers: { Authorization: `Bearer ${cookies.token}` }}),
+                    axios.get(`${BACKEND_URL}/api/reports/product-reports`, {headers: { Authorization: `Bearer ${cookies.token}` }})
+                ]);
+
+                setAdmins(adminsRes.data.adminList);
+                setLatestProducts(productsRes.data.products);
+                setPendings(pendingRes.data.products);
+                setOnway(onWayRes.data.products);
+                setDelivered(deliveredRes.data.products);
+                setReports(reportsRes.data.reports);
+                
             }catch(err){
                 console.log(err)
             }
 
         }
-        // refactor and add error handling 
+        // refactor and add error handling , decleare valid api routes 
         return () => {fetchStatus()};
 
     },[])
@@ -67,7 +72,6 @@ const AdminDashboard = () => {
 
     return(
         <div className="admin-dashboard-container">
-            {isAdmin !== null && !isAdmin ? <Navigate to='/'/> : <>
 
                 {toggleCreateNew ? <div><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct /></div> : <></> }
             
@@ -80,7 +84,7 @@ const AdminDashboard = () => {
                     <div className="admin-dashboard-end col">
 
                         <User />
-                        <AdminList admins={admins} user={user}/>
+                        <AdminList admins={admins} />
 
                         <section id="manage-products">
 
@@ -100,7 +104,6 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             
-            </>}
         </div>
     )
 }

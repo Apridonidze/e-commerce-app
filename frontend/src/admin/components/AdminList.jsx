@@ -1,7 +1,6 @@
 import Skeleton from "react-loading-skeleton"
 
-const AdminList = ({ admins, user }) => {
-
+const AdminList = ({ admins }) => {
 
     return(
         <div className="admin-list-container">
