@@ -38,9 +38,8 @@ const AdminDashboard = () => {
                 setPendings(response.data.pending)
                 setOnway(response.data.onWay)
                 setDelivered(response.data.delivered)
-                setAdmins([response.data.onlineAdmins])
+                setAdmins(response.data.admins)
 
-                console.log(response)
 
             } catch (error) {
                 console.error("Dashboard fetch error:", error);
