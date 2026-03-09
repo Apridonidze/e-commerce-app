@@ -8,7 +8,7 @@ const ValidateToken = require('../middlewares/ValidateToken');
 const isAdmin = require('../middlewares/isAdmin')
 
 
-router.get('/' , ValidateToken, isAdmin , adminRoute.list)
+router.get('/admin-list' , ValidateToken, isAdmin , adminRoute.list)
 router.get('/' , ValidateToken, isAdmin , adminRoute.check)
 router.post('/' , ValidateToken, isAdmin ,rateLimiter, adminRoute.add)
 router.delete('/' , ValidateToken, isAdmin ,rateLimiter, adminRoute.remove)
