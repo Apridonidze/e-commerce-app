@@ -4,17 +4,12 @@ const AdminList = ({ admins }) => {
 
     return(
         <div className="admin-list-container">
-            <h1>Admins</h1>
-            {admins !==null ? admins?.map((admin, adminId) => 
+            <h1>Online Admins</h1>
+            {admins ? admins?.map((admin, adminId) => 
                 <div className="admin d-flex justify-content-between" key={adminId}>
                     <div className="admin-start">
-                        <span>Id : {admin.id}</span>
-                        <span>Id : {admin.fullname}</span>
+                        <span>Fullname : {admin.fullname}</span>
                         <span>Id : {admin.email}</span>
-                    </div>
-                    <div className="admin-end">
-                        {admin.id === user.id ? <></> : 
-                        <button>Remove</button>}
                     </div>
                 </div>
             ) : <Skeleton />}

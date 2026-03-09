@@ -17,7 +17,6 @@ const AdminDashboard = () => {
 
     const [ admins, setAdmins ] = useState(null)
 
-    const [ latestProducts, setLatestProducts] = useState([])
     const [ pendings, setPendings] = useState([])
     const [ onway, setOnway ] = useState([])
     const [ delivered, setDelivered ] = useState([])
@@ -34,26 +33,21 @@ const AdminDashboard = () => {
         const fetchStatus = async () => {
             try {
 
-                const requests = [
-                    axios.get(`${BACKEND_URL}/api/admin/admin-list`, config),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/pending-order`, config),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/onway-order`, config),
-                    axios.get(`${BACKEND_URL}/api/manage-orders/delivered-order`, config),
-                ];
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard`, config)
 
-                const [adminsRes, pendingRes, onWayRes, deliveredRes] = await Promise.all(requests);
+                setPendings(response.data.pending)
+                setOnway(response.data.onWay)
+                setDelivered(response.data.delivered)
+                setAdmins([response.data.onlineAdmins])
 
-                setAdmins(adminsRes.data.adminList);
-                setPendings(pendingRes.data.products);
-                setOnway(onWayRes.data.products);
-                setDelivered(deliveredRes.data.products);
+                console.log(response)
 
             } catch (error) {
                 console.error("Dashboard fetch error:", error);
             }
         };
 
-        fetchStatus();
+        return () => fetchStatus();
 
     }, []);
 
@@ -75,7 +69,7 @@ const AdminDashboard = () => {
 
                     <div className="admin-dashboard-end col">
 
-                        <AdminList admins={admins} />
+                    <AdminList admins={admins} />
 
                         <section id="manage-products">
 
