@@ -34,12 +34,13 @@ const AdminDashboard = () => {
             try {
 
                 const response = await axios.get(`${BACKEND_URL}/api/dashboard`, config)
-
+                
                 setPendings(response.data.pending)
                 setOnway(response.data.onWay)
                 setDelivered(response.data.delivered)
                 setAdmins(response.data.admins)
 
+                console.log(response.data.pending)
 
             } catch (error) {
                 console.error("Dashboard fetch error:", error);
@@ -74,7 +75,7 @@ const AdminDashboard = () => {
 
                             <button onClick={() => setToggleCreateNew(!toggleCreateNew)}>Add</button>
 
-                            {pendings?.length > 0 ? delivered?.map((item, itemId) => (
+                            {pendings?.length !== 0 ? delivered?.map((item, itemId) => (
                                 <AdminItem item={itemId} prodId={prodId} key={key}/>
                             )) : "no pending items"} 
 

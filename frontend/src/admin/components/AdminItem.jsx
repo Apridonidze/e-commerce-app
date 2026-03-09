@@ -1,6 +1,6 @@
 const AdminItem = ({item , itemId, key}) => {
     return(
-        <div className="admin-item" key={itemId}>
+        <div className="admin-item border" key={itemId}>
 
             <div className="item-start">
                 {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(item.images)[0]}`} style={{maxHeight:'80px' , maxWidth : '80px'}}/>}
@@ -15,5 +15,4 @@ const AdminItem = ({item , itemId, key}) => {
     )
 }
 
-// add admin visible data
 export default AdminItem;
