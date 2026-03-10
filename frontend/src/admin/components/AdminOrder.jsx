@@ -3,6 +3,7 @@ import { useState } from "react"
 
 import { BACKEND_URL } from '../../../config'
 import { useCookies } from "react-cookie"
+import Item from "../../component/Item"
 
 const AdminOrder = ({ order, orderId, key }) => {
 
@@ -15,7 +16,7 @@ const AdminOrder = ({ order, orderId, key }) => {
 
             const response = await axios.get(`${BACKEND_URL}/api/order/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
 
-            console.log(response)
+            setProducts(response.data.orderItems)
 
         }catch(err){
             // toggle error message
@@ -38,7 +39,9 @@ const AdminOrder = ({ order, orderId, key }) => {
                 </div>
             </div>
             <div className="order-bottom">
-                <div className="collapse" id={`collapseDiv${orderId}`}>asdsd</div>
+                <div className="collapse" id={`collapseDiv${orderId}`}>
+                    {products?.map((prod, prodId) => <Item prod={prod} prodId={prodId}/>)}
+                </div>
             </div>
         </div>
     )

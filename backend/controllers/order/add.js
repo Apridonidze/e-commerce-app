@@ -21,7 +21,7 @@ async function add(req, res) {
         return res.status(200).json({message: "Your Items Have Been Ordered Successfully, Wait For Delivery"})
 
     } catch (err) {
-        // add err on this sql error ER_NO_REFERENCED_ROW_2
+        // add err on this sql error ER_NO_REFERENCED_ROW_2 and ER_DUPLICATE
         console.log(err)
         return res.status(500).json({errMessage: "Internal Error",err: err})
     }
