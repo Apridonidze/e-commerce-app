@@ -33,7 +33,7 @@ const AdminOrder = ({ order, orderId, key }) => {
                     {new Date(order.created_at).toLocaleDateString()} {new Date(order.created_at).toLocaleTimeString()}
                 </div>
                 <div className="top-end">
-                    <button className="btn btn-primary" onClick={() => fetchOrderDetails(orderId)} type="button" data-toggle="collapse" data-target={`#collapseDiv${orderId}`} aria-expanded="false" aria-controls={`collapseDiv${orderId}`}>^</button>
+                    <button className="btn btn-primary" onClick={() => fetchOrderDetails(order.order_id)} type="button" data-toggle="collapse" data-target={`#collapseDiv${orderId}`} aria-expanded="false" aria-controls={`collapseDiv${orderId}`}>^</button>
                     
                 </div>
             </div>

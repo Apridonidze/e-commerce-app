@@ -39,8 +39,11 @@ const Order = ({ setCart, cart }) => {
         if(checked && cart.length !== 0){
 
             let items = cart.map((cart, _) => (cart.price * cart.amount))
-            let total = items.reduce((sum, item) => sum + item, 0);
+            let total = items.reduce((sum, item) => sum + item);
+            let allItems = cart.map((cart,_) => (cart))
+            
             setTotalPrice(total)
+            setSelectedItems(allItems)
 
             checkboxRef?.current.filter(c => c !== null).map((c) => c.checked = true)
             
@@ -48,6 +51,7 @@ const Order = ({ setCart, cart }) => {
 
         else {
             checkboxRef?.current.filter(c => c !== null).map((c) => c.checked = false)
+            setSelectedItems([])
             return setTotalPrice(0)
         }
 
@@ -67,10 +71,6 @@ const Order = ({ setCart, cart }) => {
     }
 
     useEffect(() => {
-
-
-        let total = selectedItems.reduce((sum, item) => sum + item.price, 0);
-        setTotalPrice(total)
 
         if(selectedItems.length === cart.length){
             selectAllRef.current.checked = true
