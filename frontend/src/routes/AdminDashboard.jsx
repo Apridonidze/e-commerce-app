@@ -7,8 +7,8 @@ import { BACKEND_URL } from "../../config"
 
 import Sidebar from "../layout/Sidebar"
 import AdminList from '../admin/components/AdminList'
-import AdminItem from "../admin/components/AdminItem"
 import CreateProduct from "../admin/components/CreateProduct"
+import AdminOrder from "../admin/components/AdminOrder"
 
 const AdminDashboard = () => {
 
@@ -75,17 +75,17 @@ const AdminDashboard = () => {
 
                             <button onClick={() => setToggleCreateNew(!toggleCreateNew)}>Add</button>
 
-                            {pendings?.length !== 0 ? delivered?.map((item, itemId) => (
-                                <AdminItem item={itemId} prodId={prodId} key={key}/>
-                            )) : "no pending items"} 
+                            {pendings?.length > 0 ? (pendings.map((order, index) => (
+                                <AdminOrder order={order} orderId={index} key={order.order_id} />
+                            ))) : ("no pending items")}
 
-                            {onway?.length > 0 ? delivered?.map((item, itemId) => (
-                                <AdminItem item={itemId} prodId={prodId} key={key}/>
-                            )) : "no onway items"} 
+                            {onway?.length > 0 ? (onway.map((order, index) => (
+                                <AdminOrder order={order} orderId={index} key={order.order_id} />
+                            ))) : ("no onway items")}
 
-                            {delivered?.length > 0 ? delivered?.map((item, itemId) => (
-                                <AdminItem item={itemId} prodId={prodId} key={key}/>
-                            )) : "no delivered items"} 
+                            {delivered?.length > 0 ? (delivered.map((order, index) => (
+                                <AdminOrder order={order} orderId={index} key={order.order_id} />
+                            ))) : ("no delivered items")}
 
 
                         </section>
