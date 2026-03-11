@@ -34,14 +34,23 @@ const AdminOrder = ({ order, orderId, key }) => {
                     {order.total_price}
                     {new Date(order.created_at).toLocaleDateString()} {new Date(order.created_at).toLocaleTimeString()}
                 </div>
+
                 <div className="top-end">
                     <button className="btn btn-primary" onClick={() => fetchOrderDetails(order.order_id)} type="button" data-toggle="collapse" data-target={`#collapseDiv${orderId}`} aria-expanded="false" aria-controls={`collapseDiv${orderId}`}>^</button>
-                    
                 </div>
             </div>
+
+            <div className="order-main">
+                <select name="statusSelector" id="statusSelector">
+                    <option value="Pending">{order.status === "Pending" ? 'Pending (Current)' : 'Pending'}</option>
+                    <option value="OnWay">{order.status === "OnWay" ? 'On Way (Current)' : 'On Way'}</option>
+                    <option value="Delivered">{order.status === "Delivered" ? 'Delivered (Current)' : 'Delivered'}</option>
+                </select>
+            </div>
+
             <div className="order-bottom">
                 <div className="collapse" id={`collapseDiv${orderId}`}>
-                    {products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId}/>)}
+                    {products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId} />)}
                 </div>
             </div>
         </div>
