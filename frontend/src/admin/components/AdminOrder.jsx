@@ -28,25 +28,21 @@ const AdminOrder = ({ order, orderId, key }) => {
 
     useEffect(() => {
 
-        const changeStatus = async(e) => {
-        
+        const changeStatus = async() => {
+            try{
 
-        try{
+                const response = await axios.put(`${BACKEND_URL}/api/dashboard/${order.order_id}` , {status}, {headers : {Authorization : `Bearer ${cookies.token}`}})
+                console.log(response)
+                setStatus(response.data.status)
 
-            const response = await axios.put(`${BACKEND_URL}/api/dashboard/${order.order_id}` , {status}, {headers : {Authorization : `Bearer ${cookies.token}`}})
-            console.log(response)
-            setStatus(response.data.status)
-
-        }catch(err){
-            console.log(err)
+            }catch(err){
+                console.log(err)
+            }
         }
 
-    }
-
-    changeStatus()
+        changeStatus()
 
     },[status])
-
 
     return(
         <div className="admin-order-container" key={orderId}>
@@ -64,7 +60,7 @@ const AdminOrder = ({ order, orderId, key }) => {
             </div>
 
             <div className="order-main">
-                <select name="statusSelector" id="statusSelector" onChange={(e) => setStatus(e.target.value)}>
+                <select name="statusSelector" id="statusSelector" defaultValue={status} onChange={(e) => setStatus(e.target.value)}>
                     <option value="Pending">{status === "Pending" ? 'Pending (Current)' : 'Pending'}</option>
                     <option value="OnWay">{status === "OnWay" ? 'On Way (Current)' : 'On Way'}</option>
                     <option value="Delivered">{status === "Delivered" ? 'Delivered (Current)' : 'Delivered'}</option>
