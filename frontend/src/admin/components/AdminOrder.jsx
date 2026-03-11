@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { BACKEND_URL } from '../../../config'
 import { useCookies } from "react-cookie"
@@ -11,6 +11,7 @@ const AdminOrder = ({ order, orderId, key }) => {
     const [ cookies ] = useCookies(['token'])
 
     const [products,setProducts] = useState([])
+    const [status,setStatus] = useState(order?.status)
 
     const fetchOrderDetails = async(id) => {
         try{
@@ -24,6 +25,28 @@ const AdminOrder = ({ order, orderId, key }) => {
             console.log(err)
         }
     }
+
+    useEffect(() => {
+
+        const changeStatus = async(e) => {
+        
+
+        try{
+
+            const response = await axios.put(`${BACKEND_URL}/api/dashboard/${order.order_id}` , {status}, {headers : {Authorization : `Bearer ${cookies.token}`}})
+            console.log(response)
+            setStatus(response.data.status)
+
+        }catch(err){
+            console.log(err)
+        }
+
+    }
+
+    changeStatus()
+
+    },[status])
+
 
     return(
         <div className="admin-order-container" key={orderId}>
@@ -41,10 +64,10 @@ const AdminOrder = ({ order, orderId, key }) => {
             </div>
 
             <div className="order-main">
-                <select name="statusSelector" id="statusSelector">
-                    <option value="Pending">{order.status === "Pending" ? 'Pending (Current)' : 'Pending'}</option>
-                    <option value="OnWay">{order.status === "OnWay" ? 'On Way (Current)' : 'On Way'}</option>
-                    <option value="Delivered">{order.status === "Delivered" ? 'Delivered (Current)' : 'Delivered'}</option>
+                <select name="statusSelector" id="statusSelector" onChange={(e) => setStatus(e.target.value)}>
+                    <option value="Pending">{status === "Pending" ? 'Pending (Current)' : 'Pending'}</option>
+                    <option value="OnWay">{status === "OnWay" ? 'On Way (Current)' : 'On Way'}</option>
+                    <option value="Delivered">{status === "Delivered" ? 'Delivered (Current)' : 'Delivered'}</option>
                 </select>
             </div>
 

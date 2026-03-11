@@ -7,7 +7,7 @@ async function update(req,res) {
         const status = req.body.status
 
         await db.query('update orders set status = ? where order_id = ?' , [status, orderId])
-        return res.status(200).json({message : "Order Updated Successfully"})
+        return res.status(200).json({message : "Order Updated Successfully", status})
 
         // add node mailer for user whos order status got updated
 
