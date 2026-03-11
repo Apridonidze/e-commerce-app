@@ -3,7 +3,8 @@ import { useState } from "react"
 
 import { BACKEND_URL } from '../../../config'
 import { useCookies } from "react-cookie"
-import Item from "../../component/Item"
+
+import OrderItem from "../../component/OrderItem"
 
 const AdminOrder = ({ order, orderId, key }) => {
 
@@ -40,7 +41,7 @@ const AdminOrder = ({ order, orderId, key }) => {
             </div>
             <div className="order-bottom">
                 <div className="collapse" id={`collapseDiv${orderId}`}>
-                    {products?.map((prod, prodId) => <Item prod={prod} prodId={prodId}/>)}
+                    {products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId}/>)}
                 </div>
             </div>
         </div>
