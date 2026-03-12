@@ -77,6 +77,11 @@ const Order = ({ setCart, cart }) => {
         }else {
             selectAllRef.current.checked = false
         }
+
+
+        let total = selectedItems.reduce((sum, item) => sum + item.price, 0);
+       
+        setTotalPrice(total)
         
     },[selectedItems, selectAllRef])
 
