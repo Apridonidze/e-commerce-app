@@ -34,7 +34,7 @@ const AdminOrder = ({ order, orderId, key, setOrders }) => {
                 const response = await axios.put(`${BACKEND_URL}/api/dashboard/${order.order_id}` , {status}, {headers : {Authorization : `Bearer ${cookies.token}`}})
                 if(response.status === 200){
                     setStatus(response.data.status)
-                    setOrders(prevOrders => prevOrders.map(ord => ord.order_id === order.order_id ? { ...ord, status: response.data.status } : ord))
+                    setOrders(prevOrders => prevOrders?.map(ord => ord.order_id === order.order_id ? { ...ord, status: response.data.status } : ord))
                 }
 
             }catch(err){

@@ -21,7 +21,7 @@ const AdminDashboard = () => {
     const [ onway, setOnway ] = useState([])
     const [ delivered, setDelivered ] = useState([])
 
-    const [ orders,  setOrders ] = useState()
+    const [ orders,  setOrders ] = useState([])
 
     const [ reports , setReports ] = useState([])
     const [ feedback, setFeedback ] = useState([])
@@ -37,8 +37,8 @@ const AdminDashboard = () => {
 
                 const response = await axios.get(`${BACKEND_URL}/api/dashboard`, config)
                 
-                let data = [...response.data.pending, response.data.onWay, response.data.delivered].filter((arr) => arr.length !== 0)
-                setOrders(...data)
+                const data = [...response.data.pending, response.data.onWay, response.data.delivered].filter((arr) => arr.length !== 0)
+                setOrders(data)
                 setAdmins(response.data.admins) 
 
 
@@ -47,16 +47,15 @@ const AdminDashboard = () => {
             }
         };
 
-        return () => fetchStatus();
+        fetchStatus();
 
     }, []);
-
-    console.log(orders)
 
     useEffect(() => {
         if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
     }, [hash]);
 
+    
 
     return(
         <div className="admin-dashboard-container">
@@ -77,15 +76,15 @@ const AdminDashboard = () => {
 
                             <button onClick={() => setToggleCreateNew(!toggleCreateNew)}>Add</button>
 
-                            {orders?.filter(prod => prod.status == 'Pending').length > 0 ? orders.filter(prod => prod.status == 'Pending').map(order => (
+                            {orders?.filter(prod => prod.status == 'Pending').length > 0 ? orders?.filter(prod => prod.status == 'Pending').map(order => (
                                 <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
                             )) : "no pending items"}
 
-                            {orders?.filter(prod => prod.status == 'OnWay').length > 0 ? orders.filter(prod => prod.status == 'OnWay').map(order => (
+                            {orders?.filter(prod => prod.status == 'OnWay').length > 0 ? orders?.filter(prod => prod.status == 'OnWay').map(order => (
                                 <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
                             )) : "no on way items"}
 
-                            {orders?.filter(prod => prod.status == 'Delivered').length > 0 ? orders.filter(prod => prod.status == 'Delivered').map(order => (
+                            {orders?.filter(prod => prod.status == 'Delivered').length > 0 ? orders?.filter(prod => prod.status == 'Delivered').map(order => (
                                 <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
                             )) : "no delivered items"}
 

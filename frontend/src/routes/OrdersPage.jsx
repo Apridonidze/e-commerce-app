@@ -2,18 +2,28 @@ import { useEffect, useState } from "react"
 import Sidebar from "../layout/Sidebar"
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PendingOrder = () => {
+
+    const params = useParams()
+    console.log(params.orderStatus)
 
     const [offset, setOffset] = useState(0);
     const [orders,setOrders] = useState([])
 
+    const navigator = useNavigate();
+
     useEffect(() => {
+
+        if(params !== "Pending" || params !== "Pending" || params !== "Pending"){
+            navigator('/', {replace : true})
+        }
 
         const fetchOrder = async() => {
             try{
 
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard`)
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/:${'PendingOrder'}`)
 
 
             }catch(err){
@@ -23,7 +33,7 @@ const PendingOrder = () => {
 
         fetchOrder()
 
-    },[offset])
+    },[offset, params])
 
     return(
 
