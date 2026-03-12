@@ -16,15 +16,15 @@ const PendingOrder = () => {
 
     useEffect(() => {
 
-        if(params !== "Pending" || params !== "Pending" || params !== "Pending"){
+        if(params !== "pending-orders" || params !== "onway-orders" || params !== "delivered-orders"){
             navigator('/', {replace : true})
         }
 
         const fetchOrder = async() => {
             try{
 
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard/:${'PendingOrder'}`)
-
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard?status=${params.orderStatus}&offset=${offset}`)
+                console.log(response)
 
             }catch(err){
                 console.log(err)

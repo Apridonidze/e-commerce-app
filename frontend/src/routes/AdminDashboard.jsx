@@ -36,8 +36,8 @@ const AdminDashboard = () => {
             try {
 
                 const response = await axios.get(`${BACKEND_URL}/api/dashboard`, config)
+                const data = [...response.data.pending, response.data.onWay, response.data.delivered].filter((arr) => arr.length !== 0).flat()
                 
-                const data = [...response.data.pending, response.data.onWay, response.data.delivered].filter((arr) => arr.length !== 0)
                 setOrders(data)
                 setAdmins(response.data.admins) 
 
