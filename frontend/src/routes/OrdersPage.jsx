@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useCookies } from "react-cookie";
+import AdminOrder from "../admin/components/AdminOrder";
 
 const OrdersPage = () => {
 
@@ -20,7 +21,9 @@ const OrdersPage = () => {
     const navigator = useNavigate();
 
     const allowedParams = ["pending-orders", "onway-orders", "delivered-orders"]
-    
+    const formattedStatuses = {'pending-orders': 'Pending','onway-orders': 'OnWay','delivered-orders': 'Delivered'}
+    const formattedStatus = formattedStatuses[params?.orderStatus]
+
 
     useEffect(() => {
 
@@ -29,8 +32,6 @@ const OrdersPage = () => {
             return;
         }
 
-        const formattedStatuses = {'pending-orders': 'Pending','onway-orders': 'OnWay','delivered-orders': 'Delivered'}
-        const formattedStatus = formattedStatuses[params?.orderStatus]
        
         if (!formattedStatus) return
 
@@ -38,8 +39,8 @@ const OrdersPage = () => {
             
             try {
                 const response = await axios.get(`${BACKEND_URL}/api/dashboard/${formattedStatus}/${offset}`,{ headers: { Authorization: `Bearer ${cookies.token}` } })
+                setOrders(response.data.orders)
 
-                console.log(response)
             } catch (err) {
                 console.log(err)
             }
@@ -56,6 +57,9 @@ const OrdersPage = () => {
             <div className="main-container">
                 <div className="prevbtn">
                     <button onClick={() => {navigator('/admin-dashboard', {replace : true})}}>PrevUrl</button>
+                    {orders?.length !== 0 ? orders?.map(order => (
+                        <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
+                    )) : `no ${formattedStatus} items`}
                 </div>
             </div>
         </div>
