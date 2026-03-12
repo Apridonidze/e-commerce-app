@@ -23,7 +23,7 @@ const PendingOrder = () => {
         const fetchOrder = async() => {
             try{
 
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard?status=${params.orderStatus}&offset=${offset}`)
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/${params.orderStatus}/${offset}`)
                 console.log(response)
 
             }catch(err){
