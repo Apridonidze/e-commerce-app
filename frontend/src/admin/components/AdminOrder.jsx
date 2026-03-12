@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie"
 
 import OrderItem from "../../component/OrderItem"
 
-const AdminOrder = ({ order, orderId, key }) => {
+const AdminOrder = ({ order, orderId, key, setOrders }) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -32,8 +32,10 @@ const AdminOrder = ({ order, orderId, key }) => {
             try{
 
                 const response = await axios.put(`${BACKEND_URL}/api/dashboard/${order.order_id}` , {status}, {headers : {Authorization : `Bearer ${cookies.token}`}})
-                console.log(response)
-                setStatus(response.data.status)
+                if(response.status === 200){
+                    setStatus(response.data.status)
+                    setOrders(prevOrders => prevOrders.map(ord => ord.order_id === order.order_id ? { ...ord, status: response.data.status } : ord))
+                }
 
             }catch(err){
                 console.log(err)
