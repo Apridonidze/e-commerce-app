@@ -6,9 +6,9 @@ async function list(req,res) {
         
         const [orders] = await db.query(`select orders.*, users.fullname, users.email from orders join users on orders.user_id = users.id`);
 
-        const pending = orders.filter(o => o.status === "Pending");
-        const onWay = orders.filter(o => o.status === "OnWay");
-        const delivered = orders.filter(o => o.status === "Delivered");
+        const pending = orders.filter(o => o.status === "Pending").slice(0,5);
+        const onWay = orders.filter(o => o.status === "OnWay").slice(0,5);
+        const delivered = orders.filter(o => o.status === "Delivered").slice(0,5);
 
         const onlineAdminList = [...onlineAdmins.keys()];
 
