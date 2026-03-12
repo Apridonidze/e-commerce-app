@@ -5,11 +5,13 @@ import { BACKEND_URL } from "../../config";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { useCookies } from "react-cookie";
 
 const OrdersPage = () => {
 
     const params = useParams()
     
+    const [cookies] = useCookies(['token'])
     const { user } = useContext(UserContext)
 
     const [offset, setOffset] = useState(0);
@@ -24,22 +26,28 @@ const OrdersPage = () => {
 
         if(!allowedParams.includes(params?.orderStatus) && user?.role !== 'admin'){
             navigator('/*', {replace : true})
+            return;
         }
 
-        const fetchOrder = async() => {
-            try{
+        const formattedStatuses = {'pending-orders': 'Pending','onway-orders': 'OnWay','delivered-orders': 'Delivered'}
+        const formattedStatus = formattedStatuses[params?.orderStatus]
+       
+        if (!formattedStatus) return
 
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard/${params.orderStatus}/${offset}`)
+        const fetchOrder = async () => {
+            
+            try {
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/${formattedStatus}/${offset}`,{ headers: { Authorization: `Bearer ${cookies.token}` } })
+
                 console.log(response)
-
-            }catch(err){
+            } catch (err) {
                 console.log(err)
             }
         }
 
         fetchOrder()
-
-    },[offset, params])
+    
+    },[offset, params.orderStatus])
 
     return(
 
