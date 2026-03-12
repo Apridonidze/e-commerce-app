@@ -3,21 +3,27 @@ import Sidebar from "../layout/Sidebar"
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
 import { useNavigate, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
-const PendingOrder = () => {
+const OrdersPage = () => {
 
     const params = useParams()
-    console.log(params.orderStatus)
+    
+    const { user } = useContext(UserContext)
 
     const [offset, setOffset] = useState(0);
     const [orders,setOrders] = useState([])
 
     const navigator = useNavigate();
 
+    const allowedParams = ["pending-orders", "onway-orders", "delivered-orders"]
+    
+
     useEffect(() => {
 
-        if(params !== "pending-orders" || params !== "onway-orders" || params !== "delivered-orders"){
-            navigator('/', {replace : true})
+        if(!allowedParams.includes(params?.orderStatus) && user?.role !== 'admin'){
+            navigator('/*', {replace : true})
         }
 
         const fetchOrder = async() => {
@@ -48,4 +54,4 @@ const PendingOrder = () => {
     )
 }
 
-export default PendingOrder
+export default OrdersPage

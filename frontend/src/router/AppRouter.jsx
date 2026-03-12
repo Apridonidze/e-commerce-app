@@ -9,7 +9,7 @@ import Dashboard from '../routes/Dashboard'
 import AdminDashboard from '../routes/AdminDashboard'
 import AdminSupportChatContainer from '../routes/AdminSupportChatContainer'
 import ProductPage from '../routes/ProductPage'
-import PendingOrders from '../routes/OrdersPage'
+import OrdersPage from '../routes/OrdersPage'
 
 const AppRouter = () => {
 
@@ -19,11 +19,11 @@ const AppRouter = () => {
     {path : '/dashboard' , element : <Dashboard />},
     {path : '/product/:id' , element : <ProductPage />},
     {path : '/admin-dashboard' , element : <AdminDashboard/>},
-    {path : '/admin-dashboard/orders/:orderStatus' , element : <PendingOrders/>},
+    {path : '/admin-dashboard/orders/:orderStatus' , element : <OrdersPage />},
     {path : '/admin-dashboard/admin-support-chat' , element  :<AdminSupportChatContainer />},
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
-    {path : '*' , element : <></>}, /**add 404 page for this and button to go back to main page */
+    {path : '*' , element : <></>}, /**add 404 page with not-found url for this and button to go back to main page */
     
     //add feedbacks send page
     //add credit cart fillout form
