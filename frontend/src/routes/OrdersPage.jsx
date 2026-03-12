@@ -55,7 +55,7 @@ const OrdersPage = () => {
             <Sidebar />
             <div className="main-container">
                 <div className="prevbtn">
-                    <button>PrevUrl</button>
+                    <button onClick={() => {navigator('/admin-dashboard', {replace : true})}}>PrevUrl</button>
                 </div>
             </div>
         </div>
