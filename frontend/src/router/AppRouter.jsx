@@ -9,7 +9,7 @@ import Dashboard from '../routes/Dashboard'
 import AdminDashboard from '../routes/AdminDashboard'
 import AdminSupportChatContainer from '../routes/AdminSupportChatContainer'
 import ProductPage from '../routes/ProductPage'
-import PendingOrders from '../routes/PendingOrder'
+import PendingOrders from '../routes/OrdersPage'
 
 const AppRouter = () => {
 
@@ -19,9 +19,7 @@ const AppRouter = () => {
     {path : '/dashboard' , element : <Dashboard />},
     {path : '/product/:id' , element : <ProductPage />},
     {path : '/admin-dashboard' , element : <AdminDashboard/>},
-    {path : '/admin-dashboard/pending-orders' , element : <PendingOrders/>},
-    // {path : '/admin-dashboard/onway-products' , element : <OnWayProducts/>},
-    // {path : '/admin-dashboard/delivered-products' , element : <DeliveredProducts/>},
+    {path : '/admin-dashboard/orders/:orderStatus' , element : <PendingOrders/>},
     {path : '/admin-dashboard/admin-support-chat' , element  :<AdminSupportChatContainer />},
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
