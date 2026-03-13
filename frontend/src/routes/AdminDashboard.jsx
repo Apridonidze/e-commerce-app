@@ -111,8 +111,7 @@ const AdminDashboard = () => {
                         </section>
 
                         <section id="reports">
-                            {/* <Reports reports={reports}/>
-                            <Feedbacks feedback={feedback}/> */}
+                            
                         </section>
 
                     </div>
