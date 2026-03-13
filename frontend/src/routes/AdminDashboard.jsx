@@ -45,11 +45,23 @@ const AdminDashboard = () => {
 
 
             } catch (error) {
-                console.error("Dashboard fetch error:", error);
+                console.log("Dashboard fetch error:", error);
             }
         };
 
+
+        const fetchReports = async () => {
+            try{
+
+                const response = await axios.get(`${BACKEND_URL}/api/report`, config)
+
+            }catch(err){
+                console.log(err)
+            }
+        }
+
         fetchStatus();
+        fetchReports();
 
     }, []);
 
@@ -111,7 +123,7 @@ const AdminDashboard = () => {
                         </section>
 
                         <section id="reports">
-                            
+                            {/* <Report report={report} reportId={reportId} key={reportId}/> */}
                         </section>
 
                     </div>
