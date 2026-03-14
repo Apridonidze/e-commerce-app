@@ -18,17 +18,13 @@ const AdminDashboard = () => {
     const [ cookies ] = useCookies(['token'])
 
     const [ admins, setAdmins ] = useState(null)
-
-    const [ pendings, setPendings] = useState([])
-    const [ onway, setOnway ] = useState([])
-    const [ delivered, setDelivered ] = useState([])
-
     const [ orders,  setOrders ] = useState([])
-
     const [ reports , setReports ] = useState([])
     const [ feedback, setFeedback ] = useState([])
 
     const [toggleCreateNew, setToggleCreateNew] = useState(false);
+
+    const [reportsOffset, setReportsOffset] = useState(0)
 
     const config = {headers: { Authorization: `Bearer ${cookies.token}`}}
 
@@ -53,7 +49,8 @@ const AdminDashboard = () => {
         const fetchReports = async () => {
             try{
 
-                const response = await axios.get(`${BACKEND_URL}/api/report`, config)
+                const response = await axios.get(`${BACKEND_URL}/api/report/${reportsOffset}`, config)
+                console.log(response)
 
             }catch(err){
                 console.log(err)
