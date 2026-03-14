@@ -8,7 +8,7 @@ async function list(req,res) {
 
         //add filters for params
 
-        const [ ReportsList ] = await db.query('select users.fullname , users.email, reports.* from reports join users on users.id = reports.user_id limit ?' , [Number(offset) + limit])
+        const [ ReportsList ] = await db.query('select users.fullname , users.email, reports.* , products.title from reports join users on users.id = reports.user_id  join products on reports.product_id = products.products_id limit ?' , [Number(offset) + limit])
         if(ReportsList.length === 0) return res.status(204)
 
         return res.status(200).json({message : "Reports Found" , reports : ReportsList})
