@@ -12,9 +12,10 @@ async function list(req,res) {
 
         const onlineAdminList = [...onlineAdmins.keys()];
 
-        const [admins] = await db.query('select id, fullname from users where id in (?)',[onlineAdminList]);
+        if(onlineAdminList.length === 0) return res.status(200).json({pending,onWay,delivered, admins: onlineAdminList});
 
-        return res.json({pending,onWay,delivered, admins});
+        const [admins] = await db.query('select id, fullname from users where id in (?)',[onlineAdminList]);
+        return res.status(200).json({pending,onWay,delivered, admins});
 
         
     }catch(err){

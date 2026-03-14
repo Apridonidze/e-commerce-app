@@ -50,7 +50,7 @@ const AdminDashboard = () => {
             try{
 
                 const response = await axios.get(`${BACKEND_URL}/api/report/${reportsOffset}`, config)
-                console.log(response)
+                console.log(response.data.reports)
 
             }catch(err){
                 console.log(err)
