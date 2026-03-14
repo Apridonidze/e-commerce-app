@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Report = ( { report, reportId ,key } ) => {
+const Report = ( { report, reportId ,key, setToggleDeleteReport, setToggleRespondReport } ) => {
     return(
         <div className="report-container d-flex justify-content-between" key={reportId}>
             <div className="report-start">
@@ -9,8 +9,8 @@ const Report = ( { report, reportId ,key } ) => {
                 <span>{report?.type == 'Product' ? <div>Reported Product : <Link to={`/product/${report.product_id}`}>{report.title}</Link></div> : <></>}</span>
             </div>
             <div className="report-end d-flex flex-column">
-                <button>Delete</button>
-                <button>Respond</button>
+                <button onClick={() => setToggleDeleteReport(true)}>Delete</button>
+                <button onClick={() => setToggleRespondReport(true)}>Respond</button>
             </div>
         </div>
     );

@@ -11,6 +11,8 @@ import CreateProduct from "../admin/components/CreateProduct"
 import AdminOrder from "../admin/components/AdminOrder"
 import Report from '../component/Report'
 import { Link } from "react-router-dom"
+import DeleteReport from "../component/DeleteReport"
+import RespondReport from "../component/RespondReport"
 
 const AdminDashboard = () => {
 
@@ -23,6 +25,8 @@ const AdminDashboard = () => {
     const [ feedback, setFeedback ] = useState([])
 
     const [toggleCreateNew, setToggleCreateNew] = useState(false);
+    const [toggleDeleteReport, setToggleDeleteReport] = useState(false);
+    const [toggleRespondReport, setToggleRespondReport] = useState(false);
 
     const [reportsOffset, setReportsOffset] = useState(0)
 
@@ -74,8 +78,10 @@ const AdminDashboard = () => {
     return(
         <div className="admin-dashboard-container">
 
-                {toggleCreateNew ? <div><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct /></div> : <></> }
-            
+            {toggleCreateNew ? <div><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct /></div> : <></> }
+            {toggleDeleteReport ? <div><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport /></div> : <></> }
+            {toggleRespondReport ? <div><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport /></div> : <></> }
+
                 <div className="row">
                         
                     <div className="admin-dashboard-start col">
@@ -124,7 +130,7 @@ const AdminDashboard = () => {
 
                         <section id="reports">
                             <h1>Reports</h1>
-                            {reports?.length !== 0 ? reports?.map((report,reportId) => <Report report={report} reportId={reportId} key={reportId}/>) : 'No reports'}
+                            {reports?.length !== 0 ? reports?.map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No reports'}
                         </section>
 
                     </div>
