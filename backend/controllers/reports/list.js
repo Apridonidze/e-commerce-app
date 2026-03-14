@@ -5,10 +5,12 @@ async function list(req,res) {
 
         const { offset } = req.params;
         const limit = 15;
-        
-        const [ ReportsList ] = await db.query('select users.fullname , users.id , users.email, reports.* from reports join users on users.id = reports.id limit ?' , [Number(offset) + limit])
-        if(ReportsList.length < 1) return res.status(204)
-            
+
+        //add filters for params
+
+        const [ ReportsList ] = await db.query('select users.fullname , users.email, reports.* from reports join users on users.id = reports.user_id limit ?' , [Number(offset) + limit])
+        if(ReportsList.length === 0) return res.status(204)
+
         return res.status(200).json({message : "Reports Found" , reports : ReportsList})
         
     }catch(err){
