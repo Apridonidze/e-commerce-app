@@ -9,7 +9,7 @@ import Sidebar from "../layout/Sidebar"
 import AdminList from '../admin/components/AdminList'
 import CreateProduct from "../admin/components/CreateProduct"
 import AdminOrder from "../admin/components/AdminOrder"
-
+import Report from '../component/Report'
 import { Link } from "react-router-dom"
 
 const AdminDashboard = () => {
@@ -50,7 +50,10 @@ const AdminDashboard = () => {
             try{
 
                 const response = await axios.get(`${BACKEND_URL}/api/report/${reportsOffset}`, config)
-                console.log(response.data)
+                console.log(response.data.reports)
+                if(response.status == 204) return setReports([])
+                
+                setReports(response.data.reports);
 
             }catch(err){
                 console.log(err)
@@ -120,7 +123,8 @@ const AdminDashboard = () => {
                         </section>
 
                         <section id="reports">
-                            {/* <Report report={report} reportId={reportId} key={reportId}/> */}
+                            <h1>Reports</h1>
+                            {reports?.length !== 0 ? reports?.map((report,reportId) => <Report report={report} reportId={reportId} key={reportId}/>) : 'No reports'}
                         </section>
 
                     </div>
