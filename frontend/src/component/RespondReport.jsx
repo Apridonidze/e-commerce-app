@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from "react"
 
 import { BACKEND_URL } from "../../config"
 
-const RespondReport = ({ setToggleRespondReport, toggleRespondReport }) => {
+const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setReports }) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -35,6 +35,9 @@ const RespondReport = ({ setToggleRespondReport, toggleRespondReport }) => {
 
             const response = await axios.post(`${BACKEND_URL}/api/report/${toggleRespondReport.reportDetails.id}`, {selectReason, status : "Responded"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
             console.log(response)
+
+            if(response.status === 200) setReports(prev => prev.map(report => report.id == response.data.reportId? { ...report, status: "Responded" }: report));
+
             // add 400 status code handling
 
         }catch(err){

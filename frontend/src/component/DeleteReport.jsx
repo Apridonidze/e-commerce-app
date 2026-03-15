@@ -4,7 +4,7 @@ import axios from "axios"
 import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 
-const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport }) => {
+const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports }) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -34,6 +34,9 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport }) => {
 
             const response = await axios.post(`${BACKEND_URL}/api/report/${toggleDeleteReport.reportDetails.id}`, {selectReason, status : "Removed"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
             console.log(response)
+
+            if(response.status === 200) setReports(prev => prev.map(report => report.id == response.data.reportId? { ...report, status: "Removed" }: report));
+            
             // add 400 status code handling
 
         }catch(err){
