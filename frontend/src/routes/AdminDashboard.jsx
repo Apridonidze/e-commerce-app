@@ -130,6 +130,7 @@ const AdminDashboard = () => {
 
                         <section id="reports">
                             <h1>Reports</h1>
+                            <Link to={'/admin-dashboard/reports'}>Visit</Link>
                             {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No reports'}
                         </section>
 
