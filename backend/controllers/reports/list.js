@@ -3,7 +3,7 @@ const db = require('../../middlewares/db')
 async function list(req,res) {
     try{
 
-        const { offset } = req.params;
+        const { offset } = req.params || 0;
         const limit = 5;
 
         //filter req.params to be number if not return 400 status code error
@@ -14,7 +14,6 @@ async function list(req,res) {
         return res.status(200).json({message : "Reports Found" , reports : ReportsList})
         
     }catch(err){
-        console.log(err)
         return res.status(500).json({errMessage : "Internal Erorr" , err : err})
     }
 }
