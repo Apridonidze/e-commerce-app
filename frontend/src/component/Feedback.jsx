@@ -6,8 +6,4 @@ const Feedback = ({ feedback, feedbackId ,key }) => {
     )
 }
 
-////TODO : fix typeos
-//TODO : craete loading skeleton for it
-
-
 export default Feedback
