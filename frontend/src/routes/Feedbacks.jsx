@@ -17,16 +17,15 @@ const Feedbacks = () => {
 
     const config = {headers: { Authorization: `Bearer ${cookies.token}`}}
 
-    const fetchFeedbacks = async() => {
+    const fetchFeedbacks = async(offset) => {
         
-        let offset = offsets + 10;
-        setOffsets(prev => prev + 10)
-
         try{
 
             const response = await axios.get(`${BACKEND_URL}/api/feedback/${offset}`, config)
+            console.log(response)
             if(response.status === 204) setFeedbacks([])
 
+            setOffsets(prev => prev + response.data.feedbacks.length);
             setFeedbacks(prev => [...prev, ...response.data.feedbacks])
 
         }catch(err){
@@ -36,6 +35,7 @@ const Feedbacks = () => {
 
     useEffect(() => { fetchFeedbacks(0) },[])
 
+    console.log(offsets)
 
     return(
         <div className="feedbacks-container d-flex">
@@ -47,7 +47,7 @@ const Feedbacks = () => {
                 </div>
                 <div className="feedback-main">
 
-                    {feedbacks?.length % 5 !== 0 || feedbacks?.length === 0 ? <span>No More Feedbacks</span> : <button onClick={() => fetchFeedbacks()}>Load More...</button>}
+                    {feedbacks?.length % 5 !== 0 || feedbacks?.length === 0 ? <span>No More Feedbacks</span> : <button onClick={() => fetchFeedbacks(offsets)}>Load More...</button>}
 
                 </div>
             </div>
