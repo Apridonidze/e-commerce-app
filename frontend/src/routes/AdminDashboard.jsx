@@ -68,7 +68,7 @@ const AdminDashboard = () => {
         const fetchFeedbacks = async() => {
             try{
 
-                const response = await axios.get(`${BACKEND_URL}/api/feedback/`, config)
+                const response = await axios.get(`${BACKEND_URL}/api/feedback/${0}`, config)
                 if(response.status === 204) setFeedbacks([])
 
                 setFeedbacks(response.data.feedbacks)
@@ -152,7 +152,7 @@ const AdminDashboard = () => {
                         <section id="feedbacks">
                             <h1>Feedbacks</h1>
                             <Link to={'/admin-dashboard/feedbacks'}>Visit</Link>
-                            {feedbacks?.length == 0 ? feedbacks?.map((feedback, feedbackId) => (
+                            {feedbacks?.length !== 0 ? feedbacks?.map((feedback, feedbackId) => (
                                 <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId}/>
                             )) : "No Feedbacks"}
                         </section>
