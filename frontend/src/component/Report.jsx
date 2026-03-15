@@ -9,8 +9,8 @@ const Report = ( { report, reportId ,key, setToggleDeleteReport, setToggleRespon
                 <span>{report?.type == 'Product' ? <div>Reported Product : <Link to={`/product/${report.product_id}`}>{report.title}</Link></div> : <></>}</span>
             </div>
             <div className="report-end d-flex flex-column">
-                <button onClick={() => setToggleDeleteReport(true)}>Delete</button>
-                <button onClick={() => setToggleRespondReport(true)}>Respond</button>
+                <button onClick={() => setToggleDeleteReport({status : true, reportDetails : report})}>Delete</button>
+                <button onClick={() => setToggleRespondReport({status : true, reportDetails : report})}>Respond</button>
             </div>
         </div>
     );

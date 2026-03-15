@@ -25,8 +25,8 @@ const AdminDashboard = () => {
     const [ feedback, setFeedback ] = useState([])
 
     const [toggleCreateNew, setToggleCreateNew] = useState(false);
-    const [toggleDeleteReport, setToggleDeleteReport] = useState(false);
-    const [toggleRespondReport, setToggleRespondReport] = useState(false);
+    const [toggleDeleteReport, setToggleDeleteReport] = useState({status : false, reportDetails : null});
+    const [toggleRespondReport, setToggleRespondReport] = useState({status : false, reportDetails : null});
 
     const [reportsOffset, setReportsOffset] = useState(0)
 
@@ -79,8 +79,8 @@ const AdminDashboard = () => {
         <div className="admin-dashboard-container">
 
             {toggleCreateNew ? <div><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct /></div> : <></> }
-            {toggleDeleteReport ? <div><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport /></div> : <></> }
-            {toggleRespondReport ? <div><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport /></div> : <></> }
+            {toggleDeleteReport.status ? <div><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport /></div> : <></> }
+            {toggleRespondReport.status ? <div><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport /></div> : <></> }
 
                 <div className="row">
                         
