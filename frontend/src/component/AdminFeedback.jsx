@@ -1,7 +1,7 @@
-const AdminFeedback = () => {
+const AdminFeedback = ({ feedback, feedbackId, key }) => {
     return(
-        <div className="admin-feedback-container">
-            
+        <div className="admin-feedback-container" key={feedback}>
+            <span>{feedback.fullname} {feedback.stars} {feedback.content}</span>
         </div>
     )
 }

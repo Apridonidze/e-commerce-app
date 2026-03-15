@@ -13,6 +13,7 @@ import Report from '../component/Report'
 import { Link } from "react-router-dom"
 import DeleteReport from "../component/DeleteReport"
 import RespondReport from "../component/RespondReport"
+import AdminFeedback from "../component/AdminFeedback"
 
 const AdminDashboard = () => {
 
@@ -22,7 +23,7 @@ const AdminDashboard = () => {
     const [ admins, setAdmins ] = useState(null)
     const [ orders,  setOrders ] = useState([])
     const [ reports , setReports ] = useState([])
-    const [ feedback, setFeedback ] = useState([])
+    const [ feedbacks, setFeedbacks ] = useState([])
 
     const [toggleCreateNew, setToggleCreateNew] = useState(false);
     const [toggleDeleteReport, setToggleDeleteReport] = useState({status : false, reportDetails : null});
@@ -64,8 +65,22 @@ const AdminDashboard = () => {
             }
         }
 
+        const fetchFeedbacks = async() => {
+            try{
+
+                const response = await axios.get(`${BACKEND_URL}/api/feedback/`, config)
+                if(response.status === 204) setFeedbacks([])
+
+                setFeedbacks(response.data.feedbacks)
+
+            }catch(err){
+                console.log(err)
+            }
+        }
+
         fetchStatus();
         fetchReports();
+        fetchFeedbacks();
 
     }, []);
 
@@ -77,7 +92,9 @@ const AdminDashboard = () => {
         <div className="admin-dashboard-container">
 
             {toggleCreateNew ? <div><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct /></div> : <></> }
+
             {toggleDeleteReport.status ? <div><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
+
             {toggleRespondReport.status ? <div><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
 
                 <div className="row">
@@ -130,6 +147,13 @@ const AdminDashboard = () => {
                             <h1>Reports</h1>
                             <Link to={'/admin-dashboard/reports'}>Visit</Link>
                             {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No reports'}
+                        </section>
+
+                        <section id="feedbacks">
+                            <h1>Feedbacks</h1>
+                            {feedbacks?.length == 0 ? feedbacks?.map((feedback, feedbackId) => (
+                                <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId}/>
+                            )) : "No Feedbacks"}
                         </section>
 
                     </div>
