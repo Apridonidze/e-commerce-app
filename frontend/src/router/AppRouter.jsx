@@ -11,6 +11,7 @@ import AdminSupportChatContainer from '../routes/AdminSupportChatContainer'
 import ProductPage from '../routes/ProductPage'
 import OrdersPage from '../routes/OrdersPage'
 import Reports from '../routes/Reports'
+import Feedbacks from '../routes/Feedbacks'
 
 const AppRouter = () => {
 
@@ -22,6 +23,7 @@ const AppRouter = () => {
     {path : '/admin-dashboard' , element : <AdminDashboard/>},
     {path : '/admin-dashboard/orders/:orderStatus' , element : <OrdersPage />},
     {path : '/admin-dashboard/reports' , element : <Reports />},
+    {path : '/admin-dashboard/feedbacks' , element : <Feedbacks />},
     {path : '/admin-dashboard/admin-support-chat' , element  :<AdminSupportChatContainer />},
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
