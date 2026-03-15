@@ -16,33 +16,39 @@ const Reports = () => {
     const [ cookies ] = useCookies(['token'])
 
     const [reports, setReports] = useState([])
-    const [reportsOffset, setReportsOffset] = useState(0)
+    const [offsets, setOffsets] = useState({Sent : 0 , Responded: 0 , Removed : 0})
 
     const [toggleDeleteReport, setToggleDeleteReport] = useState({status : false, reportDetails : null});
     const [toggleRespondReport, setToggleRespondReport] = useState({status : false, reportDetails : null});
 
     const config = {headers: { Authorization: `Bearer ${cookies.token}`}}
 
-    useEffect(() => {
+    const fetchReports = async(status) => {
+        try {
 
-        const fetchReports = async() => {
-            try{
+            const offset = offsets[status];
 
-                const response = await axios.get(`${BACKEND_URL}/api/report/report-list/${reportsOffset}`, config)
-                console.log(response.data.reports)
-                if(response.status == 204) return setReports([])
-                
-                setReports(response.data.reports);
+            const response = await axios.get(
+                `${BACKEND_URL}/api/report/report-list/${offset}/${status}`,
+                config
+            );
 
-            }catch(err){
-                console.log(err)
-            }
+            if (response.status === 204) return;
+
+            setReports(prev => [...prev, ...response.data.reports]);
+
+            setOffsets(prev => ({
+                ...prev,
+                [status]: prev[status] + response.data.reports.length
+            }));
+
+        } catch (err) {
+            console.log(err);
         }
+    }
 
-        fetchReports()
-
-    },[])
-
+    useEffect(() => {fetchReports()},[offsets])
+   
     return(
         <div className="reports-container d-flex">
 
@@ -59,14 +65,17 @@ const Reports = () => {
                     <section id="#Unanswered-Reports">
                         <h1>Unanswered Reports</h1>
                         {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No Unanswered reports'}
+                        <button onClick={() => fetchReports("Sent")}>Load More...</button>
                     </section>
                     <section id="#Answered-Reports">
                         <h1>Answered Reports</h1>
                         {reports?.length !== 0 ? reports?.filter(report => report.status == "Responded").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No Responded reports'}
+                        <button onClick={() => fetchReports("Responded")}>Load More...</button>
                     </section>
                     <section id="#Deleted-Reports">
                         <h1>Deleted Reports</h1>
                         {reports?.length !== 0 ? reports?.filter(report => report.status == "Removed").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No Deleted reports'}
+                        <button onClick={() => fetchReports("Removed")} >Load More...</button>
                     </section>
                 </div>
             </div>
