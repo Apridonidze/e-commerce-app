@@ -39,7 +39,8 @@ const Reports = () => {
         }
     }
 
-    useEffect(() => {fetchReports()},[offsets])
+
+    useEffect(() => {fetchReports("Sent");fetchReports("Responded");fetchReports("Removed");},[])
    
     return(
         <div className="reports-container d-flex">
