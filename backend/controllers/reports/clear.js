@@ -1,8 +1,22 @@
+const db = require("../../middlewares/db")
+
 async function clear(req,res) {
-    console.log(req.params)
-    console.log(req.body)
+    
+    const reportId = req.params.id
+    const resolution_action = req.body.selectReason
     const status = 'Removed'
-    // clear report by id , and return user message that their report has beeen viewed and thanks thme
+    const resolved_by = req.user.userId;
+
+    try{
+
+        await db.query('update reports set status = ? , resolution_action = ? , resolved_by = ? where id = ?' , [status, resolution_action, resolved_by , reportId])
+        // add node mailer to user whos report has been deleted
+        return res.status(200).json({message : "Report Deleted Successfully" , reportId })
+    }catch(err){
+        console.log(err)
+        return res.status(500).json({message : "Interla Error" , err})
+    }
+
 }
 
 module.exports = clear

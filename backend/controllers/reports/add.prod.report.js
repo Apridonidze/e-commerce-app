@@ -7,7 +7,7 @@ async function addProdReport(req,res) {
         const status = "Sent"
         // add zod schema for data
 
-        await db.query('insert into report (id, product_id ,type, content) values (?,?,?,?)' , [req.user.userId , productId, "Product" , data.content])
+        await db.query('insert into report (id, product_id ,type, content) values (?,?,?,?,?)' , [req.user.userId , productId, "Product" , data.content, status])
         return res.status(200).json({message : "Report Sent Successfully"})
 
     }catch(err){
