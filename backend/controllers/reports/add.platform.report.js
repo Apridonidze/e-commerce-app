@@ -7,7 +7,7 @@ async function addPlatformReport(req,res) {
         const status = "Sent"
         //validate data in zod schema
 
-        const report = await db.query('insert into reports (id, type, content, product_id) values (?,?,?,?)' , [req.user.userId , data.type , data.content, data.productId ?? null])
+        const report = await db.query('insert into reports (id, type, content, product_id) values (?, ?, ?, ?, ?)' , [req.user.userId , data.type , data.content, data.productId ?? null , status])
         return res.status(200).json({message : "Report Send Successfully" ,reportId : report.insertId })
 
 
