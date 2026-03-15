@@ -57,10 +57,17 @@ const Reports = () => {
                 </div>
                 <div className="reports-main">
                     <section id="#Unanswered-Reports">
-                        {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No reports'}
+                        <h1>Unanswered Reports</h1>
+                        {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No Unanswered reports'}
                     </section>
-                    <section id="#Answered-Reports"></section>
-                    <section id="#Deleted-Reports"></section>
+                    <section id="#Answered-Reports">
+                        <h1>Answered Reports</h1>
+                        {reports?.length !== 0 ? reports?.filter(report => report.status == "Responded").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No Responded reports'}
+                    </section>
+                    <section id="#Deleted-Reports">
+                        <h1>Deleted Reports</h1>
+                        {reports?.length !== 0 ? reports?.filter(report => report.status == "Removed").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No Deleted reports'}
+                    </section>
                 </div>
             </div>
         </div>
