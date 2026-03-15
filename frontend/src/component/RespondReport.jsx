@@ -1,6 +1,9 @@
+import axios from "axios"
 import { Link } from "react-router-dom"
 import { useCookies } from "react-cookie"
 import { useRef, useState, useEffect } from "react"
+
+import { BACKEND_URL } from "../../config"
 
 const RespondReport = ({ setToggleRespondReport, toggleRespondReport }) => {
 

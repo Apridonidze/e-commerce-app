@@ -5,7 +5,8 @@ const Report = ( { report, reportId ,key, setToggleDeleteReport, setToggleRespon
         <div className="report-container d-flex justify-content-between" key={reportId}>
             <div className="report-start">
                 <span>{report.fullname} {report.email} {report.content}</span>
-                <br />  
+                <br /> 
+                <span>Report Status : {report.status}</span>
                 <span>{report?.type == 'Product' ? <div>Reported Product : <Link to={`/product/${report.product_id}`}>{report.title}</Link></div> : <></>}</span>
             </div>
             <div className="report-end d-flex flex-column">
