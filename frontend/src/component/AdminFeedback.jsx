@@ -10,8 +10,8 @@ const AdminFeedback = ({ feedback, feedbackId, key }) => {
                 <h6>{feedback.content}</h6>
                 {feedback.stars}
                 {feedback.type}
-                {feedback.type === "Product" ? <>
-                    Product : <Link to={`product/${feedback.product_id}`}>{feedback.title}</Link>
+                {feedback.type === "product" ? <>
+                    Product : <Link to={`/product/${feedback.product_id}`}>{feedback.title}</Link>
                 </> : <></>}
             </div>
         </div>
