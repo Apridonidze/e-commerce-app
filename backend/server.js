@@ -29,5 +29,3 @@ app.use('/api', routes)
 server.listen(PORT , () => {
     console.log(`Listening To Port:  ${PORT}`)
 })
-
-// cleanup
