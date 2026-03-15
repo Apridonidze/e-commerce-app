@@ -32,7 +32,7 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport }) => {
 
         try{
 
-            const response = await axios.post(`${BACKEND_URL}/api/report/${toggleDeleteReport.reportDetails.id}`, {selectReason} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const response = await axios.post(`${BACKEND_URL}/api/report/${toggleDeleteReport.reportDetails.id}`, {selectReason, status : "Removed"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
             console.log(response)
             // add 400 status code handling
 
@@ -59,13 +59,12 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport }) => {
             <div className="delete-report-bottom">
                 <h4>Reason of report deletion</h4>
                 <div className="select">
-                    <span onClick={() => setSelectReason("Valid Report – Content Removed")}>Valid Report – Content Removed</span>
-                    <span onClick={() => setSelectReason("Valid Report – Warning Sent")}>Valid Report – Warning Sent</span>
-                    <span onClick={() => setSelectReason("Valid Report – Listing Edited")}>Valid Report – Listing Edited</span>
-                    <span onClick={() => setSelectReason("Invalid Report – No Violation")}>Invalid Report – No Violation</span>
-                    <span onClick={() => setSelectReason("Duplicate Report")}>Duplicate Report</span>
-                    <span onClick={() => setSelectReason("Resolved – Already Fixed")}>Resolved – Already Fixed</span>
-                    <span onClick={() => setSelectReason("Other Action Taken")}>Other Action Taken</span>
+                    <span onClick={() => setSelectReason("Content Removed (Invalid)")}>Valid Report – Content Removed</span>
+                    <span onClick={() => setSelectReason("Listing Edited (Invalid)")}>Valid Report – Listing Edited</span>
+                    <span onClick={() => setSelectReason("No Violation (Invalid)")}>Invalid Report – No Violation</span>
+                    <span onClick={() => setSelectReason("Duplicate (Invalid)")}>Duplicate Report</span>
+                    <span onClick={() => setSelectReason("Already Fixed (Invalid)")}>Resolved – Already Fixed</span>
+                    <span onClick={() => setSelectReason("Other (Invalid)")}>Other Action Taken</span>
                 </div>
 
             </div>

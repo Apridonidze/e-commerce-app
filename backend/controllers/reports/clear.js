@@ -4,7 +4,7 @@ async function clear(req,res) {
     
     const reportId = Number(req.params.id)
     const resolution_action = req.body.selectReason
-    const status = 'Removed'
+    const status = req.params.status
     const resolved_by = req.user.userId;
 
     try{
