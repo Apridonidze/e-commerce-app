@@ -32,7 +32,7 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport }) => {
 
         try{
 
-            const response = await axios.post(`${BACKEND_URL}/api/report/${toggleDeleteReport.reportDetails.product_id}`, {selectReason} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const response = await axios.post(`${BACKEND_URL}/api/report/${toggleDeleteReport.reportDetails.id}`, {selectReason} , {headers : {Authorization : `Bearer ${cookies.token}`}})
             console.log(response)
             // add 400 status code handling
 
