@@ -27,20 +27,12 @@ const Reports = () => {
         try {
 
             const offset = offsets[status];
-
-            const response = await axios.get(
-                `${BACKEND_URL}/api/report/report-list/${offset}/${status}`,
-                config
-            );
+            const response = await axios.get(`${BACKEND_URL}/api/report/report-list/${offset}/${status}`,config);
 
             if (response.status === 204) return;
 
             setReports(prev => [...prev, ...response.data.reports]);
-
-            setOffsets(prev => ({
-                ...prev,
-                [status]: prev[status] + response.data.reports.length
-            }));
+            setOffsets(prev => ({...prev,[status]: prev[status] + response.data.reports.length}));
 
         } catch (err) {
             console.log(err);
