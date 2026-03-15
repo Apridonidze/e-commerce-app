@@ -7,8 +7,7 @@ async function list(req,res) {
 
     try{
 
-        const [ feedbacks ] = await db.query('select feedback.*, users.fullname from feedback join users on users.id = feedback.id limit ? offset ?', [limit, Number(offset)])
-        console.log(feedbacks)
+        const [ feedbacks ] = await db.query('select feedback.*, users.fullname, products.title from feedback join users on users.id = feedback.id join products on products.products_id = feedback.product_id limit ? offset ?', [limit, Number(offset)])
         if(feedbacks.length === 0) return res.status(204)
 
         return res.status(200).json({message : "Feedbacks Found" , feedbacks : feedbacks})
