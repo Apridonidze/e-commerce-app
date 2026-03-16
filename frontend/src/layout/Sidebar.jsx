@@ -2,7 +2,6 @@ import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
 import { useEffect , useState, useRef, useContext } from 'react'
 import { BACKEND_URL } from '../../config'
-import User from '../component/User'
 import { UserContext } from '../context/UserContext'
 
 
@@ -81,7 +80,7 @@ const Sidebar = () => {
             <div className="sidebar-end"> 
                 
                 <div className="end-start">
-                    <Link>FAQ</Link>
+                    <Link to={'/faq'}>FAQ</Link>
                     <Link>Feedback</Link>
                     <Link>Report</Link>
                 </div>
