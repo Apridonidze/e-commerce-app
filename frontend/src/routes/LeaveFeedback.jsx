@@ -18,8 +18,8 @@ const LeaveFeedback = () => {
         const fetchFeedbacks = async() => {
             try{
 
-                const response = await axios.get(`${BACKEND_URL}/api/feedback/customers-feedbacks`)
-                
+                const response = await axios.get(`${BACKEND_URL}/api/feedback/customer-feedbacks`)
+
 
             }catch(err){
                 console.log(err)
