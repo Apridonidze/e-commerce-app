@@ -48,14 +48,14 @@ const Feedbacks = () => {
                     <h1>Product</h1>
                     {feedbacks.filter(feedback => feedback.type === 'product')?.length !== 0 ? feedbacks.filter(feedback => feedback.type === 'product')?.map((feedback, feedbackId) => (
                                 <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId}/>
-                        )) : "No Feedbacks"}
-                    {feedbacks.filter(feedback => feedback.type === 'product')?.length % 10 !== 0 || feedbacks.filter(feedback => feedback.type === 'product')?.length === 0 ? <span>No More Feedbacks</span> : <button onClick={() => fetchFeedbacks('product')}>Load More...</button>}
+                        )) : <></>}
+                    {feedbacks.filter(feedback => feedback.type === 'product')?.length % 10 !== 0 || feedbacks.filter(feedback => feedback.type === 'product')?.length === 0 ? <span>No More Product Feedbacks</span> : <button onClick={() => fetchFeedbacks('product')}>Load More...</button>}
                     
                     <h1>Platform</h1>
                     {feedbacks.filter(feedback => feedback.type === 'platform')?.length !== 0 ? feedbacks?.filter(feedback => feedback.type === 'platform').map((feedback, feedbackId) => (
                                 <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId}/>
-                            )) : "No Feedbacks"}
-                    {feedbacks.filter(feedback => feedback.type === 'platform')?.length % 10 !== 0 || feedbacks.filter(feedback => feedback.type === 'platform')?.length === 0 ? <span>No More Feedbacks</span> : <button onClick={() => fetchFeedbacks('platform')}>Load More...</button>}
+                            )) : <></>}
+                    {feedbacks.filter(feedback => feedback.type === 'platform')?.length % 10 !== 0 || feedbacks.filter(feedback => feedback.type === 'platform')?.length === 0 ? <span>No More Platform Feedbacks</span> : <button onClick={() => fetchFeedbacks('platform')}>Load More...</button>}
 
 
                 </div>
