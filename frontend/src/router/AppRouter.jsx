@@ -14,6 +14,7 @@ import Reports from '../routes/Reports'
 import Feedbacks from '../routes/Feedbacks'
 import FAQ from '../routes/FAQ'
 import LeaveFeedback from '../routes/LeaveFeedback'
+import ReportPage from '../routes/ReportPage'
 
 const AppRouter = () => {
 
@@ -28,13 +29,12 @@ const AppRouter = () => {
     {path : '/admin-dashboard/feedbacks' , element : <Feedbacks />},
     {path : '/admin-dashboard/admin-support-chat' , element  :<AdminSupportChatContainer />},
     {path : '/faq' , element  :<FAQ />},
+    {path : '/report' , element  :<ReportPage />},
     {path : '/leave-feedback' , element  :<LeaveFeedback />},
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
     {path : '*' , element : <></>}, /**add 404 page with not-found url for this and button to go back to main page */
     
-    //add feedbacks send page
-    // add faq page
     //add  which pages should be used with cookies rest left empty
   ])
 
