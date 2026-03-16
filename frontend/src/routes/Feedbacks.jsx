@@ -14,25 +14,26 @@ const Feedbacks = () => {
     const [ cookies ] = useCookies(['token'])
 
     const [feedbacks, setFeedbacks] = useState([])
-    const [offsets , setOffsets] = useState(0);
+    const [offsets , setOffsets] = useState({platform : 0 , product : 0});
 
     const config = {headers: { Authorization: `Bearer ${cookies.token}`}}
 
-    const fetchFeedbacks = async(offset) => {
+    const fetchFeedbacks = async(status) => {
         try{
-            const response = await axios.get(`${BACKEND_URL}/api/feedback/${offset}`, config)
-            
+            const offset = offsets[status]
+            const response = await axios.get(`${BACKEND_URL}/api/feedback/${offset}/${status}`, config)
+            console.log(response)
             if (response.status === 204 || !response?.data.feedbacks.length) return;
 
             setFeedbacks(prev => [...prev, ...response.data.feedbacks]);
-            setOffsets(prev => prev + response.data.feedbacks.length);
+            setOffsets(prev => ({...prev,[status]: prev[status] + response.data.feedbacks.length}));
 
         }catch(err){
             console.log(err)
         }
     }
 
-    useEffect(() => { return () => fetchFeedbacks(offsets) },[])
+    useEffect(() => { fetchFeedbacks('product'); fetchFeedbacks('platform') },[])
 
     return(
         <div className="feedbacks-container d-flex">
@@ -43,11 +44,20 @@ const Feedbacks = () => {
                     <Link to={'/admin-dashboard'}>Prev</Link>
                 </div>
                 <div className="feedback-main">
-                    {feedbacks?.length !== 0 ? feedbacks?.map((feedback, feedbackId) => (
+
+                    <h1>Product</h1>
+                    {feedbacks.filter(feedback => feedback.type === 'product')?.length !== 0 ? feedbacks.filter(feedback => feedback.type === 'product')?.map((feedback, feedbackId) => (
+                                <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId}/>
+                        )) : "No Feedbacks"}
+                    {feedbacks.filter(feedback => feedback.type === 'product')?.length % 10 !== 0 || feedbacks.filter(feedback => feedback.type === 'product')?.length === 0 ? <span>No More Feedbacks</span> : <button onClick={() => fetchFeedbacks('product')}>Load More...</button>}
+                    
+                    <h1>Platform</h1>
+                    {feedbacks.filter(feedback => feedback.type === 'platform')?.length !== 0 ? feedbacks?.filter(feedback => feedback.type === 'platform').map((feedback, feedbackId) => (
                                 <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId}/>
                             )) : "No Feedbacks"}
-                    {feedbacks?.length % 10 !== 0 || feedbacks?.length === 0 ? <span>No More Feedbacks</span> : <button onClick={() => fetchFeedbacks(offsets)}>Load More...</button>}
-                            
+                    {feedbacks.filter(feedback => feedback.type === 'platform')?.length % 10 !== 0 || feedbacks.filter(feedback => feedback.type === 'platform')?.length === 0 ? <span>No More Feedbacks</span> : <button onClick={() => fetchFeedbacks('platform')}>Load More...</button>}
+
+
                 </div>
             </div>
         </div>

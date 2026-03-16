@@ -5,7 +5,7 @@ const feedbackRoutes = require('../controllers/feedback')
 const ValidateToken = require('../middlewares/ValidateToken')
 const isAdmin = require('../middlewares/isAdmin')
 
-router.get('/:offset', feedbackRoutes.list)
+router.get('/:offset/:status', feedbackRoutes.list)
 router.get('/product-feedback/:id', feedbackRoutes.getProdFb)
 router.post('/', ValidateToken, feedbackRoutes.add)
 router.post('/product-feedback/:id', ValidateToken, feedbackRoutes.addProdFb)

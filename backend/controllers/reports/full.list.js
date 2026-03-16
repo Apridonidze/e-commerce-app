@@ -9,7 +9,7 @@ async function fullList(req, res) {
         offset = Number(offset)
 
         if (Number.isNaN(offset) || offset < 0) {return res.status(400).json({ message: "Invalid offset" })}
-        if (status === "undefined") status = undefined
+        if (status == "undefined") status = undefined
 
         let query = `select users.fullname, users.email, reports.*, products.title from reports join users on users.id = reports.user_id join products on reports.product_id = products.products_id`
         const params = []
