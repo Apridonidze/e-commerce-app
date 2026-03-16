@@ -63,6 +63,7 @@ const Sidebar = () => {
                                 <Link to='/admin-dashboard'>Admin Dashboard</Link>
                                 <Link to='/admin-dashboard#manage-products'>Manage Products</Link>
                                 <Link to='/admin-dashboard#reports'>Reports</Link>
+                                <Link to='/admin-dashboard#feedbacks'>Feedbacks</Link>
                             </div>
                             <div className="text-bottom">
                                 <Link to='/admin-dashboard/admin-support-chat'>Support Chat <span>{messagesCount}</span></Link> {/* add limit for messageCount (max 9 , after 9 return 9+) */}
