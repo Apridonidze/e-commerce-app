@@ -40,7 +40,9 @@ const LeaveFeedback = () => {
                 {user ? <PlatformFeedback/> : <></>}
 
                 <div className="customers-feedbacks">
-
+                    {feedbacks?.map((feedback, feedbackId) => (
+                        <Feedback feedback={feedback} feedbackId={feedbackId} key={feedbackId}/>
+                    ))}
                 </div>
             </div>
         </div>
