@@ -1,5 +1,4 @@
 import { useCookies } from "react-cookie"
-import { useParams } from "react-router-dom"
 
 import { useEffect, useState, useRef } from "react"
 
