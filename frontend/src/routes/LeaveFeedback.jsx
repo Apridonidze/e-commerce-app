@@ -19,15 +19,17 @@ const LeaveFeedback = () => {
             try{
 
                 const response = await axios.get(`${BACKEND_URL}/api/feedback/customer-feedbacks`)
-
+                
+                if(response.status === 204) setFeedbacks([])
+                setFeedbacks(response.data.feedbacks)
 
             }catch(err){
+                setFeedbacks([])
                 console.log(err)
             }
         }
 
         return () => fetchFeedbacks();
-
     },[])
 
     return(
