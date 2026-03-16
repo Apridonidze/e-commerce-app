@@ -15,6 +15,7 @@ import Feedbacks from '../routes/Feedbacks'
 import FAQ from '../routes/FAQ'
 import LeaveFeedback from '../routes/LeaveFeedback'
 import ReportPage from '../routes/ReportPage'
+import Legal from '../routes/Legal'
 
 const AppRouter = () => {
 
@@ -31,6 +32,7 @@ const AppRouter = () => {
     {path : '/faq' , element  :<FAQ />},
     {path : '/report' , element  :<ReportPage />},
     {path : '/leave-feedback' , element  :<LeaveFeedback />},
+    {path : '/legal' , element  :<Legal />},
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
     {path : '*' , element : <></>}, /**add 404 page with not-found url for this and button to go back to main page */

@@ -84,9 +84,8 @@ const Sidebar = () => {
                     <Link to={'/report'}>Report</Link>
                 </div>
                 <div className="end-main">
-                    <span>Terms</span>
-                    <span>Privacy</span>
-                    <span>Policy</span>
+                    <Link to={'/legal#terms'}>Terms of Service</Link>
+                    <Link to={'/legal#privacy'}>Privacy Policy</Link>
                     <span>Copyright 2026</span>
                 </div>
                 <div className="end-bottom">
