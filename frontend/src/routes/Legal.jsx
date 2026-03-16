@@ -4,7 +4,7 @@ import Terms from "../component/Terms"
 
 const Legal = () => {
     return(
-        <div className="legal-container">
+        <div className="legal-container d-flex">
             <Sidebar />
             <div className="legal-main-container">
                 <section id="terms"><Terms /></section>

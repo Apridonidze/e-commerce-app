@@ -30,7 +30,7 @@ const AppRouter = () => {
     {path : '/admin-dashboard/feedbacks' , element : <Feedbacks />},
     {path : '/admin-dashboard/admin-support-chat' , element  :<AdminSupportChatContainer />},
     {path : '/faq' , element  :<FAQ />},
-    {path : '/report' , element  :<ReportPage />},
+    {path : '/report-platform' , element  :<ReportPage />},
     {path : '/leave-feedback' , element  :<LeaveFeedback />},
     {path : '/legal' , element  :<Legal />},
     {path : '/login' , element : <Login />},
