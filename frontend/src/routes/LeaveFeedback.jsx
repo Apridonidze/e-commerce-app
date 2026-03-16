@@ -37,7 +37,7 @@ const LeaveFeedback = () => {
             <Sidebar />
             <div className="leave-feedback-main-container">
 
-                {user ? <PlatformFeedback/> : <></>}
+                {user ? <PlatformFeedback setFeedbacks={setFeedbacks}/> : <></>}
 
                 <div className="customers-feedbacks">
                     {feedbacks?.map((feedback, feedbackId) => (

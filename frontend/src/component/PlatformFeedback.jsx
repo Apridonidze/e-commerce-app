@@ -1,10 +1,13 @@
 import { useCookies } from "react-cookie"
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useContext } from "react"
+import { UserContext } from "../context/UserContext"
 
-const PlatformFeedback = () => {
+const PlatformFeedback = ({ setFeedbacks }) => {
 
+    const { user } = useContext(UserContext)
     const [cookies] = useCookies(['token'])
+
     const [feedbackData, setFeedbackData] = useState({})
 
     const postRef = useRef(null)
@@ -18,8 +21,9 @@ const PlatformFeedback = () => {
 
             const postFeedback = await axios.post(`${BACKEND_URL}/api/feedback/` , feedbackData , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-            console.log(postFeedback)
-            //toggle success message
+            if(postFeedback.status === 200){return setFeedbacks(prev => [...prev, {fullname : user.fullname, stars : feedbackData.star , content : feedbackData.content }])}
+           
+            //if status === 400 toggle error message
 
         }catch(err){
             //toggle eerror message
