@@ -78,23 +78,23 @@ const Sidebar = () => {
                 </div>
             </div>
             <div className="sidebar-end"> 
-                
                 <div className="end-start">
                     <Link to={'/faq'}>FAQ</Link>
                     <Link to={`/leave-feedback`}>Feedback</Link>
-                    <Link>Report</Link>
+                    <Link to={'/report'}>Report</Link>
                 </div>
-                <div className="end-bottom">
+                <div className="end-main">
                     <span>Terms</span>
                     <span>Privacy</span>
                     <span>Policy</span>
-                    <span>copyright 2022</span>
+                    <span>Copyright 2026</span>
+                </div>
+                <div className="end-bottom">
+                    <button>Logout</button>
                 </div>
             </div>
         </div>
     )
 }
-
-//add user account in sidebar footer + move settings to very bottom and assign it as a gear icon , remove sidebar-end texts that will collide with user component
 
 export default Sidebar
