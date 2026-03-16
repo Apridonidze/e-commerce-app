@@ -81,7 +81,7 @@ const Sidebar = () => {
                 
                 <div className="end-start">
                     <Link to={'/faq'}>FAQ</Link>
-                    <Link>Feedback</Link>
+                    <Link to={`/leave-feedback`}>Feedback</Link>
                     <Link>Report</Link>
                 </div>
                 <div className="end-bottom">
