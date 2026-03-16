@@ -68,7 +68,8 @@ const AdminDashboard = () => {
         const fetchFeedbacks = async() => {
             try{
 
-                const response = await axios.get(`${BACKEND_URL}/api/feedback/${0}`, config)
+                const response = await axios.get(`${BACKEND_URL}/api/feedback/${0}/${undefined}`, config)
+                console.log(response)
                 if(response.status === 204) setFeedbacks([])
 
                 setFeedbacks(response.data.feedbacks)
