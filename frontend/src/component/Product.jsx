@@ -1,47 +1,14 @@
-import axios from "axios"
+
 import { useEffect, useState } from "react"
-import { useCookies } from "react-cookie"
 
 import Skeleton from "react-loading-skeleton" // reloacte to skeletons 
 
-import { BACKEND_URL } from "../../config"
-import {  useNavigate } from "react-router-dom"
 
 
 const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
 
-    //check if amount is equal to 0 , if so toggle style of disable
+    const [toggleMore, setToggleMore] = useState(false)
 
-    const [ cookies ] = useCookies(['token'])
-
-    const [isInCart, setIsInCart] = useState(false);
-
-    const navigator = useNavigate()
-
-
-    const handleAddToCart = async(e) => {
-        try{
-
-            await axios.post(`${BACKEND_URL}/api/cart/${e}` , {} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(true)})
-
-        }catch(err){
-            setIsInCart(false)
-            console.log(err)
-        }
-    }
-
-    const handleDeleteFromCart = async(e) => {
-        try{
-
-            await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(false)})
-
-        }catch(err){
-
-            setIsInCart(true)
-            console.log(err)
-        }
-    }
-    //add 429, 400 status code handling for this events
     useEffect(() => {
 
         const id = prod.products_id
@@ -66,6 +33,14 @@ const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
 
             <div className="product-wrapper" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
 
+                <div className="more">
+                    <span onClick={() => setToggleMore(!toggleMore)}>:</span>
+                    <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "relative" , bottom : '25px'}}>
+                        <button className="btn btn-primary">Edit</button>
+                        <button className="btn btn-danger">Remove</button>
+                    </div>
+                </div>
+
                 <div className="product-top w-100 h-auto d-flex justify-content-center" >
                 {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'200px'}}/> || <Skeleton />}
                 </div>
@@ -85,10 +60,6 @@ const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
 
             </div>
             
-            <div className="buttons position-relative w-100 h-100 align-items-center ">
-                <img src='' alt="cart-icon" onClick={() => {isInCart ? handleDeleteFromCart(prod.products_id) : handleAddToCart(prod.products_id)}}/> {/* add src based on isInCart variable */}
-            </div>
-          
         </div>
     )
 }
