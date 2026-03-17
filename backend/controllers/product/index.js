@@ -5,5 +5,4 @@ const similarList = require('./similar.list')
 const productDetails = require('./product.details');
 const ProductSearch = require('./product.search');
 
-
 module.exports = {add , remove, list, similarList, productDetails, ProductSearch}

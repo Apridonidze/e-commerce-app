@@ -24,4 +24,4 @@ router.use('/report' , ReportRoutes)
 router.use('/stripe', stripeRoutes)
 
 
-module.exports = router
+module.exports = router;

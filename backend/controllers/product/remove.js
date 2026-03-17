@@ -1,10 +1,9 @@
-const db = require('../../middlewares/db')
+const db = require('../../middlewares/db') 
 
 async function remove(req,res) {
     try{
 
         const { id } = req.params
-        // validate id
 
         const [ response ] = await db.query('delete from products where products_id = ?' , [Number(id)])
         if(response.affectedRows === 0) return res.status(400).json({message : "Product Not Found"})

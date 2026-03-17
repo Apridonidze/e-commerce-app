@@ -8,7 +8,6 @@ const isAdmin = require('../middlewares/isAdmin');
 const uploader = require('../middlewares/uploader')
 
 router.post('/' , ValidateToken, isAdmin , uploader.array("images", 5) , productRoute.add)
-router.put('/:id' , ValidateToken, isAdmin , productRoute.edit)
 router.delete('/:id' , ValidateToken, isAdmin , productRoute.remove)
 router.get('/', productRoute.list)
 router.get('/similar-products', productRoute.similarList)
