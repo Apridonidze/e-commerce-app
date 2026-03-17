@@ -8,7 +8,7 @@ const isAdmin = require('../middlewares/isAdmin');
 router.get('/' , ValidateToken , orderRoutes.list)
 router.get('/:id', ValidateToken, isAdmin, orderRoutes.check);
 router.post('/' , ValidateToken , orderRoutes.add)
-router.delete('/' , ValidateToken , orderRoutes.remove)
+router.delete('/:id' , ValidateToken , orderRoutes.remove)
 
 
 module.exports = router

@@ -4,7 +4,7 @@ import { BACKEND_URL } from "../../config";
 import OrderItem from "./OrderItem";
 import { useCookies } from "react-cookie";
 
-const OrderDetails = ({order, orderId, key}) => {
+const OrderDetails = ({order, orderId, key , setOrders}) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -24,6 +24,21 @@ const OrderDetails = ({order, orderId, key}) => {
         }
     }
 
+    const discardOrder = async() => {
+        try{
+
+            const response = await axios.delete(`${BACKEND_URL}/api/order/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
+
+            if(response.status === 200) setOrders(prev => prev.filter(ord => ord.order_id !== order.order_id))
+            
+            // toggle alert message why discard is not possible
+
+        }catch(err){
+            // toggle alert message
+            console.log(err)
+        }
+    }
+
     return(
         <div className="order-details-container" key={orderId}>
             <div className="order-top  d-flex justify-content-between">
@@ -35,7 +50,7 @@ const OrderDetails = ({order, orderId, key}) => {
                 <div className="order-end border h-100 d-flex flex-column align-items-end">
                     <button className="btn btn-primary" onClick={() => setToggleDrop(!toggleDrop)}>:</button>
                     <div className="toggle text-white" style={{ display : toggleDrop ? 'flex' : 'none' , flexDirection : 'column',position : 'relative', top : '10px'}}>
-                        <button className="btn btn-danger" disabled={order.status === "OnWay" || order.status === "Delivered" ? true : false}>Discard Order</button>
+                        <button className="btn btn-danger" disabled={order.status === "OnWay" || order.status === "Delivered" ? true : false} onClick={() => discardOrder()}>Discard Order</button>
                     </div>
                 </div>
             </div>
