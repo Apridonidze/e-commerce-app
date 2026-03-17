@@ -154,7 +154,7 @@ const AdminDashboard = () => {
                             <h1>Feedbacks</h1>
                             <Link to={'/admin-dashboard/feedbacks'}>Visit</Link>
                             {feedbacks?.length !== 0 ? feedbacks?.map((feedback, feedbackId) => (
-                                <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId}/>
+                                <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId} setFeedbacks={setFeedbacks}/>
                             )) : "No Feedbacks"}
                         </section>
 

@@ -1,8 +1,35 @@
-import { Link } from "react-router-dom"
+import axios from "axios";
 
-const AdminFeedback = ({ feedback, feedbackId, key }) => {
+import { BACKEND_URL } from "../../config";
+
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import { useCookies } from "react-cookie";
+
+const AdminFeedback = ({ feedback, feedbackId, key, setFeedbacks }) => {
+
+    const [ cookies ] = useCookies(['token'])
+
+    const [toggleDrop , setToggleDrop] = useState(false);
+
+    const removeFeedback = async(id) =>{
+        try{
+
+            const response = await axios.delete(`${BACKEND_URL}/api/feedback/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
+
+            if(response.status === 200) setFeedbacks(prev => prev.filter((fb => fb.feedback_id !== feedback.feedback_id)))
+            // toggle stattus 400 alert messagee
+            setToggleDrop(false)
+
+
+
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     return(
-        <div className="admin-feedback-container d-flex justify-content-between" key={feedback}>
+        <div className="admin-feedback-container d-flex justify-content-between" key={feedbackId}>
             <div className="admin-start">
                 <div className="admin-header">
                 <h4>{feedback.fullname}</h4>
@@ -16,7 +43,12 @@ const AdminFeedback = ({ feedback, feedbackId, key }) => {
                 </> : <></>}
             </div>
             </div>
-            <div className="admin-end">:</div>
+            <div className="admin-end">
+                <button className="btn btn-primary" onClick={() => setToggleDrop(!toggleDrop)}>:</button>
+                <div className="toggle text-white" style={{ display : toggleDrop ? 'flex' : 'none' , flexDirection : 'column',position : 'relative', top : '10px'}}>
+                    <button className="btn btn-danger" onClick={() => removeFeedback(feedback.feedback_id)}>Remove</button>
+                </div>
+            </div>
         </div>
     )
 }

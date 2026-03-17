@@ -7,11 +7,16 @@ import { useCookies } from "react-cookie";
 const CreateProduct = () => {
     
     const categories = [
-        
+        {
+            "name": "Select Product Category",
+            "slug": "",
+            "subcategories": []
+        },
         {
             "name": "Electronics",
             "slug": "electronics",
             "subcategories": [
+            "Select Product Sub-Category",
             "Smartphones & Accessories",
             "Laptops & Computers",
             "PC Parts & Components",
@@ -25,6 +30,7 @@ const CreateProduct = () => {
             "name": "Home & Living",
             "slug": "home-living",
             "subcategories": [
+            "Select Product Sub-Category",
             "Furniture",
             "Kitchen & Dining",
             "Home Decor",
@@ -36,6 +42,7 @@ const CreateProduct = () => {
             "name": "Fashion",
             "slug": "fashion",
             "subcategories": [
+            "Select Product Sub-Category",
             "Men's Clothing",
             "Women's Clothing",
             "Shoes",
@@ -47,6 +54,7 @@ const CreateProduct = () => {
             "name": "Beauty & Personal Care",
             "slug": "beauty",
             "subcategories": [
+            "Select Product Sub-Category",
             "Skincare",
             "Haircare",
             "Makeup",
@@ -57,6 +65,7 @@ const CreateProduct = () => {
             "name": "Sports & Outdoors",
             "slug": "sports-outdoors",
             "subcategories": [
+            "Select Product Sub-Category",
             "Fitness Equipment",
             "Outdoor Gear",
             "Sportswear",
@@ -67,6 +76,7 @@ const CreateProduct = () => {
             "name": "Automotive",
             "slug": "automotive",
             "subcategories": [
+            "Select Product Sub-Category",
             "Car Accessories",
             "Auto Parts",
             "Motorcycle Gear"
@@ -76,6 +86,7 @@ const CreateProduct = () => {
             "name": "Kids & Toys",
             "slug": "kids-toys",
             "subcategories": [
+            "Select Product Sub-Category",
             "Toys",
             "Baby Essentials",
             "Kids Clothing"
@@ -211,7 +222,7 @@ const CreateProduct = () => {
                         <span>{priceErr}</span>
                     </div>
 
-                    <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
+                    <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(() => {if(e.target.value === 'Select Product Category') return '' ; return e.target.value })} value={selectedCat} ref={categoryRef}>
                         {categories.map((cat, catId) => (
                             <option value={cat.name} key={catId}>{cat.name}</option>
                         ))}
@@ -219,7 +230,7 @@ const CreateProduct = () => {
                     <span>{categoryErr}</span>
 
                     {selectedCat && 
-                        <select onChange={(e) => setSelectedSub(e.target.value)} value={selectedSub} ref={subCategoryRef}>
+                        <select className="form-select" onChange={(e) => setSelectedSub(() => {if(e.target.value === "Select Product Sub-Category") return '' ; return e.target.value})} value={selectedSub} ref={subCategoryRef}>
                             {categories.filter(cat => cat.name === selectedCat)[0].subcategories.map((sub, subId) => <option key={subId} value={sub}>{sub}</option>)}
                         </select>
                     }
