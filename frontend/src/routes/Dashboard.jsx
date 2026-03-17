@@ -33,8 +33,7 @@ const Dashboard = () => {
     const [toggleOrder,setToggleOrder] = useState(false)
 
     const { user } = useContext(UserContext)
-
-    console.log(user)
+    const { cardDetails } = useContext(UserContext)
 
     const [cart , setCart] = useState([])
 
@@ -62,6 +61,11 @@ const Dashboard = () => {
             // setToggleCard(false)
         }
     }
+
+    const handleMissingCard = () => {
+        setToggleCard(true);
+        return null;
+    };
     
     return(
         <div className="dashboard-container container-fluid d-flex">
@@ -76,7 +80,7 @@ const Dashboard = () => {
                 <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId}/>
 
                 {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
-                {toggleOrder ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div> : <></>}
+                {toggleOrder  ? cardDetails?.last4 ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div> : handleMissingCard()  : <></>}
 
                 <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
                 <section id='order-list'><OrderList /></section>

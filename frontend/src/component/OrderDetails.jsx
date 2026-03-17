@@ -33,8 +33,8 @@ const OrderDetails = ({order, orderId, key , setOrders}) => {
             const response = await axios.delete(`${BACKEND_URL}/api/order/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
 
             if(response.status === 200)return setOrders(prev => prev.filter(ord => ord.order_id !== order.order_id))
-            
-            console.log(response.data)
+            // toggle stattus 400 alert messagee
+            setToggleDrop(false)
 
         }catch(err){
             // toggle alert message
@@ -53,7 +53,7 @@ const OrderDetails = ({order, orderId, key , setOrders}) => {
                 <div className="order-end border h-100 d-flex flex-column align-items-end">
                     <button className="btn btn-primary" onClick={() => setToggleDrop(!toggleDrop)}>:</button>
                     <div className="toggle text-white" style={{ display : toggleDrop ? 'flex' : 'none' , flexDirection : 'column',position : 'relative', top : '10px'}}>
-                        <button className="btn btn-danger"  onClick={() => discardOrder(order.order_id)}>Discard Order</button>
+                        <button className="btn btn-danger" disabled={order.status === 'OnWay' || order.status === 'Delivered' ? true : false}  onClick={() => discardOrder(order.order_id)}>Discard Order</button>
                     </div>
                 </div>
             </div>
