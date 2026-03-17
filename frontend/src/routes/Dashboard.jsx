@@ -34,6 +34,7 @@ const Dashboard = () => {
 
     const { user } = useContext(UserContext)
 
+    console.log(user)
 
     const [cart , setCart] = useState([])
 

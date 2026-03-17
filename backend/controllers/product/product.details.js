@@ -11,6 +11,7 @@ async function productDetails (req,res) {
         
         return res.status(200).json({message : "Product Found" , product : products[0]})
     }catch(err){
+        console.log(err)
         return res.status(500).json({errMessage : 'Internal Errror' , err : err})
     }
 }

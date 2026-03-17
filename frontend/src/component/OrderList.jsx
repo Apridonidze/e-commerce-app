@@ -17,7 +17,7 @@ const OrderList = () => {
             try{
 
                 const orders = await axios.get(`${BACKEND_URL}/api/order`, {headers : {Authorization : `Bearer ${cookies.token}`}})
-
+                console.log(orders)
                 if(orders.status === 204) setOrders([])
                 
                 setOrders(orders.data.orders)
