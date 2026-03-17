@@ -105,6 +105,8 @@ const CreateProduct = () => {
     const [selectedCat , setSelectedCat] = useState('')
     const [selectedSub, setSelectedSub] = useState('')
     const [price ,setPrice] = useState('')
+    const [toggleSalesPrice, setToggleSalesPrice] = useState(false);
+    const [salesPrice,setSalesPrice] = useState('');
     const [amount, setAmount] = useState('')
 
     const [imageErr , setImageErr] = useState('')
@@ -113,6 +115,7 @@ const CreateProduct = () => {
     const [categoryErr, setCategoryErr] = useState('')
     const [subCategoryErr, setSubCategoryErr] = useState('')
     const [priceErr ,setPriceErr] = useState('')
+    const [salesPriceErr, setSalesPriceErr] = useState('')
     const [amountErr ,setAmountErr] = useState('')
 
     const imageRef = useRef(null)
@@ -121,6 +124,7 @@ const CreateProduct = () => {
     const categoryRef = useRef(null)
     const subCategoryRef = useRef(null)
     const priceRef = useRef(null)
+    const salesPriceRef = useRef(null)
     const amountRef = useRef(null)
     
     const handleUploadProduct = async (e) => {
@@ -147,11 +151,28 @@ const CreateProduct = () => {
 
         if(price.trim() == '' || price.trim() == null || price.trim() == undefined){isValid = false ; setPriceErr(`This Field Can't Be Empty`); priceRef.current.classList.add('is-invalid');priceRef.current.classList.remove('is-valid')}
         else if(Number(price) === 0 || Number(price) >= 100000 || Number(price) <= 0){isValid = false; setPriceErr('Enter Valid Price'); priceRef.current.classList.add('is-invalid');priceRef.current.classList.remove('is-valid')}
-        else if (NumberRegex.test(Number(price)) === false){isValid = false ; setPriceErr('Enter Valid Price (Numbers Only)')}
+        else if (NumberRegex.test(price) === false){isValid = false ; setPriceErr('Enter Valid Price (Numbers Only)')}
+        else if (Number(salesPrice) > Number(price) || Number(salesPrice) === Number(price)){isValid = false ; setPriceErr('Sales Price Should Not Be Greater Than Original Price'); priceRef.current.classList.add('is-invalid');priceRef.current.classList.remove('is-valid')}
         else {isValid = true; setPriceErr('') ;priceRef.current.classList.add('is-valid') ;priceRef.current.classList.remove('is-invalid'); data = {...data, price : Number(price)}}
 
+        if(toggleSalesPrice){
+            if(salesPrice.trim() == '' || salesPrice.trim() == null || salesPrice.trim() == undefined){isValid = false ; setSalesPriceErr(`This Field Can't Be Empty`); salesPriceRef.current.classList.add('is-invalid');salesPriceRef.current.classList.remove('is-valid')}
+            else if(Number(salesPrice) === 0 || Number(price) >= 100000 || Number(price) <= 0){isValid = false; setSalesPriceErr('Enter Valid Price'); salesPriceRef.current.classList.add('is-invalid');salesPriceRef.current.classList.remove('is-valid')}
+            else if (NumberRegex.test(salesPrice) === false){isValid = false ; setSalesPriceErr('Enter Valid Price (Numbers Only)'); salesPriceRef.current.classList.add('is-invalid');salesPriceRef.current.classList.remove('is-valid')}
+            else if (Number(salesPrice) > Number(price) || Number(salesPrice) === Number(price)){isValid = false ; setSalesPriceErr('Sales Price Should Not Be Greater Than Original Price'); salesPriceRef.current.classList.add('is-invalid');salesPriceRef.current.classList.remove('is-valid')}
+            else {isValid = true; setSalesPriceErr('') ;salesPriceRef.current.classList.add('is-valid') ;salesPriceRef.current.classList.remove('is-invalid'); data = {...data, salesPrice : Number(salesPrice)}}
+        }
+
+        if(!toggleSalesPrice){
+            if (salesPriceRef.current) {
+                salesPriceRef.current.classList.remove('is-valid')
+                salesPriceRef.current.classList.remove('is-invalid')
+            }
+            setSalesPriceErr('')
+            data = { ...data, salesPrice: null }
+        }
+        
         if(selectedCat.trim() == '' || selectedCat.trim() == null || selectedCat.trim() == undefined){isValid = false ; setCategoryErr(`This Field Can't Be Empty`); categoryRef.current.classList.add('is-invalid');categoryRef.current.classList.remove('is-valid')}
-        else if(selectedCat.trim().length <= 3){isValid = false; setCategoryErr('Enter Valid Product Description'); descRef.current.classList.add('is-invalid');categoryRef.current.classList.remove('is-valid')}
         else {isValid = true; setCategoryErr('') ;categoryRef.current.classList.add('is-valid') ;categoryRef.current.classList.remove('is-invalid'); data = {...data, category : selectedCat}}
 
         if(selectedSub.trim() == '' || selectedSub.trim() == null || selectedSub.trim() == undefined){isValid = false ; setSubCategoryErr(`This Field Can't Be Empty`); subCategoryRef.current.classList.add('is-invalid');subCategoryRef.current.classList.remove('is-valid')}
@@ -219,10 +240,21 @@ const CreateProduct = () => {
                     <div className="form-floating">
                         <input className="form-control" id="priceId" placeholder="Product Price (In GEL)" ref={priceRef} onChange={(e) => setPrice(e.target.value)} value={price}/>
                         <label htmlFor="priceId">Product Price (In GEL)</label>
-                        <span>{priceErr}</span>
+                        <span>{salesPriceErr}</span>
                     </div>
 
-                    <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(() => {if(e.target.value === 'Select Product Category') return '' ; return e.target.value })} value={selectedCat} ref={categoryRef}>
+                    <div className="form-group">
+                        <input type="checkbox" id="salesCheckbox" onChange={() => setToggleSalesPrice(!toggleSalesPrice)}/>
+                        <label htmlFor="salesCheckbox">On Sale</label>
+                    </div>
+
+                    {toggleSalesPrice ? <div className="form-floating">
+                        <input className="form-control" id="salesPriceId" placeholder="Product Sales Price (In GEL)" ref={salesPriceRef} onChange={(e) => setSalesPrice(e.target.value)} value={salesPrice}/>
+                        <label htmlFor="salesPriceId">Sales Price (In GEL)</label>
+                        <span>{priceErr}</span>
+                    </div> : <></>}
+
+                    <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
                         {categories.map((cat, catId) => (
                             <option value={cat.name} key={catId}>{cat.name}</option>
                         ))}
@@ -230,7 +262,7 @@ const CreateProduct = () => {
                     <span>{categoryErr}</span>
 
                     {selectedCat && 
-                        <select className="form-select" onChange={(e) => setSelectedSub(() => {if(e.target.value === "Select Product Sub-Category") return '' ; return e.target.value})} value={selectedSub} ref={subCategoryRef}>
+                        <select className="form-select" onChange={(e) => setSelectedSub(e.target.value)} value={selectedSub} ref={subCategoryRef}>
                             {categories.filter(cat => cat.name === selectedCat)[0].subcategories.map((sub, subId) => <option key={subId} value={sub}>{sub}</option>)}
                         </select>
                     }
