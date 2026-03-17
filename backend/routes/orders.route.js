@@ -9,6 +9,6 @@ router.get('/' , ValidateToken , orderRoutes.list)
 router.get('/:id', ValidateToken, isAdmin, orderRoutes.check);
 router.post('/' , ValidateToken , orderRoutes.add)
 router.delete('/:id' , ValidateToken , orderRoutes.remove)
-
+router.delete('/admin-remove/:id' , ValidateToken , orderRoutes.adminRemove)
 
 module.exports = router

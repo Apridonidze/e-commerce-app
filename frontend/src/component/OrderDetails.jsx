@@ -63,7 +63,7 @@ const OrderDetails = ({order, orderId, key , setOrders}) => {
                     <button className="btn btn-primary" onClick={() => fetchOrderDetails(order.order_id)} type="button" data-toggle="collapse" data-target={`#collapseDiv${orderId}`} aria-expanded="false" aria-controls={`collapseDiv${orderId}`}>^</button>
                 </div>
                 <div className="collapse" id={`collapseDiv${orderId}`}>
-                    {products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId} />) || 'loadinfg'}
+                    {products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId} />)}
                 </div>
             </div>
         </div>

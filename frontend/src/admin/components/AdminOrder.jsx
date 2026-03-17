@@ -12,6 +12,7 @@ const AdminOrder = ({ order, orderId, key, setOrders }) => {
 
     const [products,setProducts] = useState([])
     const [status,setStatus] = useState(order?.status)
+    const [toggleDrop, setToggleDrop] = useState(false)
 
     const fetchOrderDetails = async(id) => {
         try{
@@ -46,30 +47,41 @@ const AdminOrder = ({ order, orderId, key, setOrders }) => {
 
     },[status])
 
-    return(
-        <div className="admin-order-container" key={orderId}>
-            <div className="order-top d-flex justify-content-between">
-                <div className="top-start">
-                    <h3>Customer : {order.fullname} {order.email}</h3>
-                    {order.status}
-                    {order.total_price}
-                    {new Date(order.created_at).toLocaleDateString()} {new Date(order.created_at).toLocaleTimeString()}
-                </div>
+    const discardOrder = async(id) => {
+        try{
 
-                <div className="top-end">
+            const response = await axios.delete(`${BACKEND_URL}/api/order/admin-remove/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
+
+            if(response.status === 200)return setOrders(prev => prev.filter(ord => ord.order_id !== order.order_id))
+            // toggle stattus 400 alert messagee
+            setToggleDrop(false)
+
+        }catch(err){
+            // toggle alert message
+            console.log(err)
+        }
+    }
+
+    return(
+        <div className="order-details-container" key={orderId}>
+            <div className="order-top  d-flex justify-content-between">
+                <div className="order-start">
+                    <h1>Order Status : {order.status}</h1>
+                    <h3>Ordered At: {new Date(order.created_at).toLocaleDateString()} {new Date(order.created_at).toLocaleTimeString()}</h3>
+                    <h3>Expected Delivery: {new Date(new Date(order.created_at).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}</h3>
+                </div>
+                <div className="order-end border h-100 d-flex flex-column align-items-end">
+                    <button className="btn btn-primary" onClick={() => setToggleDrop(!toggleDrop)}>:</button>
+                    <div className="toggle text-white" style={{ display : toggleDrop ? 'flex' : 'none' , flexDirection : 'column',position : 'relative', top : '10px'}}>
+                        <button className="btn btn-danger" onClick={() => discardOrder(order.order_id)}>Discard Order</button>
+                    </div>
+                </div>
+            </div>
+            <div className="order-bottom">
+                <div className="d d-flex justify-content-between">
+                    <h4>Ordered Items</h4>
                     <button className="btn btn-primary" onClick={() => fetchOrderDetails(order.order_id)} type="button" data-toggle="collapse" data-target={`#collapseDiv${orderId}`} aria-expanded="false" aria-controls={`collapseDiv${orderId}`}>^</button>
                 </div>
-            </div>
-
-            <div className="order-main">
-                <select name="statusSelector" id="statusSelector" defaultValue={status} onChange={(e) => setStatus(e.target.value)}>
-                    <option value="Pending">{status === "Pending" ? 'Pending (Current)' : 'Pending'}</option>
-                    <option value="OnWay">{status === "OnWay" ? 'On Way (Current)' : 'On Way'}</option>
-                    <option value="Delivered">{status === "Delivered" ? 'Delivered (Current)' : 'Delivered'}</option>
-                </select>
-            </div>
-
-            <div className="order-bottom">
                 <div className="collapse" id={`collapseDiv${orderId}`}>
                     {products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId} />)}
                 </div>

@@ -57,12 +57,13 @@ const Dashboard = () => {
 
         }catch(err){
             console.log(err)
-
-            // setToggleCard(false)
+            // toggle alert message 
+            setToggleCard(false)
         }
     }
 
     const handleMissingCard = () => {
+        // toggle alert message and tell first user has to fill out card details to create order 
         setToggleCard(true);
         return null;
     };
