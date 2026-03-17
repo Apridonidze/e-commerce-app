@@ -7,7 +7,9 @@ async function remove(req,res) {
 
         // validate feedback id
 
-        await db.query('drop from feedback where feedback_id = ?', [Number(feedbackId)])
+        const [response] = await db.query('drop from feedback where feedback_id = ?', [Number(feedbackId)])
+        if(response.affectedRows === 0) return res.status(400).json({message : "Feedback Not Found"})
+
         return res.status(200).json({message : "Feedback Removed Successfuly" , feedbackId})
 
     }catch(err){
