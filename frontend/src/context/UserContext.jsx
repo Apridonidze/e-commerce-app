@@ -46,13 +46,9 @@ export const UserProvider = ({children}) => {
                 try{
 
                     const cartIds = await axios.get(`${BACKEND_URL}/api/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
-           
                     if(cartIds.status === 204){setCartIds([]); return}
-                
-                    const cartResp = cartIds.data.products              
-                    const mappedCartIds = cartResp.map((id) => {return id.product_id})
-            
-                    setCartIds(mappedCartIds)
+                    
+                    setCartIds(cartIds.data.cartItems)
 
                 }catch(err){
                     setCartIds([]);

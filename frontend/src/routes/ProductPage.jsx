@@ -18,6 +18,7 @@ const ProductPage = () => {
     const [feedback, setFeedback] = useState([]);
     const [similarProducts, setSimilarProducts] = useState([]);
     const [isInCart, setIsInCart] = useState(false)
+    const [inCartAmount, setInCartAmount] = useState(0);
     const [toggleFeedback, setToggleFeedback] = useState(false)
     const [amount, setAmount] = useState(0)
 
@@ -62,13 +63,19 @@ const ProductPage = () => {
     }, [id])
 
     useEffect(() => {
-    
-        if (!product) return;
-        setIsInCart(cartIds.includes(product.products_id))
-    
-    }, [cartIds, product])
+        if (!product || !cartIds) return;
 
-    
+        const cartItem = cartIds.find(item => item.products_id === product.products_id);
+
+        if (!cartItem) {
+            setIsInCart(false);
+            setInCartAmount(0);
+        } else {
+            setIsInCart(true);
+            setInCartAmount(cartItem.amount);
+        }
+
+    }, [cartIds, product])
     
     let imagesArray = []
     
@@ -138,11 +145,9 @@ const ProductPage = () => {
 
                         <div className="d-flex flex-column gap-2">
                             <div>
-                                <button onClick={() => setAmount(prev => Math.max(prev - 1, 0))}>-</button>
-                                <span>{amount}</span>
-                                <button onClick={() => setAmount(prev =>
-                                    product ? Math.min(prev + 1, product.amount) : prev
-                                )}>+</button>
+                                <button disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev - 1 <= 0) return 0;return prev - 1})}>-</button>
+                                <span>{isInCart ? inCartAmount : amount}</span>
+                                <button disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev + 1 > product?.amount)return prev; return prev + 1})}>+</button>
                             </div>
 
                             {isInCart ? (<button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button>) : (

@@ -10,7 +10,7 @@ import { BACKEND_URL } from "../../config"
 const Cart = ({ setToggleOrder, setCart, cart }) => {
 
     const [cookies] = useCookies(['token'])
-    
+    //remove useeefect and use userContext for acartitems
     useEffect(() => {
 
         const fetchCartItems = async() => {

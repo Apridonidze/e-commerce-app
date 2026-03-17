@@ -7,8 +7,8 @@ const ValidateToken = require('../middlewares/ValidateToken');
 const RateLimiter = require('../middlewares/RateLimiter');
 
 router.get('/' , ValidateToken , cartRoute.list)
-router.post('/:id' , ValidateToken , RateLimiter, cartRoute.add)
-router.delete('/:id' , ValidateToken , RateLimiter, cartRoute.remove)
+router.post('/:id' , ValidateToken , cartRoute.add)
+router.delete('/:id' , ValidateToken , cartRoute.remove)
 
 
 module.exports = router
