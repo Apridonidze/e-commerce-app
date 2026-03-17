@@ -55,4 +55,6 @@ const Header = ({ setProducts }) => {
     )
 }
 
+// disable serach function when user is not on main page . use useLocation() to define where is header.jsx component decleared
+
 export default Header

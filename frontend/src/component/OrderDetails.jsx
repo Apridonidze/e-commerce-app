@@ -1,20 +1,51 @@
+import axios from "axios";
 import { useState } from "react";
+import { BACKEND_URL } from "../../config";
+import OrderItem from "./OrderItem";
+import { useCookies } from "react-cookie";
 
 const OrderDetails = ({order, orderId, key}) => {
 
+    const [ cookies ] = useCookies(['token'])
+
+    const [products,setProducts] = useState([]);
     const [toggleDrop, setToggleDrop] = useState(false)
 
+    const fetchOrderDetails = async(id) => {
+        try{
+
+            const response = await axios.get(`${BACKEND_URL}/api/order/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
+
+            setProducts(response.data.orderItems)
+
+        }catch(err){
+            // toggle error message
+            console.log(err)
+        }
+    }
+
     return(
-        <div className="order-details-container d-flex justify-content-between" key={orderId}>
-            <div className="order-start">
-                <h1>Order Status : {order.status}</h1>
-                <h3>Ordered At: {new Date(order.created_at).toLocaleDateString()} {new Date(order.created_at).toLocaleTimeString()}</h3>
-                <h3>Expected Delivery: {new Date(new Date(order.created_at).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}</h3>
+        <div className="order-details-container" key={orderId}>
+            <div className="order-top  d-flex justify-content-between">
+                <div className="order-start">
+                    <h1>Order Status : {order.status}</h1>
+                    <h3>Ordered At: {new Date(order.created_at).toLocaleDateString()} {new Date(order.created_at).toLocaleTimeString()}</h3>
+                    <h3>Expected Delivery: {new Date(new Date(order.created_at).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}</h3>
+                </div>
+                <div className="order-end border h-100 d-flex flex-column align-items-end">
+                    <button className="btn btn-primary" onClick={() => setToggleDrop(!toggleDrop)}>:</button>
+                    <div className="toggle text-white" style={{ display : toggleDrop ? 'flex' : 'none' , flexDirection : 'column',position : 'relative', top : '10px'}}>
+                        <button className="btn btn-danger" disabled={order.status === "OnWay" || order.status === "Delivered" ? true : false}>Discard Order</button>
+                    </div>
+                </div>
             </div>
-            <div className="order-end border h-100 d-flex flex-column align-items-end">
-                <button className="btn btn-primary" onClick={() => setToggleDrop(!toggleDrop)}>:</button>
-                <div className="toggle text-white" style={{ display : toggleDrop ? 'flex' : 'none' , flexDirection : 'column',position : 'relative', top : '10px'}}>
-                    <button className="btn btn-danger" disabled={order.status === "OnWay" ? true : false}>Discard Order</button>
+            <div className="order-bottom">
+                <div className="d d-flex justify-content-between">
+                    <h4>Ordered Items</h4>
+                    <button className="btn btn-primary" onClick={() => fetchOrderDetails(order.order_id)} type="button" data-toggle="collapse" data-target={`#collapseDiv${orderId}`} aria-expanded="false" aria-controls={`collapseDiv${orderId}`}>^</button>
+                </div>
+                <div className="collapse" id={`collapseDiv${orderId}`}>
+                    {products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId} />) || 'loadinfg'}
                 </div>
             </div>
         </div>
