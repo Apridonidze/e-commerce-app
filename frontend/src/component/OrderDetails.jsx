@@ -1,8 +1,11 @@
 import axios from "axios";
-import { useState } from "react";
-import { BACKEND_URL } from "../../config";
-import OrderItem from "./OrderItem";
 import { useCookies } from "react-cookie";
+
+import { useState } from "react";
+
+import OrderItem from "./OrderItem";
+
+import { BACKEND_URL } from "../../config";
 
 const OrderDetails = ({order, orderId, key , setOrders}) => {
 
