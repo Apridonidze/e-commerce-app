@@ -1,182 +1,192 @@
 import Sidebar from '../layout/Sidebar'
 import Header from '../layout/Header';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 import { BACKEND_URL } from '../../config';
 import Product from '../component/Product';
 import { useCookies } from 'react-cookie';
-import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import FeedbackInput from '../component/FeedbackInput';
 
 const ProductPage = () => {
 
     const [cookies] = useCookies(['token'])
-
     const { id } = useParams()
 
-    const [product,setProduct] = useState();
+    const [product, setProduct] = useState(null);
     const [feedback, setFeedback] = useState([]);
     const [similarProducts, setSimilarProducts] = useState([]);
-    const [isInCart , setIsInCart] = useState(false)
+    const [isInCart, setIsInCart] = useState(false)
     const [toggleFeedback, setToggleFeedback] = useState(false)
-
-    const [amount,setAmount] = useState(0)
+    const [amount, setAmount] = useState(0)
 
     const { cartIds } = useContext(UserContext)
 
     useEffect(() => {
 
-        const fetchProduct = async() => {
-
-            try{
-
-                const product = await axios.get(`${BACKEND_URL}/api/product/product-details`, {params : {id : id}})
-                const feedback = await axios.get(`${BACKEND_URL}/api/feedback/product-feedback/${id}`)
+        const fetchSimilarProducts = async (category, subcategory) => {
+            try {
                 
-                setProduct(product.data.product)
-                setFeedback(feedback.data.feedback)
+                const res = await axios.get(`${BACKEND_URL}/api/product/similar-products`, {params: { category, subcategory, id }})
+                setSimilarProducts(res.data.products || [])
 
-                fetchSimilarProducts(product.data.product.category, product.data.product.subcategory)
-
-            }catch(err){
-                console.log(err)
-                // add erorr handling here based on statuses 500, 400 and 204 , 404
-            }
-        }
-
-        const fetchSimilarProducts = async (category,subcategory) => {
-            try{
-
-                //add checking responses
-
-                const products = await axios.get(`${BACKEND_URL}/api/product/similar-products`, {params : {category : category , subcategory : subcategory , id : id}})
-                console.log(products.data.products) //remove    
-                setSimilarProducts(products.data.products)
-
-            }catch(err){
-                // add erorr handling here based on statuses 500, 400 and 204 , 404
+            } catch (err) {
                 console.log(err)
             }
         }
 
-        cartIds.includes(product?.products_id) ? setIsInCart(true): setIsInCart(false)
+        const fetchProduct = async () => {
+            try {
 
-        return () => {fetchProduct()}
+                const productRes = await axios.get(`${BACKEND_URL}/api/product/product-details`, {params: { id }})
+                const feedbackRes = await axios.get(`${BACKEND_URL}/api/feedback/product-feedback/${id}`)
 
-    },[id])
+                const prod = productRes.data.product
+
+                setProduct(prod)
+                setFeedback(feedbackRes.data.feedback || [])
+
+                if (prod) {
+                    fetchSimilarProducts(prod.category, prod.subcategory)
+                    setAmount(1)
+                }
+
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        fetchProduct()
+
+    }, [id])
+
+    useEffect(() => {
     
-    const imagesArray = product && JSON.parse(product.images)
+        if (!product) return;
+        setIsInCart(cartIds.includes(product.products_id))
+    
+    }, [cartIds, product])
 
-    const handleAddToCart = async(e) => {
-        try{
+    
+    
+    let imagesArray = []
+    
+    try {   
+        imagesArray = product?.images ? JSON.parse(product.images) : []
+    } catch {
+        imagesArray = []
+    }
 
-            await axios.post(`${BACKEND_URL}/api/cart/${e}` , {amount} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(true)})
+    const handleAddToCart = async (productId) => {
+        try {
 
-        }catch(err){
+            await axios.post(`${BACKEND_URL}/api/cart/${productId}`,{ amount },{ headers: { Authorization: `Bearer ${cookies.token}` } })
+            setIsInCart(true)
+
+        } catch (err) {
             setIsInCart(false)
             console.log(err)
         }
     }
 
-    const handleDeleteFromCart = async(e) => {
-        try{
-
-            await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setIsInCart(false)})
-
-        }catch(err){
-
+    const handleDeleteFromCart = async (productId) => {
+        try {
+            
+            await axios.delete(`${BACKEND_URL}/api/cart/${productId}`,{ headers: { Authorization: `Bearer ${cookies.token}` } })
+            setIsInCart(false)
+            
+        } catch (err) {
             setIsInCart(true)
             console.log(err)
         }
     }
 
-    return(
+    return (
         <div className="main-container container-fluid row border">
             <div className="main-start col">
-                <Sidebar /> 
+                <Sidebar />
             </div>
-            <div className="main-end col " >
 
+            <div className="main-end col">
                 <Header />
 
-                {toggleFeedback ? <div><div className="feedback-bg bg-dark opacity-25 w-100 h-100" onClick={() => setToggleFeedback(false)} style={{position : 'absolute' , left : '0px' , top : '0px'}} tabIndex={99}></div> <FeedbackInput /></div> : <></>}
+                {toggleFeedback && (
+                    <div>
+                        <div
+                            className="feedback-bg bg-dark opacity-25 w-100 h-100"
+                            onClick={() => setToggleFeedback(false)}
+                            style={{ position: 'absolute', left: 0, top: 0 }}
+                        />
+                        <FeedbackInput />
+                    </div>
+                )}
 
                 <div className="product-container row">
                     <div className="product-start col">
-
-                        {imagesArray?.map((img, index) => (
-                            <img key={index} src={`data:image/jpeg;base64,${img}`} alt={`product-${index}`} style={{maxWidth : '400px', height: 'auto'}}/>
+                        {imagesArray.map((img, index) => (
+                            <img key={index} src={`data:image/jpeg;base64,${img}`} alt={`product-${index}`} style={{ maxWidth: '400px', height: 'auto' }}/>
                         ))}
-                        {/* add slider for images if there is more images than 1 */}
-
                     </div>
+
                     <div className="product-end col">
-                        <div className="d">
-                            <h4>{product?.title}</h4>
-                            <h6>{product?.description}</h6>
-                            <h6>{product?.category} / {product?.subcategory}</h6>
-                            <h4>{product?.price}</h4>
-                            <h5>Avaliable : {product?.amount} Pieces</h5>
-                        </div>
-                        <div className="d d-flex flex-column g-3">
-                            <div className="d">
-                                <button onClick={() => setAmount(prev => { if(prev - 1 <= 0) return 0;return prev - 1})}>-</button>
+                        <h4>{product?.title}</h4>
+                        <h6>{product?.description}</h6>
+                        <h6>{product?.category} / {product?.subcategory}</h6>
+                        <h4>{product?.price}</h4>
+                        <h5>Available: {product?.amount} Pieces</h5>
+
+                        <div className="d-flex flex-column gap-2">
+                            <div>
+                                <button onClick={() => setAmount(prev => Math.max(prev - 1, 0))}>-</button>
                                 <span>{amount}</span>
-                                <button onClick={() => setAmount(prev => { if(prev + 1 > product?.amount)return prev; return prev + 1})}>+</button>
+                                <button onClick={() => setAmount(prev =>
+                                    product ? Math.min(prev + 1, product.amount) : prev
+                                )}>+</button>
                             </div>
-                            {isInCart ? <button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button> : amount === 0 ? <button disabled>Add To Cart</button> : <button onClick={() => handleAddToCart(product.products_id)}>Add To Cart</button>}
+
+                            {isInCart ? (<button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button>) : (
+                                amount === 0 ? (<button disabled>Add To Cart</button>) : (
+                                    <button onClick={() => handleAddToCart(product.products_id)}>Add To Cart</button>)
+                            )}
                         </div>
                     </div>
                 </div>
-
-                {/* add loading skeleton for this component also */}
 
                 <div className="feedback">
                     <div className="feedback-header">
-                        <h3>{feedback?.length} Product Review</h3>
+                        <h3>{feedback.length} Product Review</h3>
                     </div>
-                    <div className="feedback-main">
 
-                        <div className="feedback-input d-flex">
-                            {cookies.token ? 
-                            <> 
+                    <div className="feedback-main">
+                        {cookies.token && (
+                            <div className="feedback-input d-flex">
                                 <div className="form-floating">
-                                    <input type="text" onClick={() => setToggleFeedback(true)} className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
+                                    <input type="text" onClick={() => setToggleFeedback(true)} className='form-control' id='fb-input'placeholder='Leave Your Feedback...'/>
                                     <label htmlFor="fb-input">Leave Your Feedback...</label>
                                 </div>
-                                
-                                <button onClick={() => setToggleFeedback(true)} className='btn btn-primary'>Post</button>
 
-                            </> : <></>}
-                        </div>
+                                <button onClick={() => setToggleFeedback(true)} className='btn btn-primary'>Post</button>
+                            </div>
+                        )}
 
                         <div className="feedback-footer d-flex flex-column">
-                            {feedback?.length > 0 ? feedback.map((fb,fbId) => (
-                                <span key={fbId}>{fb.fullname} {fb.content} {fb.stars}</span>
-                            )) : 'No review'}
+                            {feedback.length > 0 ? (feedback.map((fb, i) => (<span key={i}>{fb.fullname} {fb.content} {fb.stars}</span>))
+                            ) : 'No review'}
                         </div>
-
-                        {/* add feedback skeleton here */}
                     </div>
-
-                    
                 </div>
 
                 <div className="similar-products">
-                    <div className="similar-products-header">
-                        <h3>Similar Products:</h3>
-                    </div>
+                    <h3>Similar Products:</h3>
+
                     <div className="similar-products-main">
-                        {similarProducts.length !== 0 ? similarProducts?.map((prod, prodId) => (
-                            <Product prod={prod} prodId={prodId} key={prodId} cartIds={cartIds}/>
-                        )) : 'No Similar Products Found'}
+                        {similarProducts.length > 0 ? (
+                            similarProducts.map((prod, i) => (
+                                <Product key={i} prod={prod} prodId={i} cartIds={cartIds} />))
+                        ) : 'No Similar Products Found'}
                     </div>
                 </div>
-                {/* add loading skeletons for products  */}
-
-                {/* add footer component here */}
             </div>
         </div>
     )
