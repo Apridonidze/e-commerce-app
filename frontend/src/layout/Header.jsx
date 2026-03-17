@@ -30,6 +30,10 @@ const Header = ({ setProducts }) => {
         fetchDataList()
     },[searchItem]) 
 
+    // fix fetchDataList funtion api route 
+    // make header.jsx reads its location with useLocation and do not trigger api call if it is on different route than Main.jsx
+
+    // add menu button that is visible on small devices , make it add classList to sidebar that will be visible by the classlists
 
     return(
         <div className="header-container  d-flex justify-content-between" >

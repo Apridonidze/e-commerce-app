@@ -195,7 +195,7 @@ const ProductPage = () => {
                     <div className="similar-products-main">
                         {similarProducts.length > 0 ? (
                             similarProducts.map((prod, i) => (
-                                <Product key={i} prod={prod} prodId={i} cartIds={cartIds} />))
+                                <Product key={i} prod={prod} prodId={i} />))
                         ) : 'No Similar Products Found'}
                     </div>
                 </div>

@@ -3,48 +3,33 @@ import { useContext, useEffect, useState } from "react"
 
 import Skeleton from "react-loading-skeleton" // reloacte to skeletons 
 import { UserContext } from "../context/UserContext"
+import { useNavigate } from "react-router-dom"
 
 
 
-const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
+const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove } ) => {
 
-    const [toggleMore, setToggleMore] = useState(false)
+    const navigator = useNavigate();
+
     const { user } = useContext(UserContext)
+    const [toggleMore, setToggleMore] = useState(false)
 
-    useEffect(() => {
-
-        const id = prod.products_id
-
-        const checkStatus = () => {
-
-            if(!cartIds) setIsInCart(false);
-
-       
-            if(cartIds.includes(id)) setIsInCart(true)
-
-            return;
-
-        }
-
-        return () => {checkStatus()}
-        
-    },[cartIds])
-
+   
     return(
-        <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" style={{cursor: 'pointer'}} key={key} >
+        <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" style={{cursor: 'pointer'}} key={prodId} >
 
-            <div className="product-wrapper" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
+            <div className="product-wrapper">
 
-                {user.role !== 'admin' ? <></> : 
+                {user?.role !== 'admin' ? <></> : 
                 <div className="more">
                     <span onClick={() => setToggleMore(!toggleMore)}>:</span>
                     <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "relative" , bottom : '25px'}}>
-                        <button className="btn btn-primary">Edit</button>
-                        <button className="btn btn-danger">Remove</button>
+                        <button className="btn btn-primary" onClick={() => setToggleEdit(true)}>Edit</button>
+                        <button className="btn btn-danger" onClick={() => setToggleRemove(true)}>Remove</button>
                     </div>
                 </div>}
 
-                <div className="product-top w-100 h-auto d-flex justify-content-center" >
+                <div className="product-top w-100 h-auto d-flex justify-content-center" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
                 {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'200px'}}/> || <Skeleton />}
                 </div>
                     
@@ -66,7 +51,5 @@ const Product = ( { prod ,prodId , key, cartIds, setCartIds } ) => {
         </div>
     )
 }
-
-//TODO : when product cart status is updated remove/add it from usercontext where user cart items ids are reserved
 
 export default Product
