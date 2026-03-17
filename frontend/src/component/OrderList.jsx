@@ -34,10 +34,15 @@ const OrderList = () => {
 
     return(
         <div className="order-list-container">
-            My Orders
-            {orders?.length > 1 ? orders?.map((order,orderId) => (
+            <h3>My Orders</h3>
+            {orders?.length > 1 ? orders?.filter((order) => order.status !== "Delivered").map((order,orderId) => (
                 <OrderDetails order={order} orderId={orderId} key={orderId}/>
             )) : "No Items Ordered"}
+
+            <h3>Delivered Orders</h3>
+            {orders?.filter((order) => order.status == "Delivered")?.length > 1 ? orders?.filter((order) => order.status == "Delivered").map((order,orderId) => (
+                <OrderDetails order={order} orderId={orderId} key={orderId}/>
+            )) : "No Delivered Orders"}
         </div>
     )
 }
