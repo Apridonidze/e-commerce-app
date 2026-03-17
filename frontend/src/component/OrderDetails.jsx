@@ -14,7 +14,7 @@ const OrderDetails = ({order, orderId, key}) => {
             <div className="order-end border h-100 d-flex flex-column align-items-end">
                 <button className="btn btn-primary" onClick={() => setToggleDrop(!toggleDrop)}>:</button>
                 <div className="toggle text-white" style={{ display : toggleDrop ? 'flex' : 'none' , flexDirection : 'column',position : 'relative', top : '10px'}}>
-                    <button className="btn btn-danger">Discard Order</button>
+                    <button className="btn btn-danger" disabled={order.status === "OnWay" ? true : false}>Discard Order</button>
                 </div>
             </div>
         </div>
