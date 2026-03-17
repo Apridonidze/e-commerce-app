@@ -10,7 +10,7 @@ const AdminSupportChatContainer = () => {
     return(
         <div className="admin-support-chat-container d-flex">
             <AdminSupportChatSidebar setTargetConvId={setTargetConvId} />
-            {targetConvId ? <AdminSupportChat targetConvId={targetConvId}/> : 'No chats targeted'}
+            {targetConvId ? <AdminSupportChat targetConvId={targetConvId} setTargetConvId={setTargetConvId}/> : 'No chats targeted'}
         </div>
     )
 }

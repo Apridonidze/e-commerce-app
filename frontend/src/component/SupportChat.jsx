@@ -4,7 +4,7 @@ import { useLayoutEffect, useEffect , useRef, useState } from "react"
 import { BACKEND_URL } from "../../config"
 
 
-const SupportChat = ({ setCount }) => {
+const SupportChat = ({ setCount, setToggleChat }) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -57,6 +57,10 @@ const SupportChat = ({ setCount }) => {
 
             if(data.type === 'recieve_admin_list'){
                 setCount(data.list.length)
+            }
+
+            if(data.type === 'recieve_chat_end'){
+                setToggleChat(false);
             }
 
         };

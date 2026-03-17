@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRef, useEffect } from "react"
 import { useCookies } from "react-cookie"
 
-const AdminSupportChat = ({ targetConvId }) => {
+const AdminSupportChat = ({ targetConvId ,setTargetConvId }) => {
 
     const [cookies] = useCookies(['token'])
     const socketRef = useRef(null)
@@ -55,6 +55,10 @@ const AdminSupportChat = ({ targetConvId }) => {
                 console.log(data)
                 setMessages(data.message.reverse())
             }
+
+            if(data.type === 'recieve_chat_end'){
+                setTargetConvId(null)
+            }
     
         };
       
@@ -83,10 +87,17 @@ const AdminSupportChat = ({ targetConvId }) => {
 
         setInput('')
     }
+
+    const handleEndChat = () => {
+        socketRef.current.send(JSON.stringify({type : 'end_chat'}))
+    }
     
     return(
         <div className="admin-support-chat d-flex flex-column w-100">
-            <div className="admin-support-char-header row">names</div>
+            <div className="admin-support-char-header row">
+                <h3>Customer</h3>
+                <button onClick={() => handleEndChat()}>End Chat</button>
+            </div>
             <div className="support-chat-header d-flex flex-column w-auto border"  ref={messagesRef}>
                 {messages?.map((m , mId) => <span key={mId} className={m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'}>{m.content} {m.status}</span>)}
             </div>

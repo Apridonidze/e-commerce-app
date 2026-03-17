@@ -13,7 +13,7 @@ const SupportChatContainer = () =>{
                 <h3>Support Chat</h3>
                 <span>{count} Online Admins</span>
             </div>
-            {toggleChat ? <SupportChat setCount={setCount}/> : <></> }
+            {toggleChat ? <SupportChat setCount={setCount} setToggleChat={setToggleChat}/> : <></> }
         </div>
     )
 }

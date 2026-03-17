@@ -73,6 +73,12 @@ function SupportChatSocket (server) {
 
             }
 
+            if(message.type === 'end_chat'){
+
+                ws.send(JSON.stringify({type: 'recieve_chat_end'}))
+                await db.query('delete from support_messages where conversation_id = ?' , [ message.convId ])
+            }
+
 
             if(message.type ==  'support_chat_message'){
 
