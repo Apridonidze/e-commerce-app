@@ -7,6 +7,7 @@ const NewProductSchema = z.object({
     name : z.string().min(3),
     description : z.string().nonempty(),
     price : z.number().max(100000).min(0),
+    salesPrice : z.number().max(100000).min(0),
     category : z.enum(categoryList),
     subCategory: z.enum(subCategoryList),
     amount : z.number().max(100000).min(0),
