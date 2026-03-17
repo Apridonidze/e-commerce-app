@@ -112,12 +112,9 @@ function SupportChatSocket (server) {
                 }
               }                
 
-              //add onmessage for admin to end conversation
         })
 
         ws.on('close', () => {
-            console.log('WebSocket client disconnected');
-
             
             const clients = rooms.get(ws.convId);
 
