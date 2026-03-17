@@ -90,10 +90,13 @@ const ProductPage = () => {
 
             await axios.post(`${BACKEND_URL}/api/cart/${productId}`,{ amount },{ headers: { Authorization: `Bearer ${cookies.token}` } })
             setIsInCart(true)
+            setInCartAmount(amount)
+            setAmount(0)
 
         } catch (err) {
             setIsInCart(false)
-            console.log(err)
+            setInCartAmount(0)
+            setAmount(amount)
         }
     }
 
@@ -102,9 +105,13 @@ const ProductPage = () => {
             
             await axios.delete(`${BACKEND_URL}/api/cart/${productId}`,{ headers: { Authorization: `Bearer ${cookies.token}` } })
             setIsInCart(false)
+            setAmount(0)
+            setInCartAmount(0)
             
         } catch (err) {
             setIsInCart(true)
+            setInCartAmount(inCartAmount)
+            setAmount(0)
             console.log(err)
         }
     }
