@@ -8,10 +8,16 @@ async function salesList (req, res) {
 
     try{
 
-        const [ salesProducts ] = await db.query("select * from products where sales_price != null");
-        if(salesProducts.length === 0) return res.status(204).send()
+        if(category){
+            const [ filteredProducts ] = await db.query('select products.products_id, products.images, products.title, products.description, products.category, products.subcategory, products.price, products.sales_price, products.amount from products where subcategory = ? and sales_price != ? order by products.date limit ? , ?' , [category, null ,offset , offset + limit])
+            if(filteredProducts.length < 1) return res.status(204).json({message : "No Products In That Category" , products : []}) //change 200 status code with 204
+            
+            return res.status(200).json({message : "Products Found With This Category" , products : filteredProducts})
 
-        return res.status(200).json({message : "Products On Sale Found" , products : salesProducts})
+        }
+        const [ products ] = await db.query('select products.products_id, products.images, products.title, products.description, products.category, products.subcategory, products.price, products.sales_price,  products.amount from products order by products.date limit ? , ?' , [offset , offset + limit])
+    
+        return res.status(200).json({message : 'Products Fetched Succesfully' , products : products})
 
     }catch(err){
         return res.status(500).json({message : "Internal Error" , err})
