@@ -7,13 +7,14 @@ const isAdmin = require('../middlewares/isAdmin');
 
 const uploader = require('../middlewares/uploader')
 
-router.post('/' , ValidateToken, isAdmin , uploader.array("images", 5) , productRoute.add)
-router.delete('/:id' , ValidateToken, isAdmin , productRoute.remove)
 router.get('/', productRoute.list)
-router.put('/:id' , ValidateToken, isAdmin, uploader.array("images", 5) , productRoute.edit)
+router.get('/sales-products' , productRoute.salesList);
 router.get('/similar-products', productRoute.similarList)
 router.get('/product-details', productRoute.productDetails)
+router.post('/' , ValidateToken, isAdmin , uploader.array("images", 5) , productRoute.add)
 router.post('/search-product', productRoute.ProductSearch)
+router.put('/:id' , ValidateToken, isAdmin, uploader.array("images", 5) , productRoute.edit)
+router.delete('/:id' , ValidateToken, isAdmin , productRoute.remove)
 
 
 module.exports = router
