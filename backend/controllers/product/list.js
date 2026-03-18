@@ -16,7 +16,6 @@ async function list(req,res) {
         }
 
         const [ products ] = await db.query('select products.products_id, products.images, products.title, products.description, products.category, products.subcategory, products.price, products.sales_price,  products.amount from products order by products.date limit ? , ?' , [offset , offset + limit])
-        console.log(products)
         return res.status(200).json({message : 'Products Fetched Succesfully' , products : products})
 
     }catch(err){

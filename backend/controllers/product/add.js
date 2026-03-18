@@ -10,7 +10,7 @@ async function add(req,res) {
         name : data.name.toString(),
         description : data.description.toString(),
         price : Number(data.price),
-        salesPrice : Number(data.salesPrice),
+        salesPrice : data.salesPrice === "null" || data.salesPrice === undefined ? null : Number(data.salesPrice),
         category : data.category.toString(),
         subCategory : data.subCategory.toString(),
         amount :  Number(data.amount),

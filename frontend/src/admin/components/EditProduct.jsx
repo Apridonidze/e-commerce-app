@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef, useState } from "react"
+import { useRef, useState,useEffect } from "react"
 
 import { BACKEND_URL } from "../../../config";
 import { useCookies } from "react-cookie";
@@ -109,8 +109,14 @@ const EditProduct = ({ setToggleEdit, toggleEdit }) => {
         imagesArray = [];
     }
     }
+    const formData = new FormData();
 
-    console.log(toggleEdit.product)
+    const getImageSrc = (img) => {
+        if (typeof img === "string") {
+            return `data:image/jpeg;base64,${img}`;
+        }
+        return URL.createObjectURL(img);
+    };
 
     const [images,setImages] = useState(imagesArray)
     const [name , setName] = useState(toggleEdit.product.title)
@@ -118,9 +124,9 @@ const EditProduct = ({ setToggleEdit, toggleEdit }) => {
     const [selectedCat , setSelectedCat] = useState(toggleEdit.product.category)
     const [selectedSub, setSelectedSub] = useState(toggleEdit.product.subcategory)
     const [price ,setPrice] = useState(toggleEdit.product.price)
-    const [toggleSalesPrice, setToggleSalesPrice] = useState(false);
-    const [salesPrice,setSalesPrice] = useState(toggleEdit.product.salesPrice);
-    const [amount, setAmount] = useState('')
+    const [toggleSalesPrice, setToggleSalesPrice] = useState(toggleEdit.product.sales_price === null ? false : true);
+    const [salesPrice,setSalesPrice] = useState(toggleEdit.product.sales_price);
+    const [amount, setAmount] = useState(JSON.stringify(toggleEdit.product.amount))
 
     const [imageErr , setImageErr] = useState('')
     const [nameErr, setNameErr] = useState('')
@@ -200,10 +206,24 @@ const EditProduct = ({ setToggleEdit, toggleEdit }) => {
 
         if(isValid){
 
-            const formData = new FormData();
+            const base64ToBlob = (base64, mime = "image/jpeg") => {
+                const byteChars = atob(base64);
+                const byteNumbers = new Array(byteChars.length);
 
-            images.forEach(img => {
-                formData.append('images', img);
+                for (let i = 0; i < byteChars.length; i++) {
+                    byteNumbers[i] = byteChars.charCodeAt(i);
+                }
+
+                return new Blob([new Uint8Array(byteNumbers)], { type: mime });
+            };
+
+            images.forEach((img) => {
+                if (typeof img === "string") {
+                    const blob = base64ToBlob(img);
+                    formData.append("images", blob, "image.jpg");
+                } else {
+                    formData.append("images", img);
+                }
             });
 
             Object.entries(data).forEach(([key, value]) => {
@@ -211,8 +231,8 @@ const EditProduct = ({ setToggleEdit, toggleEdit }) => {
             });
 
             try {
-                // mod api/product with api/product/${productId}
-                const response = await axios.post(`${BACKEND_URL}/api/product`, formData ,{headers: {Authorization: `Bearer ${cookies.token}`,"Content-Type": "multipart/form-data"}});
+
+                const response = await axios.put(`${BACKEND_URL}/api/product/${toggleEdit.product.products_id}`, formData ,{headers: {Authorization: `Bearer ${cookies.token}`,"Content-Type": "multipart/form-data"}});
                 console.log(response.data);
 
             } catch (err) {
@@ -220,6 +240,12 @@ const EditProduct = ({ setToggleEdit, toggleEdit }) => {
             }
         }
     }
+
+    useEffect(() => {
+        return () => {
+            images.forEach(img => {if (typeof img !== "string") URL.revokeObjectURL(img)});
+        };
+    }, [images]);
 
     return(
         <div className="create-product-container position-fixed bg-white" style={{left : '40vw' }} tabIndex={9999}>
@@ -230,7 +256,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit }) => {
                 <form onSubmit={handleUploadProduct} enctype="multipart/form-data">
 
                     <div className="images-container">
-                        {images.map((img, imgId) => {return <img src={`data:image/jpeg;base64,${img}`} style={{maxWidth: '200px' , height : 'auto', cursor : 'pointer'}} alt={img.name} key={imgId} onClick={(e) => {const newImages = images.filter((_, id) => id !== imgId) ; setImages(newImages)}}/>})}
+                        {images.map((img, imgId) => {return <img src={getImageSrc(img)} style={{maxWidth: '200px' , height : 'auto', cursor : 'pointer'}} alt={img.name} key={imgId} onClick={(e) => {const newImages = images.filter((_, id) => id !== imgId) ; setImages(newImages)}}/>})}
                     </div>
 
                     <div className="form-floating">
