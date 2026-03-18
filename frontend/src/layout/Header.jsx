@@ -19,7 +19,14 @@ const Header = ({ setProducts }) => {
 
 
         try{
-            await axios.get(`${BACKEND_URL}/api/products/item-data-list?searchItem=${searchItem}`).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
+            const response = await axios.post(`${BACKEND_URL}/api/product/search-product` , {searchItem})
+            if(response.status === 204){
+                setDataList([])
+                setProducts([])
+            }
+            setDataList(response.data.products)
+            setProducts(response.data.products)
+            // .then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
         }catch(err){
             console.log(err)
         }
@@ -28,9 +35,9 @@ const Header = ({ setProducts }) => {
 
     useEffect(() => {
         fetchDataList()
-    },[searchItem]) 
+    },[searchItem])
 
-    // fix fetchDataList funtion api route 
+    
     // make header.jsx reads its location with useLocation and do not trigger api call if it is on different route than Main.jsx
 
     // add menu button that is visible on small devices , make it add classList to sidebar that will be visible by the classlists
