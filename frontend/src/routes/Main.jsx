@@ -17,6 +17,7 @@ import Skeleton from "react-loading-skeleton" //relocate skeletons for folder
 import { useContext } from "react"
 import { ProductContext } from "../context/ProductContext"
 import EditProduct from "../admin/components/EditProduct"
+import RemoveProduct from "../admin/components/RemoveProduct"
 
 const Main = () => {
 
@@ -29,7 +30,7 @@ const Main = () => {
     const [category, setCategory] = useState(null);
 
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
-    const [toggleRemove , setToggleRemove] = useState({status : false, product: null});
+    const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleSidebar, setToggleSidebar]= useState(false);
     
     const fetchProducts = async(offset, category) => {
@@ -66,7 +67,8 @@ const Main = () => {
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
             {/* <StatusMessage /> */}
 
-            {toggleEdit.status ? <EditProduct toggleEdit={toggleEdit}/> : <></> }
+            {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
+            {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }
 
             <div className="main-start col">
                 <Sidebar /> 
@@ -77,7 +79,7 @@ const Main = () => {
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
 
                 <div className="products row">
-                    {products?.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} />) || <Skeleton />}
+                    {products?.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove}/>) || <Skeleton />}
                     {products?.length % 15 !== 0 || products?.length === 0 ? <></> : <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>}
                 </div>
                 
