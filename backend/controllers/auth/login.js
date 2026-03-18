@@ -14,13 +14,11 @@ async function login(req,res) {
         const userData = req.body.data
 
         const [rows] = await db.query('select * from users where email = ?' , [userData.email]);
-
         if(rows.length < 1) return res.status(404).json({err : 'Invalid Email Or Password'})
         
         const user = rows[0]
         
         const isPasswordValid = await bcrypt.compare(userData.password , user.password)
-       
         if(!isPasswordValid) return res.status(400).json({err : 'Invalid Email Or Password'})
         
         
