@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react"
 import { BACKEND_URL } from "../../config";
-
+import { useLocation } from "react-router-dom";
 const Header = ({ setProducts }) => {
 
     const [dataList,setDataList] = useState([]);
@@ -10,6 +10,7 @@ const Header = ({ setProducts }) => {
 
     const regexContainsSpecial = /[^\w\s]/;
 
+    const location = useLocation()
 
     const fetchDataList = async() => {
 
@@ -19,7 +20,7 @@ const Header = ({ setProducts }) => {
 
 
         try{
-            const response = await axios.post(`${BACKEND_URL}/api/product/search-product` , {searchItem})
+            const response = await axios.post(`${BACKEND_URL}/api/product/search-product` , {searchItem , type : location?.pathname.split('/')[1]})
             if(response.status === 204){
                 setDataList([])
                 setProducts([])
@@ -37,7 +38,7 @@ const Header = ({ setProducts }) => {
         fetchDataList()
     },[searchItem])
 
-    
+
     // make header.jsx reads its location with useLocation and do not trigger api call if it is on different route than Main.jsx
 
     // add menu button that is visible on small devices , make it add classList to sidebar that will be visible by the classlists
