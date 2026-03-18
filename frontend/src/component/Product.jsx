@@ -22,7 +22,7 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove } ) => {
 
                 {user?.role !== 'admin' ? <></> : 
                 <div className="more">
-                    <span onClick={() => setToggleMore(!toggleMore)}>:</span>
+                    <btn className='btn' onClick={() => setToggleMore(!toggleMore)}>:</btn>
                     <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "relative" , bottom : '25px'}}>
                         <button className="btn btn-primary" onClick={() => setToggleEdit(true)}>Edit</button>
                         <button className="btn btn-danger" onClick={() => setToggleRemove(true)}>Remove</button>
