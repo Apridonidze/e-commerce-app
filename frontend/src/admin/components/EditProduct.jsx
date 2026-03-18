@@ -4,7 +4,7 @@ import { useRef, useState } from "react"
 import { BACKEND_URL } from "../../../config";
 import { useCookies } from "react-cookie";
 
-const EditProduct = () => {
+const EditProduct = ({ setToggleEdit, toggleEdit }) => {
 
      const categories = [
         {
@@ -94,19 +94,32 @@ const EditProduct = () => {
         }
 ]
 
+
     const [ cookies ] = useCookies(['token'])
 
     const regexContainsSpecial = /[^\w\s]/;
     const NumberRegex = /\d/;
 
-    const [images,setImages] = useState([])
-    const [name , setName] = useState('')
-    const [description , setDescription] = useState('')
-    const [selectedCat , setSelectedCat] = useState('')
-    const [selectedSub, setSelectedSub] = useState('')
-    const [price ,setPrice] = useState('')
+    let imagesArray = [];
+
+    if (toggleEdit?.product?.images) {
+    try {
+        imagesArray = JSON.parse(toggleEdit.product.images);
+    } catch (e) {
+        imagesArray = [];
+    }
+    }
+
+    console.log(toggleEdit.product)
+
+    const [images,setImages] = useState(imagesArray)
+    const [name , setName] = useState(toggleEdit.product.title)
+    const [description , setDescription] = useState(toggleEdit.product.description)
+    const [selectedCat , setSelectedCat] = useState(toggleEdit.product.category)
+    const [selectedSub, setSelectedSub] = useState(toggleEdit.product.subcategory)
+    const [price ,setPrice] = useState(toggleEdit.product.price)
     const [toggleSalesPrice, setToggleSalesPrice] = useState(false);
-    const [salesPrice,setSalesPrice] = useState('');
+    const [salesPrice,setSalesPrice] = useState(toggleEdit.product.salesPrice);
     const [amount, setAmount] = useState('')
 
     const [imageErr , setImageErr] = useState('')
@@ -217,7 +230,7 @@ const EditProduct = () => {
                 <form onSubmit={handleUploadProduct} enctype="multipart/form-data">
 
                     <div className="images-container">
-                        {images.map((img, imgId) => {return <img src={URL.createObjectURL(img)} style={{maxWidth: '200px' , height : 'auto', cursor : 'pointer'}} alt={img.name} key={imgId} onClick={(e) => {const newImages = images.filter((_, id) => id !== imgId) ; setImages(newImages)}}/>})}
+                        {images.map((img, imgId) => {return <img src={`data:image/jpeg;base64,${img}`} style={{maxWidth: '200px' , height : 'auto', cursor : 'pointer'}} alt={img.name} key={imgId} onClick={(e) => {const newImages = images.filter((_, id) => id !== imgId) ; setImages(newImages)}}/>})}
                     </div>
 
                     <div className="form-floating">
@@ -274,8 +287,8 @@ const EditProduct = () => {
                         <span>{amountErr}</span>
                     </div>
                     
-                    <input type="submit" value='Add Product'/>
-                    
+                    <input type="submit" value='Edit Product'/>
+                    <button className="btn btn-danger">Cancel</button>
                 </form>
             </div>
         </div>

@@ -28,8 +28,8 @@ async function edit(req,res) {
         const filesBuffer = await Promise.all(files.map(file => fs.promises.readFile(file.path)));
         const base64 = filesBuffer.map(buffer => buffer.toString("base64"))
 
-        await db.query('insert into products (id, images, title, description , category , subcategory , price, sales_price, amount , date) values (?,?,?,?,?,?,?,?,?,?)' , [req.user.userId , [JSON.stringify(base64)] , parsedRequest.name , parsedRequest.description , parsedRequest.category , parsedRequest.subCategory, parsedRequest.price , parsedRequest.salesPrice, parsedRequest.amount , parsedRequest.date])
-        return res.status(200).json({message : 'product added succsefully' , productDetails : `${data.name}${data.description}${data.category}${data.subCategory}`})
+        await db.query('update products set user_id = ?, images = ?, title = ?, description = ?, category = ?, subcategory = ?, price = ?, sales_price = ?, amount = ?,  date = ? WHERE products_id = ?' , [req.user.userId , [JSON.stringify(base64)] , parsedRequest.name , parsedRequest.description , parsedRequest.category , parsedRequest.subCategory, parsedRequest.price , parsedRequest.salesPrice, parsedRequest.amount , parsedRequest.date])
+        return res.status(200).json({message : 'product edited succsefully' , productDetails : `${data.name}${data.description}${data.category}${data.subCategory}`})
 
     }catch(err){
         console.log(err)

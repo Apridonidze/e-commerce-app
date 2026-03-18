@@ -16,6 +16,7 @@ import Skeleton from "react-loading-skeleton" //relocate skeletons for folder
 
 import { useContext } from "react"
 import { ProductContext } from "../context/ProductContext"
+import EditProduct from "../admin/components/EditProduct"
 
 const Main = () => {
 
@@ -27,8 +28,8 @@ const Main = () => {
     const [offset, setOffset] = useState(0)
     const [category, setCategory] = useState(null);
 
-    const [toggleEdit , setToggleEdit] = useState(false);
-    const [toggleRemove , setToggleRemove] = useState(false);
+    const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
+    const [toggleRemove , setToggleRemove] = useState({status : false, product: null});
     const [toggleSidebar, setToggleSidebar]= useState(false);
     
     const fetchProducts = async(offset, category) => {
@@ -65,7 +66,7 @@ const Main = () => {
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
             {/* <StatusMessage /> */}
 
-            {/* create remove and edit product component and toggle them */}
+            {toggleEdit.status ? <EditProduct toggleEdit={toggleEdit}/> : <></> }
 
             <div className="main-start col">
                 <Sidebar /> 

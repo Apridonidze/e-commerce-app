@@ -11,9 +11,9 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove } ) => {
 
     const navigator = useNavigate();
 
+    console.log(prod)
     const { user } = useContext(UserContext)
     const [toggleMore, setToggleMore] = useState(false)
-
    
     return(
         <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" style={{cursor: 'pointer'}} key={prodId} >
@@ -24,7 +24,7 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove } ) => {
                 <div className="more">
                     <btn className='btn' onClick={() => setToggleMore(!toggleMore)}>:</btn>
                     <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "relative" , bottom : '25px'}}>
-                        <button className="btn btn-primary" onClick={() => setToggleEdit(true)}>Edit</button>
+                        <button className="btn btn-primary" onClick={() => setToggleEdit({status : true , product : prod})}>Edit</button>
                         <button className="btn btn-danger" onClick={() => setToggleRemove(true)}>Remove</button>
                     </div>
                 </div>}

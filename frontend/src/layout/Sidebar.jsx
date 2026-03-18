@@ -45,7 +45,7 @@ const Sidebar = () => {
                 <div className="center-header col-12 h-auto">
                     <div className="text d-flex flex-column">
                         <Link to='/'>Home</Link>
-                        <Link>Top Products</Link>
+                        <Link>On Sale</Link>
                     </div>
                 </div>
                 <div className="center-center col-12 h-auto">

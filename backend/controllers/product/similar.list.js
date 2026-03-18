@@ -8,7 +8,7 @@ async function add(req,res) {
 
         //check category and subcategoryt in zod
 
-        const [products] = await db.query('select products_id, images , title	, description ,price , amount, category, subcategory from products where category like ? and subcategory like ? and products_id != ?' , [category, subcategory, id])
+        const [products] = await db.query('select products_id, images , title, description ,price , sales_price, amount, category, subcategory from products where category like ? and subcategory like ? and products_id != ?' , [category, subcategory, id])
 
         if(products.length < 1) return res.status(204)
 
