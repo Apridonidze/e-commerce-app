@@ -1,10 +1,13 @@
 import axios from "axios"
 import { BACKEND_URL } from "../../../config"
 import { useCookies } from "react-cookie"
+import { useNavigate } from "react-router-dom"
 
 const RemoveProduct = ({ setToggleRemove, toggleRemove }) => {
 
     const [ cookies ] = useCookies(['token'])
+
+    const navigator = useNavigate()
 
     const handleDelete = async() => {
         try{
@@ -15,7 +18,7 @@ const RemoveProduct = ({ setToggleRemove, toggleRemove }) => {
                 // toggle error message
             }
             // toggle success message
-            window.location.reload();
+            navigator('/' , {replace : true})  
         }catch(err){
             console.log(err)
         }

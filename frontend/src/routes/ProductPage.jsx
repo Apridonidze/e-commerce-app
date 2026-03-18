@@ -9,6 +9,9 @@ import { useCookies } from 'react-cookie';
 import { UserContext } from '../context/UserContext';
 import FeedbackInput from '../component/FeedbackInput';
 
+import EditProduct from '../admin/components/EditProduct';
+import RemoveProduct from '../admin/components/RemoveProduct';
+
 const ProductPage = () => {
 
     const [cookies] = useCookies(['token'])
@@ -21,6 +24,9 @@ const ProductPage = () => {
     const [inCartAmount, setInCartAmount] = useState(0);
     const [toggleFeedback, setToggleFeedback] = useState(false)
     const [amount, setAmount] = useState(0)
+
+    const [toggleEdit , setToggleEdit] = useState({status : false, product: id});
+    const [toggleRemove , setToggleRemove] = useState({status : false, productId: id});
 
     const { cartIds } = useContext(UserContext)
 
@@ -125,6 +131,9 @@ const ProductPage = () => {
             <div className="main-end col">
                 <Header />
 
+                {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
+                {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }
+
                 {toggleFeedback && (
                     <div>
                         <div
@@ -141,13 +150,19 @@ const ProductPage = () => {
                         {imagesArray.map((img, index) => (
                             <img key={index} src={`data:image/jpeg;base64,${img}`} alt={`product-${index}`} style={{ maxWidth: '400px', height: 'auto' }}/>
                         ))}
+                        <div className="toggle-more" >
+                            <div className="toggle-list">
+                                <button className='btn btn-primary' onClick={() => setToggleEdit({status : true , product : product})}>Edit</button>
+                                <button className='btn btn-danger' onClick={() => setToggleRemove({status : true , productId : product?.products_id})}>Remove</button>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="product-end col">
                         <h4>{product?.title}</h4>
                         <h6>{product?.description}</h6>
                         <h6>{product?.category} / {product?.subcategory}</h6>
-                        <h4>{product?.price}</h4>
+                        <h4>{product?.price} {product?.sales_price != null ? product?.sales_price : ''}</h4>
                         <h5>Available: {product?.amount} Pieces</h5>
 
                         <div className="d-flex flex-column gap-2">
