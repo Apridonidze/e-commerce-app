@@ -16,11 +16,13 @@ import FAQ from '../routes/FAQ'
 import LeaveFeedback from '../routes/LeaveFeedback'
 import ReportPage from '../routes/ReportPage'
 import Legal from '../routes/Legal'
+import Sales from '../routes/Sales'
 
 const AppRouter = () => {
 
   const router = createBrowserRouter([
     {path : '/' , element : <Main />},
+    {path : '/sales' , element : <Sales />},
     {path : '/landing-page' , element : <Landing />},
     {path : '/dashboard' , element : <Dashboard />},
     {path : '/product/:id' , element : <ProductPage />},
