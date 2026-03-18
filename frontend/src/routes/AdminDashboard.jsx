@@ -14,6 +14,7 @@ import { Link } from "react-router-dom"
 import DeleteReport from "../component/DeleteReport"
 import RespondReport from "../component/RespondReport"
 import AdminFeedback from "../component/AdminFeedback"
+import ManageAdmins from "../admin/components/ManageAdmins"
 
 const AdminDashboard = () => {
 
@@ -43,7 +44,7 @@ const AdminDashboard = () => {
                 const data = [...response.data.pending, response.data.onWay, response.data.delivered].filter((arr) => arr.length !== 0).flat()
                 
                 setOrders(data)
-                setAdmins(response.data.admins) 
+                setAdmins({onlineAdmins : response.data.onlineAdmins , offlineAdmins : response.data.offlineAdmins}) 
 
 
             } catch (error) {
@@ -56,7 +57,6 @@ const AdminDashboard = () => {
             try{
 
                 const response = await axios.get(`${BACKEND_URL}/api/report/${reportsOffset}`, config)
-                console.log(response.data.reports)
                 if(response.status == 204) return setReports([])
                 
                 setReports(response.data.reports);
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
             {toggleCreateNew ? <div><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct /></div> : <></> }
             {toggleDeleteReport.status ? <div><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
             {toggleRespondReport.status ? <div><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
-            {toggleManageAdmins ? <div><div className="manage-admins-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleManageAdmins(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct /></div> : <></>}
+            {toggleManageAdmins ? <div><div className="manage-admins-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleManageAdmins(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><ManageAdmins /></div> : <></>}
                 <div className="row">
                         
                     <div className="admin-dashboard-start col">
