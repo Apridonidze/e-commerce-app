@@ -26,6 +26,7 @@ const AdminDashboard = () => {
     const [ feedbacks, setFeedbacks ] = useState([])
 
     const [toggleCreateNew, setToggleCreateNew] = useState(false);
+    const [toggleManageAdmins ,setToggleManageAdmins] = useState(false);
     const [toggleDeleteReport, setToggleDeleteReport] = useState({status : false, reportDetails : null});
     const [toggleRespondReport, setToggleRespondReport] = useState({status : false, reportDetails : null});
 
@@ -95,7 +96,7 @@ const AdminDashboard = () => {
             {toggleCreateNew ? <div><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct /></div> : <></> }
             {toggleDeleteReport.status ? <div><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
             {toggleRespondReport.status ? <div><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
-
+            {toggleManageAdmins ? <div><div className="manage-admins-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleManageAdmins(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct /></div> : <></>}
                 <div className="row">
                         
                     <div className="admin-dashboard-start col">
@@ -105,11 +106,11 @@ const AdminDashboard = () => {
                     <div className="admin-dashboard-end col">
                         {/* create AdminHeader.jsx which will have toggle buttons and additional features of admin dashbaord */}
 
-                    <AdminList admins={admins} />
+                    <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>
 
                         <section id="manage-products">
 
-                            <button onClick={() => setToggleCreateNew(!toggleCreateNew)}>Add</button>
+                            <button onClick={() => setToggleCreateNew(true)}>Add New Product</button>
 
                             <div className="order-container">
                                 <div className="order-header d-flex ">

@@ -2,14 +2,18 @@ const db = require('../../middlewares/db')
 
 async function add (req,res) {
     try{
+        // get admin id from req
         
         const [ adminQuery ] = await db.query('insert into admin (id) values (?)' , newAdmId)
-        res.status(200).json({message : 'New Admin Successfully Added To List' , adminUser : adminQuery})
-
-        // send user notification that they have been promoted as admin
+        if(adminQuery.affectedRows === 0) return req.status(404).json({message : 'Invalid ID provided. Please try again later'})
+        return res.status(200).json({message : 'New admin added successfully' , adminUser : adminQuery.insertId})
 
     }catch(err){
-        return res.status(500).json({errMessage : "Internal Error" , err : err})
+        if(err.code === 'ER_DUP_ENTRY'){
+            if(err.message.includes('admin.id'))return res.status(400).json({message : 'This User Is Already Admin'})
+        }
+            
+        return res.status(500).json({message : "Internal Error While Adding New Admin. Please try again later."})
     }
 }
 
