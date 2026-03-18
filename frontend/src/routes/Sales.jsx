@@ -69,7 +69,7 @@ const Sales = () => {
             </div>
             <div className="sales-end col " style={{minHeight : '100vh'}}>
 
-                <Header />
+                <Header setProducts={setProducts}/>
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
 
                 <div className="products row">
