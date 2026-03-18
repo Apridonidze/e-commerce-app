@@ -1,6 +1,4 @@
 const AdminList = ({ admins, setToggleManageAdmins }) => {
-
-    console.log(admins)
     
     return(
         <div className="admin-list-container">
@@ -16,7 +14,7 @@ const AdminList = ({ admins, setToggleManageAdmins }) => {
                     </div>
                 </div>
             ) : 'No Admins Online'}
-            
+
             {admins?.offlineAdmins.length ? admins?.offlineAdmins.map((admin, adminId) => 
                 <div className="admin d-flex justify-content-between" key={adminId}>
                     <div className="admin-start">
