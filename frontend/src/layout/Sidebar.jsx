@@ -81,7 +81,7 @@ const Sidebar = () => {
                 <div className="end-start">
                     <Link to={'/faq'}>FAQ</Link>
                     <Link to={`/leave-feedback`}>Feedback</Link>
-                    <Link to={'/report'}>Report</Link>
+                    <Link to={'/report-platform'}>Report</Link>
                 </div>
                 <div className="end-main">
                     <Link to={'/legal#terms'}>Terms of Service</Link>

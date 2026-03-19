@@ -38,7 +38,6 @@ const AppRouter = () => {
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
     {path : '*' , element : <></>}, /**add 404 page with not-found url for this and button to go back to main page */
-    
     //add  which pages should be used with cookies rest left empty
   ])
 
