@@ -107,6 +107,9 @@ const AdminDashboard = () => {
                         {/* create AdminHeader.jsx which will have toggle buttons and additional features of admin dashbaord */}
 
                     <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>
+                    {/* add charts for products */}
+                    {/* fetch counts of orders and sold items  */}
+                    {/* add recent activities component on side */}
 
                         <section id="manage-products">
 

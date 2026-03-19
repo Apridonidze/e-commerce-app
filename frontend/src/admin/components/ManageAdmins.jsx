@@ -28,6 +28,9 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
         fetchDataList()
     },[searchItem]) 
 
+
+    // finish component functionalities
+
     return(
         <div className="manage-admins-container position-relative bg-white w-100" style={{zIndex : 999}}>
             <div className="manage-admins-header">
