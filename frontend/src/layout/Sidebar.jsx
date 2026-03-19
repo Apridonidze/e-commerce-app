@@ -65,7 +65,7 @@ const Sidebar = () => {
                                 <Link to='/admin-dashboard#feedbacks'>Feedbacks</Link>
                             </div>
                             <div className="text-bottom">
-                                <Link to='/admin-dashboard/admin-support-chat'>Support Chat <span>{messagesCount}</span></Link> {/* add limit for messageCount (max 9 , after 9 return 9+) */}
+                                <Link to='/admin-dashboard/admin-support-chat'>Support Chat <span>{messagesCount < 9  ? messagesCount : '9+' }</span></Link> {/* add limit for messageCount (max 9 , after 9 return 9+) */}
                             </div>
                         </div> : <></>
                     }
