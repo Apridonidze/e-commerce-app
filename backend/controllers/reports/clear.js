@@ -10,7 +10,9 @@ async function clear(req,res) {
     try{
         // add node mailer to user whos report has been deleted
         
-        await db.query('update reports set status = ?, resolution_action = ?, resolved_by = ? WHERE id = ?',[status, resolution_action, resolved_by, reportId]);
+        const [ response ] = await db.query('update reports set status = ?, resolution_action = ?, resolved_by = ? WHERE id = ?',[status, resolution_action, resolved_by, reportId]);
+        if(response.affectedRows === 0) return res.status(404).json({message : 'Invalid Credidentials'})
+
         return res.status(200).json({message : `Report ${status} Successfully` , reportId })
         
     }catch(err){
