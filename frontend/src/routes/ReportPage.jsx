@@ -6,6 +6,7 @@ import { useEffect } from "react"
 
 const ReportPage = () => {
 
+    const reasonRef = useRef([null]);
     const [targetReason ,setTargetReason] = useState(null);
 
     const reasons =  [
@@ -14,6 +15,7 @@ const ReportPage = () => {
         {id : 2, icon : <i class="fa-solid fa-bug"></i> , title : 'Technical Issue' , desc : 'Broken links, payment errors, or platform functionality bugs.'},
         {id : 3, icon : <i class="fa-solid fa-copyright"></i> , title : 'Copyright Violation' , desc : 'Intellectual property theft or unauthorized asset usage.'}
     ]
+
 
     return(
         <div className="report-page-container d-flex">
@@ -26,7 +28,7 @@ const ReportPage = () => {
                 <div className="report-input-container">
                     <h4>Select Primary Reason : </h4>
                     {reasons?.map(reason => (
-                        <ReportOption reason={reason} setTargetReason={setTargetReason} targetReason={targetReason}/>
+                        <ReportOption reason={reason} setTargetReason={setTargetReason} targetReason={targetReason} reasonRef={reasonRef}/>
                     ))}
                 </div>
                 <div className="report-footer">
