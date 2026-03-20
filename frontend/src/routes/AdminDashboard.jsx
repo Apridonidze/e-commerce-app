@@ -57,6 +57,7 @@ const AdminDashboard = () => {
             try{
 
                 const response = await axios.get(`${BACKEND_URL}/api/report/${reportsOffset}`, config)
+                console.log(response)
                 if(response.status == 204) return setReports([])
                 
                 setReports(response.data.reports);
