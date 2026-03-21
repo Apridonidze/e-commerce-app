@@ -3,13 +3,14 @@ const db = require('../../middlewares/db')
 async function add(req,res) {
     try{
 
-        const data = req.body.data
+        const data = req.body
         //validate data in zod schema
 
         console.log(data)
+        // add filter that if type === 'product' product id should be necceccary
 
-        // const [ report ] = await db.query('insert into reports (id, type, content, product_id) values (?, ?, ?, ?, ?)' , [req.user.userId , data.type , data.content, data.productId ?? null , data.status])
-        // return res.status(200).json({message : "Report Send Successfully" , reportId : report.insertId })
+        const [ report ] = await db.query('insert into reports (id, type, content, product_id) values (?, ?, ?, ?, ?)' , [req.user.userId , data.type , data.content, data.productId ?? null , data.status])
+        return res.status(200).json({message : "Report Send Successfully" , reportId : report.insertId })
 
 
     }catch(err){

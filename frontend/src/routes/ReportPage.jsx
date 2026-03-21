@@ -53,35 +53,6 @@ const ReportPage = () => {
             desc: 'Rude or inappropriate interaction from service representatives'
         },
         {
-            id: 5,
-            category: 'Product',
-            icon: <i className="fa-solid fa-circle-exclamation"></i>,
-            title: 'Inappropriate Content',
-            desc: 'Offensive material or behavior violating community guidelines'
-        },
-        {
-            id: 6,
-            category: 'Product',
-            icon: <i className="fa-solid fa-tags"></i>,
-            title: 'Misleading Description',
-            desc: 'Product details do not match actual item received'
-        },
-        {
-            id: 7,
-            category: 'Product',
-            icon: <i className="fa-solid fa-box-open"></i>,
-            title: 'Damaged Product',
-            desc: 'Item arrived broken or not in expected condition'
-        },
-        {
-            id: 8,
-            category: 'Product',
-            icon: <i className="fa-solid fa-copyright"></i>,
-            title: 'Counterfeit Item',
-            desc: 'Fake or unauthorized replica being sold'
-        },
-
-        {
             id: 9,
             category: 'Delivery',
             icon: <i className="fa-solid fa-truck"></i>,
@@ -168,8 +139,6 @@ const ReportPage = () => {
         }
 
     },[input, inputRef, targetReason])
-
-    console.log(cookies.token)
 
     const handleSubmitReport = async() => {
         try{
