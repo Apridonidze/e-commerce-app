@@ -24,7 +24,7 @@ async function fullList(req, res) {
 
         const [ReportsList] = await db.query(query, params)
 
-        if (!ReportsList.length) return res.status(204)
+        if (!ReportsList.length) return res.status(204).send()
 
         return res.status(200).json({message: "Reports Found",reports: ReportsList})
 
