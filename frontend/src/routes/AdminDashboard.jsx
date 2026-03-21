@@ -81,9 +81,11 @@ const AdminDashboard = () => {
             }
         }
 
-        fetchStatus();
-        fetchReports();
-        fetchFeedbacks();
+        return () => {
+            fetchStatus();
+            fetchReports();
+            fetchFeedbacks();
+        }
 
     }, []);
 

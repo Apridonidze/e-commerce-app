@@ -12,7 +12,7 @@ async function add (req,res) {
         if(err.code === 'ER_DUP_ENTRY'){
             if(err.message.includes('admin.id'))return res.status(400).json({message : 'This User Is Already Admin'})
         }
-            
+            // add db rollback if errro happens
         return res.status(500).json({message : "Internal Error While Adding New Admin. Please try again later."})
     }
 }
