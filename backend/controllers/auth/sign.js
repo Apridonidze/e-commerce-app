@@ -29,6 +29,7 @@ async function sign(req,res) {
             if(err.message.includes('users.fullname'))return res.status(400).json({errMessage : 'This Name Is Already In Use' , state : 'name' , err : err})
             if(err.message.includes('users.email'))return res.status(400).json({errMessage : 'This Email Is Already In Use' , state : 'email' , err : err})
         }
+        console.log(err)
         return res.status(500).json({errMessage : 'Internal Error'  , err : err})
     }
 }

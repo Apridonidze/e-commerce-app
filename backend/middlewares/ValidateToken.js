@@ -9,6 +9,7 @@ function ValidateToken ( req , res , next ) {
     if(!AuthHeaders) return res.status(400).json({err : 'Invalid Headers'})
 
     const token = AuthHeaders.split(' ')[1]
+
     
     try{
 
@@ -19,6 +20,7 @@ function ValidateToken ( req , res , next ) {
         next()
 
     }catch(err){
+        console.log(err)
         return res.status(401).json({errMessage : 'Invalid Token', err : err})
     }
 

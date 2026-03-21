@@ -1,9 +1,16 @@
 import Sidebar from "../layout/Sidebar"
 import ReportOption from "../component/ReportOption"
-import { useEffect, useState } from "react"
-import { useRef } from "react"
+
+import { useEffect, useState, useRef } from "react"
+
+import axios from "axios"
+import { useCookies } from "react-cookie"
+
+import { BACKEND_URL } from "../../config"
 
 const ReportPage = () => {
+
+    const [ cookies ] = useCookies(['token'])
 
     const reasonRef = useRef([null]);
     const inputRef = useRef(null);
@@ -162,8 +169,22 @@ const ReportPage = () => {
 
     },[input, inputRef, targetReason])
 
+    console.log(cookies.token)
 
-    const handleSubmitReport = async() => {}
+    const handleSubmitReport = async() => {
+        try{
+
+            const response = await axios.post(`${BACKEND_URL}/api/report/`, {type : targetReason.category , content : input , status : "Sent"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+
+            console.log(response)
+            if(response.status === 200) {
+                
+            }
+        }catch(err){
+            console.log(err)
+            // toggle error emssage
+        }
+    }
 
     const handleDiscard = () => {
 
@@ -203,7 +224,7 @@ const ReportPage = () => {
                     </div> 
                     <div className="report-end ">
                         <button className="btn border" ref={discardRef}>Discard</button>
-                        <button className="btn btn-danger" ref={submitRef}>Submit Report</button>
+                        <button className="btn btn-danger" ref={submitRef} onClick={() => handleSubmitReport()}>Submit Report</button>
                     </div>
                 </div>
             </div>

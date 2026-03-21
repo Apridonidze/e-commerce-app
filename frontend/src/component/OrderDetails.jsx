@@ -26,7 +26,7 @@ const OrderDetails = ({order, orderId, key , setOrders}) => {
             console.log(err)
         }
     }
-
+    
     const discardOrder = async(id) => {
         try{
 

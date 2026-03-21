@@ -43,7 +43,7 @@ const Login =  () =>  {
         if(isValid){
             try{
 
-                await axios.post(`${BACKEND_URL}/login` , {data}).then(resp => {
+                await axios.post(`${BACKEND_URL}/api/auth/login` , {data}).then(resp => {
                     console.log(resp);
                     setCookies('token' , resp.data.token , {path : '/' , maxAge :  2592000})
                     navigator('/' , {replace : true})

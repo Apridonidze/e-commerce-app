@@ -9,6 +9,6 @@ const reportsRoute = require('../controllers/reports')
 router.get('/:offset', ValidateToken, isAdmin, reportsRoute.list)
 router.get('/report-list/:offset/:status' , ValidateToken, isAdmin, reportsRoute.fullList)
 router.put('/:id', ValidateToken, isAdmin, reportsRoute.clear)
-router.post('/:id', ValidateToken, reportsRoute.add)
+router.post('/', ValidateToken, reportsRoute.add)
 
 module.exports = router

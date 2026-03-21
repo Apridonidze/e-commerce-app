@@ -17,7 +17,7 @@ const Report = ( { report, reportId ,key, setToggleDeleteReport, setToggleRespon
                 </>
                 : report?.status === "Removed" ? 
                 <>
-                    <button onClick={() => setToggleDeleteReport({status : true, reportDetails : report})} disabled>Delete</button>
+                <button onClick={() => setToggleDeleteReport({status : true, reportDetails : report})} disabled>Delete</button>
                     <button onClick={() => setToggleRespondReport({status : true, reportDetails : report})} disabled>Respond</button>
                 </> : 
                 <>

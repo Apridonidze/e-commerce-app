@@ -4,7 +4,7 @@ async function remove (req,res) {
     try{
         const admId = req.params.id
         
-        await db.query('delete from admin where id = ?' , admId)
+        const [ query ] = await db.query('delete from admin where id = ?' , admId)
         return res.status(200).json({message : 'Admin removed successfully' , admId : admId})
 
     }catch(err){
