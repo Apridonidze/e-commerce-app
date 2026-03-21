@@ -52,8 +52,10 @@ const Dashboard = () => {
 
             const GenerateCustomerId = await axios.post(`${BACKEND_URL}/api/stripe/create-customer-intent`, {email : user.email} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-            if(!GenerateCustomerId) //toggle error + setToggleCard(false)
-            setToggleCard(true)
+            if(GenerateCustomerId.status === 200){
+                setToggleCard(true)
+            } //toggle error + setToggleCard(false)
+            
 
         }catch(err){
             console.log(err)

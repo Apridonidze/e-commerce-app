@@ -17,6 +17,7 @@ async function createCustomer(req,res){
         return res.status(200).json({message : "Stripe User Generated", stripe_customer_id : customer.id})
 
     }catch(err){
+        console.log(err)
         return res.status(500).json({errMessage : "Internal Error" , err : err})
     }
 }
