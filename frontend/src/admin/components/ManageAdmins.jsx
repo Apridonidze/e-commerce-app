@@ -9,11 +9,12 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
 
     const [ cookies ] = useCookies(['token'])
 
+    const [selectedUser, setSelectedUser] = useState();
     const [dataList,setDataList] = useState([]);
     const [searchItem, setSearchItem] = useState('');
 
     const regexContainsSpecial = /[^\w\s]/;
-    
+
     const fetchDataList = async() => {
 
         if(searchItem.trim().length < 1 || searchItem.trim() === "" || searchItem === "" || 
@@ -46,9 +47,6 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
         fetchDataList()
     },[searchItem]) 
 
-
-    // finish component functionalities
-
     return(
         <div className="manage-admins-container position-relative bg-white w-100" style={{zIndex : 999}}>
             <div className="manage-admins-header">
@@ -58,7 +56,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
 
             <div className="search-bar">
                 <div className="form-floating">
-                    <input type="text" id="searchUsers" className='form-control' placeholder="Searchs Users..." list="searchlist" onChange={(e) => setSearchItem(e.target.value)} value={searchItem} tabIndex={1}/>
+                    <input type="text" id="searchUsers" className='form-control' placeholder="Searchs Users..." list="searchlist" onChange={(e) => {setSearchItem(e.target.value);const selected = dataList.find((u) => u.fullname === e.target.value);if (selected) setSelectedUser(selected.id)}} value={searchItem} tabIndex={1}/>
                     <label htmlFor="searchUsers">Searchs Users...</label>
                 </div>
                 <datalist id="searchlist">
