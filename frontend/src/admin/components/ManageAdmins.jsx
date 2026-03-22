@@ -31,8 +31,8 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
                 setDataList(response.data.users)
             }
 
-            if(response.status === 404){
-                setDataList([]);
+            if(response.status === 204){
+                setDataList([null]);
             }
 
         }catch(err){
@@ -44,7 +44,11 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
     }
 
     useEffect(() => {
+
+        if(searchItem.length === 0) setDataList([])
+        
         fetchDataList()
+
     },[searchItem]) 
 
     return(
@@ -56,12 +60,18 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
 
             <div className="search-bar">
                 <div className="form-floating">
-                    <input type="text" id="searchUsers" className='form-control' placeholder="Searchs Users..." list="searchlist" onChange={(e) => {setSearchItem(e.target.value);const selected = dataList.find((u) => u.fullname === e.target.value);if (selected) setSelectedUser(selected.id)}} value={searchItem} tabIndex={1}/>
+                    <input type="text" id="searchUsers" className='form-control' placeholder="Searchs Users..." list="searchlist" onChange={(e) => {setSearchItem(e.target.value); if(dataList.length === 0 || dataList[0] === null) return ; const selected = dataList.find((u) => u.fullname === e.target.value);if (selected) setSelectedUser(selected.id)}} value={searchItem} tabIndex={1}/>
                     <label htmlFor="searchUsers">Searchs Users...</label>
                 </div>
-                <datalist id="searchlist">
-                    {dataList?.map(dl => <option key={dl.id} value={dl.fullname} label={`${dl.fullname} - ${dl.email}`} />)}
-                </datalist>
+                <div className="data-list">
+                    {dataList[0] !== null ? (
+                        dataList.map(u => (
+                            <div key={u.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                                <span>{u.fullname} - {u.email}</span>
+                                <button onClick={() => makeAdmin(u.id)}>Make Admin</button>
+                            </div>
+                    ))) : dataList?.length === 0 ? <p></p>  : <p>No users found</p>}
+                </div>
             </div>
 
             <div className="admin-lists">
