@@ -31,6 +31,7 @@ const Sales = () => {
 
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
+    const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleSidebar, setToggleSidebar]= useState(false);
     const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId:  null});
 
@@ -64,6 +65,7 @@ const Sales = () => {
 
             {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
             {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }
+            {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
 
             <div className="sales-start col">
                 <Sidebar /> 

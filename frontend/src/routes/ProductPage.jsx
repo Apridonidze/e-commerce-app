@@ -31,6 +31,8 @@ const ProductPage = () => {
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId: null})
     const [toggleSidebar, setToggleSidebar]= useState(false);
+    const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
+
     const [toggleMore, setToggleMore] = useState(false)
 
     const { cartIds } = useContext(UserContext)
@@ -149,6 +151,8 @@ const ProductPage = () => {
                         <FeedbackInput />
                     </div>
                 )}
+
+                {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
 
                 <div className="product-container row">
                     <div className="product-start col">

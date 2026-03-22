@@ -18,6 +18,7 @@ import { useContext } from "react"
 import { ProductContext } from "../context/ProductContext"
 import EditProduct from "../admin/components/EditProduct"
 import RemoveProduct from "../admin/components/RemoveProduct"
+import AddToCart from "../component/AddToCart"
 
 const Main = () => {
 
@@ -71,6 +72,7 @@ const Main = () => {
 
             {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
             {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }
+            {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
 
             <div className="main-start col">
                 <Sidebar /> 
