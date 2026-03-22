@@ -56,7 +56,7 @@ const Dashboard = () => {
                 setToggleCard(true)
             } //toggle error + setToggleCard(false)
             
-
+            
         }catch(err){
             console.log(err)
             // toggle alert message 
@@ -64,12 +64,14 @@ const Dashboard = () => {
         }
     }
 
-    const handleMissingCard = () => {
-        // toggle alert message and tell first user has to fill out card details to create order 
+    useEffect(() => {
+    if (toggleOrder && !cardDetails?.last4) {
         setToggleCard(true);
-        return null;
-    };
-    
+        setToggleOrder(false);
+        // toggle alert message
+    }
+    }, [toggleOrder, cardDetails]);
+
     return(
         <div className="dashboard-container container-fluid d-flex">
             
@@ -83,7 +85,7 @@ const Dashboard = () => {
                 <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId}/>
 
                 {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
-                {toggleOrder  ? cardDetails?.last4 ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div> : handleMissingCard()  : <></>}
+                {toggleOrder && cardDetails?.last4 ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div>  : <></>}
 
                 <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
                 <section id='order-list'><OrderList /></section>
