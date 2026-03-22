@@ -3,7 +3,8 @@ const { WebSocketServer } = require('ws');
 
 const ValidateSocketToken = require('./socket.middlewares/ValidateSocketToken');
 const ValidateSocketAdmin = require('./socket.middlewares/ValidateSocketAdmin')
-const db = require('../middlewares/db')
+
+const db = require('../utils/db')
 
 const asignToAdmin = require('./socket.middlewares/asignToAdmin');
 const handleMessageLoad = require('./socket.middlewares/handleMessageLoad');

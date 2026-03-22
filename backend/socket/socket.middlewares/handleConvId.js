@@ -1,6 +1,6 @@
 const handleMessageLoad = require('./handleMessageLoad')
 
-const db = require('../../middlewares/db')
+const db = require('../../utils/db')
 const rooms = require('../socket.stores/rooms')
 const { v4: uuid } = require("uuid");
 

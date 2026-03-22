@@ -1,4 +1,4 @@
-const db = require('../../middlewares/db')
+const db = require('../../utils/db')
 const onlineAdmins = require('../socket.stores/onlineAdmins')
 
 async function ValidateSocketAdmin (user, ws) {

@@ -54,9 +54,6 @@ const AdminDashboard = () => {
             }
         };
 
-        console.log(soldItems)
-
-
         const fetchReports = async () => {
             try{
 

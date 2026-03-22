@@ -5,7 +5,7 @@ const productRoute = require('../controllers/product');
 const ValidateToken = require('../middlewares/ValidateToken');
 const isAdmin = require('../middlewares/isAdmin');
 
-const uploader = require('../middlewares/uploader')
+const uploader = require('../utils/uploader')
 
 router.get('/', productRoute.list)
 router.get('/sales-products' , productRoute.salesList);
