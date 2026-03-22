@@ -6,7 +6,7 @@ import axios from 'axios';
 import { BACKEND_URL } from '../../config';
 import Product from '../component/Product';
 import { useCookies } from 'react-cookie';
-import { UserContext } from '../context/UserContext';
+import { UserContext, UserProvider } from '../context/UserContext';
 import FeedbackInput from '../component/FeedbackInput';
 
 import EditProduct from '../admin/components/EditProduct';
@@ -17,6 +17,8 @@ const ProductPage = () => {
     const [cookies] = useCookies(['token'])
     const { id } = useParams()
 
+    const { user } = useContext(UserContext)
+
     const [product, setProduct] = useState(null);
     const [feedback, setFeedback] = useState([]);
     const [similarProducts, setSimilarProducts] = useState([]);
@@ -25,8 +27,11 @@ const ProductPage = () => {
     const [toggleFeedback, setToggleFeedback] = useState(false)
     const [amount, setAmount] = useState(0)
 
-    const [toggleEdit , setToggleEdit] = useState({status : false, product: id});
-    const [toggleRemove , setToggleRemove] = useState({status : false, productId: id});
+    const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
+    const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
+    const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId: null})
+    const [toggleSidebar, setToggleSidebar]= useState(false);
+    const [toggleMore, setToggleMore] = useState(false)
 
     const { cartIds } = useContext(UserContext)
 
@@ -150,12 +155,22 @@ const ProductPage = () => {
                         {imagesArray.map((img, index) => (
                             <img key={index} src={`data:image/jpeg;base64,${img}`} alt={`product-${index}`} style={{ maxWidth: '400px', height: 'auto' }}/>
                         ))}
-                        <div className="toggle-more" >
-                            <div className="toggle-list">
-                                <button className='btn btn-primary' onClick={() => setToggleEdit({status : true , product : product})}>Edit</button>
-                                <button className='btn btn-danger' onClick={() => setToggleRemove({status : true , productId : product?.products_id})}>Remove</button>
-                            </div>
-                        </div>
+                        {!user ? <></> : 
+                            <div className="more">
+                                <btn className='btn' onClick={() => setToggleMore(!toggleMore)}>:</btn>
+                                <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "relative" , bottom : '25px'}}>
+                                    {user?.role == 'admin' ? 
+                                        <>
+                                            <button className="btn btn-primary" onClick={() => setToggleEdit({status : true , product : prod})}>Edit</button>
+                                            <button className="btn btn-danger" onClick={() => setToggleRemove({status : true , productId : prod.products_id})}>Remove</button>
+                                        </>
+                                    :
+                                        <>
+                                            <button className="btn btn-danger" onClick={() => setToggleReportProduct({status : true , productId : prod.products_id})}>Report</button>
+                                        </>
+                                    }
+                                </div>
+                            </div>}
                     </div>
 
                     <div className="product-end col">

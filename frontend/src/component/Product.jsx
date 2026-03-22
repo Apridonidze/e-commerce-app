@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 
 
 
-const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove } ) => {
+const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setToggleReportProduct } ) => {
 
     const navigator = useNavigate();
 
@@ -19,12 +19,20 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove } ) => {
 
             <div className="product-wrapper">
 
-                {user?.role !== 'admin' ? <></> : 
+                {!user ? <></> : 
                 <div className="more">
                     <btn className='btn' onClick={() => setToggleMore(!toggleMore)}>:</btn>
                     <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "relative" , bottom : '25px'}}>
-                        <button className="btn btn-primary" onClick={() => setToggleEdit({status : true , product : prod})}>Edit</button>
-                        <button className="btn btn-danger" onClick={() => setToggleRemove({status : true , productId : prod.products_id})}>Remove</button>
+                        {user?.role == 'admin' ? 
+                            <>
+                                <button className="btn btn-primary" onClick={() => setToggleEdit({status : true , product : prod})}>Edit</button>
+                                <button className="btn btn-danger" onClick={() => setToggleRemove({status : true , productId : prod.products_id})}>Remove</button>
+                            </>
+                        :
+                            <>
+                                <button className="btn btn-danger" onClick={() => setToggleReportProduct({status : true , productId : prod.products_id})}>Report</button>
+                            </>
+                        }
                     </div>
                 </div>}
 
