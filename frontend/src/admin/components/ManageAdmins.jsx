@@ -68,7 +68,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
                         dataList.map(u => (
                             <div key={u.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
                                 <span>{u.fullname} - {u.email}</span>
-                                <button onClick={() => makeAdmin(u.id)}>Make Admin</button>
+                                <button onClick={() => makeAdmin(u.id)} disabled={admins?.offlineAdmins.some(adm => adm.id == u.id) || admins?.onlineAdmins.some(adm => adm.id == u.id)}>Promote</button>
                             </div>
                     ))) : dataList?.length === 0 ? <p></p>  : <p>No users found</p>}
                 </div>
