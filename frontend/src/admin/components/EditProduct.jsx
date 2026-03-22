@@ -314,7 +314,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit }) => {
                     </div>
                     
                     <input type="submit" value='Edit Product'/>
-                    <button className="btn btn-danger">Cancel</button>
+                    <button className="btn btn-danger" onClick={() => setToggleEdit({status : false , product : null})}>Cancel</button>
                 </form>
             </div>
         </div>
