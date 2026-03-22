@@ -29,9 +29,9 @@ const ProductPage = () => {
 
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
+    const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId: null})
     const [toggleSidebar, setToggleSidebar]= useState(false);
-    const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
 
     const [toggleMore, setToggleMore] = useState(false)
 
@@ -228,8 +228,8 @@ const ProductPage = () => {
 
                     <div className="similar-products-main">
                         {similarProducts.length > 0 ? (
-                            similarProducts.map((prod, i) => (
-                                <Product key={i} prod={prod} prodId={i} />))
+                            similarProducts.map((prod, prodId) => (
+                                <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct}/>))
                         ) : 'No Similar Products Found'}
                     </div>
                 </div>

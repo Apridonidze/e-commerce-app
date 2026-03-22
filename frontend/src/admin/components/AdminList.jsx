@@ -3,26 +3,41 @@ const AdminList = ({ admins, setToggleManageAdmins }) => {
     return(
         <div className="admin-list-container">
             <div className="header d-flex">    
-                <h1>Online Admins</h1>
                 <button onClick={() => setToggleManageAdmins(true)}>Manage Admins</button>
             </div>
-            {admins?.onlineAdmins.length ? admins?.onlineAdmins.map((admin, adminId) => 
-                <div className="admin d-flex justify-content-between" key={adminId}>
-                    <div className="admin-start">
-                        <span>Fullname : {admin.fullname}</span>
-                        <span>Id : {admin.id}</span>
-                    </div>
-                </div>
-            ) : 'No Admins Online'}
 
-            {admins?.offlineAdmins.length ? admins?.offlineAdmins.map((admin, adminId) => 
-                <div className="admin d-flex justify-content-between" key={adminId}>
-                    <div className="admin-start">
-                        <span>Fullname : {admin.fullname}</span>
-                        <span>Id : {admin.id}</span>
+
+            
+            <div className="admin-div">
+
+                <h3>Online Admins</h3>
+
+                {admins?.onlineAdmins.length ? admins?.onlineAdmins.map((admin, adminId) => 
+                    <div className="admin d-flex justify-content-between" key={adminId}>
+                        <div className="admin-start">
+                            <span>Fullname : {admin.fullname}</span>
+                            <span>Id : {admin.id}</span>
+                        </div>
                     </div>
-                </div>
-            ) : 'No Offline Admins'}
+                ) : 'No Admins Online'}
+            </div>
+
+            <div className="admin-div">
+
+                <h3>Offline Admins</h3>
+
+                {admins?.offlineAdmins.length ? admins?.offlineAdmins.map((admin, adminId) => 
+                    <div className="admin d-flex justify-content-between" key={adminId}>
+                        <div className="admin-start">
+                            <span>Fullname : {admin.fullname}</span>
+                            <span>Id : {admin.id}</span>
+                        </div>
+                    </div>
+                ) : 'No Offline Admins'}
+
+            </div>
+
+            
         </div>
     )
 }
