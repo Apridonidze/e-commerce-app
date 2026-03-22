@@ -13,8 +13,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
     const [searchItem, setSearchItem] = useState('');
 
     const regexContainsSpecial = /[^\w\s]/;
-
-
+    
     const fetchDataList = async() => {
 
         if(searchItem.trim().length < 1 || searchItem.trim() === "" || searchItem === "" || 
@@ -23,8 +22,21 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
 
 
         try{
-            await axios.get(`${BACKEND_URL}/api/admin/search-users?targetUser=${searchItem}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
+            const response = await axios.get(`${BACKEND_URL}/api/admin/search-users?targetUser=${searchItem}` , {headers : {Authorization : `Bearer ${cookies.token}`}})
+
+            console.log(response)
+
+            if(response.status === 200) {
+                setDataList(response.data.users)
+            }
+
+            if(response.status === 404){
+                setDataList([]);
+            }
+
         }catch(err){
+
+            // toggle alert message
             console.log(err)
         }
     
@@ -50,7 +62,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
                     <label htmlFor="searchUsers">Searchs Users...</label>
                 </div>
                 <datalist id="searchlist">
-                    {dataList?.map((dl, dlId) => <option key={dlId} value={dl.title} />)}
+                    {dataList?.map(dl => <option key={dl.id} value={dl.fullname} label={`${dl.fullname} - ${dl.email}`} />)}
                 </datalist>
             </div>
 
