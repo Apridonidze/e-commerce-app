@@ -1,13 +1,15 @@
 import axios from "axios";
 import { BACKEND_URL } from "../../../config";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useCookies } from "react-cookie";
+import { UserContext } from "../../context/UserContext";
 
 
 const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
 
     const [ cookies ] = useCookies(['token'])
+    const { user } = useContext(UserContext);
 
     const [selectedUser, setSelectedUser] = useState();
     const [dataList,setDataList] = useState([]);
@@ -24,8 +26,6 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
 
         try{
             const response = await axios.get(`${BACKEND_URL}/api/admin/search-users?targetUser=${searchItem}` , {headers : {Authorization : `Bearer ${cookies.token}`}})
-
-            console.log(response)
 
             if(response.status === 200) {
                 setDataList(response.data.users)
@@ -74,10 +74,15 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
     const handleRemoveAdmin = async(id) => {
         try{
 
-            
+            const response = await axios.delete(`${BACKEND_URL}/api/admin/${id}` , {headers: {Authorization  : `Bearer ${cookies.token}`}})
+
+            if(response.status === 200){
+                console.log(response)
+                // toggle success message and tell them to refreshh page to seee updated admin list
+            }
 
         }catch(err){
-
+            console.log(err)
         }
     }
 
@@ -109,7 +114,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
                 <div className="admin d-flex justify-content-between" key={adminId}>
                     <div className="admin-start">
                         <span>{admin.fullname}</span>
-                        <button onClick={() => handleRemoveAdmin(admin.id)}>Remove</button>
+                        <button onClick={() => handleRemoveAdmin(admin.id)} disabled={user.id === admin.id ? true : false}>Remove</button>
                     </div>
                 </div>
             ) : 'No Admins Online'}
@@ -118,7 +123,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
                 <div className="admin d-flex justify-content-between" key={adminId}>
                     <div className="admin-start">
                         <span>Fullname : {admin.fullname}</span>
-                        <button onClick={() => handleRemoveAdmin(admin.id)}>Remove</button>
+                        <button onClick={() => handleRemoveAdmin(admin.id)} disabled={user.id === admin.id ? true : false}>Remove</button>
                     </div>
                 </div>
             ) : 'No Offline Admins'}
