@@ -4,7 +4,10 @@ async function remove (req,res) {
     try{
         
         const admId = req.params.id
-        
+        // validate id
+
+        if(req.user.userId == admId)return res.status(400).json({message : 'You can not remove yourself from admin list'})
+
         const [ query ] = await db.query('delete from admin where id = ?' , Number(admId))
 
         if(query.affectedRows === 0) return res.status(404).json({message : "Admin Not Found"})

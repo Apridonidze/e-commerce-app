@@ -82,6 +82,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
             }
 
         }catch(err){
+            // handle err.status === 400
             console.log(err)
         }
     }
