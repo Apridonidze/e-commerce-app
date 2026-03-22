@@ -10,11 +10,13 @@ async function list(req,res) {
         const onWay = orders.filter(o => o.status === "OnWay").slice(0,5);
         const delivered = orders.filter(o => o.status === "Delivered").slice(0,5);
 
+        const [ soldItems ] = await db.query('select ordered_items.product_id, ordered_items.amount, ordered_items.price , products.title from ordered_items join products on ordered_items.product_id = products.products_id')        
+
         const [ allAdmins ] = await db.query('select admin.id , users.fullname from admin join users on users.id = admin.id') 
         const onlineAdminList = [...onlineAdmins.keys()];
         const offlineAdmins = allAdmins.filter(admin => !onlineAdminList.includes(admin.id));
 
-        if(onlineAdminList.length === 0) return res.status(200).json({pending,onWay,delivered, onlineAdmins: onlineAdminList , offlineAdmins});
+        if(onlineAdminList.length === 0) return res.status(200).json({pending,onWay,delivered, soldItems, onlineAdmins: onlineAdminList , offlineAdmins});
 
         const [admins] = await db.query('select id, fullname from users where id in (?)',[onlineAdminList]);
         return res.status(200).json({pending,onWay,delivered, onlineAdmins : admins , offlineAdmins });

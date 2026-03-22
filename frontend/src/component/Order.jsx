@@ -16,12 +16,15 @@ const Order = ({ setCart, cart }) => {
     const selectAllRef = useRef(null)
 
     const [toggleOrder , setToggleOrder] = useState(false)
-
+    
     const orderItems = async() => {
+
+        let itemsIds = selectedItems?.map(prod => ({product_id: prod.product_id, amount : prod.product_id, price : prod.price}))
+
         try{
 
             setToggleOrder(false)
-            const order = await axios.post(`${BACKEND_URL}/api/order` , {selectedItems, address , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, address , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
             console.log(order)
 

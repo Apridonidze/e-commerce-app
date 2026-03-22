@@ -25,6 +25,7 @@ const AdminDashboard = () => {
     const [ orders,  setOrders ] = useState([])
     const [ reports , setReports ] = useState([])
     const [ feedbacks, setFeedbacks ] = useState([])
+    const [ soldItems , setSoldItems] = useState([])
 
     const [toggleCreateNew, setToggleCreateNew] = useState(false);
     const [toggleManageAdmins ,setToggleManageAdmins] = useState(false);
@@ -44,6 +45,7 @@ const AdminDashboard = () => {
                 const data = [...response.data.pending, response.data.onWay, response.data.delivered].filter((arr) => arr.length !== 0).flat()
                 
                 setOrders(data)
+                setSoldItems(response.data.soldItems)
                 setAdmins({onlineAdmins : response.data.onlineAdmins , offlineAdmins : response.data.offlineAdmins}) 
 
 
@@ -51,6 +53,8 @@ const AdminDashboard = () => {
                 console.log("Dashboard fetch error:", error);
             }
         };
+
+        console.log(soldItems)
 
 
         const fetchReports = async () => {

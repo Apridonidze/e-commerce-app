@@ -49,6 +49,14 @@ async function webHook(req,res){
                 
             break;
 
+            case 'setup_intent.created':
+                res.status(200).json({message : "Setup Intent Created Successfully"})
+            break;
+
+            case 'setup_intent.created':
+                res.status(200).json({message : "Setup Intent Created Successfully"})
+            break;
+
             default:
                 console.log(`Unhandled event type ${event.type}`)
                 // return 400 status error

@@ -3,9 +3,10 @@ const db = require('../../middlewares/db')
 async function add(req, res) {
     try {
 
-        const items = req.body.selectedItems
+        const items = req.body.itemsIds
         const address = req.body.address
         const totalPrice = req.body.totalPrice
+
 
         const [order] = await db.query('insert into orders (user_id, total_price, status, address) values (?, ?, ?, ?)',[req.user.userId, totalPrice, 'Pending', address])
 
