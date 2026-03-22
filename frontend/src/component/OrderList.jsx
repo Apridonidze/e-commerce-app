@@ -17,10 +17,13 @@ const OrderList = () => {
             try{
 
                 const orders = await axios.get(`${BACKEND_URL}/api/order`, {headers : {Authorization : `Bearer ${cookies.token}`}})
-                console.log(orders)
+                
                 if(orders.status === 204) setOrders([])
                 
-                setOrders(orders.data.orders)
+                    console.log(orders)
+                if(orders.status === 200){
+                    setOrders(orders.data.orders)
+                }
 
             }catch(err){
                 console.log(err)
@@ -35,7 +38,7 @@ const OrderList = () => {
     return(
         <div className="order-list-container">
             <h3>My Orders</h3>
-            {orders?.length > 1 ? orders?.filter((order) => order.status !== "Delivered").map((order,orderId) => (
+            {orders?.length > 0 ? orders?.filter((order) => order.status !== "Delivered").map((order,orderId) => (
                 <OrderDetails order={order} orderId={orderId} key={orderId} setOrders={setOrders}/>
             )) : "No Items Ordered"}
 

@@ -26,7 +26,10 @@ const Order = ({ setCart, cart }) => {
             setToggleOrder(false)
             const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, address , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-            console.log(order)
+            if(order.status === 200){
+                // toggle success message
+                window.location.reload()
+            }
 
         }catch(err){
 
