@@ -3,14 +3,13 @@ const router = express.Router();
 
 const adminRoute = require('../controllers/admin');
 
-const rateLimiter = require('../middlewares/RateLimiter')
 const ValidateToken = require('../middlewares/ValidateToken');
 const isAdmin = require('../middlewares/isAdmin')
 
 
 router.get('/admin-list' , ValidateToken, isAdmin , adminRoute.list)
 router.get('/search-users' , ValidateToken, isAdmin , adminRoute.userList)
-router.post('/' , ValidateToken, isAdmin ,rateLimiter, adminRoute.add)
-router.delete('/' , ValidateToken, isAdmin ,rateLimiter, adminRoute.remove)
+router.post('/' , ValidateToken, isAdmin , adminRoute.add)
+router.delete('/' , ValidateToken, isAdmin, adminRoute.remove)
 
 module.exports = router

@@ -1,7 +1,13 @@
+import axios from "axios";
+import { BACKEND_URL } from "../../../config";
+
 import { useState, useEffect } from "react"
+import { useCookies } from "react-cookie";
 
 
 const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
+
+    const [ cookies ] = useCookies(['token'])
 
     const [dataList,setDataList] = useState([]);
     const [searchItem, setSearchItem] = useState('');
@@ -17,7 +23,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
 
 
         try{
-            await axios.get(`${BACKEND_URL}/api/admins/search-user/?target-user=${searchItem}`).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
+            await axios.get(`${BACKEND_URL}/api/admin/search-users?targetUser=${searchItem}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
         }catch(err){
             console.log(err)
         }
@@ -39,7 +45,10 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
             </div>
 
             <div className="search-bar">
-                <input type="text" className='form-control' list="searchlist" onChange={(e) => setSearchItem(e.target.value)} value={searchItem} tabIndex={1}/>
+                <div className="form-floating">
+                    <input type="text" id="searchUsers" className='form-control' placeholder="Searchs Users..." list="searchlist" onChange={(e) => setSearchItem(e.target.value)} value={searchItem} tabIndex={1}/>
+                    <label htmlFor="searchUsers">Searchs Users...</label>
+                </div>
                 <datalist id="searchlist">
                     {dataList?.map((dl, dlId) => <option key={dlId} value={dl.title} />)}
                 </datalist>
