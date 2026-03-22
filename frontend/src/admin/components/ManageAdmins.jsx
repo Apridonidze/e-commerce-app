@@ -51,6 +51,36 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
 
     },[searchItem]) 
 
+    const handleAddAdmin = async(id) => {
+        try{
+
+            const response = await axios.post(`${BACKEND_URL}/api/admin`, {id} , {headers: {Authorization  : `Bearer ${cookies.token}`}})
+
+            if(response.status === 200){
+                admins.offlineAdmins.push(id);
+            }
+
+        }catch(err){
+            // return alert message
+            
+            if(err.status === 400){
+                // toggle error message
+            }
+
+            console.log(err)
+        }
+    }
+
+    const handleRemoveAdmin = async(id) => {
+        try{
+
+            
+
+        }catch(err){
+
+        }
+    }
+
     return(
         <div className="manage-admins-container position-relative bg-white w-100" style={{zIndex : 999}}>
             <div className="manage-admins-header">
@@ -68,7 +98,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
                         dataList.map(u => (
                             <div key={u.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
                                 <span>{u.fullname} - {u.email}</span>
-                                <button onClick={() => makeAdmin(u.id)} disabled={admins?.offlineAdmins.some(adm => adm.id == u.id) || admins?.onlineAdmins.some(adm => adm.id == u.id)}>Promote</button>
+                                <button onClick={() => handleAddAdmin(u.id)} disabled={admins?.offlineAdmins.some(adm => adm.id == u.id) || admins?.onlineAdmins.some(adm => adm.id == u.id)}>Promote</button>
                             </div>
                     ))) : dataList?.length === 0 ? <p></p>  : <p>No users found</p>}
                 </div>
@@ -78,8 +108,8 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
                 {admins?.onlineAdmins.length ? admins?.onlineAdmins.map((admin, adminId) => 
                 <div className="admin d-flex justify-content-between" key={adminId}>
                     <div className="admin-start">
-                        <span>Fullname : {admin.fullname}</span>
-                        <span>Id : {admin.id}</span>
+                        <span>{admin.fullname}</span>
+                        <button onClick={() => handleRemoveAdmin(admin.id)}>Remove</button>
                     </div>
                 </div>
             ) : 'No Admins Online'}
@@ -88,7 +118,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
                 <div className="admin d-flex justify-content-between" key={adminId}>
                     <div className="admin-start">
                         <span>Fullname : {admin.fullname}</span>
-                        <span>Id : {admin.id}</span>
+                        <button onClick={() => handleRemoveAdmin(admin.id)}>Remove</button>
                     </div>
                 </div>
             ) : 'No Offline Admins'}
