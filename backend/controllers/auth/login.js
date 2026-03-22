@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); //importing node libraries
 
-const db = require('../../middlewares/db'); //importing db middlewares
+const db = require('../../utils/db'); //importing db middlewares
 const LoginSchema = require('../../schemas/LoginSchema'); //importing login shcema
 
 async function login(req,res) {

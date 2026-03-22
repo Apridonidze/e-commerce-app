@@ -1,5 +1,5 @@
 const fs = require('fs')
-const db = require('../../middlewares/db')
+const db = require('../../utils/db')
 const NewProductSchema = require('../../schemas/NewProductSchema')
 
 async function add(req,res) {

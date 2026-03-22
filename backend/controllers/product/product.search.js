@@ -1,4 +1,4 @@
-const db = require('../../middlewares/db')
+const db = require('../../utils/db')
 const SearchSchema = require('../../schemas/SearchSchema')
 
 async function productSearch(req,res) {

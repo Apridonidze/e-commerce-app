@@ -1,4 +1,4 @@
-const db = require('../../middlewares/db')
+const db = require('../../utils/db')
 
 async function getByProdId(req,res) {
     try{

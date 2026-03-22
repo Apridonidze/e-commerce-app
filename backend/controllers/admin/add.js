@@ -1,4 +1,4 @@
-const db = require('../../middlewares/db'); //importing db middleware
+const db = require('../../utils/db'); //importing db middleware
 
 async function add (req,res) {
     

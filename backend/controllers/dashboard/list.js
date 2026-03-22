@@ -1,4 +1,4 @@
-const db = require('../../middlewares/db'); //importing db middleware
+const db = require('../../utils/db'); //importing db middleware
 
 const onlineAdmins = require('../../socket/socket.stores/onlineAdmins'); //importing online admin object from socket.sotres (to dispaly online admins)
 

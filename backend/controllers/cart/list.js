@@ -1,4 +1,4 @@
-const db = require('../../middlewares/db'); //importing db middleware
+const db = require('../../utils/db'); //importing db middleware
 
 async function list(req,res) {
     try{
@@ -9,7 +9,7 @@ async function list(req,res) {
         return res.status(200).json({message : 'Found Items In Your Cart' , cartItems : cartItems}); //sending 200 status code with card items
 
     }catch(err){
-        return res.status(500).json({errMessage : 'Internal Error While Fetching cart items'}); //returning 500 status code internal error message
+        return res.status(500).json({message : 'Internal Error While Fetching cart items'}); //returning 500 status code internal error message
     };
 };
 

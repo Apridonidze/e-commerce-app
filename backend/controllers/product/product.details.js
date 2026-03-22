@@ -1,4 +1,4 @@
-const db = require('../../middlewares/db')
+const db = require('../../utils/db')
 
 async function productDetails (req,res) {
     const { id } = req.query;

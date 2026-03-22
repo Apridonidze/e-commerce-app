@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET_KEY
 
-const db = require('../../middlewares/db')
+const db = require('../../utils/db')
 
 async function webHook(req,res){
 

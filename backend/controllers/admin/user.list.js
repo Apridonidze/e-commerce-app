@@ -1,4 +1,4 @@
-const db = require('../../middlewares/db'); //importing db middleware
+const db = require('../../utils/db'); //importing db middleware
 const UserSearchSchema = require('../../schemas/UserSearchSchema');
 
 async function userList (req,res){

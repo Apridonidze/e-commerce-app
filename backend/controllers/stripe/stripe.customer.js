@@ -3,7 +3,7 @@ require('dotenv').config()
 const Stripe = require('stripe')
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
-const db = require('../../middlewares/db')
+const db = require('../../utils/db')
 
 async function createCustomer(req,res){
     try{
