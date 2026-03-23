@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config(); //importing env file
 
 const CorsOptions = {
     credentials: true,
@@ -6,6 +6,6 @@ const CorsOptions = {
     methods: ["GET" ,"POST", "PUT" , "DELETE"],
     allowedHeaders :  ['Content-Type' , 'Authorization'],
     transports: ["polling", "websocket"]
-}
+}; //definng cors options
 
-module.exports = CorsOptions
+module.exports = CorsOptions; //exporting middleware

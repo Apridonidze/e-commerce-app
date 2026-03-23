@@ -1,24 +1,22 @@
-const db = require('../utils/db')
+const db = require('../utils/db'); //importing db utility
 
 async function isAdmin ( req , res , next) {
     try{
 
-        const id = req.user.userId
+        const id = req.user.userId; //defining userId from validateToekn middleware
 
-        const [ doesUserExists ] = await db.query('select id from users where id = ?' , id)
-        if(doesUserExists.length < 1) return res.status(404).json({message : "User Not Found" , isAdmin : false})
+        const [rows] = await db.query(`select users.id, admin.id from users left join admin on users.id = admin.id where users.id = ?`, [id]);
 
-        const [ isAdmin ] = await db.query('select id from admin where id = ?' , id)
-        if(isAdmin.length < 1) return res.status(403).json({message : "Access Declined" , isAdmin : false})
+        if (rows.length === 0) return res.status(404).json({message: "User Not Found",isAdmin: false});//returning 404 status error if usser is not found
+        if (!rows[0].admin_id) return res.status(403).json({message: "Access Declined",isAdmin: false}); //returning 403 status error if user is found but not in admin list
 
-            //refactor use joins for this
+        req.user.isAdmin = true; //setting req.user.isAdmin to true after
 
-        next();
+        next(); //calling api after middleware  finished its work
 
     }catch(err){
-        return res.status(500).json({errMessage : "Internal Error" , err : err})
-    }
-    
-}
+        return res.status(500).json({message : "Could Not Validate Admin"}); //returning errorr message
+    };
+};
 
-module.exports = isAdmin
+module.exports = isAdmin; //exporting middleware
