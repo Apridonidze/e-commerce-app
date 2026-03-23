@@ -1,8 +1,8 @@
-const add = require('./add')
-const list = require('./list')
-const addProdFb = require('./add.product.fb')
-const getByProdId = require('./get.product.fb')
-const remove = require('./remove')
-const customerList = require('./customer.list')
+const add = require('./add');//adding platform feedback
+const addProdFb = require('./add.product.fb'); //adding product feedback
+const list = require('./list'); //fetching feedbacks
+const customerList = require('./customer.list'); //fetcing feedbacks for landing page 
+const getByProdId = require('./get.product.fb'); //fetcing product feedbacks with productId params
+const remove = require('./remove'); //deleting feeback from db
 
-module.exports = {add, addProdFb, getByProdId, list, customerList, remove}
+module.exports = {add, addProdFb, getByProdId, list, customerList, remove}; //exproting services from controller
