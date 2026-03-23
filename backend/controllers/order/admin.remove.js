@@ -4,6 +4,8 @@ async function adminRemove (req,res){
     try{
 
         const { id } = req.params
+        if(!Number(id) || id <= 0) return res.status(400).json({message : "Invalid Product Id Format."});
+
         
         const [respnse] = await db.query('delete from orders where order_id = ?' , [Number(id)])
         if(respnse.affectedRows === 0) return res.status(400).json({message : "Order Not Found"})
