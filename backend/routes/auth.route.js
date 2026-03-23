@@ -1,11 +1,12 @@
-const express = require('express')
-const router = express.Router();
+const express = require('express');//importing epxress 
+const router = express.Router(); //initializing router
 
-const authRoute = require('../controllers/auth');
-const ValidateToken = require('../middlewares/ValidateToken');
+const authRoute = require('../controllers/auth');//importing routes
 
-router.get('/me' , ValidateToken , authRoute.me)
-router.post('/sign', authRoute.sign)
-router.post('/login' , authRoute.login)
+const ValidateToken = require('../middlewares/ValidateToken');//importing middleware
 
-module.exports = router
+router.get('/me' , ValidateToken , authRoute.me);
+router.post('/sign', authRoute.sign);
+router.post('/login' , authRoute.login); //defining api routes
+
+module.exports = router;//exporting routes
