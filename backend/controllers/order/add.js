@@ -1,5 +1,5 @@
-const z = require("zod")
-const db = require('../../utils/db')
+const z = require("zod"); //importing validator library
+const db = require('../../utils/db'); //importing db utility
 
 async function add(req, res) {
 
@@ -18,28 +18,25 @@ async function add(req, res) {
 
     try {
 
-        const items = req.body.itemsIds
-        const address = req.body.address
-        const totalPrice = req.body.totalPrice
+        const { itemsIds, address, totalPrice } = req.body; //defining data from request body
         
-        const [order] = await db.query('insert into orders (user_id, total_price, status, address) values (?, ?, ?, ?)',[req.user.userId, totalPrice, 'Pending', address])
-
+        const [order] = await db.query('insert into orders (user_id, total_price, status, address) values (?, ?, ?, ?)',[req.user.userId, totalPrice, 'Pending', address]); // creating new order
+        
         await Promise.all(
-            items.map(async (item) => {
+            itemsIds.map(async (item) => {
                 await db.query('insert into ordered_items (order_id, product_id, amount, price) values (?, ?, ?, ?)',[order.insertId, item.product_id, item.amount, item.price])
                 await db.query('update products set amount = amount - ? where products_id = ?',[item.amount, item.id])
             })
-        )
+        );//mapping item ids
 
-        await db.query('delete from cart where id = ?',[req.user.userId])
-
-        return res.status(200).json({message: "Your Items Have Been Ordered Successfully, Wait For Delivery"})
+        await db.query('delete from cart where id = ?',[req.user.userId]); //clearing users cart
+        return res.status(200).json({message: "Your Items Have Been Ordered Successfully, Wait For Delivery"});//returning success message
 
     } catch (err) {
-        // add err on this sql error ER_NO_REFERENCED_ROW_2 and ER_DUPLICATE
-        console.log(err)
-        return res.status(500).json({errMessage: "Internal Error",err: err})
-    }
-}
+        if (err.code === 'ER_NO_REFERENCED_ROW_2') return res.status(400).json({ message: 'Order Items Not Found In Database'}); //returns 400 status message if no product is same as productid is in db
+        if (err.code === 'ER_DUPLICATE') return res.status(400).json({ message: 'Duplicate Order Creation'});//returns 400 status message if order_id is duplicated in db
+        return res.status(500).json({message: "Could Not Create Order. Try Later"}); //returning 500 status code error if internal error occurs
+    };
+};
 
-module.exports = add
+module.exports = add; //exprting service
