@@ -1,10 +1,11 @@
 const db = require('../../utils/db'); //importing db utility
 
 async function adminRemove (req,res){
-    try{
 
-        const { id } = req.params; //defining request param
-        if(!Number(id) || id <= 0) return res.status(400).json({message : "Invalid Product Id Format."}); //validating request params
+    const { id } = req.params; //defining request param
+    if(!Number(id) || id <= 0) return res.status(400).json({message : "Invalid Product Id Format."}); //validating request params
+    
+    try{
 
         const [ data ] = await db.query('select orders.user_id , orders.total_price, orders.created_at , orders.address , orders.status , users.email from orders join users on orders.user_id = users.id where order_id = ?' , [Number(id)]); //selecting order + user data for mail + to ensure order exists
         if(data.length === 0) return res.status(404).json({message : "Order Not Found"}); //returning 404 status code if order is not found by this orderId
