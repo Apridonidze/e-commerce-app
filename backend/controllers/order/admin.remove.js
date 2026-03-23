@@ -3,7 +3,7 @@ const db = require('../../utils/db'); //importing db utility
 async function adminRemove (req,res){
 
     const { id } = req.params; //defining request param
-    if(!Number(id) || id <= 0) return res.status(400).json({message : "Invalid Product Id Format."}); //validating request params
+    if(!Number(id) || id <= 0) return res.status(400).json({message : "Invalid Id Format."}); //validating request params
     
     try{
 

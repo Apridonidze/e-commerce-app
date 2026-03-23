@@ -8,7 +8,7 @@ async function list(req,res) {
 
         offset = Number(offset) ; //defining offset as number type
 
-        if (Number.isNaN(offset) || offset < 0) {return res.status(400).json({ message: "Invalid offset" })}; //checking if number type of offset is valid or not
+        if (Number.isNaN(offset) || offset < 0) {return res.status(400).json({ message: "Invalid Offset Format" })}; //checking if number type of offset is valid or not
         if (status == "undefined") status = undefined; //defining status as undefined if status is not provided
 
         let query = `select feedback.*, users.fullname, products.title from feedback join users on users.id = feedback.id left join products on products.products_id = feedback.product_id`; //querys body

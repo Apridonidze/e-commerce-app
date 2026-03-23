@@ -3,7 +3,7 @@ const db = require('../../utils/db'); //importing db utility
 async function remove(req,res) {
 
     const { id } = req.params; //defining request params
-    if(!Number(id) || id <= 0) return res.status(400).json({message : "Invalid Product Id Format."}); //validating request param
+    if(!Number(id) || id <= 0) return res.status(400).json({message : "Invalid Order Id Format."}); //validating request param
     
     try{
 

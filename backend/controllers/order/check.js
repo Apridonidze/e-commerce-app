@@ -3,7 +3,7 @@ const db = require('../../utils/db'); //importing db utility
 async function check(req,res) {
     
     const orderId = Number(req.params.id); //defininig request param
-    if(!Number(orderId) || orderId <= 0) return res.status(400).json({message : "Invalid Product Id Format."}); //validating request param
+    if(!Number(orderId) || orderId <= 0) return res.status(400).json({message : "Invalid Order Id Format."}); //validating request param
     
     try{
 
