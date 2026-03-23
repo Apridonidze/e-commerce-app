@@ -1,37 +1,37 @@
-const db = require('../../utils/db')
+const db = require('../../utils/db'); //importing db utility 
 
 async function fullList(req, res) {
+
+    let { offset = 0, status } = req.params; //definig request data
+    const limit = 5; //limit for query
+
+    offset = Number(offset); //defining offset as number
+
+    if (Number.isNaN(offset) || offset < 0) {return res.status(400).json({ message: "Invalid offset" })};
+    if (status == "undefined") status = undefined; //validating status and offset
+
     try {
 
-        let { offset = 0, status } = req.params
-        const limit = 5
+        let query = `select users.fullname, users.email, reports.*, products.title from reports join users on users.id = reports.user_id left join products on reports.product_id = products.products_id`; //main query
+        const params = []; //params array
 
-        offset = Number(offset)
+        if (status) { //if status is defined statement runs
+            query += ` where reports.status = ?`; //adding to main query
+            params.push(status); //pushin status as params 
+        };
 
-        if (Number.isNaN(offset) || offset < 0) {return res.status(400).json({ message: "Invalid offset" })}
-        if (status == "undefined") status = undefined
+        // if status is not defined
+        query += ` limit ? offset ?`; //directly adding limit to main query without where
+        params.push(limit, offset); //pushing limit and offset in params array
 
-        let query = `select users.fullname, users.email, reports.*, products.title from reports join users on users.id = reports.user_id left join products on reports.product_id = products.products_id`
-        const params = []
+        const [ReportsList] = await db.query(query, params); //executting query
 
-        if (status) {
-            query += ` where reports.status = ?`
-            params.push(status)
-        }
-
-        query += ` limit ? offset ?`
-        params.push(limit, offset)
-
-        const [ReportsList] = await db.query(query, params)
-
-        if (!ReportsList.length) return res.status(204).send()
-
-        return res.status(200).json({message: "Reports Found",reports: ReportsList})
+        if (ReportsList.length === 0) return res.status(204).send();//sending 204 status code if no reports have been found 
+        return res.status(200).json({message: "Reports Found",reports: ReportsList}); //sending 200 status code if reports has beeen found
 
     } catch (err) {
-        console.error(err)
-        return res.status(500).json({message: "Internal Error"})
-    }
-}
+        return res.status(500).json({message: "Could Not Fetch Reports. Try Later"}); //returning internal error message
+    };
+};
 
-module.exports = fullList
+module.exports = fullList; //exporting service
