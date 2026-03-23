@@ -4,7 +4,7 @@ const db = require('../../utils/db')
 
 async function add(req,res) {
     
-    const data = req.body.data
+    const data = req.body
 
     const Schema = z.object({
         content : z.string().min(0).max(255),

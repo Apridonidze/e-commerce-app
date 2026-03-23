@@ -5,7 +5,7 @@ async function remove(req,res) {
 
         const { feedbackId } = req.params
 
-        // validate feedback id
+        if (Number.isNaN(feedbackId) || feedbackId < 0) {return res.status(400).json({ message: "Invalid Feedback It Provided" })}
 
         const [response] = await db.query('delete from feedback where feedback_id = ?', [Number(feedbackId)])
         if(response.affectedRows === 0) return res.status(400).json({message : "Feedback Not Found"})
