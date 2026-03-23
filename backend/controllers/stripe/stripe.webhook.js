@@ -54,4 +54,4 @@ async function webHook(req,res){
     };
 };
 
-module.exports = webHook; //exporting service
+module.exports = webHook; //exporting servicee
