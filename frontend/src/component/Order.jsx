@@ -16,10 +16,10 @@ const Order = ({ setCart, cart }) => {
     const selectAllRef = useRef(null)
 
     const [toggleOrder , setToggleOrder] = useState(false)
-    
     const orderItems = async() => {
+        
 
-        let itemsIds = selectedItems?.map(prod => ({product_id: prod.product_id, amount : prod.product_id, price : prod.price}))
+        let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.price}))
 
         try{
 
