@@ -1,6 +1,7 @@
 const z = require('zod')
 
 const db = require('../../utils/db')
+const mailer = require('../../utils/mailer')
 
 async function update(req,res) {
 
@@ -20,14 +21,27 @@ async function update(req,res) {
         const { orderId } = req.params;
         const { status } = req.body;
 
-        const [ response ] = await db.query('update orders set status = ? where order_id = ?' , [status, orderId])
-        return res.status(200).json({message : "Order Updated Successfully", status})
+        const [ response ] = await db.query('update orders set status = ? where order_id = ?' , [status, orderId]);
+        if(response.affectedRows === 0) return res.status(404).json({message: "Order With Provided Id Does Not Exists."})
+        
+        const html = `
+            <h2>Order Update</h2>
+            <p>Order ID: ${orderId}</p>
+            <p>Status: ${status}</p>
+        `;
 
-        // add node mailer for user whos order status got updated
+        mailer({
+            to: req.user.userEmail,
+            subject: 'Order Update',
+            html,
+        }).catch(console.error);
+        
+        return res.status(200).json({message : "Order Updated Successfully", status});
+
+        
 
     }catch(err){
-        console.log(err)
-        return res.status(500).json({message : "Internal Error" , err})
+        return res.status(500).json({message : "Could Not Update Order Status. Try Later"})
     }
 }
 
