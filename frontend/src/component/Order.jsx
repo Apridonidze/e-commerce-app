@@ -28,6 +28,7 @@ const Order = ({ setCart, cart }) => {
 
             if(order.status === 200){
                 // toggle success message
+                // add payment success message toggle here before ordering
                 window.location.reload()
             }
 
@@ -84,8 +85,8 @@ const Order = ({ setCart, cart }) => {
             selectAllRef.current.checked = false
         }
 
-        let total = selectedItems.reduce((sum, item) => sum + item.price, 0);
-       
+        let total = selectedItems.reduce((sum, item) => sum + item.price * item.amount, 0);
+     
         setTotalPrice(total)
         
     },[selectedItems, selectAllRef])
