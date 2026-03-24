@@ -19,6 +19,7 @@ import { ProductContext } from "../context/ProductContext"
 import EditProduct from "../admin/components/EditProduct"
 import RemoveProduct from "../admin/components/RemoveProduct"
 import AddToCart from "../component/AddToCart"
+import ReportProduct from "../component/ReportProduct"
 
 const Main = () => {
 
@@ -33,7 +34,7 @@ const Main = () => {
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
-    const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId: null})
+    const [toggleReportProduct, setToggleReportProduct] = useState({status : true, productId: null})
     const [toggleSidebar, setToggleSidebar]= useState(false);
     
     const fetchProducts = async(offset, category) => {
@@ -73,7 +74,7 @@ const Main = () => {
             {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
             {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }
             {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
-
+            {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
             <div className="main-start col">
                 <Sidebar /> 
             </div>

@@ -30,7 +30,7 @@ const ProductPage = () => {
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
-    const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId: null})
+    const [toggleReportProduct, setToggleReportProduct] = useState({status : true, productId: null})
     const [toggleSidebar, setToggleSidebar]= useState(false);
 
     const [toggleMore, setToggleMore] = useState(false)
@@ -153,6 +153,7 @@ const ProductPage = () => {
                 )}
 
                 {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
+                {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
 
                 <div className="product-container row">
                     <div className="product-start col">

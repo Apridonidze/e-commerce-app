@@ -1,7 +1,160 @@
-const ReportProduct = () => {
-    return(
-        <div className="report-product-container">
+import axios from 'axios'
+import { BACKEND_URL } from '../../config' 
+
+import ReportOption from "./ReportOption"
+import { useRef, useState, useEffect } from "react";
+import { useCookies } from 'react-cookie';
+
+const ReportProduct = ({ setToggleReportProduct, toggleReportProduct }) => {
+
+    const reasons = [
+        {
+            id: 5,
+            category: 'Product',
+            icon: <i className="fa-solid fa-circle-exclamation"></i>,
+            title: 'Inappropriate Content',
+            desc: 'Offensive material or behavior violating community guidelines'
+        },
+        {
+            id: 6,
+            category: 'Product',
+            icon: <i className="fa-solid fa-tags"></i>,
+            title: 'Misleading Description',
+            desc: 'Product details do not match actual item received'
+        },
+        {
+            id: 7,
+            category: 'Product',
+            icon: <i className="fa-solid fa-box-open"></i>,
+            title: 'Damaged Product',
+            desc: 'Item arrived broken or not in expected condition'
+        },
+        {
+            id: 8,
+            category: 'Product',
+            icon: <i className="fa-solid fa-copyright"></i>,
+            title: 'Counterfeit Item',
+            desc: 'Fake or unauthorized replica being sold'
+        },
+    ]
+
+    const [ cookies ] = useCookies(['token'])
+
+    const reasonRef = useRef([null]);
+    const inputRef = useRef(null);
+    const discardRef = useRef(null);
+    const submitRef = useRef(null);
+    
+    const [targetReason ,setTargetReason] = useState(null);
+    const [input, setInput] = useState('');
+    
+    const [targetReasonErr, setTargerReasonErr] = useState('');
+    const [inputErr ,setInputErr] = useState('');
+
+     useEffect(() => {
+
+        if(inputRef && inputRef.current && submitRef && submitRef.current){
+
+            let isValid = false;
+
+            if(input.length === 0 || input.length >= 20) {
+                
+                setInputErr('') 
+                
+                inputRef.current.classList.remove('is-valid')
+                inputRef.current.classList.remove('is-invalid')
+
+                submitRef.current.disabled = false; 
+
+                isValid = true
+            };
+
+            if(input.length !== 0 && input.length < 20) {
+
+                setInputErr('Please enter at least 20 characters')
+                
+                inputRef.current.classList.remove('is-valid')
+                inputRef.current.classList.add('is-invalid')
             
+                submitRef.current.disabled = true;
+
+                isValid = false
+            };
+
+            if(input.length > 500) {
+
+                setInputErr('Please enter no more than 500 characters')
+                
+                inputRef.current.classList.remove('is-valid')
+                inputRef.current.classList.add('is-invalid')
+            
+                submitRef.current.disabled = true;
+
+                isValid = false
+            };
+
+            if(!targetReason) submitRef.current.disabled = true ; isValid = false;
+
+            if(isValid){submitRef.current.disabled = false}
+
+        }
+
+    },[input, inputRef, targetReason])
+
+    const handleSubmitReport = async() => {
+        try{
+
+            const response = await axios.post(`${BACKEND_URL}/api/report`, {type : targetReason.category , content : input, productId : toggleReportProduct.product_id , status : "Sent"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+
+            console.log(response)
+            if(response.status === 200) {
+                
+            }
+        }catch(err){
+            console.log(err)
+            // toggle error emssage
+        }
+    }
+
+    const handleDiscard = () => {
+
+    }
+
+    return(
+        <div className="report-product-container position-relative bg-white border top-50" style={{zIndex : 999}}>
+            <div className="report-header">
+                    <h1>Report</h1>
+                    <h4>Help us maintain the integrity of the Curator ecosystem. Detailed reports allow our developer's team to resolve disputes and technical erros with precision</h4>
+                </div>
+                <div className="report-input-container">
+                    
+                    <div className="row">
+                        <h4>Select Primary Reason : </h4>
+                        {reasons?.map(reason => (
+                            <ReportOption reason={reason} setTargetReason={setTargetReason} targetReason={targetReason} reasonRef={reasonRef}/>
+                        ))}
+                        <span className="text-danger">{targetReasonErr}</span>
+                    </div>
+
+                    <div className="row">
+                        <h4>Editorial Context</h4>
+                        <div className="form-floating">
+                            <textarea className="form-control" onChange={(e) => setInput(e.target.value)} ref={inputRef} name="textArea" id="textArea" placeholder="Provide detailed information regarding the artifact or behavior in question... Min(20 characters)" />
+                            <label  htmlFor="textArea">Provide detailed information regarding the artifact or behavior in question... Min(20 characters)</label>
+                            <span className="text-danger">{inputErr}</span>
+                        </div>
+                    </div>
+                        
+                </div>
+                <div className="report-footer row">
+                    <div className="report-start ">
+                        <h6>Reports are processed within 24 hours by our human curators.</h6>
+                    </div> 
+                    <div className="report-end ">
+                        <button className="btn border" ref={discardRef} onClick={() => setToggleReportProduct({status : false, product_id : null})}>Discard</button>
+                        <button className="btn btn-danger" ref={submitRef} onClick={() => handleSubmitReport()}>Submit Report</button>
+                    </div>
+                </div>
         </div>
     )
 }

@@ -34,7 +34,8 @@ const Sales = () => {
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleSidebar, setToggleSidebar]= useState(false);
-    const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId:  null});
+    const [toggleReportProduct, setToggleReportProduct] = useState({status : true, productId: null})
+
 
     const fetchProducts = async(offset, category) => {
 
@@ -67,6 +68,7 @@ const Sales = () => {
             {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
             {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }
             {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
+            {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
 
             <div className="sales-start col">
                 <Sidebar /> 
