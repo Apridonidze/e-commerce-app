@@ -3,14 +3,22 @@ import { UserContext } from '../context/UserContext'
 
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { useCookies } from 'react-cookie'
+import { replace, useNavigate } from 'react-router-dom'
 
 const User = () => {
 
     const { user } = useContext(UserContext)
+    const [ cookies , setCookies, removeCookies] = useCookies(['token'])
+    
+    const navigator = useNavigate()
 
     const handleLogout = async() => {
         try{
 
+            removeCookies('token' , {path : '/'})
+            navigator('/', {replace : true})
+            window.location.reload();
             // reset cookies ,redirect to main page and reload page
 
         }catch(err){

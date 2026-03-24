@@ -19,7 +19,7 @@ import { useContext } from "react"
 import { ProductContext } from "../context/ProductContext"
 import EditProduct from "../admin/components/EditProduct"
 import RemoveProduct from "../admin/components/RemoveProduct"
-
+import ReportProduct from "../component/ReportProduct"
 const Sales = () => {
 
     const { prevProducts } = useContext(ProductContext)

@@ -11,7 +11,7 @@ import FeedbackInput from '../component/FeedbackInput';
 
 import EditProduct from '../admin/components/EditProduct';
 import RemoveProduct from '../admin/components/RemoveProduct';
-
+import ReportProduct from '../component/ReportProduct';
 const ProductPage = () => {
 
     const [cookies] = useCookies(['token'])
