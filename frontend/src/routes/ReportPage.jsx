@@ -156,6 +156,14 @@ const ReportPage = () => {
     }
 
     const handleDiscard = () => {
+        setTargetReason(null)
+        setInput('')
+
+        setTargerReasonErr('')
+        setInputErr('')
+
+        inputRef.current.classList.remove('is-valid');
+        inputRef.current.classList.remove('is-invalid');
 
     }
 
@@ -192,7 +200,7 @@ const ReportPage = () => {
                         <h6>Reports are processed within 24 hours by our human curators.</h6>
                     </div> 
                     <div className="report-end ">
-                        <button className="btn border" ref={discardRef}>Discard</button>
+                        <button className="btn border" ref={discardRef} onClick={() => handleDiscard()}>Discard</button>
                         <button className="btn btn-danger" ref={submitRef} onClick={() => handleSubmitReport()}>Submit Report</button>
                     </div>
                 </div>
