@@ -35,6 +35,8 @@ function SupportChatSocket (server) {
             if(!generateConvId) return
         }
 
+        
+
         const loadMessages = handleMessageLoad(ws.user, ws.convId , ws)
         if(!loadMessages) return;
         

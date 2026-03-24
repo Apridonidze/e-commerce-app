@@ -1,32 +1,42 @@
-const db = require('../../utils/db')
-const onlineAdmins = require('../socket.stores/onlineAdmins')
+const db = require('../../utils/db');
+const onlineAdmins = require('../socket.stores/onlineAdmins');
 
-async function asignToAdmin (convId, ws) {
+async function asignToAdmin(convId, ws) {
+    try {
+        const onlineAdminsArr = Array.from(onlineAdmins.keys());
 
-    try{
+        if (onlineAdminsArr.length === 0) return ws.send(JSON.stringify({type: 'no_online_admins',message: "Could Not Find Available Admin. Try Later"}));
         
-        
+        const [rows] = await db.query(`select id, rooms from admin where id in (?)`,[onlineAdminsArr]);
 
-        const [query] = await db.query('select admin.rooms from admin')
-        const rooms = query.map(r => JSON.parse(r.rooms)?.rooms || []).flat();
+        let selectedAdmin = null;
+        let minRooms = Infinity;
 
-        if(rooms.includes(convId)){return}
-        
-        rooms.push(convId)    
-        await db.query(`UPDATE admin SET rooms = JSON_ARRAY() WHERE rooms IS NULL;`)
-        await db.query(`UPDATE admin SET rooms = JSON_ARRAY_APPEND(rooms, "$", ?) WHERE id = 1 AND NOT JSON_CONTAINS(rooms, JSON_QUOTE(?))`, [convId, convId]);
+        for (const admin of rows) {
+            const parsed = admin.rooms ? JSON.parse(admin.rooms) : [];
+            const count = parsed.length;
 
-        //if there is no rooms then send to first admin here
-        // const [query] = await db.query('select support_messages.sender_id , support_messages.content, support_messages.created_at from support_messages join users on support_messages.sender_id = users.id where support_messages.conversation_id  = ? ORDER BY support_messages.message_id DESC' , [convId])
+            if (count < minRooms) {
+                minRooms = count;
+                selectedAdmin = admin;
+            }
+        }
 
-        return true
-    }catch(err){
-        console.log
-        return false
-        //return error message via ws   
-        //close connection
+        if (!selectedAdmin) return false;
+
+        const currentRooms = selectedAdmin.rooms ? JSON.parse(selectedAdmin.rooms): [];
+
+        if (currentRooms.includes(convId)) return true;
+
+        await db.query(`update admin set rooms = JSON_ARRAY_APPEND (COALESCE(rooms, JSON_ARRAY()), "$", ?) where id = ?`,[convId, selectedAdmin.id]);
+
+        return true;
+
+    } catch (err) {
+        ws.send(JSON.stringify({type: 'internal_error',message: "Could Not Assign Your Chat To Admin. Try Later"}));
+        ws.close();
+        return false;
     }
 }
 
-
-module.exports = asignToAdmin 
+module.exports = asignToAdmin;
