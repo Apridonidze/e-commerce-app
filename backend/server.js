@@ -1,31 +1,28 @@
-const express = require('express')
-const app = express()
+require('dotenv').config(); //importing envv file
 
-require('dotenv').config()
+const express = require('express'); //importing express
+const app = express(); //defining express
 
-const cors = require('cors')
-const CorsOptions = require('./middlewares/CorsOptions')
+const cors = require('cors'); //importing cors library to prevent foreign sources to access server
+const CorsOptions = require('./middlewares/CorsOptions'); //importing cors option object to asign to cors library
 
-const webhook = require('./controllers/stripe')
+const webhook = require('./controllers/stripe'); //importing stripe webhook file
+app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }) , webhook.webhook); //creating route for webhook in server.js to pass raw json files instead of decoded ones
 
-app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }) , webhook.webhook)
+app.use(cors(CorsOptions));//using cors with corsoptions
+app.use(express.json()); // parsing incoming json requests
+app.use(express.urlencoded({extended : true})); // parses url-econded data
 
-app.use(cors(CorsOptions))
-app.use(express.json())
-app.use(express.urlencoded({extended : true}))
+const http = require('http');//importing http
+const server = http.createServer(app); //creating server with http for webscoket
+const PORT = process.env.PORT || 8081; //importing port from env file or defining 8081 as default if env file fails
 
-const http = require('http')
-const server = http.createServer(app)
+const routes = require('./routes');//importing routes folder
+const SupportChatSocket = require('./socket/SupportChatSocket'); //importing websocket file
 
-const PORT = process.env.PORT || 8081
-
-const SupportChatSocket = require('./socket/SupportChatSocket')
-SupportChatSocket(server)
-
-const routes = require('./routes')
-
-app.use('/api', routes)
+app.use('/api', routes);//defining api route for apis
+SupportChatSocket(server); //passing server data to websocket
 
 server.listen(PORT , () => {
     console.log(`Listening To Port:  ${PORT}`)
-})
+}); //listening to server
