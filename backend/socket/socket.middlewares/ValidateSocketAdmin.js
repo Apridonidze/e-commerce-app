@@ -17,7 +17,7 @@ async function ValidateSocketAdmin (user, ws) {
     }catch(err){
         ws.adminUser = null
         ws.send(JSON.stringify({type : "admin_access" , status : 500 , admin_access : false}))
-        ws.send(JSON.stringify({type : "internal_error" , message : err}))
+        ws.send(JSON.stringify({type : "internal_error"}))
         ws.close()
         return false;
     }

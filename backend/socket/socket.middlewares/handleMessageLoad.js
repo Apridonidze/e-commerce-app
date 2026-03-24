@@ -14,11 +14,7 @@ async function handleMessageLoad (user, convId , ws) {
                     content : msg.content,
                     created_at : msg.created_at,
                     status : msg.sender_id === user.userId ? msg.status : 'Seen'
-        }))
-
-        //check prevmessages length if length === 0 then return [] as a message
-
-
+        })) || []
 
         const clients = rooms.get(convId);
             
@@ -29,8 +25,8 @@ async function handleMessageLoad (user, convId , ws) {
 
         return true
     }catch(err){
-        console.log(err)
-        //return error message via ws
+        ws.send(JSON.stringify({type : 'internal_error' ,message : "Could Not Recieve Messages. Try Later"}))
+        ws.close()
         return false
     }
 }

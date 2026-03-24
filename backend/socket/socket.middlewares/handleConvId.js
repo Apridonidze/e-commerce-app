@@ -22,9 +22,8 @@ async function handleConvId (user ,ws) {
         return true
 
         }catch(err){
-            console.log(err)
-            ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Recieve Failed", errMessage : err}))
-            
+            ws.send(JSON.stringify({type : 'internal_error' ,message : "Could Not Generate Conversation Id. Try Later"}))
+            ws.close()
             return false
         }
 }
