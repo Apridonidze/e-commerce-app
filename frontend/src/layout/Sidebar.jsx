@@ -88,9 +88,6 @@ const Sidebar = () => {
                     <Link to={'/legal#privacy'}>Privacy Policy</Link>
                     <span>Copyright 2026</span>
                 </div>
-                <div className="end-bottom">
-                    <button>Logout</button>
-                </div>
             </div>
         </div>
     )

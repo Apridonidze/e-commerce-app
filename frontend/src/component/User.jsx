@@ -35,6 +35,5 @@ const User = () => {
     )
 }
 
-//TODO : create skeletons for User.jsx
 
 export default User
