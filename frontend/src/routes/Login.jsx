@@ -31,15 +31,15 @@ const Login =  () =>  {
         let data
 
         if(email.trim() == '' || password.trim() == email || password.trim() == email){isValid = false; setEmailErr(`This Field Can't Be Empty`) ; emailRef.current.classList.add('is-invalid'); emailRef.current.classList.remove('is-valid')}
-        else if(emailRegex.test(email) === false){isValid = false ; emailRef.current.classList.add('is-invalid') ; emailRef.current.classList.remove('is-valid'); setEmailErr('Insert Valid Email!')}
+        else if(emailRegex.test(email) === false){isValid = false ; emailRef.current.classList.add('is-invalid') ; emailRef.current.classList.remove('is-valid'); setEmailErr('Invalid Email')}
         else {isValid = true ;emailRef.current.classList.add('is-valid') ; emailRef.current.classList.remove('is-invalid'); setEmailErr(''); data = {...data, email : email}}
 
         if(password.trim() == '' || password.trim() == null || password.trim() == undefined){isValid = false; setPasswordErr(`This Field Can't Be Empty`) ; passwordRef.current.classList.add('is-invalid'); passwordRef.current.classList.remove('is-valid')}
-        else if (password.trim().length <= 8 ){isValid == false ; setPasswordErr('Your Password Should Be 8 Letters Long'); passwordRef.current.classList.add('is-invalid');passwordRef.current.classList.remove('is-valid')}
-        else if (NumberRegex.test(password) === false ) {isValid = false ; setPasswordErr('Your Password Should Contain Numbers');passwordRef.current.classList.add('is-invalid');passwordRef.current.classList.remove('is-valid')}
-        else if (regexContainsSpecial.test(password) === false ){isValid = false; setPasswordErr('Your Password Should Contain Special Characters');passwordRef.current.classList.add('is-invalid');passwordRef.current.classList.remove('is-valid')}
+        else if (password.trim().length <= 8 ){isValid == false ; setPasswordErr('Invalid Password'); passwordRef.current.classList.add('is-invalid');passwordRef.current.classList.remove('is-valid')}
+        else if (NumberRegex.test(password) === false ) {isValid = false ; setPasswordErr('Invalid Password');passwordRef.current.classList.add('is-invalid');passwordRef.current.classList.remove('is-valid')}
+        else if (regexContainsSpecial.test(password) === false ){isValid = false; setPasswordErr('Invalid Password');passwordRef.current.classList.add('is-invalid');passwordRef.current.classList.remove('is-valid')}
         else {isValid = true; setPasswordErr('') ; passwordRef.current.classList.remove('is-invalid'); passwordRef.current.classList.add('is-valid'); data = {...data, password : password}}
-        
+        // add error that says invalid mail/password do not say which one is incorrect for security
         if(isValid){
             try{
 

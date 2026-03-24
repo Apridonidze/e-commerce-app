@@ -17,6 +17,7 @@ import LeaveFeedback from '../routes/LeaveFeedback'
 import ReportPage from '../routes/ReportPage'
 import Legal from '../routes/Legal'
 import Sales from '../routes/Sales'
+import NotFound from '../routes/NotFound'
 
 const AppRouter = () => {
 
@@ -37,7 +38,7 @@ const AppRouter = () => {
     {path : '/legal' , element  :<Legal />},
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
-    {path : '*' , element : <></>}, /**add 404 page with not-found url for this and button to go back to main page */
+    {path : '*' , element : <NotFound />}, /**add 404 page with not-found url for this and button to go back to main page */
     //add  which pages should be used with cookies rest left empty
   ])
 
