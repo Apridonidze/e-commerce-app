@@ -1,3 +1,3 @@
-let onlineAdmins = new Map()
+let onlineAdmins = new Map(); //object to store online admins ids
 
-module.exports = onlineAdmins
+module.exports = onlineAdmins; //exporting object
