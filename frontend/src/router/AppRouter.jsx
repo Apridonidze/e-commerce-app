@@ -43,34 +43,6 @@ const AppRouter = () => {
 
   //add localstorage theme get method, and style project based on its references (e.g : dark, light)
   
-// {
-//             id: 5,
-//             category: 'Product',
-//             icon: <i className="fa-solid fa-circle-exclamation"></i>,
-//             title: 'Inappropriate Content',
-//             desc: 'Offensive material or behavior violating community guidelines'
-//         },
-//         {
-//             id: 6,
-//             category: 'Product',
-//             icon: <i className="fa-solid fa-tags"></i>,
-//             title: 'Misleading Description',
-//             desc: 'Product details do not match actual item received'
-//         },
-//         {
-//             id: 7,
-//             category: 'Product',
-//             icon: <i className="fa-solid fa-box-open"></i>,
-//             title: 'Damaged Product',
-//             desc: 'Item arrived broken or not in expected condition'
-//         },
-//         {
-//             id: 8,
-//             category: 'Product',
-//             icon: <i className="fa-solid fa-copyright"></i>,
-//             title: 'Counterfeit Item',
-//             desc: 'Fake or unauthorized replica being sold'
-//         },
 
   return(
     <div className="app-container">
