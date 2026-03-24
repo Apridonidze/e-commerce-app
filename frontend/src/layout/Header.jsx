@@ -5,7 +5,6 @@ import { BACKEND_URL } from "../../config";
 import { useLocation } from "react-router-dom";
 const Header = ({ setProducts }) => {
 
-    const [dataList,setDataList] = useState([]);
     const [searchItem, setSearchItem] = useState('');
 
     const regexContainsSpecial = /[^\w\s]/;
@@ -22,10 +21,8 @@ const Header = ({ setProducts }) => {
         try{
             const response = await axios.post(`${BACKEND_URL}/api/product/search-product` , {searchItem , type : location?.pathname.split('/')[1]})
             if(response.status === 204){
-                setDataList([])
                 setProducts([])
             }
-            setDataList(response.data.products)
             setProducts(response.data.products)
             // .then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
         }catch(err){
@@ -50,9 +47,6 @@ const Header = ({ setProducts }) => {
                 <div className="input-group  align-items-center ">
                     <i className="fa-solid fa-magnifying-glass"></i>
                     <input type="text" className='form-control' list="searchlist" onChange={(e) => setSearchItem(e.target.value)} value={searchItem} tabIndex={1}/>
-                    <datalist id="searchlist">
-                        {dataList?.map((dl, dlId) => <option key={dlId} value={dl.title} />)}
-                    </datalist>
                 </div>
             </div>
 
