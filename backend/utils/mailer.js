@@ -1,8 +1,8 @@
-const sgMail = require('@sendgrid/mail');
+require('dotenv').config();//importing env file
 
-require('dotenv').config()
+const sgMail = require('@sendgrid/mail');//importing mail sender library
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);//assigning apikey to sendGrid events
 
 const sendEmail = async ({ to, subject, html }) => {
     return sgMail.send({
@@ -11,6 +11,6 @@ const sendEmail = async ({ to, subject, html }) => {
         subject,
         html,
     });
-};
+};//defining body of the mail sent by us
 
-module.exports = sendEmail;
+module.exports = sendEmail;//exporting utility
