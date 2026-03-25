@@ -33,8 +33,8 @@ const Header = ({ setProducts }) => {
     }
 
     useEffect(() => {
-        console.log(location)
-        fetchDataList()
+        if(location.pathname == '/' || location.pathname == '/sales' )  fetchDataList();
+        return
     },[searchItem])
 
 
