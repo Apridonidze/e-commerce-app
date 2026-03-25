@@ -30,7 +30,7 @@ const ProductPage = () => {
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
-    const [toggleReportProduct, setToggleReportProduct] = useState({status : true, productId: null})
+    const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId: null})
     const [toggleSidebar, setToggleSidebar]= useState(false);
 
     const [toggleMore, setToggleMore] = useState(false)
@@ -194,7 +194,7 @@ const ProductPage = () => {
 
                             {isInCart ? (<button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button>) : (
                                 amount === 0 ? (<button disabled>Add To Cart</button>) : (
-                                    <button onClick={() => handleAddToCart(product.products_id)} disabled={cookies ? true : false}>Add To Cart</button>)
+                                    <button onClick={() => handleAddToCart(product.products_id)} disabled={cookies ? false : true}>Add To Cart</button>)
                             )}
                         </div>
                     </div>

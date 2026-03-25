@@ -34,7 +34,7 @@ const Sales = () => {
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleSidebar, setToggleSidebar]= useState(false);
-    const [toggleReportProduct, setToggleReportProduct] = useState({status : true, productId: null})
+    const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId: null})
 
 
     const fetchProducts = async(offset, category) => {

@@ -4,7 +4,7 @@ async function add (req,res) {
     
     const { id } = req.body; //getting data from req body
     if(!Number(id)) return res.status(400).json({message : "Invalid User Id Format"}); //validating if id is number
-
+    
     try{
 
         const [ adminQuery ] = await db.query('insert into admin (id) values (?)' , Number(id)); //inserting id into admin table

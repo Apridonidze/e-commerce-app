@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BACKEND_URL } from "../../../config";
 
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext, useRef } from "react"
 import { useCookies } from "react-cookie";
 import { UserContext } from "../../context/UserContext";
 
@@ -14,6 +14,8 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
     const [selectedUser, setSelectedUser] = useState();
     const [dataList,setDataList] = useState([]);
     const [searchItem, setSearchItem] = useState('');
+
+    const btnRefs = useRef([null])
 
     const regexContainsSpecial = /[^\w\s]/;
 
@@ -57,7 +59,9 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
             const response = await axios.post(`${BACKEND_URL}/api/admin`, {id} , {headers: {Authorization  : `Bearer ${cookies.token}`}})
 
             if(response.status === 200){
-                admins.offlineAdmins.push(id);
+                btnRefs.current = btnRefs.current.filter(ref => ref.value == id);
+                btnRefs.current.disabled = true
+                setAdmins(prev => ({...prev,offlineAdmins: [...prev.offlineAdmins, id]}));
             }
 
         }catch(err){
@@ -77,7 +81,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
             const response = await axios.delete(`${BACKEND_URL}/api/admin/${id}` , {headers: {Authorization  : `Bearer ${cookies.token}`}})
 
             if(response.status === 200){
-                console.log(response)
+                setAdmins(prev => ({...prev, onlineAdmins: prev.onlineAdmins.filter(a => a !== id), offlineAdmins: prev.offlineAdmins.filter(a => a != id)}));
                 // toggle success message and tell them to refreshh page to seee updated admin list
             }
 
@@ -101,10 +105,10 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
                 </div>
                 <div className="data-list">
                     {dataList[0] !== null ? (
-                        dataList.map(u => (
+                        dataList.map((u, uId) => (
                             <div key={u.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
                                 <span>{u.fullname} - {u.email}</span>
-                                <button onClick={() => handleAddAdmin(u.id)} disabled={admins?.offlineAdmins.some(adm => adm.id == u.id) || admins?.onlineAdmins.some(adm => adm.id == u.id)}>Promote</button>
+                                <button value={u.id} onClick={() => handleAddAdmin(u.id)} disabled={admins?.offlineAdmins.some(adm => adm.id == u.id) || admins?.onlineAdmins.some(adm => adm.id == u.id)} ref={(e) => btnRefs.current[uId] = e}>Promote</button>
                             </div>
                     ))) : dataList?.length === 0 ? <p></p>  : <p>No users found</p>}
                 </div>

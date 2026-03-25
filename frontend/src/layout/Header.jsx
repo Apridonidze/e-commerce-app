@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react"
 import { BACKEND_URL } from "../../config";
 import { useLocation } from "react-router-dom";
+
 const Header = ({ setProducts }) => {
 
     const [searchItem, setSearchItem] = useState('');
