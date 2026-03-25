@@ -34,6 +34,10 @@ const Sales = () => {
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleSidebar, setToggleSidebar]= useState(false);
+    const [toggleAlert, setToggleAlert] = useState(false)
+
+            
+
     const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId: null})
 
 

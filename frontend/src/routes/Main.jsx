@@ -1,31 +1,33 @@
-import axios from "axios"
-import { useCookies } from "react-cookie"
+import axios from "axios";
+import { BACKEND_URL } from "../../config";
 
-import { useEffect, useState } from "react"
 
-import { BACKEND_URL } from "../../config"
+import { useCookies } from "react-cookie";
+import { useEffect, useState, useContext } from "react";
 
-import Category from "../component/Category"
-import Header from "../layout/Header"
-import SupportChatContainer from "../component/SupportChatContainer"
-import Sidebar from "../layout/Sidebar"
-import Product from "../component/Product"
-import StatusMessage from "../alerts/StatusMessage"
 
-import Skeleton from "react-loading-skeleton" //relocate skeletons for folder
+import { ProductContext } from "../context/ProductContext";
 
-import { useContext } from "react"
-import { ProductContext } from "../context/ProductContext"
-import EditProduct from "../admin/components/EditProduct"
-import RemoveProduct from "../admin/components/RemoveProduct"
-import AddToCart from "../component/AddToCart"
-import ReportProduct from "../component/ReportProduct"
+
+import Category from "../component/Category";
+import Header from "../layout/Header";
+import Sidebar from "../layout/Sidebar";
+
+import SupportChatContainer from "../component/SupportChatContainer";
+import EditProduct from "../admin/components/EditProduct";
+import Product from "../component/Product";
+import RemoveProduct from "../admin/components/RemoveProduct";
+import AddToCart from "../component/AddToCart";
+import ReportProduct from "../component/ReportProduct";
+
+import Skeleton from "react-loading-skeleton";
+import StatusMessage from "../alerts/StatusMessage";
 
 const Main = () => {
 
-    const { prevProducts } = useContext(ProductContext)
-
     const [ cookies ] = useCookies(['token'])
+    
+    const { prevProducts } = useContext(ProductContext)
 
     const [products, setProducts] = useState([])
     const [offset, setOffset] = useState(0)
@@ -35,6 +37,7 @@ const Main = () => {
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null})
+    const [toggleAlert, setToggleAlert] = useState(false)
     const [toggleSidebar, setToggleSidebar]= useState(false);
     
     const fetchProducts = async(offset, category) => {
@@ -65,7 +68,7 @@ const Main = () => {
     
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
-            
+                
             {toggleAlert ? <StatusMessage setToggleAlert={setToggleAlert}/> : <></>}
 
             {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
@@ -77,7 +80,7 @@ const Main = () => {
             </div>
             <div className="main-end col " style={{minHeight : '100vh'}}>
 
-                <Header setProducts={setProducts}/>
+                <Header setProducts={setProducts} setToggleSidebar={setToggleSidebar}/>
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
 
                 <div className="products row">
