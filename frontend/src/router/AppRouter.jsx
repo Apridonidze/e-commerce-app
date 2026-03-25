@@ -18,8 +18,11 @@ import ReportPage from '../routes/ReportPage'
 import Legal from '../routes/Legal'
 import Sales from '../routes/Sales'
 import NotFound from '../routes/NotFound'
+import { useEffect, useRef } from 'react'
 
 const AppRouter = () => {
+
+  const bodyRef = useRef(null)
 
   const router = createBrowserRouter([
     {path : '/' , element : <Main />},
@@ -43,10 +46,9 @@ const AppRouter = () => {
   ])
 
   //add localstorage theme get method, and style project based on its references (e.g : dark, light)
-  
 
   return(
-    <div className="app-container">
+    <div className="app-container" ref={bodyRef}>
       <RouterProvider router={router}/>
     </div>
   )

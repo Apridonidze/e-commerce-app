@@ -12,6 +12,8 @@ const Header = ({ setProducts }) => {
 
     const location = useLocation()
 
+    const [theme ,setTheme] = useState(localStorage.getItem('theme'))
+    
     const fetchDataList = async() => {
 
         if(searchItem.trim().length < 1 || searchItem.trim() === "" || searchItem === "" || 
@@ -37,9 +39,6 @@ const Header = ({ setProducts }) => {
         return
     },[searchItem])
 
-
-    // make header.jsx reads its location with useLocation and do not trigger api call if it is on different route than Main.jsx
-
     // add menu button that is visible on small devices , make it add classList to sidebar that will be visible by the classlists
 
     return(
@@ -53,8 +52,7 @@ const Header = ({ setProducts }) => {
             </div>
 
             <div className="header-end ">
-                <i class="fa-solid fa-moon"></i>
-                <i class="fa-solid fa-sun"></i>
+                <button className="btn" onClick={() => setTheme(prev => (prev == 'dark' ? 'light' : 'dark'))}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
                 <i class="fa-solid fa-basket-shopping"></i>
                 <i class="fa-solid fa-bell"></i>
             </div>
