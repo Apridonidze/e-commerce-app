@@ -1,7 +1,14 @@
+.sidebar-container{
+    position: relative;
+    width: fit-content;
+}
+
 @media (max-width: 925px) {
     .sidebar-container{
         position: absolute;
-        transform: translateX(-400px); /**adjust x position with toggle functiopn */
+        left: 0px;
+        width: 80vw;
+        transform: translateX(-700px); /**adjust x position with toggle functiopn */
         z-index: 999;
     }
     .sidebar-container.active{

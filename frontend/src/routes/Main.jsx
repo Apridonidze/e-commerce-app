@@ -59,7 +59,7 @@ const Main = () => {
     },[category, offset]); //logic executes on first mount and after dependencies change
 
     return(
-        <div className="main-container container-fluid row" style={{minHeight: '100vh'}}>
+        <div className="main-container container-fluid d-flex" style={{minHeight: '100vh', width : '100%', gap: '20px'}}>
 
             {/* toggling components */}   
 
@@ -71,10 +71,10 @@ const Main = () => {
             
             {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
 
-            <div className="main-start col col-2 ">
+            <div className="main-start">
                 <Sidebar /> 
             </div>
-            <div className="main-end col col-12 col-md-10">
+            <div className="main-end border" style={{width : '100%'}}>
 
                 <Header setProducts={setProducts} />
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
