@@ -1,13 +1,10 @@
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
 
-
 import { useCookies } from "react-cookie";
 import { useEffect, useState, useContext } from "react";
 
-
 import { ProductContext } from "../context/ProductContext";
-
 
 import Category from "../component/Category";
 import Header from "../layout/Header";
