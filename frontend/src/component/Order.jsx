@@ -21,8 +21,7 @@ const Order = ({ setCart, cart }) => {
 
     const orderItems = async() => {
         
-
-        let itemsIds = selectedItems?.map(prod => ({product_id: prod.product_id, amount : prod.amount, price : prod.price}))
+        let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.price}))
         
         try{
 

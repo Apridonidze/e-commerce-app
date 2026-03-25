@@ -4,7 +4,6 @@ const db = require('../../utils/db'); //importing db utility
 async function add(req, res) {
 
     const data = req.body; //definiing request body
-
     const Schema = z.object({
         itemsIds: z.array(z.object({product_id: z.coerce.number().int().positive(),amount: z.coerce.number().int().positive(),price: z.coerce.number().positive()})).nonempty(),
         address: z.string().min(5).max(255),
@@ -14,6 +13,7 @@ async function add(req, res) {
     function validateParams (data) {return Schema.safeParse(data)}; //definign functuon to valdiate data with schema provided
             
     const validateParamsResponse = validateParams({itemsIds : data.itemsIds, address : data.address, totalPrice: Number(data.totalPrice)}); //passing data to validator funciton 
+    console.log(validateParamsResponse)
     if(!validateParamsResponse.success) return res.status(400).json({message: "Invalid Credidentials"});  //returning error message if validation fails
 
     try {
