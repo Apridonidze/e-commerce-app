@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react"
 import { BACKEND_URL } from "../../config";
 import { useLocation } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme, useToggle } from "../context/ThemeContext";
 import { Link } from "react-router-dom";
 const Header = ({ setProducts }) => {
 
@@ -14,7 +14,8 @@ const Header = ({ setProducts }) => {
     const location = useLocation()
 
     const { theme, toggleTheme } = useTheme();
-    
+    const { toggle , toggleSidebar} = useToggle()
+
     const fetchDataList = async() => {
 
         if(searchItem.trim().length < 1 || searchItem.trim() === "" || searchItem === "" || 
@@ -39,7 +40,6 @@ const Header = ({ setProducts }) => {
         if(location.pathname == '/' || location.pathname == '/sales' )  fetchDataList();
         return
     },[searchItem])
-
     // add menu button that is visible on small devices , make it add classList to sidebar that will be visible by the classlists
 
     return(
@@ -55,7 +55,7 @@ const Header = ({ setProducts }) => {
             <div className="header-end ">
                 <button className="btn" onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
                 <Link to='/dashboard'><i class="fa-regular fa-user"></i></Link>
-                <button className="btn" ><i class="fa-solid fa-bars"></i></button>
+                <button className="btn" onClick={() => toggleSidebar(!toggle)}><i class="fa-solid fa-bars"></i></button>
             </div>
             
         </div>

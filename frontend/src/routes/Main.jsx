@@ -71,10 +71,10 @@ const Main = () => {
             
             {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
 
-            <div className="main-start col col-4 col-md-2">
+            <div className="main-start col col-2 ">
                 <Sidebar /> 
             </div>
-            <div className="main-end col col-8 col-md-10">
+            <div className="main-end col col-12 col-md-10">
 
                 <Header setProducts={setProducts} />
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>

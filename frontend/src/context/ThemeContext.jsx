@@ -23,3 +23,17 @@ export const ThemeProvider = ({ children }) => {
         <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
     );
 };
+
+const ToggleContext = createContext();
+
+export const useToggle = () => useContext(ToggleContext);
+
+export const ToggleProvider = ({ children }) => {
+
+    const [toggle, setToggle] = useState(false);
+    const toggleSidebar = () => setToggle(!toggle);
+
+    return (
+        <ToggleContext.Provider value={{ toggle, toggleSidebar }}>{children}</ToggleContext.Provider>
+    );
+};
