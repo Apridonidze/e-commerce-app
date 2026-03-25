@@ -61,15 +61,12 @@ const Main = () => {
         return () => {fetchProducts()}
     },[category, offset])
 
-    useEffect(() => {
-        const toggles = ['setToggleEdit' , 'setToggleRemove', 'setToggleSidebar']
-        // disable other toggles if one is active
-    },[toggleEdit, toggleRemove , toggleSidebar])
-    //cleanup
+    
     
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
-            {/* <StatusMessage /> */}
+            
+            {toggleAlert ? <StatusMessage setToggleAlert={setToggleAlert}/> : <></>}
 
             {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
             {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }

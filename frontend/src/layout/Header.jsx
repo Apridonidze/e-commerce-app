@@ -4,6 +4,7 @@ import { useState } from "react"
 import { BACKEND_URL } from "../../config";
 import { useLocation } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
+import Cart from "../component/Cart";
 const Header = ({ setProducts }) => {
 
     const [searchItem, setSearchItem] = useState('');
@@ -13,6 +14,7 @@ const Header = ({ setProducts }) => {
     const location = useLocation()
 
     const { theme, toggleTheme } = useTheme();
+    const [toggleCart,setToggleCart] = useState(false)
     
     const fetchDataList = async() => {
 
@@ -44,6 +46,8 @@ const Header = ({ setProducts }) => {
     return(
         <div className="header-container  d-flex justify-content-between" >
 
+            {toggleCart ? <div><div className="cart-background"></div> <Cart /> </div> : <></>}
+
             <div className="header-start">
                 <div className="input-group  align-items-center ">
                     <i className="fa-solid fa-magnifying-glass"></i>
@@ -53,8 +57,7 @@ const Header = ({ setProducts }) => {
 
             <div className="header-end ">
                 <button className="btn" onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
-                <i class="fa-solid fa-basket-shopping"></i>
-                <i class="fa-solid fa-bell"></i>
+                <button className="btn" onClick={() => setToggleCart(!toggleCart)}><i class="fa-solid fa-basket-shopping"></i></button>
             </div>
             
         </div>
