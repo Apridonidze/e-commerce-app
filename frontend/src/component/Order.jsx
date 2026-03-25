@@ -4,6 +4,7 @@ import axios from "axios"
 import OrderCheckbox from "./OrderCheckbox"
 import { useEffect, useRef, useState } from "react"
 import SubmitOrder from "./SubmitOrder"
+import PaymentMessage from "../alerts/PaymentMessage"
 
 const Order = ({ setCart, cart }) => {
 
@@ -16,6 +17,8 @@ const Order = ({ setCart, cart }) => {
     const selectAllRef = useRef(null)
 
     const [toggleOrder , setToggleOrder] = useState(false)
+    const [togglePayment, setTogglePayment] = useState(false)
+
     const orderItems = async() => {
         
 
@@ -27,11 +30,8 @@ const Order = ({ setCart, cart }) => {
             const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, address , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
             if(order.status === 200){
-                // toggle success message
-                // add payment success message toggle here before ordering
-                // setTimeout(() => {
-                //     window.location.reload()
-                // }, 5000)
+                setTogglePayment(true)
+                
             }
 
         }catch(err){
@@ -96,7 +96,7 @@ const Order = ({ setCart, cart }) => {
         <div className="order-container bg-white position-relative" style={{right : '25vw', bottom : '25vw'}}>
 
             {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setToggleOrder(false), setAddress('')}}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
-            
+            {togglePayment ? <div><div className="payment-success-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setTogglePayment(false)}}></div> <PaymentMessage /> </div> : <></>}
             <div className="order-top">
                 <div className="top-start">
                     <h3>Choose Products To Be Ordered</h3>
