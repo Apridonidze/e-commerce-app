@@ -4,4 +4,20 @@
         transform: translateX(-400px); /**adjust x position with toggle functiopn */
         z-index: 999;
     }
+    .sidebar-container.active{
+        transform: translateX(0px);
+    }
+    .sidebar-background{
+        display: none;
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        background-color: red;
+        top: 0px;
+        left: 0px;
+        z-index: 990;
+    }
+    .sidebar-background.active{
+        display: flex;
+    }
 }
