@@ -40,6 +40,7 @@ const ProductPage = () => {
     useEffect(() => {
 
         const fetchSimilarProducts = async (category, subcategory) => {
+            console.log(category , subcategory)
             try {
                 
                 const res = await axios.get(`${BACKEND_URL}/api/product/similar-products`, {params: { category, subcategory, id }})
@@ -49,6 +50,7 @@ const ProductPage = () => {
                 console.log(err)
             }
         }
+
 
         const fetchProduct = async () => {
             try {
@@ -74,6 +76,8 @@ const ProductPage = () => {
         fetchProduct()
 
     }, [id])
+
+    console.log(product)
 
     useEffect(() => {
         if (!product || !cartIds) return;

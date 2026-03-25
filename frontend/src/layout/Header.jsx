@@ -33,6 +33,7 @@ const Header = ({ setProducts }) => {
     }
 
     useEffect(() => {
+        console.log(location)
         fetchDataList()
     },[searchItem])
 
