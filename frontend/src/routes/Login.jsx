@@ -47,6 +47,7 @@ const Login =  () =>  {
                     console.log(resp);
                     setCookies('token' , resp.data.token , {path : '/' , maxAge :  2592000})
                     navigator('/' , {replace : true})
+                    window.location.reload()
                 })
 
 

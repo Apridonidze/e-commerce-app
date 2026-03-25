@@ -34,7 +34,7 @@ const SubmitOrder = ({ setToggleOrder, orderItems, setAddress, address }) => {
 
             setError('')
         }
-    }
+    } //refactor address reading 
 
     useEffect(() => {btnRef.current.disabled = true},[])
 
@@ -49,7 +49,7 @@ const SubmitOrder = ({ setToggleOrder, orderItems, setAddress, address }) => {
             </div>
 
             <button onClick={() => {setToggleOrder(false) , setAddress('')}}>Cancle Ordering</button>
-            <button ref={btnRef} onClick={orderItems}>Ordaser</button>
+            <button ref={btnRef} onClick={orderItems}>Order</button>
         </div>
     )
 }

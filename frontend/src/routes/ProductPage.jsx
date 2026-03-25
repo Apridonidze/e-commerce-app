@@ -194,7 +194,7 @@ const ProductPage = () => {
 
                             {isInCart ? (<button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button>) : (
                                 amount === 0 ? (<button disabled>Add To Cart</button>) : (
-                                    <button onClick={() => handleAddToCart(product.products_id)}>Add To Cart</button>)
+                                    <button onClick={() => handleAddToCart(product.products_id)} disabled={cookies ? true : false}>Add To Cart</button>)
                             )}
                         </div>
                     </div>

@@ -6,9 +6,9 @@ async function add(req, res) {
     const data = req.body; //definiing request body
 
     const Schema = z.object({
-        itemsIds: z.array(z.object({product_id: z.coerce.number().int().positive(),amount: z.number().int().positive(),price: z.number().positive()})).nonempty(),
+        itemsIds: z.array(z.object({product_id: z.coerce.number().int().positive(),amount: z.coerce.number().int().positive(),price: z.coerce.number().positive()})).nonempty(),
         address: z.string().min(5).max(255),
-        totalPrice : z.number().min(40).max(99999)
+        totalPrice : z.coerce.number().min(40).max(99999)
     });//defining schema for requests data
             
     function validateParams (data) {return Schema.safeParse(data)}; //definign functuon to valdiate data with schema provided

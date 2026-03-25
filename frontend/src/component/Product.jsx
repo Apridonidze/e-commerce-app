@@ -79,7 +79,7 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
 
                 <div className="product-bottom d-flex align-items-center" >
                     
-                    {isInCart ? <button onClick={() => handleDeleteFromCart(prod?.products_id)}>In Cart</button> : <button onClick={() => setToggleAddToCart({status : true , product : prod})}>Add To Cart</button> }
+                    {!user ? <></> : isInCart ? <button onClick={() => handleDeleteFromCart(prod?.products_id)}>In Cart</button> : <button onClick={() => setToggleAddToCart({status : true , product : prod})}>Add To Cart</button> }
                     
                 </div>
 

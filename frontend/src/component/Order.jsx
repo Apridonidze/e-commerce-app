@@ -29,7 +29,9 @@ const Order = ({ setCart, cart }) => {
             if(order.status === 200){
                 // toggle success message
                 // add payment success message toggle here before ordering
-                window.location.reload()
+                setTimeout(() => {
+                    window.location.reload()
+                }, 5000)
             }
 
         }catch(err){
