@@ -22,34 +22,33 @@ import StatusMessage from "../alerts/StatusMessage";
 
 const Main = () => {
 
-    const [ cookies ] = useCookies(['token'])
-    
-    const { prevProducts } = useContext(ProductContext)
+    const [ cookies ] = useCookies(['token']);
+    const { prevProducts } = useContext(ProductContext);
 
-    const [products, setProducts] = useState([])
-    const [offset, setOffset] = useState(0)
+    const [products, setProducts] = useState([]);
+    const [offset, setOffset] = useState(0);
     const [category, setCategory] = useState(null);
 
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null})
-    const [toggleAlert, setToggleAlert] = useState(false)
+    const [toggleAlert, setToggleAlert] = useState({status : false , responseStatus : null, message : null});
     const [toggleSidebar, setToggleSidebar]= useState(false);
     
     const fetchProducts = async(offset, category) => {
-
         try{
 
             const product = await axios.get(`${BACKEND_URL}/api/product`, { params : {offset, category} })
             
             if(product.status === 204) setProducts([])
             setProducts(product.data.products)
+        setToggleAlert({status : true , responseStatus : false, message : product.data.message})
+
 
         }catch(err){
+            setToggleAlert({status : true , responseStatus : false, message : err.response.data.message})
             setProducts(prevProducts)
-            console.log(err)
-            //toggle allert message and pass errors
         }
     }
     
@@ -66,7 +65,7 @@ const Main = () => {
     return(
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
                 
-            {toggleAlert ? <StatusMessage setToggleAlert={setToggleAlert}/> : <></>}
+            {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             {toggleSidebar ? <div><div className="sidebar-background"></div><Sidebar /></div>  : <></>}
             {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
             {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }

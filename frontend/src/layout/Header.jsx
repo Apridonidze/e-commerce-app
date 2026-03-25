@@ -14,7 +14,6 @@ const Header = ({ setProducts, setToggleSidebar }) => {
     const location = useLocation()
 
     const { theme, toggleTheme } = useTheme();
-    const [toggleCart,setToggleCart] = useState(false)
     
     const fetchDataList = async() => {
 

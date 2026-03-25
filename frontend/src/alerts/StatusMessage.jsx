@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 
-const StatusMessage = ({ setToggleAlert }) => {
+const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
 
     useEffect(() => {
 
         setTimeout(() => {
-            setToggleAlert(false);
+            setToggleAlert({status : false, responseStatus : false, message : null});
         },3000);
 
     },[])
 
     return(
         <div className="status-message-container position-fixed top-0 border " tabIndex={99}>
-            error
+            {toggleAlert.message}
         </div>
     )
 }
