@@ -5,10 +5,10 @@ async function isAdmin ( req , res , next) {
 
         const id = req.user.userId; //defining userId from validateToekn middleware
 
-        const [rows] = await db.query(`select users.id, admin.id from users left join admin on users.id = admin.id where users.id = ?`, [id]);
+        const [rows] = await db.query(`select users.id, admin.id from users join admin on users.id = admin.id where users.id = ?`, [id]);
 
         if (rows.length === 0) return res.status(404).json({message: "User Not Found",isAdmin: false});//returning 404 status error if usser is not found
-        if (!rows[0].admin_id) return res.status(403).json({message: "Access Declined",isAdmin: false}); //returning 403 status error if user is found but not in admin list
+        if (!rows[0]) return res.status(403).json({message: "Access Declined",isAdmin: false}); //returning 403 status error if user is found but not in admin list
 
         req.user.isAdmin = true; //setting req.user.isAdmin to true after
 
