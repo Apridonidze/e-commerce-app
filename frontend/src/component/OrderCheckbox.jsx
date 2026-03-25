@@ -10,7 +10,7 @@ const OrderCheckbox = ({ prod, prodId, key, setCart, cart, handleCheckbox, check
     const handleDeleteFromCart = async(e) => {
         try{
 
-            await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setCart()})
+            await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp)})
             setCart(cart.filter(c => c.product_id !== prod.product_id))
             
         }catch(err){
@@ -23,7 +23,7 @@ const OrderCheckbox = ({ prod, prodId, key, setCart, cart, handleCheckbox, check
 
             <div className="checkbox-start d-flex justify-content-between">
                 <div className="d">
-                    <input type="checkbox" id={prod?.product_id} onChange={(e) => handleCheckbox(e, prod?.amount, prod?.price)} ref={(e) => (checkboxRef.current[prod?.product_id] = e)}/>
+                    <input type="checkbox" id={prod?.product_id} onChange={(e) => handleCheckbox(e, Number(prod?.amount) , Number(prod?.price))} ref={(e) => (checkboxRef.current[prod?.product_id] = e)}/>
                     {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod?.images)[0]}`} style={{maxHeight:'80px' , maxWidth : '80px'}}/>}
                 </div>
                 <div className="d">

@@ -19,8 +19,8 @@ const Order = ({ setCart, cart }) => {
     const orderItems = async() => {
         
 
-        let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.price}))
-
+        let itemsIds = selectedItems?.map(prod => ({product_id: prod.product_id, amount : prod.amount, price : prod.price}))
+        
         try{
 
             setToggleOrder(false)
@@ -29,9 +29,9 @@ const Order = ({ setCart, cart }) => {
             if(order.status === 200){
                 // toggle success message
                 // add payment success message toggle here before ordering
-                setTimeout(() => {
-                    window.location.reload()
-                }, 5000)
+                // setTimeout(() => {
+                //     window.location.reload()
+                // }, 5000)
             }
 
         }catch(err){
@@ -72,7 +72,7 @@ const Order = ({ setCart, cart }) => {
         const checked = e.target.checked;
 
         if (checked) {
-            setSelectedItems((prev) => [...prev, {id , amount, price : price * amount}]);
+            setSelectedItems((prev) => [...prev, {id , amount, price}]);
         } else {
             setSelectedItems((prev) => prev.filter((item) => item.id !== id));
         }
@@ -86,9 +86,8 @@ const Order = ({ setCart, cart }) => {
         }else {
             selectAllRef.current.checked = false
         }
-
-        let total = selectedItems.reduce((sum, item) => sum + item.price * item.amount, 0);
-     
+        console.log(selectedItems)
+        let total = selectedItems.reduce((sum, item) => sum + Number(item.price) * Number(item.amount), 0);     
         setTotalPrice(total)
         
     },[selectedItems, selectAllRef])

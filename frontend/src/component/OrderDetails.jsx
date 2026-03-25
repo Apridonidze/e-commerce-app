@@ -16,8 +16,8 @@ const OrderDetails = ({order, orderId, key , setOrders}) => {
 
     const fetchOrderDetails = async(id) => {
         try{
-
             const response = await axios.get(`${BACKEND_URL}/api/order/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
+            console.log(response)
 
             setProducts(response.data.orderItems)
 

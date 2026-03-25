@@ -20,14 +20,12 @@ async function add(req, res) {
 
         const { itemsIds, address, totalPrice } = req.body; //defining data from request body
         
-        const [order] = await db.query('insert into orders (user_id, total_price, status, address) values (?, ?, ?, ?)',[req.user.userId, totalPrice, 'Pending', address]); // creating new order
-        
-        await Promise.all(
-            itemsIds.map(async (item) => {
-                await db.query('insert into ordered_items (order_id, product_id, amount, price) values (?, ?, ?, ?)',[order.insertId, item.product_id, item.amount, item.price])
-                await db.query('update products set amount = amount - ? where products_id = ?',[item.amount, item.id])
-            })
-        );//mapping item ids
+        const [order] = await db.query('insert into orders (user_id, total_price, status, address) values (?, ?, ?, ?)',[req.user.userId, totalPrice, 'Pending', address]);
+
+        for (const item of itemsIds) {
+            await db.query('insert into ordered_items (order_id, product_id, amount, price) values (?, ?, ?, ?)',[order.insertId, item.product_id, item.amount, item.price]);
+            await db.query('update products set amount = amount - ? where products_id = ?',[item.amount, item.product_id]);
+        }
 
         await db.query('delete from cart where id = ?',[req.user.userId]); //clearing users cart
         return res.status(200).json({message: "Your Items Have Been Ordered Successfully, Wait For Delivery"});//returning success message

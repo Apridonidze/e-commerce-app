@@ -34,7 +34,7 @@ const OrderList = () => {
         return () => fetchOrders()
 
     },[])
-
+    console.log(orders)
     return(
         <div className="order-list-container">
             <h3>My Orders</h3>

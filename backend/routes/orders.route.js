@@ -7,7 +7,7 @@ const ValidateToken = require('../middlewares/ValidateToken');
 const isAdmin = require('../middlewares/isAdmin'); //importing middlewares
 
 router.get('/' , ValidateToken , orderRoutes.list);
-router.get('/:id', ValidateToken, isAdmin, orderRoutes.check);
+router.get('/:id', ValidateToken, orderRoutes.check);
 router.post('/' , ValidateToken , orderRoutes.add);
 router.delete('/:id' , ValidateToken , orderRoutes.remove);
 router.delete('/admin-remove/:id' , ValidateToken , isAdmin, orderRoutes.adminRemove); //defining api paths
