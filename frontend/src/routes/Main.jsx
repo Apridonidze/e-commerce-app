@@ -1,82 +1,82 @@
-import axios from "axios";
-import { BACKEND_URL } from "../../config";
+import axios from "axios"; //importing axios
+import { BACKEND_URL } from "../../config";  //importing backend url from env file
 
-import { useCookies } from "react-cookie";
-import { useEffect, useState, useContext } from "react";
+import { useCookies } from "react-cookie"; //importing react library
+import { useEffect, useState, useContext } from "react"; //importing react hooks
 
-import { ProductContext } from "../context/ProductContext";
+import { ProductContext } from "../context/ProductContext"; //importing products from context (to avoid api calls everytime user visits this route)
 
 import Category from "../component/Category";
 import Header from "../layout/Header";
-import Sidebar from "../layout/Sidebar";
+import Sidebar from "../layout/Sidebar"; //importing layout components
 
 import SupportChatContainer from "../component/SupportChatContainer";
 import EditProduct from "../admin/components/EditProduct";
 import Product from "../component/Product";
 import RemoveProduct from "../admin/components/RemoveProduct";
 import AddToCart from "../component/AddToCart";
-import ReportProduct from "../component/ReportProduct";
+import ReportProduct from "../component/ReportProduct"; //importing components
 
 import Skeleton from "react-loading-skeleton";
-import StatusMessage from "../alerts/StatusMessage";
+import StatusMessage from "../alerts/StatusMessage"; //importing skeletons for loading and component to  dissplay messages (error, warning)
 
 const Main = () => {
 
-    const [ cookies ] = useCookies(['token']);
-    const { prevProducts } = useContext(ProductContext);
+    const [ cookies ] = useCookies(['token']); //defining cookies
+    const { prevProducts } = useContext(ProductContext); //defining main products from context api
 
     const [products, setProducts] = useState([]);
     const [offset, setOffset] = useState(0);
-    const [category, setCategory] = useState(null);
+    const [category, setCategory] = useState(null);//states for product and its parameters
 
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
-    const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null})
+    const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null});
     const [toggleAlert, setToggleAlert] = useState({status : false , responseStatus : null, message : null});
-    const [toggleSidebar, setToggleSidebar]= useState(false);
     
     const fetchProducts = async(offset, category) => {
         try{
 
-            const product = await axios.get(`${BACKEND_URL}/api/product`, { params : {offset, category} })
+            const product = await axios.get(`${BACKEND_URL}/api/product`, { params : {offset, category} }); //fetching products from backend on offsets or category changes
             
-            if(product.status === 204) setProducts([])
-            setProducts(product.data.products)
-        setToggleAlert({status : true , responseStatus : false, message : product.data.message})
+            if(product.status === 204) setProducts([]); //handing 204 status code
+            setProducts(product.data.products); //storing products in state if status code is 200
 
-
-        }catch(err){
-            setToggleAlert({status : true , responseStatus : false, message : err.response.data.message})
-            setProducts(prevProducts)
-        }
-    }
+        }catch(err){ //catching error
+            setToggleAlert({status : true , responseStatus : false, message : err.response.data.message}); //defining data to toggle StatusMessage
+            setProducts(prevProducts); //Setting pre-loaded products in state in case error occurs
+        };
+    };
     
     useEffect(() => {
 
-        setProducts(prevProducts)
-        fetchProducts(offset,category);
+        setProducts(prevProducts); //setting context provided products in products state
+        fetchProducts(offset,category); //declearing funnction and passing offset, category arguments
 
-        return () => {fetchProducts()}
-    },[category, offset])
+        return () => fetchProducts(); //cleanup function to run function once on unmount
 
-    
-    
+    },[category, offset]); //logic executes on first mount and after dependencies change
+
     return(
-        <div className="main-container container-fluid row border" style={{height : '100vh'}}>
-                
+        <div className="main-container container-fluid row" style={{minHeight: '100vh'}}>
+
+            {/* toggling components */}   
+
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
-            {toggleSidebar ? <div><div className="sidebar-background"></div><Sidebar /></div>  : <></>}
+            
             {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
             {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }
-            {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
             {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
-            <div className="main-start col">
+            
+            {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
+
+            <div className="main-start col col-4 col-md-2">
                 <Sidebar /> 
             </div>
-            <div className="main-end col " style={{minHeight : '100vh'}}>
+            <div className="main-end col col-8 col-md-10">
 
-                <Header setProducts={setProducts} setToggleSidebar={setToggleSidebar}/>
+                <Header setProducts={setProducts} />
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
 
                 <div className="products row">
@@ -88,7 +88,7 @@ const Main = () => {
                 
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Main
+export default Main; //exporting route

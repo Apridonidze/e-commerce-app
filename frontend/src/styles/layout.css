@@ -1,0 +1,7 @@
+@media (max-width: 925px) {
+    .sidebar-container{
+        position: absolute;
+        transform: translateX(-000px);
+        z-index: 999;
+    }
+}

@@ -4,6 +4,7 @@ import { useEffect , useState, useRef, useContext } from 'react'
 import { BACKEND_URL } from '../../config'
 import { UserContext } from '../context/UserContext'
 
+import '../styles/layout.css'
 
 const Sidebar = () => {
 
@@ -37,7 +38,7 @@ const Sidebar = () => {
 
 
     return(
-        <div className="sidebar-container d-flex flex-column justify-content-between border position-sticky w-25 text-break" style={{maxHeight:"100vh"}}>
+        <div className="sidebar-container d-flex flex-column justify-content-between border text-break" style={{height:"100vh"}}>
             <div className="sidebar-top">
                 <h1>E-commerce-app-icon</h1>
             </div>
