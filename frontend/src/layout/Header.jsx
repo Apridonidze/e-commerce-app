@@ -56,6 +56,7 @@ const Header = ({ setProducts, setToggleSidebar }) => {
             <div className="header-end ">
                 <button className="btn" onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
                 <Link to='/dashboard'><i class="fa-regular fa-user"></i></Link>
+                <button className="btn" onClick={() => setToggleSidebar(true)}><i class="fa-solid fa-bars"></i></button>
             </div>
             
         </div>

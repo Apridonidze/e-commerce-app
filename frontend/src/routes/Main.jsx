@@ -67,7 +67,7 @@ const Main = () => {
         <div className="main-container container-fluid row border" style={{height : '100vh'}}>
                 
             {toggleAlert ? <StatusMessage setToggleAlert={setToggleAlert}/> : <></>}
-
+            {toggleSidebar ? <div><div className="sidebar-background"></div><Sidebar /></div>  : <></>}
             {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
             {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }
             {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
