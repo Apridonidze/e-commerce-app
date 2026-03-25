@@ -5,6 +5,8 @@ import AppRouter from '../router/AppRouter'
 import { UserProvider } from '../context/UserContext'
 import StripeProvider from '../stripe/StripeProvider'
 import { ProductProvider } from '../context/ProductContext'
+import { ThemeProvider } from '../context/ThemeContext'
+import '../styles/index.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -13,7 +15,9 @@ createRoot(document.getElementById('root')).render(
       <StripeProvider>
           <UserProvider>
             <ProductProvider>
-              <AppRouter />
+              <ThemeProvider>
+                <AppRouter />
+              </ThemeProvider>
             </ProductProvider>
           </UserProvider>
       </StripeProvider>

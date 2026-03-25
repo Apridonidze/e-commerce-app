@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react"
 import { BACKEND_URL } from "../../config";
 import { useLocation } from "react-router-dom";
-
+import { useTheme } from "../context/ThemeContext";
 const Header = ({ setProducts }) => {
 
     const [searchItem, setSearchItem] = useState('');
@@ -12,7 +12,7 @@ const Header = ({ setProducts }) => {
 
     const location = useLocation()
 
-    const [theme ,setTheme] = useState(localStorage.getItem('theme'))
+    const { theme, toggleTheme } = useTheme();
     
     const fetchDataList = async() => {
 
@@ -52,7 +52,7 @@ const Header = ({ setProducts }) => {
             </div>
 
             <div className="header-end ">
-                <button className="btn" onClick={() => setTheme(prev => (prev == 'dark' ? 'light' : 'dark'))}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
+                <button className="btn" onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
                 <i class="fa-solid fa-basket-shopping"></i>
                 <i class="fa-solid fa-bell"></i>
             </div>
