@@ -33,7 +33,7 @@ const Main = () => {
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null});
-    const [toggleAlert, setToggleAlert] = useState({status : false , responseStatus : null, message : null});
+    const [toggleAlert, setToggleAlert] = useState({status : true , responseStatus : null, message : null});
     
     const fetchProducts = async(offset, category) => {
         try{
@@ -59,9 +59,7 @@ const Main = () => {
     },[category, offset]); //logic executes on first mount and after dependencies change
 
     return(
-        <div className="main-container container-fluid d-flex" style={{minHeight: '100vh', width : '100%', gap: '20px'}}>
-
-            {/* toggling components */}   
+        <div className="main-container container-fluid d-flex mx-auto" style={{minHeight: '100vh', width : '100%', gap: '20px'}}> 
 
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             

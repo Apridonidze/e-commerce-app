@@ -3,6 +3,17 @@
     width: fit-content;
 }
 
+.status-message-container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position:fixed;
+    z-index: 99999;
+    width: auto;
+    left: 50%;
+    top: 5vw;
+}
+
 @media (max-width: 925px) {
     .sidebar-container{
         position: absolute;
@@ -26,5 +37,8 @@
     }
     .sidebar-background.active{
         display: flex;
+    }
+    .status-message-container{
+        left: 43%;
     }
 }
