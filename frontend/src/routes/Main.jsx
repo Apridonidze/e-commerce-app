@@ -20,6 +20,8 @@ import ReportProduct from "../component/ReportProduct"; //importing components
 import Skeleton from "react-loading-skeleton";
 import StatusMessage from "../alerts/StatusMessage"; //importing skeletons for loading and component to  dissplay messages (error, warning)
 
+import '../styles/products.css'
+
 const Main = () => {
 
     const [ cookies ] = useCookies(['token']); //defining cookies
@@ -82,7 +84,7 @@ const Main = () => {
                 <Header setProducts={setProducts} />
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
 
-                <div className="products row">
+                <div className="products">
                     {!isLoading ? 
                         products?.length < 1 ? <h1>No Products In This Category.</h1> 
                         : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart}/>) 

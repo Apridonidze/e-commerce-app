@@ -10,6 +10,8 @@ import axios from "axios"
 import { BACKEND_URL } from "../../config"
 import { useCookies } from "react-cookie"
 
+import '../styles/products.css'
+
 const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setToggleReportProduct, setToggleAddToCart } ) => {
 
     const navigator = useNavigate();
@@ -42,7 +44,7 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
     },[cartIds])
    
     return(
-        <div className="product-container col-12 col-lg-5 d-flex flex-column border border-secondary rounded-2 p-2" style={{cursor: 'pointer'}} key={prodId} >
+        <div className="product-container d-flex flex-column border border-secondary rounded-2 p-2" style={{cursor: 'pointer'}} key={prodId} >
 
             <div className="product-wrapper">
 
