@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState } from "react";; //importing state
 
-const Category = ({ setCategory, category, setProducts, fetchProducts,offset }) => {
+import '../styles/layout.css'
+const Category = ({ setCategory, category, fetchProducts,offset }) => {
 
     const categories = [
-        
         {
             "name": "Electronics",
             "slug": "electronics",
@@ -77,36 +77,36 @@ const Category = ({ setCategory, category, setProducts, fetchProducts,offset }) 
             "Kids Clothing"
             ]
         }
-    ]
+    ]; //defining categories with its subcategories
 
-    const [openIndex, setOpenIndex] = useState(null);
+    const [openIndex, setOpenIndex] = useState(null); //state to toggle subCategory list
 
     const toggleSubmenu = (index) => {
         setOpenIndex(openIndex === index ? null : index);
-    };
+    };//toggling subcategory
+
     return(
-        <div className="category-sidebar border p-3">
-            <h5 className="mb-3">Categories</h5>
+        <div className="category-sidebar d-flex align-items-start gap-2 p-3" >
+        
+            <button className="btn border border-2" style={{minWidth:'140px'}} onClick={() => {setCategory(null);fetchProducts(offset,null)}} disabled={!category ? true : false} >All Products</button> 
             
-            <ul className="list-unstyled">
+            <ul className="list-unstyled d-flex flex-nowrap gap-2 align-items-center " style={{overflowX: "hidden", maxWidth: '50vw' , width :'100%'}}>
                 {categories.map((cat, index) => (
-                    <li key={cat.slug} className="mb-2">
-                    <button className="btn btn-light  text-start d-flex justify-content-between align-items-center" onClick={() => toggleSubmenu(index)}>{cat.name} <span>{openIndex === index ? "-" : "+"}</span></button>
-                    
-                    <ul className={`list-unstyled ps-3 mt-1 ${openIndex === index ? 'd-block' : 'd-none'}`}>
-                        {cat.subcategories.map((sub, i) => (
-                            <li key={i} className="mb-1">
+                    <li key={cat.slug}>
+                        <button className="btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '220px'}} onClick={() => toggleSubmenu(index)}>{cat.name} <span>{openIndex === index ? "-" : "+"}</span></button>
+                        <div className={`list-unstyled-background ${openIndex !== null ? 'd-flex' : 'd-none'} opacity-0 position-absolute w-100 h-100 bg-dark start-0 top-0`} style={{zIndex : 1000}} onClick={() => setOpenIndex(null)}></div>
+                        <ul className={`list-unstyled position-absolute bg-white ps-3 mt-1 ${openIndex === index ? 'd-block' : 'd-none'}`} style={{zIndex : 10001}}>
+                                {cat.subcategories.map((sub, i) => (
+                                <li key={i} className="mb-1">
                                 <button className="btn p-1 text-start" style={{ border: category === sub ? '1px solid red' : '1px solid blue'}} onClick={() => setCategory(sub)}>{sub}</button>
                             </li>
-                    ))}
-                    </ul>
-                </li>))}
+                        ))}
+                        </ul>
+                    </li>))}
             </ul>
-                    {/* disable button when category is not chooosed */}
-            <button onClick={() => {setCategory(null);fetchProducts(offset,null)}} style={{border: category ? '1px solid green' : '1px solid blue'}}>Clear Filters</button> 
-    </div>
-    )
-}
+        </div>
+    );
+};
 
 
-export default Category 
+export default Category; //exporting component

@@ -1,6 +1,6 @@
 .sidebar-container{
     position: relative;
-    width: fit-content;
+    min-width: 15vw;
 }
 
 .status-message-container{

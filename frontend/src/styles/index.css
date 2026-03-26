@@ -17,3 +17,24 @@ div {
   background-color: var(--bg-color);
   color: var(--text-color);
 }  
+
+.main-container{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.main-end{
+  width: 100%;
+  max-width: 95vw;
+  margin: auto;
+  min-height: 100vh;
+}
+
+@media (max-width: 925px) {
+  .main-container{
+    gap: 0px;
+  }
+}

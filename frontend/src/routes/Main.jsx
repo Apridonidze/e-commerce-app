@@ -21,7 +21,7 @@ import Skeleton from "react-loading-skeleton";
 import StatusMessage from "../alerts/StatusMessage"; //importing skeletons for loading and component to  dissplay messages (error, warning)
 
 import '../styles/products.css'
-
+import '../styles/index.css'
 const Main = () => {
 
     const [ cookies ] = useCookies(['token']); //defining cookies
@@ -66,7 +66,7 @@ const Main = () => {
     },[category, offset]); //logic executes on first mount and after dependencies change
 
     return(
-        <div className="main-container container-fluid d-flex mx-auto" style={{minHeight: '100vh', width : '100%', gap: '20px'}}> 
+        <div className="main-container container-fluid"> 
 
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             
@@ -79,10 +79,10 @@ const Main = () => {
             <div className="main-start">
                 <Sidebar /> 
             </div>
-            <div className="main-end border" style={{width : '100%'}}>
+            <div className="main-end border" >
 
                 <Header setProducts={setProducts} />
-                <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
+                <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset}/>
 
                 <div className="products">
                     {!isLoading ? 

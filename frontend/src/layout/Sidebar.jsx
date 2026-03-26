@@ -48,7 +48,7 @@ const Sidebar = () => {
     },[])
 
     return(
-        <div className="sidebar-main-container">
+        <div className="sidebar-main-container border border-danger">
             <div className="sidebar-background" ref={backgroundRef} onClick={() => toggleSidebar(false)}></div>
             <div className="sidebar-container d-flex flex-column justify-content-between border text-break"  ref={containerRef} style={{height:"100vh"}}>
                 <div className="sidebar-top">
