@@ -33,7 +33,7 @@ const Main = () => {
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null});
-    const [toggleAlert, setToggleAlert] = useState({status : true , responseStatus : null, message : null});
+    const [toggleAlert, setToggleAlert] = useState({status : true , type: 'Info', statusCode : 200, message : 'Test Test Test Test'});
     
     const fetchProducts = async(offset, category) => {
         try{
@@ -44,7 +44,7 @@ const Main = () => {
             setProducts(product.data.products); //storing products in state if status code is 200
 
         }catch(err){ //catching error
-            setToggleAlert({status : true , responseStatus : false, message : err.response.data.message}); //defining data to toggle StatusMessage
+            setToggleAlert({status : true , success : false, statusCode : err.status, message : err.response.data.message}); //defining data to toggle StatusMessage
             setProducts(prevProducts); //Setting pre-loaded products in state in case error occurs
         };
     };

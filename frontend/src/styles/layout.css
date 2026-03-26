@@ -5,13 +5,40 @@
 
 .status-message-container{
     display: flex;
-    flex-direction: column;
-    text-align: center;
+    align-items: center;
+    gap: 20px;
+    text-align: start;
     position:fixed;
     z-index: 99999;
     width: auto;
+    top: 3vw;
     left: 50%;
-    top: 5vw;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.status-message-container.Success{
+    background-color: #f2fbfa;
+    color: #035b41;
+}
+.status-message-container.Failed{
+    background-color: #f5edf3;
+    color: #ba1a1a;
+}
+.status-message-container.Info{
+    background-color: #f3f5ff;
+    color: #6366f1;
+}
+.status-message-container.Warning{
+    background-color: #fff9eb;
+    color: #b78103;
+}
+
+.status-message-container.Internal_Error{
+    background-color: #f5edf3;
+    color: #ba1a1a;
 }
 
 @media (max-width: 925px) {
@@ -37,8 +64,5 @@
     }
     .sidebar-background.active{
         display: flex;
-    }
-    .status-message-container{
-        left: 43%;
     }
 }
