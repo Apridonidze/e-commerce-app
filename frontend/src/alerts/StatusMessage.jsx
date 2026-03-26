@@ -6,6 +6,7 @@ const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
 
     const statusRef = useRef(null);
     const [targetIcon, setTargetIcon] = useState()
+    const [second, setSecond] = useState(3);
     const icons = [
         {type : "Success", statusCode : 200 , icon : <i className="fa-solid fa-check d-flex justify-content-center rounded-5 h-auto fs-6" style={{border : '3px solid #035b41', padding : '5px 13px' }}></i>},
         {type : "Info" , statusCode : 200, icon : <i class="fa-solid fa-exclamation fs-4"></i>},
@@ -25,19 +26,34 @@ const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
                     break; 
                 };
             };
-            
-            //     setTimeout(() => {
-            //         setToggleAlert({status : false , success : false, statusCode : null, message : ''});
-            //     },3000);
-
         }
 
     },[statusRef, toggleAlert])
+
+    useEffect(() => {
+        if (second <= 0) return;
+
+        const timer = setTimeout(() => {
+           
+            setSecond((prev) => {
+                if (prev <= 1) {
+                    setToggleAlert({status : false , type: '', statusCode : null, message : ''});
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, [second]);
+
+    
     return(
         <div className="status-message-container" ref={statusRef}>
             {targetIcon}
             <h6>{toggleAlert.message}</h6>
             {/* {toggleAlert} */}
+            {second}
         </div>
     )
 }
