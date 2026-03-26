@@ -25,6 +25,8 @@ const Main = () => {
     const [ cookies ] = useCookies(['token']); //defining cookies
     const { prevProducts } = useContext(ProductContext); //defining main products from context api
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const [products, setProducts] = useState([]);
     const [offset, setOffset] = useState(0);
     const [category, setCategory] = useState(null);//states for product and its parameters
@@ -33,17 +35,20 @@ const Main = () => {
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null});
-    const [toggleAlert, setToggleAlert] = useState({status : true , type: 'Info', statusCode : 200, message : 'Test Test Test Test'});
+    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''});
     
     const fetchProducts = async(offset, category) => {
         try{
 
+            setIsLoading(true)
+
             const product = await axios.get(`${BACKEND_URL}/api/product`, { params : {offset, category} }); //fetching products from backend on offsets or category changes
             
-            if(product.status === 204) setProducts([]); //handing 204 status code
-            setProducts(product.data.products); //storing products in state if status code is 200
+            if(product.status === 204) {setProducts([]); setIsLoading(false)} //handing 204 status code
+            setProducts(product.data.products); setIsLoading(false) //storing products in state if status code is 200
 
         }catch(err){ //catching error
+            setIsLoading(false)
             setToggleAlert({status : true , success : false, statusCode : err.status, message : err.response.data.message}); //defining data to toggle StatusMessage
             setProducts(prevProducts); //Setting pre-loaded products in state in case error occurs
         };
@@ -78,7 +83,11 @@ const Main = () => {
                 <Category setCategory={setCategory} category={category} setProducts={setProducts} fetchProducts={fetchProducts} offset={offset}/>
 
                 <div className="products row">
-                    {products?.length < 1 ? <h1>No Products In This Category.</h1> : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart}/>) || <Skeleton />}
+                    {!isLoading ? 
+                        products?.length < 1 ? <h1>No Products In This Category.</h1> 
+                        : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart}/>) 
+                    : <Skeleton />}
+
                     {products?.length % 15 !== 0 || products?.length === 0 ? <></> : <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>}
                 </div>
                 
