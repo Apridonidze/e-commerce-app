@@ -17,6 +17,17 @@ div {
   background-color: var(--bg-color);
   color: var(--text-color);
 }  
+.button-div .btn:hover,
+.button-div .btn:active,
+.button-div .btn:focus {
+  background-color: #fff !important;
+  box-shadow: none !important;
+}
+
+.button-div button{
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
 
 .main-container{
   display: flex;

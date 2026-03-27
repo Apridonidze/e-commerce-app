@@ -37,7 +37,7 @@ const Main = () => {
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null});
-    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''});
+    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : 0, message : ''});
     
     const fetchProducts = async(offset, category) => {
         try{
@@ -46,12 +46,13 @@ const Main = () => {
 
             const product = await axios.get(`${BACKEND_URL}/api/product`, { params : {offset, category} }); //fetching products from backend on offsets or category changes
             
-            if(product.status === 204) {setProducts([]); setIsLoading(false)} //handing 204 status code
+            if(product.status === 204) {setProducts([]); setIsLoading(false) ;return} //handing 204 status code
             setProducts(product.data.products); setIsLoading(false) //storing products in state if status code is 200
 
         }catch(err){ //catching error
+            console.log(err)
             setIsLoading(false)
-            setToggleAlert({status : true , success : false, statusCode : err.status, message : err.response.data.message}); //defining data to toggle StatusMessage
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
             setProducts(prevProducts); //Setting pre-loaded products in state in case error occurs
         };
     };
