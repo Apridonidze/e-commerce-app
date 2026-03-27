@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from "react";; //importing state
+import { useEffect, useRef, useState } from "react";; //importing hooks
 
 import '../styles/layout.css'
 const Category = ({ setCategory, category, fetchProducts,offset }) => {
@@ -84,75 +84,65 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
                 { name: "Kids Clothing", icon: <i className="fa-solid fa-shirt" style={{ color: "#1E90FF" }}></i>, description: "Clothes designed for comfort and style." }
             ]
         }
-    ];
-    const [openIndex, setOpenIndex] = useState(null); //state to toggle subCategory list
+    ]; //defining categories data
+
     const listRef = useRef(null);
     const leftRef = useRef(null);
-    const rightRef = useRef(null);
+    const rightRef = useRef(null);//defining refs
+    const [openIndex, setOpenIndex] = useState(null); //state to toggle subCategory list
 
     const toggleSubmenu = (index) => {
         setOpenIndex(openIndex === index ? null : index);
-    };//toggling subcategory
-    const scrollLeft = () => {
+    }; //settingopenIndex 
 
-
-        listRef.current.scrollBy({left: -300, behavior: "smooth"});
-        
-    };
-
-    const scrollRight = () => {
-        listRef.current.scrollBy({left: 300, behavior: "smooth"});
-    };
+    const scrollLeft = () => {listRef.current.scrollBy({left: -300, behavior: "smooth"})};
+    const scrollRight = () => {listRef.current.scrollBy({left: 300, behavior: "smooth"})}; //functions to scroll on sides 
 
     const handleScroll = () => {
-        const el = listRef.current;
 
+        const el = listRef.current; //definign listRef to not be null
+        if(!el) return; //returning empty promise if ref is undefined || null
 
-        if (el.scrollLeft  == 0) {
-            leftRef.current.classList.add('d-none');
-        } else {
-            leftRef.current.classList.remove('d-none');
-        }
-
-        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 5) {
-            rightRef.current.classList.add('d-none');
-        } else {
-            rightRef.current.classList.remove('d-none');
-        }
+        el.scrollLeft == 0 ? leftRef.current.classList.add('d-none') : leftRef.current.classList.remove('d-none'); //undisplaying leftRef
+        el.scrollLeft + el.clientWidth >= el.scrollWidth - 5 ? rightRef.current.classList.add('d-none') :rightRef.current.classList.remove('d-none'); //undisplaying rightRef
+        
     };
 
     useEffect(() => {
-  handleScroll();
-}, []); 
-console.log(category)
+        handleScroll();
+    }, []); //calling function on mount to avoid undefined refs errors 
+
     return(
-        <div className="category-sidebar d-flex align-items-start gap-2 p-3" >
+        <div className="category-sidebar d-flex align-items-start gap-2 p-3">
         
-        <span className="button-div d-flex position-absolute " style={{backgroundColor : 'none'}}>
-            <button onClick={scrollRight} ref={rightRef} className="btn border border-2 rounded-5 mt-2 position-relative" style={{padding: '2px 5px' , left: "77.5vw"}}><i class="fa-solid fa-angle-right"></i></button>
-            <button onClick={scrollLeft} ref={leftRef} className="btn border border-2 rounded-5 mt-2 position-absolute" style={{padding: '2px 5px', left : "-0.5vw"}}><i class="fa-solid fa-angle-left"></i></button>
-        </span>
+            <span className="button-div d-flex position-absolute " style={{backgroundColor : 'none'}}>
+                <button onClick={scrollRight} ref={rightRef} className="btn border border-2 rounded-5 mt-2 position-relative" style={{padding: '2px 5px' , left: "77.5vw"}}><i class="fa-solid fa-angle-right"></i></button>
+                <button onClick={scrollLeft} ref={leftRef} className="btn border border-2 rounded-5 mt-2 position-absolute" style={{padding: '2px 5px', left : "-0.5vw"}}><i class="fa-solid fa-angle-left"></i></button>
+            </span>
             
             <ul className="list-unstyled d-flex flex-nowrap gap-2 align-items-center ms-2 " onScroll={handleScroll} style={{overflowX: "hidden", height :'50px', maxWidth: '78vw' , width :'100%'}} ref={listRef}>
                 <button className={`btn btn-light fw-medium  ${category ? " text-dark" : "text-white"}`} style={{minWidth:'160px', backgroundColor : !category ? '#006947': ''}} onClick={() => {setCategory(null);fetchProducts(offset,null)}} ><i className="fa-solid fa-th-large"></i> All Category</button> 
                 {categories.map((cat, index) => (
+                    
                     <li key={cat.slug}>
+                        
                         <button className="toggleDropDown btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '240px', borderBottom : openIndex === index ? '2px solid #006947' : ''}} onClick={() => toggleSubmenu(index)}>{cat.icon} {cat.name} <span style={{rotate : openIndex === index ? '180deg' : "0deg", transition: 'all 0.2s'}}><i class="fa-solid fa-angle-down"></i></span></button>
                         <div className={`list-unstyled-background ${openIndex !== null ? 'd-flex' : 'd-none'} opacity-0 position-absolute w-100 h-100 bg-dark start-0 top-0`} style={{zIndex : 1000 , }} onClick={() => setOpenIndex(null)}></div>
+                        
                         <ul className={`list-unstyled rounded-2 position-absolute bg-white p-3 mt-1 ${openIndex === index ? 'd-block' : 'd-none'}`} style={{zIndex : 10001}}>
-                                {cat.subcategories.map((sub, i) => (
+                            {cat.subcategories.map((sub, i) => (
                                 <li key={i} className="my-2" style={{cursor : "pointer"}}>
                                     <span className="d-flex flex-column gap-2 p-2 text-dark rounded-0 w-100 " style={{borderBottom : sub.name == category ? '2px solid #006947' : '1px solid #dee2e6'}} onClick={() => setCategory(sub.name)}>
                                         <strong>{sub.icon} {sub.name}</strong>
                                         <small> {sub.description}</small>
                                     </span>
-                            </li>
-                        ))}
+                                </li>
+                            ))}
                         </ul>
+                    
                     </li>))}
+
             </ul>
-            
-            
         </div>
     );
 };
