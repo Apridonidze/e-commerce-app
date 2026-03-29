@@ -80,7 +80,7 @@ const Main = () => {
             <div className="main-start">
                 <Sidebar /> 
             </div>
-            <div className="main-end border" >
+            <div className="main-end" >
 
                 <Header setProducts={setProducts} setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/>
                 <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset}/>
