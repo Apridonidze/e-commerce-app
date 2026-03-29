@@ -89,9 +89,17 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
     const listRef = useRef(null);
     const leftRef = useRef(null);
     const rightRef = useRef(null);//defining refs
-    const [openIndex, setOpenIndex] = useState(null); //state to toggle subCategory list
 
-    const toggleSubmenu = (index) => {
+    const [openIndex, setOpenIndex] = useState(null); //state to toggle subCategory list
+    const [dropDownPos, setDropdownPos] = useState({top: null,left: null}); //state to define max cordinates for dropdown components
+
+    const toggleSubmenu = (e, index) => {
+        const location = e.currentTarget.getBoundingClientRect()
+
+        setDropdownPos({
+            top: location.bottom + window.scrollY,
+            left: location.left + window.scrollX,
+        });// defining max cordinates for dropdown
         setOpenIndex(openIndex === index ? null : index);
     }; //settingopenIndex 
 
@@ -120,16 +128,16 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
                 <button onClick={scrollLeft} ref={leftRef} className="btn border border-2 rounded-5 mt-2 position-absolute" style={{padding: '2px 5px', left : "-0.5vw"}}><i class="fa-solid fa-angle-left"></i></button>
             </span>
             
-            <ul className="list-unstyled d-flex flex-nowrap gap-2 align-items-center ms-2 " onScroll={handleScroll} style={{overflowX: "hidden", height :'50px', maxWidth: '78vw' , width :'100%'}} ref={listRef}>
+            <ul className="list-unstyled d-flex flex-nowrap gap-2 align-items-center ms-2 " onScroll={handleScroll} style={{overflow: "hidden", height :'50px', maxWidth: '78vw' , width :'100%'}} ref={listRef}>
                 <button className={`btn btn-light fw-medium  ${category ? " text-dark" : "text-white"}`} style={{minWidth:'160px', backgroundColor : !category ? '#006947': ''}} onClick={() => {setCategory(null);fetchProducts(offset,null)}} ><i className="fa-solid fa-th-large"></i> All Category</button> 
                 {categories.map((cat, index) => (
                     
-                    <li key={cat.slug}>
+                    <li key={cat.slug} className="d-flex flex-column" >
                         
-                        <button className="toggleDropDown btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '240px', borderBottom : openIndex === index ? '2px solid #006947' : ''}} onClick={() => toggleSubmenu(index)}>{cat.icon} {cat.name} <span style={{rotate : openIndex === index ? '180deg' : "0deg", transition: 'all 0.2s'}}><i class="fa-solid fa-angle-down"></i></span></button>
+                        <button className="toggleDropDown btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '240px', borderBottom : openIndex === index ? '2px solid #006947' : ''}} onClick={(e) => toggleSubmenu(e, index)}>{cat.icon} {cat.name} <span style={{rotate : openIndex === index ? '180deg' : "0deg", transition: 'all 0.2s'}}><i class="fa-solid fa-angle-down"></i></span></button>
                         <div className={`list-unstyled-background ${openIndex !== null ? 'd-flex' : 'd-none'} opacity-0 position-absolute w-100 h-100 bg-dark start-0 top-0`} style={{zIndex : 1000 , }} onClick={() => setOpenIndex(null)}></div>
                         
-                        <ul className={`list-unstyled rounded-2 position-fixed bg-white p-3 mt-1 ${openIndex === index ? 'd-block' : 'd-none'}`} style={{zIndex : 10001}}>
+                        <ul className={`list-unstyled rounded-2 position-absolute bg-white p-3 mt-1 ${openIndex === index ? 'd-block' : 'd-none'}`} style={{zIndex : 1000, left : dropDownPos?.left , top : dropDownPos?.top }}>
                             {cat.subcategories.map((sub, i) => (
                                 <li key={i} className="my-2" style={{cursor : "pointer"}}>
                                     <span className="d-flex flex-column gap-2 p-2 text-dark rounded-0 w-100 " style={{borderBottom : sub.name == category ? '2px solid #006947' : '1px solid #dee2e6'}} onClick={() => setCategory(sub.name)}>
