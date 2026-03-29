@@ -1,46 +1,46 @@
-import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react"
-import { BACKEND_URL } from "../../config";
+import axios from "axios"; //importing axios library
+import { BACKEND_URL } from "../../config"; //importing backend url from config file
+
+import { useEffect, useState } from "react"; //importing react hooks
+
 import { useLocation } from "react-router-dom";
-import { useTheme, useToggle } from "../context/ThemeContext";
-import { Link } from "react-router-dom";
-const Header = ({ setProducts }) => {
+import { Link } from "react-router-dom"; //importing react-router library
 
-    const [searchItem, setSearchItem] = useState('');
+import { useTheme, useToggle } from "../context/ThemeContext"; //importing context api
 
-    const regexContainsSpecial = /[^\w\s]/;
+const Header = ({ setProducts, setToggleAlert, toggleAlert }) => {
 
-    const location = useLocation()
-
-    const { theme, toggleTheme } = useTheme();
-    const { toggle , toggleSidebar} = useToggle()
+    const regexContainsSpecial = /[^\w\s]/; //regex to validate search input
+    const [searchItem, setSearchItem] = useState(''); //search input state
+    
+    const location = useLocation(); //defining useLocation
+    const { theme, toggleTheme } = useTheme(); //defining theme context
+    const { toggle , toggleSidebar} = useToggle(); //defining sidebar toggle contxext
 
     const fetchDataList = async() => {
 
         if(searchItem.trim().length < 1 || searchItem.trim() === "" || searchItem === "" || 
         searchItem.trim() === undefined || searchItem.trim() === null || searchItem.length > 30 || 
-        regexContainsSpecial.test(searchItem))return;
-
+        regexContainsSpecial.test(searchItem))return; //validating search input and returning empty promise if input is invalid
 
         try{
-            const response = await axios.post(`${BACKEND_URL}/api/product/search-product` , {searchItem , type : location?.pathname.split('/')[1]})
-            if(response.status === 204){
-                setProducts([])
-            }
-            setProducts(response.data.products)
-            // .then(resp => {console.log(resp) ; setDataList(resp.data.products) ; setProducts(resp.data.products)})
+
+            const response = await axios.post(`${BACKEND_URL}/api/product/search-product` , {searchItem , type : location?.pathname.split('/')[1]}); //calling api and passing parameters
+            
+            if(response.status === 204)setProducts([]); //handing 204 status code
+            if(response.status === 200)setProducts(response.data.products) ; //handling 200 status code 
+
         }catch(err){
-            console.log(err)
-        }
-    
-    }
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+        };
+    };
 
     useEffect(() => {
-        if(location.pathname == '/' || location.pathname == '/sales' )  fetchDataList();
-        return
-    },[searchItem])
-    // add menu button that is visible on small devices , make it add classList to sidebar that will be visible by the classlists
+
+        if(location.pathname == '/' || location.pathname == '/sales' ) fetchDataList(); // checking location of from which path api call is made (only Main and OnSale pages are allowed to make this api call) and executing function if route is valid
+        return; //else returning empty promise
+
+    },[searchItem]); //logic executes on searchItem dependency change
 
     return(
         <div className="header-container  d-flex justify-content-between" >
@@ -59,9 +59,7 @@ const Header = ({ setProducts }) => {
             </div>
             
         </div>
-    )
-}
+    );
+};
 
-// disable serach function when user is not on main page . use useLocation() to define where is header.jsx component decleared
-
-export default Header
+export default Header;//exporting component

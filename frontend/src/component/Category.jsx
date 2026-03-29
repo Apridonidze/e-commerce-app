@@ -147,9 +147,7 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
                                 </li>
                             ))}
                         </ul>
-                    
                     </li>))}
-
             </ul>
         </div>
     );
