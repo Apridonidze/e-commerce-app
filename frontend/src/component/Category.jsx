@@ -121,7 +121,7 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
     }, []); //calling function on mount to avoid undefined refs errors 
 
     return(
-        <div className="category-sidebar d-flex align-items-start gap-2 p-3">
+        <div className="category-sidebar d-flex align-items-start gap-2 py-1 px-3">
         
             <span className="button-div d-flex position-absolute " style={{backgroundColor : 'none'}}>
                 <button onClick={scrollRight} ref={rightRef} className="btn border border-2 rounded-5 mt-2 position-relative" style={{padding: '2px 5px' , left: "77.5vw"}}><i class="fa-solid fa-angle-right"></i></button>
@@ -129,9 +129,10 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
             </span>
             
             <ul className="list-unstyled d-flex flex-nowrap gap-2 align-items-center ms-2 " onScroll={handleScroll} style={{overflow: "hidden", height :'50px', maxWidth: '78vw' , width :'100%'}} ref={listRef}>
+                
                 <button className={`btn btn-light fw-medium  ${category ? " text-dark" : "text-white"}`} style={{minWidth:'160px', backgroundColor : !category ? '#006947': ''}} onClick={() => {setCategory(null);fetchProducts(offset,null)}} ><i className="fa-solid fa-th-large"></i> All Category</button> 
-                {categories.map((cat, index) => (
-                    
+                
+                {categories.map((cat, index) => (                
                     <li key={cat.slug} className="d-flex flex-column" >
                         
                         <button className="toggleDropDown btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '240px', borderBottom : openIndex === index ? '2px solid #006947' : ''}} onClick={(e) => toggleSubmenu(e, index)}>{cat.icon} {cat.name} <span style={{rotate : openIndex === index ? '180deg' : "0deg", transition: 'all 0.2s'}}><i class="fa-solid fa-angle-down"></i></span></button>

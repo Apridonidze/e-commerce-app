@@ -1,12 +1,13 @@
 import axios from "axios"; //importing axios library
 import { BACKEND_URL } from "../../config"; //importing backend url from config file
 
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";  //importing react-router library's utilities
+
 import { useEffect, useState } from "react"; //importing react hooks
-
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom"; //importing react-router library
-
 import { useTheme, useToggle } from "../context/ThemeContext"; //importing context api
+
+import '../styles/layout.css'; //importing css file
 
 const Header = ({ setProducts, setToggleAlert, toggleAlert }) => {
 
@@ -43,19 +44,22 @@ const Header = ({ setProducts, setToggleAlert, toggleAlert }) => {
     },[searchItem]); //logic executes on searchItem dependency change
 
     return(
-        <div className="header-container  d-flex justify-content-between" >
+        <div className="header-container d-flex justify-content-between align-items-center px-4 py-3" >
 
             <div className="header-start">
-                <div className="input-group  align-items-center ">
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" className='form-control' list="searchlist" onChange={(e) => setSearchItem(e.target.value)} value={searchItem} tabIndex={1}/>
+                <div className="headerSearchInput input-group" style={{padding : '3px 0px', maxWidth :'20vw', minWidth : '25vw'}}>
+                    
+                    <span className="input-group-text border-0" style={{fontSize : '15px', color : '#717578'}}><i className="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text" id="searchlist" name="searchlist" className='form-control border-0 shadow-none' placeholder="Search Products..." onChange={(e) => setSearchItem(e.target.value)} style={{fontSize : '15px', color : 'black'}} value={searchItem} tabIndex={1}/>
+                    
                 </div>
             </div>
 
-            <div className="header-end ">
-                <button className="btn" onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
-                <Link to='/dashboard'><i class="fa-regular fa-user"></i></Link>
-                <button className="btn" onClick={() => toggleSidebar(!toggle)}><i class="fa-solid fa-bars"></i></button>
+            <div className="header-end d-flex align-items-center gap-2">
+
+                <button className="btn" style={{fontSize: "18px", border : 'none'}} onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
+                <Link to='/dashboard'><i class="fa-regular fa-user" style={{fontSize: "18px", border : 'none'}}></i></Link>
+                <button className="btn border-0" onClick={() => toggleSidebar(!toggle)}><i class="fa-solid fa-bars" style={{fontSize: "18px", border : 'none'}}></i></button>
             </div>
             
         </div>

@@ -19,6 +19,21 @@
     font-size: 12px;
 }
 
+.headerSearchInput{
+    background-color:#f3f6fa ;
+    border-radius: 10px;
+    
+}
+
+.headerSearchInput input,.headerSearchInput span{
+    background-color: #f3f6fa ;
+    color: #94a3b8;
+}
+.headerSearchInput input:focus{
+    color: #94a3b8;
+    background-color: #f3f6fa;
+}
+
 .status-message-container.Success{
     background-color: #f2fbfa;
     color: #035b41;
