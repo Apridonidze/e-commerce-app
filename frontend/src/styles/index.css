@@ -2,12 +2,14 @@
   --bg-color: #f9f9ff;
   --text-color: #111c2d;
   --product-bg-color : white;
+  --product-color : '#111c2d'
 }
 
 [data-theme='dark'] {
-  --bg-color: #0f172a;
+  --bg-color: #020617;
   --text-color: #94a3b8;
-  --product-bg-color : 
+  --product-bg-color : #0f172a;
+  --product-color : '#ffffff'
 }
 
 body {
@@ -20,7 +22,15 @@ div {
   color: var(--text-color);
 }
 
-.product-container{
+ul, li {
+  list-style-type: none;
+}
+
+.product-container {
+  background-color: var(--product-bg-color);
+}
+
+.product-container div{
   background-color: var(--product-bg-color);
 }
 

@@ -11,10 +11,8 @@
 }
 
 .product-container{
-    border: none;
     display: flex;
     padding: 10px 15px;
-    background-color: #ffffff;
 }
 
 .product-wrapper {
