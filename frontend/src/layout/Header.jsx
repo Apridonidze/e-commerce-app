@@ -64,7 +64,9 @@ const Header = ({ setProducts, setToggleAlert, toggleAlert }) => {
                 <div className="side-buttons gap-3">
                     <button className="btn" style={{fontSize: "18px", border : 'none'}} onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
                     <div className="user d-flex gap-2 align-items-center">
-                        <small><strong>{user?.fullname}</strong> <br /> <span className="text-muted">{user?.email.length > 20 ? user?.email.slice(0, 21) : user?.email}</span></small>
+                        <Link to='/dashboard' className="text-decoration-none ">
+                            <small><strong>{user?.fullname}</strong> <br /> <span className="text-muted">{user?.email.length > 20 ? user?.email.slice(0, 21) : user?.email}</span></small>
+                        </Link>
                         <Link to='/dashboard'><i class="fa-regular fa-user border border-2 border-dark rounded-5 px-3 py-2 d-flex align-items-center justify-content-center" style={{fontSize: "18px", border : 'none'}}></i></Link>
                     </div>
                 </div>
