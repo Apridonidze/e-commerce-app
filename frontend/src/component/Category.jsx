@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";; //importing hooks
 
-import '../styles/layout.css'
+import '../styles/layout.css'; //importing css file
+
 const Category = ({ setCategory, category, fetchProducts,offset }) => {
 
     const categories = [
@@ -19,7 +20,7 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
             ]
         },
         {
-            icon: <i className="fa-regular fa-house" style={{ color: "#228B22" }}></i>,
+            icon: <i className="fa-regular fa-house" style={{ color: "#334c61" }}></i>,
             name: "Home & Living",
             slug: "home-living",
             subcategories: [
@@ -121,18 +122,15 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
         handleScroll();
     }, []); //calling function on mount to avoid undefined refs errors 
 
-  
-    console.log(dropDownIndex)
-
     return(
         <div className="category-sidebar d-flex align-items-start gap-2 py-1 px-3">
         
             <span className="button-div d-flex position-absolute " style={{backgroundColor : 'none'}}>
-                <button onClick={scrollRight} ref={rightRef} className="btn border border-2 rounded-5 mt-2 position-relative" style={{padding: '2px 5px' , left: "77.5vw"}}><i class="fa-solid fa-angle-right"></i></button>
-                <button onClick={scrollLeft} ref={leftRef} className="btn border border-2 rounded-5 mt-2 position-absolute" style={{padding: '2px 5px', left : "-0.5vw"}}><i class="fa-solid fa-angle-left"></i></button>
+                <button onClick={scrollRight} ref={rightRef} className="btn1 btn border border-2 rounded-5 mt-2 position-relative" ><i class="fa-solid fa-angle-right"></i></button>
+                <button onClick={scrollLeft} ref={leftRef} className="btn2 btn border border-2 rounded-5 mt-2 position-absolute" ><i class="fa-solid fa-angle-left"></i></button>
             </span>
             
-            <ul className="list-unstyled d-flex flex-nowrap gap-2 align-items-center ms-2 " onScroll={handleScroll} style={{overflow: "hidden", height :'50px', maxWidth: '78vw' , width :'100%'}} ref={listRef}>
+            <ul className="list-unstyled d-flex flex-nowrap gap-2 align-items-center ms-2 " onScroll={handleScroll} ref={listRef}>
                 
                 <button className={`btn btn-light fw-medium  ${category ? " text-dark" : "text-white"}`} style={{minWidth:'160px', backgroundColor : !category ? '#006947': ''}} onClick={() => {setCategory(null);fetchProducts(offset,null)}} ><i className="fa-solid fa-th-large"></i> All Category</button> 
                 

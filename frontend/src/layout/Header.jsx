@@ -47,7 +47,7 @@ const Header = ({ setProducts, setToggleAlert, toggleAlert }) => {
         <div className="header-container d-flex justify-content-between align-items-center px-4 py-3" >
 
             <div className="header-start">
-                <div className="headerSearchInput input-group" style={{padding : '3px 0px', maxWidth :'20vw', minWidth : '25vw'}}>
+                <div className="headerSearchInput input-group">
                     
                     <span className="input-group-text border-0" style={{fontSize : '15px', color : '#717578'}}><i className="fa-solid fa-magnifying-glass"></i></span>
                     <input type="text" id="searchlist" name="searchlist" className='form-control border-0 shadow-none' placeholder="Search Products..." onChange={(e) => setSearchItem(e.target.value)} style={{fontSize : '15px', color : 'black'}} value={searchItem} tabIndex={1}/>
@@ -57,9 +57,11 @@ const Header = ({ setProducts, setToggleAlert, toggleAlert }) => {
 
             <div className="header-end d-flex align-items-center gap-2">
 
-                <button className="btn" style={{fontSize: "18px", border : 'none'}} onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
-                <Link to='/dashboard'><i class="fa-regular fa-user" style={{fontSize: "18px", border : 'none'}}></i></Link>
-                <button className="btn border-0" onClick={() => toggleSidebar(!toggle)}><i class="fa-solid fa-bars" style={{fontSize: "18px", border : 'none'}}></i></button>
+                <div className="side-buttons">
+                    <button className="btn" style={{fontSize: "18px", border : 'none'}} onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
+                    <Link to='/dashboard'><i class="fa-regular fa-user" style={{fontSize: "18px", border : 'none'}}></i></Link>
+                </div>
+                <button className="menu btn border-0" onClick={() => toggleSidebar(!toggle)}><i class="fa-solid fa-bars" style={{fontSize: "18px", border : 'none'}}></i></button>
             </div>
             
         </div>

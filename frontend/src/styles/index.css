@@ -16,7 +16,12 @@ body {
 div {
   background-color: var(--bg-color);
   color: var(--text-color);
-}  
+}
+
+i {
+  color:  var(--text-color);
+}
+
 .button-div .btn:hover,
 .button-div .btn:active,
 .button-div .btn:focus {
