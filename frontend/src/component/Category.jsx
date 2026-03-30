@@ -123,7 +123,7 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
     }, []); //calling function on mount to avoid undefined refs errors 
 
     return(
-        <div className="category-sidebar d-flex align-items-start gap-2 py-1 px-3">
+        <div className="category-sidebar d-flex align-items-start gap-2 ">
         
             <span className="button-div d-flex position-absolute " style={{backgroundColor : 'none'}}>
                 <button onClick={scrollRight} ref={rightRef} className="btn1 btn border border-2 rounded-5 mt-2 position-relative" ><i class="fa-solid fa-angle-right"></i></button>

@@ -4,12 +4,16 @@ import { BACKEND_URL } from "../../config"; //importing backend url from config 
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";  //importing react-router library's utilities
 
-import { useEffect, useState } from "react"; //importing react hooks
+import { useContext, useEffect, useState } from "react"; //importing react hooks
+
+import { UserContext } from "../context/UserContext";
 import { useTheme, useToggle } from "../context/ThemeContext"; //importing context api
 
 import '../styles/layout.css'; //importing css file
 
 const Header = ({ setProducts, setToggleAlert, toggleAlert }) => {
+
+    const { user } = useContext(UserContext);
 
     const regexContainsSpecial = /[^\w\s]/; //regex to validate search input
     const [searchItem, setSearchItem] = useState(''); //search input state
@@ -57,9 +61,12 @@ const Header = ({ setProducts, setToggleAlert, toggleAlert }) => {
 
             <div className="header-end d-flex align-items-center gap-2">
 
-                <div className="side-buttons">
+                <div className="side-buttons gap-3">
                     <button className="btn" style={{fontSize: "18px", border : 'none'}} onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
-                    <Link to='/dashboard'><i class="fa-regular fa-user" style={{fontSize: "18px", border : 'none'}}></i></Link>
+                    <div className="user d-flex gap-2 align-items-center">
+                        <small><strong>{user?.fullname}</strong> <br /> <span className="text-muted">{user?.email.length > 20 ? user?.email.slice(0, 21) : user?.email}</span></small>
+                        <Link to='/dashboard'><i class="fa-regular fa-user border border-2 border-dark rounded-5 px-3 py-2 d-flex align-items-center justify-content-center" style={{fontSize: "18px", border : 'none'}}></i></Link>
+                    </div>
                 </div>
                 <button className="menu btn border-0" onClick={() => toggleSidebar(!toggle)}><i class="fa-solid fa-bars" style={{fontSize: "18px", border : 'none'}}></i></button>
             </div>
