@@ -18,7 +18,6 @@ import AddToCart from "../component/AddToCart";
 import ReportProduct from "../component/ReportProduct"; //importing components
 
 import StatusMessage from "../alerts/StatusMessage"; //importing skeletons for loading and component to  dissplay messages (error, warning)
-
 import ProductSkeleton from "../skeletons/ProductSkeleton"; //importing loading skeleton for products
 
 import '../styles/products.css';
@@ -39,7 +38,7 @@ const Main = () => {
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null});
-    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : 0, message : ''});
+    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : 0, message : ''}); //states to toggle components
     
     const fetchProducts = async(offset, category) => {
         try{

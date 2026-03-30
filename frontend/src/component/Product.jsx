@@ -48,29 +48,29 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
     },[cartIds]) //logic executes on render and on cartIds change
    
     return(
-        <div className="product-container d-flex flex-column border border-secondary rounded-2 p-2" style={{cursor: 'pointer'}} key={prodId} >
-
+        <div className="product-container d-flex flex-column border border-secondary rounded-2 p-2" style={{cursor: 'pointer'}} key={prod.products_id} >
             <div className="product-wrapper">
 
                 {!user ? <></> : 
-                <div className="more">
-                    <btn className='btn' onClick={() => setToggleMore(!toggleMore)}>:</btn>
-                    <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "relative" , bottom : '25px'}}>
-                        {user?.role == 'admin' ? 
-                            <>
-                                <button className="btn btn-primary" onClick={() => setToggleEdit({status : true , product : prod})}>Edit</button>
-                                <button className="btn btn-danger" onClick={() => setToggleRemove({status : true , productId : prod.products_id})}>Remove</button>
-                            </>
-                        :
-                            <>
-                                <button className="btn btn-danger" onClick={() => setToggleReportProduct({status : true , productId : prod.products_id})}>Report</button>
-                            </>
-                        }
+                    <div className="more">
+                        <btn className='btn' onClick={() => setToggleMore(!toggleMore)}>:</btn>
+                        <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "absolute" , bottom : '0px'}}>
+                            {user?.role == 'admin' ? 
+                                <>
+                                    <button className="btn btn-primary" onClick={() => setToggleEdit({status : true , product : prod})}>Edit</button>
+                                    <button className="btn btn-danger" onClick={() => setToggleRemove({status : true , productId : prod.products_id})}>Remove</button>
+                                </>
+                            :
+                                <>
+                                    <button className="btn btn-danger" onClick={() => setToggleReportProduct({status : true , productId : prod.products_id})}>Report</button>
+                                </>
+                            }
+                        </div>
                     </div>
-                </div>}
+                }
 
                 <div className="product-top w-100 h-auto d-flex justify-content-center" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
-                {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'200px'}}/> || <Skeleton />}
+                    {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'200px'}}/> || <Skeleton />}
                 </div>
                     
                 <div className="product-main">
@@ -90,7 +90,6 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
                 </div>
 
             </div>
-            
         </div>
     );
 };
