@@ -1,5 +1,24 @@
 .products {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 16px; 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px; 
+}
+
+.more {
+    border-radius: 100%;
+    padding: 0px;
+    background-color: none;
+}
+
+.product-container{
+    border: none;
+    display: flex;
+    padding: 10px 15px;
+    background-color: #ffffff;
+}
+
+.product-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap:25px;
 }

@@ -1,11 +1,13 @@
 :root {
-  --bg-color: #fff;
-  --text-color: #000;
+  --bg-color: #f9f9ff;
+  --text-color: #111c2d;
+  --product-bg-color : white;
 }
 
 [data-theme='dark'] {
-  --bg-color: #121212;
-  --text-color: #f5f5f5;
+  --bg-color: #0f172a;
+  --text-color: #94a3b8;
+  --product-bg-color : 
 }
 
 body {
@@ -16,6 +18,10 @@ body {
 div {
   background-color: var(--bg-color);
   color: var(--text-color);
+}
+
+.product-container{
+  background-color: var(--product-bg-color);
 }
 
 i , a{

@@ -21,6 +21,7 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
 
     const [isInCart, setIsInCart] = useState(false); //state to trigger buttons based on if user has item on cart or not
     const [toggleMore, setToggleMore] = useState(false); //state to toggle toggleMore component
+    const [toggleBtn, setToggleBtn] = useState(false); //state to toggle three dots button
 
     const handleDeleteFromCart = async (productId) => {
         try {
@@ -48,13 +49,20 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
     },[cartIds]) //logic executes on render and on cartIds change
    
     return(
-        <div className="product-container d-flex flex-column border border-secondary rounded-2 p-2" style={{cursor: 'pointer'}} key={prod.products_id} >
-            <div className="product-wrapper">
+        <div className="product-container d-flex flex-column rounded-1 " style={{cursor: 'pointer'}} key={prod.products_id} >
+            <div className="product-more-background position-absolute w-100 h-100 top-0 opacity-0" style={{zIndex: 99, display : toggleMore ? 'flex' : 'none'}} onClick={() => setToggleMore(false)}></div>
+            <div className="product-wrapper" onMouseEnter={() => setToggleBtn(true)} onMouseLeave={() => setToggleBtn(() => (toggleMore ? true : false))}>
 
                 {!user ? <></> : 
-                    <div className="more">
-                        <btn className='btn' onClick={() => setToggleMore(!toggleMore)}>:</btn>
-                        <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "absolute" , bottom : '0px'}}>
+                    <div className="more position-absolute" style={{zIndex : 100}}>
+
+                        {toggleBtn ? 
+                            <btn className='more-button btn border border-2 rounded-5' style={{fontSize : '12px', padding : '5px 8px'}} onClick={() => setToggleMore(!toggleMore)} >{toggleMore ? 
+                                <i class="fa-solid fa-xmark"></i> : 
+                                <i class="fa-solid fa-ellipsis-vertical"></i>}</btn> 
+                        : <></>}
+
+                        <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "absolute" , }}>
                             {user?.role == 'admin' ? 
                                 <>
                                     <button className="btn btn-primary" onClick={() => setToggleEdit({status : true , product : prod})}>Edit</button>
@@ -70,7 +78,7 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
                 }
 
                 <div className="product-top w-100 h-auto d-flex justify-content-center" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
-                    {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'200px'}}/> || <Skeleton />}
+                    {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'100%'}}/> || <Skeleton />}
                 </div>
                     
                 <div className="product-main">
