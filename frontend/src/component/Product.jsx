@@ -25,28 +25,27 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
     const handleDeleteFromCart = async (productId) => {
         try {
             
-            const response = await axios.delete(`${BACKEND_URL}/api/cart/${productId}`, { headers: { Authorization: `Bearer ${cookies.token}`}});
+            const response = await axios.delete(`${BACKEND_URL}/api/cart/${productId}`, { headers: { Authorization: `Bearer ${cookies.token}`}}); //calling api to delete item from cart with product_id of passed params
 
-            if(response.status === 200){
-                setIsInCart(false)
-            }
+            if(response.status === 200)setIsInCart(false); //removing from state if api success
             
-        } catch(err){
-            if(err.status === 404){
-                setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
-            }else{
-                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
-            }
-        }
-    }
+        } catch(err){ //handling errors
+            if(err.status === 404){ //reutrning 404 status code if product is not found in your cart 
+                setIsInCart(false);//returning false state since we do not have item in cart
+                setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message and passing error message
+            }else{ //handling internal error
+                setIsInCart(true); //returning true state since item could not be removed from clients cart
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //returning internal error message
+            };
+        };
+    };
 
 
     useEffect(() => {
 
-        if(cartIds?.some(cart => cart.product_id === prod?.products_id)) return setIsInCart(true)
+        if(cartIds?.some(cart => cart.product_id === prod?.products_id)) return setIsInCart(true); // checking if current product is included in cartIds array and if so setting isInCart state as true, if its not we are returning empty promise
 
-
-    },[cartIds])
+    },[cartIds]) //logic executes on render and on cartIds change
    
     return(
         <div className="product-container d-flex flex-column border border-secondary rounded-2 p-2" style={{cursor: 'pointer'}} key={prodId} >
@@ -93,7 +92,7 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
             </div>
             
         </div>
-    )
-}
+    );
+};
 
-export default Product
+export default Product; //exporting component
