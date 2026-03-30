@@ -19,9 +19,11 @@ import ReportProduct from "../component/ReportProduct"; //importing components
 
 import StatusMessage from "../alerts/StatusMessage"; //importing skeletons for loading and component to  dissplay messages (error, warning)
 
-import '../styles/products.css'
-import '../styles/index.css'
-import ProductSkeleton from "../skeletons/ProductSkeleton";
+import ProductSkeleton from "../skeletons/ProductSkeleton"; //importing loading skeleton for products
+
+import '../styles/products.css';
+import '../styles/index.css'; //importing css files
+
 const Main = () => {
 
     const [ cookies ] = useCookies(['token']); //defining cookies
@@ -50,7 +52,6 @@ const Main = () => {
             setProducts(product.data.products); setIsLoading(false) //storing products in state if status code is 200
 
         }catch(err){ //catching error
-            console.log(err)
             setIsLoading(false)
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
             setProducts(prevProducts); //Setting pre-loaded products in state in case error occurs
@@ -85,10 +86,10 @@ const Main = () => {
                 <Header setProducts={setProducts} setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/>
                 <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset}/>
 
-                <div className="products">
+                <div className="products px-4">
                     {!isLoading ? 
                         products?.length < 1 ? <h1>No Products In This Category.</h1> 
-                        : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart}/>) 
+                        : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>) 
                     : [...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}
 
                     {products?.length % 15 !== 0 || products?.length === 0 ? <></> : <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>}

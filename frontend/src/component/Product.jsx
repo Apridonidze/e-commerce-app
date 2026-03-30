@@ -1,37 +1,42 @@
+import { useContext, useEffect, useState } from "react"; //importing react hooks
 
-import { useContext, useEffect, useState } from "react"
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie"; //importing react libraries
+
+import { UserContext } from "../context/UserContext"; //importing user context
+import { BACKEND_URL } from "../../config";//importing backend url from config file for api calls
 
 import Skeleton from "react-loading-skeleton" // reloacte to skeletons 
-import { useNavigate } from "react-router-dom"
 
-import { UserContext } from "../context/UserContext"
+import '../styles/products.css'; //importing css file
 
-import axios from "axios"
-import { BACKEND_URL } from "../../config"
-import { useCookies } from "react-cookie"
-
-import '../styles/products.css'
-
-const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setToggleReportProduct, setToggleAddToCart } ) => {
+const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setToggleReportProduct, setToggleAddToCart, setToggleAlert } ) => {
 
     const navigator = useNavigate();
 
-    const [ cookies ] = useCookies(['token'])
-    const { user } = useContext(UserContext)
-    const { cartIds } = useContext(UserContext)
+    const [ cookies ] = useCookies(['token']); //defining user cookies
+    const { user } = useContext(UserContext); //defining user context
+    const { cartIds } = useContext(UserContext); //defining cart items ids from usercontext
 
-    const [isInCart, setIsInCart] = useState(false);
-    const [toggleMore, setToggleMore] = useState(false)
+    const [isInCart, setIsInCart] = useState(false); //state to trigger buttons based on if user has item on cart or not
+    const [toggleMore, setToggleMore] = useState(false); //state to toggle toggleMore component
 
     const handleDeleteFromCart = async (productId) => {
         try {
             
-            await axios.delete(`${BACKEND_URL}/api/cart/${productId}`, { headers: { Authorization: `Bearer ${cookies.token}` } })
-            setIsInCart(false)
+            const response = await axios.delete(`${BACKEND_URL}/api/cart/${productId}`, { headers: { Authorization: `Bearer ${cookies.token}`}});
+
+            if(response.status === 200){
+                setIsInCart(false)
+            }
             
-        } catch (err) {
-            setIsInCart(true)
-            console.log(err)
+        } catch(err){
+            if(err.status === 404){
+                setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+            }else{
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+            }
         }
     }
 
