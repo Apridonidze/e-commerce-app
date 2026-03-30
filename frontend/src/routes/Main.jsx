@@ -17,11 +17,11 @@ import RemoveProduct from "../admin/components/RemoveProduct";
 import AddToCart from "../component/AddToCart";
 import ReportProduct from "../component/ReportProduct"; //importing components
 
-import Skeleton from "react-loading-skeleton";
 import StatusMessage from "../alerts/StatusMessage"; //importing skeletons for loading and component to  dissplay messages (error, warning)
 
 import '../styles/products.css'
 import '../styles/index.css'
+import ProductSkeleton from "../skeletons/ProductSkeleton";
 const Main = () => {
 
     const [ cookies ] = useCookies(['token']); //defining cookies
@@ -89,7 +89,7 @@ const Main = () => {
                     {!isLoading ? 
                         products?.length < 1 ? <h1>No Products In This Category.</h1> 
                         : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart}/>) 
-                    : <Skeleton />}
+                    : [...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}
 
                     {products?.length % 15 !== 0 || products?.length === 0 ? <></> : <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>}
                 </div>
