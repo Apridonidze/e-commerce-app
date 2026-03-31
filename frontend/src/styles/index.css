@@ -40,6 +40,10 @@ ul, li {
   background-color: var(--product-bg-color);
   padding: 5px;
 }
+
+#message{
+  background-color: var(--product-bg-color) ;
+}
 .avalability{
   background-color: var(--bg-color);
 }

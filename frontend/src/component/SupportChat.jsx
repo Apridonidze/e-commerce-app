@@ -15,6 +15,8 @@ const SupportChat = ({setToggleChat }) => {
     const socketRef = useRef(null)
 
     const messagesRef = useRef(null)
+    const messageRefs = useRef([null])
+    const statusRefs = useRef([null]);
     const [lastStatus , setLastStatus] = useState('Delivered')
     const [count,setCount] = useState(0)
 
@@ -91,13 +93,30 @@ const SupportChat = ({setToggleChat }) => {
         setInput('')
     }
 
+    useEffect(() => {
+        if(messageRefs && messageRefs.current && statusRefs && statusRefs.current){
+
+            statusRefs.current.forEach((el, i) => {
+                if (!el) return;
+
+                if (i === statusRefs.current.length - 1) {
+                    el.classList.remove('d-none');
+                    el.classList.add('d-flex');
+                } else {
+                    el.classList.add('d-none');
+                    el.classList.remove('d-flex');
+                }
+            });
+        }
+    },[messages])
+
     return(
         <div className="support-chat-container" tabIndex={1}>
 
             <div className="support-chat-header ">
                 <div className="header-start text-start border-0">
                     <h4>Support Chat</h4>
-                    <h6><i class="fa-solid fa-circle border border-2 rounded-5" style={{color : count > 0 ? '#10b981' : '#9b9b9b' , fontSize : '14px'}}></i> Online Admins {count}</h6>
+                    <h6><i class="fa-solid fa-circle rounded-5" style={{color : count > 0 ? '#10b981' : '#9b9b9b' , fontSize : '14px'}}></i> Online Admins {count}</h6>
                 </div>
                 <div className="header-end border-0">
                     <i onClick={() => setToggleChat(false)} class="fa-solid fa-xmark"></i>
@@ -105,7 +124,7 @@ const SupportChat = ({setToggleChat }) => {
             </div>
 
             <div className="support-chat-main d-flex flex-column border-0" style={{overflowY : 'scroll'}} ref={messagesRef}>
-                {messages?.map((m , mId) => <span key={mId} className={m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'}>{m.content} {m.status}</span>)}
+                {messages?.map((m , mId) => <span key={mId}> <span id="message" ref={(e) => messageRefs.current[mId] = e}  style={{backgroundColor : m.sender_name !== 'You' && '#10b981' , color : m.sender_name !== 'You' && 'white'}} className={`${m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'} px-2 py-1 rounded-3 fw-medium my-1`}>{m.content}</span> <span className="d-none" ref={(e) => statusRefs.current[mId] = e}>{m.status}</span></span>)}
             </div>
 
             <div className="support-chat-footer">
