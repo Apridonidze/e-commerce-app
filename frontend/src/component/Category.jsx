@@ -132,7 +132,7 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
             
             <ul className="list-unstyled d-flex flex-nowrap gap-2 align-items-center ms-2 " onScroll={handleScroll} ref={listRef}>
                 
-                <button className="allCat btn fw-medium" style={{minWidth:'160px', backgroundColor : !category && '#006947', color : !category && 'white'}} onClick={() => {setCategory(null);setDropDownIndex({id : null , category : null}) ; fetchProducts(offset,null)}} ><i class="fa-solid fa-layer-group"></i> All Category</button> 
+                <button className="allCat btn fw-medium" style={{minWidth:'160px', backgroundColor : !category && '#10b981', color : !category && 'white'}} onClick={() => {setCategory(null);setDropDownIndex({id : null , category : null}) ; fetchProducts(offset,null)}} ><i class="fa-solid fa-layer-group" style={{color : !category && 'white'}}></i> All Category</button> 
                 
                 {categories.map((cat, index) => (                
                     <li key={cat.slug} className="d-flex flex-column" >

@@ -81,8 +81,8 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
                     
                 <div className="product-main">
 
+                    <small style={{color : '#10b981'}}>{`${prod.category} / ${prod.subcategory}`}</small>
                     <h5>{prod.title}</h5>
-                    <h5>{`${prod.category} / ${prod.subcategory}`}</h5>
 
                     <h5>{prod?.price.toString().split('.').length > 1 ? prod.price : `${prod.price}.00` + '₾' }</h5>
                     <h5>{`Items Left: ${prod?.amount}`}</h5>
