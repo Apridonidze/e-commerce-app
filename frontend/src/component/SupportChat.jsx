@@ -94,11 +94,21 @@ const SupportChat = ({setToggleChat }) => {
     return(
         <div className="support-chat-container" tabIndex={1}>
 
-            <div className="support-chat-header d-flex flex-column" style={{maxHeight : "300px" , overflowY : 'scroll'}} ref={messagesRef}>
+            <div className="support-chat-header d-flex">
+                <div className="header-start text-start">
+                    <h4>Support Chat</h4>
+                    <h6>Online Admins {count}</h6>
+                </div>
+                <div className="header-end">
+                    <i onClick={() => setToggleChat(false)} class="fa-solid fa-angle-down"></i>
+                </div>
+            </div>
+
+            <div className="support-chat-main d-flex flex-column" style={{maxHeight : "300px" , overflowY : 'scroll'}} ref={messagesRef}>
                 {messages?.map((m , mId) => <span key={mId} className={m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'}>{m.content} {m.status}</span>)}
             </div>
 
-            <div className="support-chat-header">
+            <div className="support-chat-footer">
                 <form onSubmit={(e) => handleMessageSend(e)}>
                     <div className="input-group">
                         <input type="text" className="form-control" placeholder="Send Message..." onChange={(e) => setInput(e.target.value)} value={input}/>
