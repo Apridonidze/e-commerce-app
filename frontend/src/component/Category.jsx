@@ -126,24 +126,24 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
         <div className="category-sidebar d-flex align-items-start gap-2 ">
         
             <span className="button-div d-flex position-absolute " style={{backgroundColor : 'none'}}>
-                <button onClick={scrollRight} ref={rightRef} className="btn1 btn border border-2 rounded-5 mt-2 position-relative" ><i class="fa-solid fa-angle-right"></i></button>
-                <button onClick={scrollLeft} ref={leftRef} className="btn2 btn border border-2 rounded-5 mt-2 position-absolute" ><i class="fa-solid fa-angle-left"></i></button>
+                <button onClick={scrollRight} ref={rightRef} className="btn1 btn rounded-5 mt-2 position-relative" ><i class="fa-solid fa-angle-right"></i></button>
+                <button onClick={scrollLeft} ref={leftRef} className="btn2 btn rounded-5 mt-2 position-absolute" ><i class="fa-solid fa-angle-left"></i></button>
             </span>
             
             <ul className="list-unstyled d-flex flex-nowrap gap-2 align-items-center ms-2 " onScroll={handleScroll} ref={listRef}>
                 
-                <button className={`btn btn-light fw-medium  ${category ? " text-dark" : "text-white"}`} style={{minWidth:'160px', backgroundColor : !category ? '#006947': ''}} onClick={() => {setCategory(null);fetchProducts(offset,null)}} ><i className="fa-solid fa-th-large"></i> All Category</button> 
+                <button className="allCat btn fw-medium" style={{minWidth:'160px', backgroundColor : !category && '#006947', color : !category && 'white'}} onClick={() => {setCategory(null);setDropDownIndex({id : null , category : null}) ; fetchProducts(offset,null)}} ><i class="fa-solid fa-layer-group"></i> All Category</button> 
                 
                 {categories.map((cat, index) => (                
                     <li key={cat.slug} className="d-flex flex-column" >
                         
-                        <button className="toggleDropDown btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '240px', borderBottom : openIndex === index ? '2px solid #006947' : '', backgroundColor : dropDownIndex.category == cat.name ? '#008a5e' : '' , color : dropDownIndex.category == cat.name ? 'white' : ''}} onClick={(e) => toggleSubmenu(e, index)}>{cat.icon} {cat.name} <span style={{rotate : openIndex === index ? '180deg' : "0deg", transition: 'all 0.2s'}}><i class="fa-solid fa-angle-down"></i></span></button>
+                        <button className="toggleDropDown btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '240px', borderBottom : openIndex === index ? '2px solid #006947' : '', backgroundColor : dropDownIndex.category == cat.name && '#008a5e', color : dropDownIndex?.category == cat.name && 'white'}} onClick={(e) => toggleSubmenu(e, index)}>{cat.icon} {cat.name} <span style={{rotate : openIndex === index ? '180deg' : "0deg", transition: 'all 0.2s'}}><i class="fa-solid fa-angle-down"></i></span></button>
                         <div className={`list-unstyled-background ${openIndex !== null ? 'd-flex' : 'd-none'} opacity-0 position-absolute w-100 h-100 bg-dark start-0 top-0`} style={{zIndex : 1000 }} onClick={() => setOpenIndex(null)}></div>
                         
-                        <ul className={`subcategory-list-unstyled rounded-2 position-absolute bg-white p-3 mt-1 ${openIndex === index ? 'd-flex' : 'd-none'} flex-column`} style={{zIndex : 1001, left : dropDownPos?.left , top : dropDownPos?.top}}>
+                        <ul className={`subcategory-list-unstyled rounded-2 position-absolute p-3 mt-1 ${openIndex === index ? 'd-flex' : 'd-none'} flex-column`} style={{zIndex : 1001, left : dropDownPos?.left , top : dropDownPos?.top}}>
                             {cat.subcategories.map((sub, i) => (
                                 <li key={i} className="my-2" style={{cursor :"pointer"}}>
-                                    <span className="d-flex flex-column gap-2 p-2 text-dark rounded-0 w-100 " style={{borderBottom : sub.name == category ? '2px solid #006947' : '1px solid #dee2e6'}} onClick={() => {setCategory(sub.name) ; setDropDownIndex({id : i , category : cat.name})}}>
+                                    <span className="d-flex flex-column gap-2 p-2 text-dark rounded-0 w-100 " style={{borderBottom : sub.name == category ? '2px solid #006947' : '1px solid'}} onClick={() => {setCategory(sub.name) ; setDropDownIndex({id : i , category : cat.name})}}>
                                         <strong>{sub.icon} {sub.name}</strong>
                                         <small> {sub.description}</small>
                                     </span>

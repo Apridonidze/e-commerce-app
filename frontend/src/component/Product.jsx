@@ -7,8 +7,6 @@ import { useCookies } from "react-cookie"; //importing react libraries
 import { UserContext } from "../context/UserContext"; //importing user context
 import { BACKEND_URL } from "../../config";//importing backend url from config file for api calls
 
-import Skeleton from "react-loading-skeleton" // reloacte to skeletons 
-
 import '../styles/products.css'; //importing css file
 
 const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setToggleReportProduct, setToggleAddToCart, setToggleAlert } ) => {
@@ -50,51 +48,53 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
    
     return(
         <div className="product-container d-flex flex-column rounded-1 " style={{cursor: 'pointer'}} key={prod.products_id} >
-            <div className="product-more-background position-absolute w-100 h-100 top-0 opacity-0" style={{zIndex: 99, display : toggleMore ? 'flex' : 'none'}} onClick={() => setToggleMore(false)}></div>
+            <div className="product-more-background position-absolute w-100 h-100 start-0 top-0 opacity-0" style={{zIndex: 99, display : toggleMore ? 'flex' : 'none'}} onClick={() => setToggleMore(false)}></div>
             <div className="product-wrapper" onMouseEnter={() => setToggleBtn(true)} onMouseLeave={() => setToggleBtn(() => (toggleMore ? true : false))}>
 
                 {!user ? <></> : 
-                    <div className="more position-absolute" style={{zIndex : 100}}>
+                    <div className="more position-absolute m-2 align-self-end" style={{zIndex : 100}}>
 
                         {toggleBtn ? 
-                            <btn className='more-button btn border border-2 rounded-5' style={{fontSize : '12px', padding : '5px 8px'}} onClick={() => setToggleMore(!toggleMore)} >{toggleMore ? 
-                                <i class="fa-solid fa-xmark"></i> : 
+                            <btn className={`more-button btn rounded-3 ${toggleMore ? 'btn-success' : 'btn-none border '}`} style={{fontSize : '12px', padding : '5px 8px'}} onClick={() => setToggleMore(!toggleMore)} >{toggleMore ? 
+                                <i class="fa-solid fa-xmark text-white"></i> : 
                                 <i class="fa-solid fa-ellipsis-vertical"></i>}</btn> 
                         : <></>}
 
-                        <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "absolute" , }}>
-                            {user?.role == 'admin' ? 
+                        <div className="toggle-more mt-1 rounded-2" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column" ,position : "absolute" , right : '0.2rem', }}>
+                            {user?.role !== 'admin' ? 
                                 <>
-                                    <button className="btn btn-primary" onClick={() => setToggleEdit({status : true , product : prod})}>Edit</button>
-                                    <button className="btn btn-danger" onClick={() => setToggleRemove({status : true , productId : prod.products_id})}>Remove</button>
+                                    <button className="btn text-primary d-flex align-items-center py-2 w-100" onClick={() => setToggleEdit({status : true , product : prod})}><i class="fa-regular fa-pen-to-square text-primary"></i> Edit</button>
+                                    <button className="btn text-danger d-flex align-items-center py-2 w-100" onClick={() => setToggleRemove({status : true , productId : prod.products_id})}><i class="fa-regular fa-trash-can text-danger"></i> Remove</button>
                                 </>
                             :
                                 <>
-                                    <button className="btn btn-danger" onClick={() => setToggleReportProduct({status : true , productId : prod.products_id})}>Report</button>
+                                    <button className="btn text-danger d-flex align-items-center py-2 w-100 gap-2" onClick={() => setToggleReportProduct({status : true , productId : prod.products_id})}><i class="fa-solid fa-flag text-danger"></i> Report</button>
                                 </>
                             }
                         </div>
                     </div>
                 }
 
-                <div className="product-top w-100 h-auto d-flex justify-content-center" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
-                    {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'100%'}}/> || <Skeleton />}
+                <div className="product-top w-100 h-100 d-flex justify-content-center rounded-1" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
+                    {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'100%', maxHeight : '190px'}}/>}
                 </div>
                     
                 <div className="product-main">
 
-                    <h5>{prod.title || <Skeleton count={1} width={'12vw'}/>}</h5>
-                    <h5>{`${prod.category} / ${prod.subcategory}` || <Skeleton count={2}/>}</h5>
+                    <h5>{prod.title}</h5>
+                    <h5>{`${prod.category} / ${prod.subcategory}`}</h5>
 
-                    <h5>{prod?.price.toString().split('.').length > 1 ? prod.price : `${prod.price}.00` + '₾' || <Skeleton/>}</h5>
-                    <h5>{`Items Left: ${prod?.amount}`|| <Skeleton/>}</h5>
+                    <h5>{prod?.price.toString().split('.').length > 1 ? prod.price : `${prod.price}.00` + '₾' }</h5>
+                    <h5>{`Items Left: ${prod?.amount}`}</h5>
 
                 </div>
 
                 <div className="product-bottom d-flex align-items-center" >
                     
-                    {!user ? <></> : isInCart ? <button onClick={() => handleDeleteFromCart(prod?.products_id)}>In Cart</button> : <button onClick={() => setToggleAddToCart({status : true , product : prod})}>Add To Cart</button> }
-                    
+                    {!user ? <></> : isInCart ? 
+                        <button onClick={() => handleDeleteFromCart(prod?.products_id)}>In Cart</button> : 
+                        <button onClick={() => setToggleAddToCart({status : true , product : prod})}>Add To Cart</button>
+                    }
                 </div>
 
             </div>
