@@ -97,7 +97,7 @@ const SupportChat = ({setToggleChat }) => {
             <div className="support-chat-header ">
                 <div className="header-start text-start border-0">
                     <h4>Support Chat</h4>
-                    <h6>Online Admins {count}</h6>
+                    <h6><i class="fa-solid fa-circle border border-2 rounded-5" style={{color : count > 0 ? '#10b981' : '#9b9b9b' , fontSize : '14px'}}></i> Online Admins {count}</h6>
                 </div>
                 <div className="header-end border-0">
                     <i onClick={() => setToggleChat(false)} class="fa-solid fa-xmark"></i>
@@ -112,7 +112,7 @@ const SupportChat = ({setToggleChat }) => {
                 <form onSubmit={(e) => handleMessageSend(e)}>
                     <div className="input-group">
                         <input type="text" className="form-control" placeholder="Write a message..." onChange={(e) => setInput(e.target.value)} value={input}/>
-                        <button type="submit" className="btn" style={{backgroundColor : "#10b981"}}><i class="fa-solid fa-paper-plane text-white"></i></button>
+                        <button type="submit" className="btn border-0" style={{backgroundColor : "#10b981"}}><i class="fa-solid fa-paper-plane text-white"></i></button>
                     </div>
                 </form>
             </div>
