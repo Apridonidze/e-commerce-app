@@ -52,7 +52,7 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
             <div className="product-wrapper" onMouseEnter={() => setToggleBtn(true)} onMouseLeave={() => setToggleBtn(() => (toggleMore ? true : false))}>
 
                 {!user ? <></> : 
-                    <div className="more position-absolute m-2 align-self-end" style={{zIndex : 100}}>
+                    <div className="more position-absolute m-2 align-self-end border" style={{zIndex : 100}}>
 
                         {toggleBtn ? 
                             <btn className={`more-button btn rounded-3 ${!toggleMore && 'btn-none'}`} style={{fontSize : '12px', padding : '5px 8px', backgroundColor : toggleMore && '#10b981'}} onClick={() => setToggleMore(!toggleMore)} >{toggleMore ? 
@@ -75,17 +75,23 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
                     </div>
                 }
 
+                <div className="stock position-absolute mt-2 px-2 py-1 rounded-3 fw-medium" style={{backgroundColor: '#10b981', color :'dark'}}>
+                    <small style={{fontSize : '14px'}}>{prod?.amount < 13  ? `${prod?.amount} Left` : 'In Stock'}</small>
+                </div>
+
                 <div className="product-top w-100 h-100 d-flex justify-content-center rounded-1" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
                     {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'100%', maxHeight : '190px'}}/>}
                 </div>
                     
-                <div className="product-main">
+                <div className="product-main d-flex justify-content-between">
 
-                    <small style={{color : '#10b981'}}>{`${prod.category} / ${prod.subcategory}`}</small>
-                    <h5>{prod.title}</h5>
-
-                    <h5>{prod?.price.toString().split('.').length > 1 ? prod.price : `${prod.price}.00` + '₾' }</h5>
-                    <h5>{`Items Left: ${prod?.amount}`}</h5>
+                    <div className="product-main-start text-break">
+                        <small style={{color : '#10b981'}}>{`${prod.category} / ${prod.subcategory}`}</small>
+                        <h5 style={{fontSize : '22px'}}>{prod.title}</h5>
+                    </div>
+                    <div className="product-main-end border" >
+                        <h5>{prod?.price.toString().split('.').length > 1 ? prod.price : `${prod.price}.00` + '₾' }</h5>
+                    </div>
 
                 </div>
 
