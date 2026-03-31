@@ -4,7 +4,7 @@ import { useLayoutEffect, useEffect , useRef, useState } from "react"
 import { BACKEND_URL } from "../../config"
 
 
-const SupportChat = ({ setCount, setToggleChat }) => {
+const SupportChat = ({setToggleChat }) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -16,7 +16,7 @@ const SupportChat = ({ setCount, setToggleChat }) => {
 
     const messagesRef = useRef(null)
     const [lastStatus , setLastStatus] = useState('Delivered')
-    
+    const [count,setCount] = useState(0)
 
     useEffect(() => {
 

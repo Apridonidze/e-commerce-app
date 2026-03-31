@@ -3,7 +3,8 @@
   --text-color: #111c2d;
   --product-bg-color : white;
   --product-color : '#111c2d';
-  --border : 2px solid #f4f5fc
+  --border : 2px solid #f4f5fc;
+  --border-2 : 2px solid #00a571;
 }
 
 [data-theme='dark'] {
@@ -64,6 +65,10 @@ ul, li {
 
 i , small, a, span , strong{
   color:  var(--text-color);
+}
+
+.support-chat-container{
+  border: var(--border-2);
 }
 
 .more , .more-button button{
