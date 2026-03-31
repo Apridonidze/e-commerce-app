@@ -82,6 +82,34 @@
     z-index: 90;
 }
 
+.support-chat-container{
+    display: flex;
+    flex-direction:column;
+    justify-content: space-between;
+    min-width: 400px;
+    min-height: 300px;
+    border-radius: 0.5rem;
+    border: 1px solid;
+}
+
+.support-chat-header{
+    border-bottom: 1px solid ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.support-chat-main{
+    padding: 5px 10px;
+    height: 200px;
+}
+
+.support-chat-footer{
+    margin: 10px;
+}
+
 @media (max-width: 925px) {
 
     .menu{

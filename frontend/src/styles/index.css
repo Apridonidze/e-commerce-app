@@ -30,20 +30,26 @@ ul, li {
   border-color: var(--text-color);
 }
 
-.product-container , .more-button, .more, .more button:focus , .more button:active{
+.product-container , .more-button, .more, .more button:focus , .more button:active, .support-chat-container {
   border: var(--border);
+}
+.support-chat-container div{
+  border-bottom: var(--border);
+}
+.support-chat-header div , .support-chat-header{
+  background-color: var(--product-bg-color);
+  padding: 5px;
 }
 .avalability{
   background-color: var(--bg-color);
 }
-
 .product-container, .product-container div {
   background-color: var(--product-bg-color);
 }
 .product-main{
   color: var(--text-color);
 }
-.headerSearchInput , .headerSearchInput input , .headerSearchInput i, .headerSearchInput span , .headerSearchInput ::placeholder{
+.headerSearchInput , .headerSearchInput input , .headerSearchInput i, .headerSearchInput span , .headerSearchInput ::placeholder ,.support-chat-footer , .support-chat-footer input, .support-chat-footer input::placeholder, .support-chat-footer :focus {
     background-color:  var(--product-bg-color);
     border: none;
     color: var(--text-color);
@@ -67,7 +73,7 @@ i , small, a, span , strong{
   color:  var(--text-color);
 }
 
-.support-chat-container{
+.support-chat-toggle{
   border: var(--border-2);
 }
 
@@ -82,6 +88,7 @@ i , small, a, span , strong{
   border: 1px solid var(--text-color);
   box-shadow: none ;
 }
+
 
 .button-div button{
   border: 1px solid var(--text-color);
