@@ -52,18 +52,18 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
             <div className="product-wrapper" onMouseEnter={() => setToggleBtn(true)} onMouseLeave={() => setToggleBtn(() => (toggleMore ? true : false))}>
 
                 {!user ? <></> : 
-                    <div className="more position-absolute m-2 align-self-end border" style={{zIndex : 100}}>
+                    <div className="more position-absolute mt-3 me-2 align-self-end " style={{zIndex : 100}}>
 
                         {toggleBtn ? 
-                            <btn className={`more-button btn rounded-3 ${!toggleMore && 'btn-none'}`} style={{fontSize : '12px', padding : '5px 8px', backgroundColor : toggleMore && '#10b981'}} onClick={() => setToggleMore(!toggleMore)} >{toggleMore ? 
+                            <btn className={`more-button btn border-0 rounded-3  ${!toggleMore && 'btn-none'}`} style={{fontSize : '12px', padding : '5px 8px', backgroundColor : toggleMore && '#10b981'}} onClick={() => setToggleMore(!toggleMore)} >{toggleMore ? 
                                 <i class="fa-solid fa-xmark text-white"></i> : 
                                 <i class="fa-solid fa-ellipsis-vertical"></i>}</btn> 
                         : <></>}
 
-                        <div className="toggle-more mt-1 rounded-2" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column" ,position : "absolute" , right : '0.2rem', }}>
-                            {user?.role !== 'admin' ? 
+                        <div className="toggle-more mt-1 rounded-2 " style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column" ,position : "absolute" , right : '0.2rem' }}>
+                            {user?.role == 'admin' ? 
                                 <>
-                                    <button className="btn text-primary d-flex align-items-center py-2 w-100" onClick={() => setToggleEdit({status : true , product : prod})}><i class="fa-regular fa-pen-to-square text-primary"></i> Edit</button>
+                                    <button className="btn text-primary d-flex align-items-center py-2 w-100 rounded-0" onClick={() => setToggleEdit({status : true , product : prod})}><i class="fa-regular fa-pen-to-square text-primary"></i> Edit</button>
                                     <button className="btn text-danger d-flex align-items-center py-2 w-100" onClick={() => setToggleRemove({status : true , productId : prod.products_id})}><i class="fa-regular fa-trash-can text-danger"></i> Remove</button>
                                 </>
                             :
@@ -75,31 +75,37 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
                     </div>
                 }
 
-                <div className="stock position-absolute mt-2 px-2 py-1 rounded-3 fw-medium" style={{backgroundColor: '#10b981', color :'dark'}}>
-                    <small style={{fontSize : '14px'}}>{prod?.amount < 13  ? `${prod?.amount} Left` : 'In Stock'}</small>
-                </div>
-
-                <div className="product-top w-100 h-100 d-flex justify-content-center rounded-1" onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
+                <div className="product-top w-100 d-flex justify-content-center rounded-1 pt-2" style={{minHeight : '190px'}} onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
                     {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'100%', maxHeight : '190px'}}/>}
                 </div>
                     
-                <div className="product-main d-flex justify-content-between">
+                <div className="product-main ">
 
-                    <div className="product-main-start text-break">
-                        <small style={{color : '#10b981'}}>{`${prod.category} / ${prod.subcategory}`}</small>
-                        <h5 style={{fontSize : '22px'}}>{prod.title}</h5>
-                    </div>
-                    <div className="product-main-end border" >
-                        <h5>{prod?.price.toString().split('.').length > 1 ? prod.price : `${prod.price}.00` + '₾' }</h5>
-                    </div>
+                        <h5 className="text-break fw-medium ps-1" style={{fontSize : '22px'}}>{prod.title.length < 22 ? prod.title  : `${prod.title.slice(0,22)}...`}</h5>
+                   
+                        <div className="product-main-container d-flex justify-content-between align-items-end pt-1">
+                            <div className="product-main-start ">
+                                {!prod?.sales_price ? 
+                                <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${prod.price} </span> : 
+                                <div className="sales-price">
+                                    <span style={{textDecoration: 'line-through', fontSize: '14px'}}>${prod.price} </span>
+                                    <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${prod.sales_price} </span>
+                                </div>    
+                            }
+                            </div>
+                            <div className="product-main-end d-flex flex-column text-end">
+                                <small className="fw-medium mb-1">Avalability</small>
+                                <span className="avalability rounded-5" style={{fontSize:'14px', padding : '2px 10px'}}>{prod.amount} Items Left</span>
+                            </div>
+                        </div>
 
                 </div>
 
                 <div className="product-bottom d-flex align-items-center" >
                     
                     {!user ? <></> : isInCart ? 
-                        <button onClick={() => handleDeleteFromCart(prod?.products_id)}>In Cart</button> : 
-                        <button onClick={() => setToggleAddToCart({status : true , product : prod})}>Add To Cart</button>
+                        <button className="btn w-100 fw-bold" style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => handleDeleteFromCart(prod?.products_id)}><i class="fa-solid fa-cart-shopping text-white me-2"></i> In Cart</button> : 
+                        <button className="btn w-100 fw-bold" style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => setToggleAddToCart({status : true , product : prod})}><i class="fa-solid fa-cart-shopping text-white me-2"></i>Add To Cart</button>
                     }
                 </div>
 
