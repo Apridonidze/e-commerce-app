@@ -51,15 +51,12 @@
     display: none;
 }
 
-.category-sidebar{
-    padding: 0px 15px;
-}
-
 .side-buttons{
     display: flex;
     align-items: center;
     gap: 5px;
 }
+
 .list-unstyled{
     overflow: hidden;
     height :50px;

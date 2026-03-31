@@ -9,7 +9,7 @@ import { BACKEND_URL } from "../../config";//importing backend url from config f
 
 import '../styles/products.css'; //importing css file
 
-const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setToggleReportProduct, setToggleAddToCart, setToggleAlert } ) => {
+const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduct, setToggleAddToCart, setToggleAlert } ) => {
 
     const navigator = useNavigate();
 

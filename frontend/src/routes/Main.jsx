@@ -80,19 +80,19 @@ const Main = () => {
             <div className="main-start">
                 <Sidebar /> 
             </div>
-            <div className="main-end">
+            <div className="main-end px-4">
 
                 <Header setProducts={setProducts} setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/>
                 <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset}/>
 
-                <div className="products px-4">
+                <div className="products">
                     {!isLoading ? 
                         products?.length < 1 ? <h1>No Products In This Category.</h1> 
-                        : products?.map((prod,prodId) => <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>) 
+                        : products?.map((prod,prodId) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>) 
                     : [...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}
-
-                    {products?.length % 15 !== 0 || products?.length === 0 ? <></> : <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>}
                 </div>
+                {products?.length % 15 !== 0 || products?.length === 0 ? <></> : <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>}
+                <button className="btn btn-warning my-3 mx-auto w-100 "onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>
                 
                 {!cookies ? <></> : <SupportChatContainer />}
                 
