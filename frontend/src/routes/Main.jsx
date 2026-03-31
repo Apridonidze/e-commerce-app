@@ -88,11 +88,10 @@ const Main = () => {
                 <div className="products">
                     {!isLoading ? 
                         products?.length < 1 ? <h1>No Products In This Category.</h1> 
-                        : products?.map((prod,prodId) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>) 
+                        : products?.map((prod,_) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>) 
                     : [...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}
                 </div>
-                {products?.length % 15 !== 0 || products?.length === 0 ? <></> : <button className="btn btn-warning" onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>}
-                <button className="btn btn-warning my-3 mx-auto w-100 "onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More...</button>
+                {products?.length % 15 !== 0 || products?.length === 0 ? <></> : <button className="btn d-flex text-white fw-bold my-5 align-items-center py-2 justify-content-center mx-auto w-25 " style={{backgroundColor : "#10b981", height : '50px', textAlign: 'center'}} onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More Items...</button>}
                 
                 {!cookies ? <></> : <SupportChatContainer />}
                 
