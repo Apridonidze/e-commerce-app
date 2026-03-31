@@ -55,7 +55,7 @@ const Product = ( { prod ,prodId , key , setToggleEdit, setToggleRemove, setTogg
                     <div className="more position-absolute m-2 align-self-end" style={{zIndex : 100}}>
 
                         {toggleBtn ? 
-                            <btn className={`more-button btn rounded-3 ${toggleMore ? 'btn-success' : 'btn-none border '}`} style={{fontSize : '12px', padding : '5px 8px'}} onClick={() => setToggleMore(!toggleMore)} >{toggleMore ? 
+                            <btn className={`more-button btn rounded-3 ${!toggleMore && 'btn-none'}`} style={{fontSize : '12px', padding : '5px 8px', backgroundColor : toggleMore && '#10b981'}} onClick={() => setToggleMore(!toggleMore)} >{toggleMore ? 
                                 <i class="fa-solid fa-xmark text-white"></i> : 
                                 <i class="fa-solid fa-ellipsis-vertical"></i>}</btn> 
                         : <></>}

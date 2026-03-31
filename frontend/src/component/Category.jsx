@@ -137,13 +137,13 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
                 {categories.map((cat, index) => (                
                     <li key={cat.slug} className="d-flex flex-column" >
                         
-                        <button className="toggleDropDown btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '240px', borderBottom : openIndex === index ? '2px solid #006947' : '', backgroundColor : dropDownIndex.category == cat.name && '#008a5e', color : dropDownIndex?.category == cat.name && 'white'}} onClick={(e) => toggleSubmenu(e, index)}>{cat.icon} {cat.name} <span style={{rotate : openIndex === index ? '180deg' : "0deg", transition: 'all 0.2s'}}><i class="fa-solid fa-angle-down"></i></span></button>
+                        <button className="toggleDropDown btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '240px', borderBottom : openIndex === index ? '2px solid #10b981' : '', backgroundColor : dropDownIndex.category == cat.name && '#10b981', color : dropDownIndex?.category == cat.name && 'white'}} onClick={(e) => toggleSubmenu(e, index)}>{cat.icon} {cat.name} <span style={{rotate : openIndex === index ? '180deg' : "0deg", transition: 'all 0.2s'}}><i class="fa-solid fa-angle-down"></i></span></button>
                         <div className={`list-unstyled-background ${openIndex !== null ? 'd-flex' : 'd-none'} opacity-0 position-absolute w-100 h-100 bg-dark start-0 top-0`} style={{zIndex : 1000 }} onClick={() => setOpenIndex(null)}></div>
                         
                         <ul className={`subcategory-list-unstyled rounded-2 position-absolute p-3 mt-1 ${openIndex === index ? 'd-flex' : 'd-none'} flex-column`} style={{zIndex : 1001, left : dropDownPos?.left , top : dropDownPos?.top}}>
                             {cat.subcategories.map((sub, i) => (
                                 <li key={i} className="my-2" style={{cursor :"pointer"}}>
-                                    <span className="d-flex flex-column gap-2 p-2 text-dark rounded-0 w-100 " style={{borderBottom : sub.name == category ? '2px solid #006947' : '1px solid'}} onClick={() => {setCategory(sub.name) ; setDropDownIndex({id : i , category : cat.name})}}>
+                                    <span className="d-flex flex-column gap-2 p-2 text-dark rounded-0 w-100 " style={{borderBottom : sub.name == category ? '2px solid #10b981' : '1px solid'}} onClick={() => {setCategory(sub.name) ; setDropDownIndex({id : i , category : cat.name})}}>
                                         <strong>{sub.icon} {sub.name}</strong>
                                         <small> {sub.description}</small>
                                     </span>
