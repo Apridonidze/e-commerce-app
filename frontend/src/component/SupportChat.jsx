@@ -95,16 +95,16 @@ const SupportChat = ({setToggleChat }) => {
         <div className="support-chat-container" tabIndex={1}>
 
             <div className="support-chat-header ">
-                <div className="header-start text-start">
+                <div className="header-start text-start border-0">
                     <h4>Support Chat</h4>
                     <h6>Online Admins {count}</h6>
                 </div>
-                <div className="header-end">
+                <div className="header-end border-0">
                     <i onClick={() => setToggleChat(false)} class="fa-solid fa-xmark"></i>
                 </div>
             </div>
 
-            <div className="support-chat-main d-flex flex-column " style={{overflowY : 'scroll'}} ref={messagesRef}>
+            <div className="support-chat-main d-flex flex-column border-0" style={{overflowY : 'scroll'}} ref={messagesRef}>
                 {messages?.map((m , mId) => <span key={mId} className={m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'}>{m.content} {m.status}</span>)}
             </div>
 
