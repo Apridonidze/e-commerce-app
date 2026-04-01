@@ -138,14 +138,16 @@ i , small, a, span , strong{
   display: flex;
   flex-direction:column;
   justify-content: space-between;
-  gap: 15px;
-  padding: 25px 15px;
+  gap: 10px;
+  padding: 3rem;
   border-radius: 2%;
   text-align: center;  
   background-color: var(--component-bg);
   min-height: 35vh;
   height: auto;
   width: 50%;
+  border: var(--border);
+  color: var(--text-color);
 }
 
 .no-product-container div{
@@ -162,7 +164,6 @@ i , small, a, span , strong{
     gap: 0px;
   }
 }
-
 
 @media (max-width : 598px){
   .no-product-container div{

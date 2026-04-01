@@ -4,8 +4,8 @@ const NoProduct = ({ fetchProducts, setCategory, setDropDownIndex }) => {
     return(
         <div className="no-product-container mx-auto mt-5 ">
             
-            <div className="row mx-auto">
-                {/* add icon herer */}
+            <div className="row mx-auto text-center d-flex justify-content-center fs-2">
+                <i class="fa-solid fa-magnifying-glass "></i>
             </div>
 
             <div className="row mx-auto gap-2">
