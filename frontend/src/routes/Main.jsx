@@ -23,6 +23,7 @@ import ProductSkeleton from "../skeletons/ProductSkeleton"; //importing loading 
 
 import '../styles/products.css';
 import '../styles/index.css'; //importing css files
+import NoProduct from "../component/NoProduct";
 
 const Main = () => {
 
@@ -84,12 +85,12 @@ const Main = () => {
             </div>
             <div className="main-end px-4">
 
-                <Header setProducts={setProducts} setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/>
+                <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
                 <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset}/>
 
                 <div className="products">
                     {!isLoading ? 
-                        products?.length < 1 ? <h1>No Products In This Category.</h1> 
+                        products?.length < 1 ? <NoProduct />
                         : products?.map((prod,_) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>) 
                     : [...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}
                 </div>

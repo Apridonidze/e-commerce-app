@@ -11,7 +11,7 @@ import { useTheme, useToggle } from "../context/ThemeContext"; //importing conte
 
 import '../styles/layout.css'; //importing css file
 
-const Header = ({ setProducts, setToggleAlert, toggleAlert }) => {
+const Header = ({ setProducts, setToggleAlert }) => {
 
     const { user } = useContext(UserContext);
 
