@@ -173,6 +173,12 @@
   background: #10b981;
   border-radius: 50%;
 }
+.sidebar-container a{
+    text-decoration: none;
+}
+.active-link{
+
+}
 
 @media (max-width: 925px) {
 
