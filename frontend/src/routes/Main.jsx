@@ -4,6 +4,7 @@ import { BACKEND_URL } from "../../config";  //importing backend url from env fi
 import { useCookies } from "react-cookie"; //importing react library
 import { useEffect, useState, useContext } from "react"; //importing react hooks
 
+import { UserContext } from "../context/UserContext"; //importing user context
 import { ProductContext } from "../context/ProductContext"; //importing products from context (to avoid api calls everytime user visits this route)
 
 import Category from "../component/Category";
@@ -27,6 +28,7 @@ const Main = () => {
 
     const [ cookies ] = useCookies(['token']); //defining cookies
     const { prevProducts } = useContext(ProductContext); //defining main products from context api
+    const { user } = useContext(UserContext);//defining user data from context
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -93,7 +95,7 @@ const Main = () => {
                 </div>
                 {products?.length % 15 !== 0 || products?.length === 0 ? <></> : <button className="btn d-flex text-white fw-bold my-5 align-items-center py-2 justify-content-center mx-auto w-25 " style={{backgroundColor : "#10b981", height : '50px', textAlign: 'center'}} onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More Items...</button>}
                 
-                {!cookies ? <></> : <SupportChatContainer />}
+                {!cookies ||  user?.role == 'admin'  ? <></> : <SupportChatContainer />}
                 
             </div>
         </div>
