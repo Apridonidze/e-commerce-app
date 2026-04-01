@@ -48,13 +48,11 @@ const SupportChat = ({setToggleChat }) => {
             }
 
             if(data.type === 'receive_support_chat_message'){
-                console.log(data)
                 setMessages(data.message.reverse())
             }
 
             if(data.type === 'recieve_convid'){
                 setConvId(data.convId)
-                console.log(data)
             }
 
             if(data.type === 'recieve_admin_list'){
