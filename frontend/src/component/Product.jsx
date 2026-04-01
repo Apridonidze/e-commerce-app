@@ -47,7 +47,7 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
     },[cartIds]) //logic executes on render and on cartIds change
    
     return(
-        <div className="product-container d-flex flex-column rounded-1 " style={{cursor: 'pointer'}} key={prod.products_id} >
+        <div className="product-container d-flex flex-column rounded-1 " style={{cursor: 'pointer' , maxWidth : '370px'}} key={prod.products_id} >
             <div className="product-more-background position-absolute w-100 h-100 start-0 top-0 opacity-0" style={{zIndex: 99, display : toggleMore ? 'flex' : 'none'}} onClick={() => setToggleMore(false)}></div>
             <div className="product-wrapper" onMouseEnter={() => setToggleBtn(true)} onMouseLeave={() => setToggleBtn(() => (toggleMore ? true : false))}>
 

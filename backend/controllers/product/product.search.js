@@ -9,7 +9,7 @@ async function productSearch(req,res) {
         
         const searchInput = req.body.searchItem;//defining searchInput from request
         const onSale = req.body.type === 'sales' ? true : false; //definiing if product is on sale
-
+        
         let query = 'select products.products_id, products.images, products.title, products.description, products.category, products.subcategory, products.price, products.sales_price ,products.amount, products.date from products where LOWER(products.title) like LOWER(?)'; //main query
 
         if(onSale){ //checking if parameters are provided from sales page
@@ -23,9 +23,8 @@ async function productSearch(req,res) {
             
         };
 
-
         const [ datalist ] = await db.query('select products.products_id, products.images, products.title, products.description, products.category, products.subcategory, products.price, products.sales_price ,products.amount, products.date from products where LOWER(products.title) like LOWER(?)', [`${searchInput}%`]); //fetching list of products that is similar to search input
-        
+   
         if(datalist.length === 0) return res.status(204).send(); //sending 204 status code if datalist is empty
         return res.status(200).json({message : "Items Found" , products : datalist}); //sending 200 status code if items exists
 

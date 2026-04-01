@@ -12,7 +12,7 @@ const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
         {type : "Info" , statusCode : 200, icon : <i class="fa-solid fa-exclamation fs-4"></i>},
         {type : "Warning" , statusCode : 200, icon : <i className='fa-solid fa-circle-exclamation fs-4'></i>},
         {type : "Failed" ,statusCode : 400 , icon : <i className="fa-solid fa-circle-exclamation fs-4" style={{ color : '#ba1a1a'}}></i>},
-        {type : "Internal_Error" , statusCode : 500 , icon : <i className='fa-solid fa-circle-exclamation fs-4'></i>},
+        {type : "Internal_Error" , statusCode : 500 , icon : <i className='fa-solid fa-circle-exclamation fs-4' style={{ color : '#ba1a1a'}}></i>},
     ]
 
     useEffect(() => {

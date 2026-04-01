@@ -30,12 +30,13 @@ const Header = ({ setProducts, setToggleAlert }) => {
 
         try{
 
-            const response = await axios.post(`${BACKEND_URL}/api/product/search-product` , {searchItem , type : location?.pathname.split('/')[1]}); //calling api and passing parameters
-            
+            const response = await axios.post(`${BACKEND_URL}/api/product/search-product` , {searchItem : searchItem , type : location?.pathname.split('/')[1]}); //calling api and passing parameters
+            console.log(response)
             if(response.status === 204)setProducts([]); //handing 204 status code
             if(response.status === 200)setProducts(response.data.products) ; //handling 200 status code 
 
         }catch(err){
+            console.log(err)
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
         };
     };

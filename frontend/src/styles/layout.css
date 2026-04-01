@@ -99,10 +99,12 @@
 .btn1{
     padding: 2px 5px;
     z-index: 90;
+    left: 100rem;
 }
 
 .btn2{
     padding: 2px 5px;
+    left : -0.5vw;
     z-index: 90;
 }
 

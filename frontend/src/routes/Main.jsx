@@ -41,7 +41,7 @@ const Main = () => {
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null});
-    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : 0, message : ''}); //states to toggle components
+    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
     
     const fetchProducts = async(offset, category) => {
         try{
@@ -84,7 +84,7 @@ const Main = () => {
                 <div className="main-start">
                     <Sidebar /> 
                 </div>
-                <div className="main-end px-4" >
+                <div className="main-end">
 
                     <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
                     <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>

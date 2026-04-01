@@ -95,14 +95,15 @@ const Category = ({ setCategory, setDropDownIndex, category, fetchProducts,offse
     const [dropDownPos, setDropdownPos] = useState({top: null,left: null}); //state to define max cordinates for dropdown components
 
     const toggleSubmenu = (e, index) => {
-        const location = e.currentTarget.getBoundingClientRect()
 
-        setDropdownPos({
-            top: location.bottom + window.scrollY,
-            left: location.left + window.scrollX,
-        });// defining max cordinates for dropdown
-        setOpenIndex(openIndex === index ? null : index);
-    }; //settingopenIndex 
+        const button = e.currentTarget;
+        const listEl = listRef.current; //defining variables
+
+        if (!button || !listEl) return; //returning empty promise if we do not have varaibles defined
+
+        setDropdownPos({top: button.offsetHeight, left: button.offsetLeft - listEl.scrollLeft,}); //setting cordinates for dropdown
+        setOpenIndex(openIndex === index ? null : index); //setting openIndex of category
+    };
 
     const scrollLeft = () => {listRef.current.scrollBy({left: -300, behavior: "smooth"})};
     const scrollRight = () => {listRef.current.scrollBy({left: 300, behavior: "smooth"})}; //functions to scroll on sides 
@@ -122,12 +123,15 @@ const Category = ({ setCategory, setDropDownIndex, category, fetchProducts,offse
     }, []); //calling function on mount to avoid undefined refs errors 
 
     return(
-        <div className="category-sidebar d-flex align-items-start gap-2 ">
-        
-            <span className="button-div d-flex position-absolute " style={{backgroundColor : 'none'}}>
-                <button onClick={scrollRight} ref={rightRef} className="btn1 btn rounded-5 mt-2 position-relative" ><i class="fa-solid fa-angle-right"></i></button>
-                <button onClick={scrollLeft} ref={leftRef} className="btn2 btn rounded-5 mt-2 position-absolute" ><i class="fa-solid fa-angle-left"></i></button>
+        <div className="category-sidebar d-flex align-items-start gap-2 position-relative">  
+
+            <span className="button-div position-absolute start-0 translate-middle-y" style={{top : '35%'}}>
+                <button onClick={scrollLeft} ref={leftRef} className="btn2 btn rounded-5"><i className="fa-solid fa-angle-left"></i></button>
             </span>
+
+            <span className="button-div position-absolute end-0 translate-middle-y" style={{top : '35%'}}>
+                <button onClick={scrollRight} ref={rightRef} className="btn1 btn rounded-5"><i className="fa-solid fa-angle-right"></i></button>
+            </span>          
             
             <ul className="list-unstyled d-flex flex-nowrap gap-2 align-items-center ms-2 " onScroll={handleScroll} ref={listRef}>
                 
@@ -151,6 +155,7 @@ const Category = ({ setCategory, setDropDownIndex, category, fetchProducts,offse
                         </ul>
                     </li>))}
             </ul>
+           
         </div>
     );
 };
