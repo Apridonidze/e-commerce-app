@@ -1,106 +1,96 @@
-import { useCookies } from "react-cookie"
-import { useLayoutEffect, useEffect , useRef, useState } from "react"
-
-import { BACKEND_URL } from "../../config"
+import { useCookies } from "react-cookie"; //importing cookies react library
+import { BACKEND_URL } from "../../config";//importing backend url from config file
+import { useLayoutEffect, useEffect , useRef, useState } from "react";//importing react hooks
 
 
 const SupportChat = ({setToggleChat }) => {
 
-    const [ cookies ] = useCookies(['token'])
+    const [ cookies ] = useCookies(['token']); //defining cookie
 
-    const [input, setInput] = useState('')
-    const [messages , setMessages] = useState([])
-    const [convId, setConvId] = useState() 
+    const [input, setInput] = useState('');
+    const [messages , setMessages] = useState([]);
+    const [convId, setConvId] = useState() ; //states for chat data
 
-    const socketRef = useRef(null)
+    const [count,setCount] = useState(0); //state to store online admins count
 
-    const messagesRef = useRef(null)
-    const messageRefs = useRef([null])
-    const statusRefs = useRef([null]);
-    const [lastStatus , setLastStatus] = useState('Delivered')
-    const [count,setCount] = useState(0)
+    const socketRef = useRef(null); //ref for websocket connection
+
+    const messagesRef = useRef(null);
+    const messageRefs = useRef([null]);
+    const statusRefs = useRef([null]);//refs for messages
+    
 
     useEffect(() => {
 
-        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}`)
+        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}`); //creatingg new websocket connection and passing token in query
         
-        socketRef.current.onopen = () => {
-            console.log('connected')
-            
-        }
-
         socketRef.current.onmessage = (event) => {
             
-            const data = JSON.parse(event.data);
+            const data = JSON.parse(event.data); //defining data that comes from backend websocket
             
             if (data.type === "token_error") {
-                alert("Token error: " + data.message);
-                socketRef.current.close();
-            }
+                alert("Token error: " + data.message); //returning error message
+                socketRef.current.close();//closing websockect connection
+            }; //recieving token error message
 
             if(data.type === 'internal_error'){
-                console.log(data)
-                socketRef.current.close();
-            }
-
-            if(data.type === 'message_status'){
-                setLastStatus(data.status)
-            }
+                console.log(data) //returnign internal error message
+                socketRef.current.close(); //closing connection
+            }; //recieving internal errror message
 
             if(data.type === 'receive_support_chat_message'){
-                setMessages(data.message.reverse())
-            }
+                setMessages(data.message.reverse()) //setting messages in state for oldest to latest
+            }; //recieveing messages
 
             if(data.type === 'recieve_convid'){
-                setConvId(data.convId)
-            }
+                setConvId(data.convId); //setting conversation id in state
+            }; //recieving conversation id as user
 
             if(data.type === 'recieve_admin_list'){
-                setCount(data.list.length)
-            }
+                setCount(data.list.length); //setting online admin count in state
+            }; //recieving count of online admins
 
             if(data.type === 'recieve_chat_end'){
-                setToggleChat(false);
-            }
+                setToggleChat(false); //closing support chat
+            }; //recieving recieve_chat_end status when admin ends conversation after help
 
         };
 
-        return () => {socketRef.current?.close() };
+        return () => socketRef.current?.close(); //cleanup function to trigger useEffect once
 
-    },[])
+    },[]); //websocket connection events 
 
 
     useLayoutEffect(() => {
-        if (messagesRef.current) {messagesRef.current.scrollTop = messagesRef.current.scrollHeight;};
-    }, [messages]);
+        if (messagesRef.current) {messagesRef.current.scrollTop = messagesRef.current.scrollHeight}; //scrolling user at the end of the chat when opening
+    }, [messages]); //using useLayoutEffect to trigger function after component is fully loaded
 
 
     const handleMessageSend = (e) => {
 
-        e.preventDefault();
+        e.preventDefault(); //preventing page load after function triggers
 
-        if(input.trim() === '') return;
+        if(input.trim() === ''|| input.trim().length > 300) return; //returnign empty promise if input is empty or too large
 
-        socketRef.current.send(JSON.stringify({type : 'support_chat_message', text : input , convId : convId}))
-
-        setInput('')
-    }
+        socketRef.current.send(JSON.stringify({type : 'support_chat_message', text : input , convId : convId})); //else sending our message to websocket
+        setInput(''); //clearing state after message is sent
+    };
 
     useEffect(() => {
-        if(messageRefs && messageRefs.current && statusRefs && statusRefs.current){
-            statusRefs.current.forEach((el, i) => {
-                if (!el) return;
+        if(messageRefs && messageRefs.current && statusRefs && statusRefs.current){ //checking if refs are defined and returning promise below
+            statusRefs.current.forEach((el, i) => { //looping messages
+                if (!el) return; //returning empty promise if looped ref is undefined
 
-                if (i === statusRefs.current.length - 1) {
+                if (i === statusRefs.current.length - 1) { //toggling message status for last sent message by us if message is defined
                     el.classList.remove('d-none');
                     el.classList.add('d-flex');
-                } else {
+                } else { //untoggling message status from every messages except last one
                     el.classList.add('d-none');
                     el.classList.remove('d-flex');
                 }
             });
         }
-    },[messages])
+    },[messages]); //displaying your users last message status 'Delivered' , 'Seen' (by admin) on messages state change
 
     return(
         <div className="support-chat-container" tabIndex={1}>
@@ -133,10 +123,7 @@ const SupportChat = ({setToggleChat }) => {
             </div>
             
         </div>
-    )
-}
+    );
+};
 
-//TODO : add Message status to only last message that is send by not me 
-//TODO : import title and online admins count from SupportChatContainer
-
-export default SupportChat
+export default SupportChat; //exporting component
