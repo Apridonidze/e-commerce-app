@@ -88,10 +88,12 @@ const Main = () => {
                 <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
                 <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
 
-                <div className="products">
+                <div className="products-container" style={{minHeight : '80vh'}}>
                     {!isLoading ? 
                         products?.length < 1 ? <NoProduct fetchProducts={fetchProducts} setCategory={setCategory} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
-                        : products?.map((prod,_) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>) 
+                        : <div className="products">
+                            {products?.map((prod,_) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>)}
+                        </div> 
                     : [...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}
                 </div>
                 
