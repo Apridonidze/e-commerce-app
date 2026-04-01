@@ -116,7 +116,7 @@ const Category = ({ setCategory, setDropDownIndex, category, fetchProducts,offse
         el.scrollLeft + el.clientWidth >= el.scrollWidth - 5 ? rightRef.current.classList.add('d-none') :rightRef.current.classList.remove('d-none'); //undisplaying rightRef
         
     };
-    
+
     useEffect(() => {
         handleScroll();
     }, []); //calling function on mount to avoid undefined refs errors 

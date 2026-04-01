@@ -70,7 +70,7 @@ const Main = () => {
     },[category, offset]); //logic executes on first mount and after dependencies change
 
     return(
-        <div className="main-container container-fluid d-flex flex-column"> 
+        <div className="main-container container-fluid d-flex flex-column" style={{maxWidth : '3000px'}}> 
 
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             
@@ -80,11 +80,11 @@ const Main = () => {
             
             {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
 
-            <div className="main-body d-flex">
+            <div className="main-body d-flex" >
                 <div className="main-start">
                     <Sidebar /> 
                 </div>
-                <div className="main-end px-4">
+                <div className="main-end px-4" >
 
                     <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
                     <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
@@ -95,14 +95,14 @@ const Main = () => {
                             : <div className="products">
                                 {products?.map((prod,_) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>)}
                             </div> 
-                        : [...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}
+                        : <div className="products">{[...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}</div> }
                     </div>
                     
                     {products?.length % 15 !== 0 || products?.length === 0 ? 
                         <></> : 
                     <button className="btn d-flex text-white fw-bold my-5 align-items-center py-2 justify-content-center mx-auto w-25 " style={{backgroundColor : "#10b981", height : '50px', textAlign: 'center'}} onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More Items...</button>}
                     
-                    {!user ||  user?.role == 'admin'  ? <></> : <SupportChatContainer setToggleAlert={setToggleAlert}/>}
+                    {!user ||  user?.role !== 'admin'  ? <></> : <SupportChatContainer setToggleAlert={setToggleAlert}/>}
                     
                 </div>
             </div>

@@ -133,7 +133,6 @@ i , small, a, span , strong{
   background-color: var(--product-bg-color);
   color: var(--product-color);
 }
-
 .no-product-container{
   display: flex;
   flex-direction:column;
