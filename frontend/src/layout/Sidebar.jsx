@@ -52,7 +52,10 @@ const Sidebar = () => {
             <div className="sidebar-background" ref={backgroundRef} onClick={() => toggleSidebar(false)}></div>
             <div className="sidebar-container d-flex flex-column justify-content-between border text-break"  ref={containerRef} style={{height:"100vh"}}>
                 <div className="sidebar-top">
-                    <span class="icon"></span>
+                    <div className="icon-container ms-3 mt-3 d-flex align-items-center gap-3">
+                        <span className="icon"></span>
+                        <span className='fs-3 fw-bold' style={{color : "#10b981"}}>Shoptic</span>
+                    </div>
                 </div>
                 <div className="sidebar-center row g-4">
                     <div className="center-header col-12 h-auto">
