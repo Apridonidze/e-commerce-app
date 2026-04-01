@@ -19,7 +19,10 @@
     overflow-x: hidden;
     padding: 5px 7px;
     position: relative;
-    min-width: 200px;
+    min-width: 235px;
+    min-height: 855px;
+    max-height: 97vh;
+    max-width: 340px;
     background-color: var(--bg)
 }
 

@@ -1,13 +1,12 @@
 import { useCookies } from 'react-cookie'
-import { Link, NavLink } from 'react-router-dom'
-import { useEffect , useState, useRef, useContext } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { BACKEND_URL } from '../../config'
+
+import { useEffect , useState, useRef, useContext } from 'react'
 import { UserContext } from '../context/UserContext'
 import { useToggle } from "../context/ThemeContext";
 
 import '../styles/layout.css'
-import { useLocation } from 'react-router-dom'
-
 
 const Sidebar = () => {
 
@@ -55,7 +54,7 @@ const location = useLocation()
     return(
         <div className="sidebar-main-container">
             <div className="sidebar-background" ref={backgroundRef} onClick={() => toggleSidebar(false)}></div>
-            <div className="sidebar-container d-flex flex-column justify-content-between "  ref={containerRef} style={{height:"97vh"}}>
+            <div className="sidebar-container d-flex flex-column justify-content-between "  ref={containerRef} >
                 <div className="sidebar-top" style={{minHeight : "87px"}}>
                     <div className="icon-container d-flex align-items-center gap-3 p-2">
                         <span className="icon"></span>
