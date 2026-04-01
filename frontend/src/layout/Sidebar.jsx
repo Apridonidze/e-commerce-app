@@ -65,13 +65,14 @@ const location = useLocation()
                 <div className="sidebar-center row h-100" style={{overflowY: "hidden"}}>
                     <div className="center-header col-12 h-auto">
                         <div className="text d-flex flex-column">
-                            <span className='p-2' style={{fontSize : '14px'}}>Shopping</span>
+                            <span className='p-2 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>SHOPPING</span>
                             <NavLink to='/' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-house pe-3"></i> Home</NavLink>
                             <NavLink to='/sales' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-tag pe-3"></i> On Sale</NavLink>
                         </div>
                     </div>
                     <div className="center-center col-12 h-auto">
                         {cookies?.token ? <div className="text d-flex flex-column">
+                            <span className='p-2 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>Dashboard</span>
                             <NavLink to='/dashboard' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-chart-line pe-4"></i> Dashboard</NavLink>
                             <Link to='/dashboard#cart-items' className={isActiveHash("#cart-items") ? "active-link" : ""}><i class="fa-solid fa-cart-shopping pe-4"></i> Cart</Link>
                             <Link to='/dashboard#order-list' className={isActiveHash("#order-list") ? "active-link" : ""}><i class="fa-solid fa-box-open pe-4"></i> Orders</Link>
@@ -80,32 +81,31 @@ const location = useLocation()
                     <div className="center-bottom col-12 h-auto">
                         {user !== null && user.role === 'admin' ? 
                             <div className="text d-flex flex-column ">
-                                <div className="text-top d-flex flex-column">
-                                    <NavLink to='/admin-dashboard' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-chart-pie pe-4"></i> Admin Dashboard</NavLink>
-                                    <Link to='/admin-dashboard#manage-products' className={isActiveHash("#manage-products") ? "active-link" : ""}><i class="fa-solid fa-box pe-4"></i> Manage Products</Link>
-                                    <Link to='/admin-dashboard#reports' className={isActiveHash("#reports") ? "active-link" : ""}><i class="fa-solid fa-newspaper pe-4"></i> Reports</Link>
-                                    <Link to='/admin-dashboard#feedbacks' className={isActiveHash("#feedbacks") ? "active-link" : ""}><i class="fa-solid fa-message pe-4"></i> Feedbacks</Link>
-                                </div>
-                                <div className="text-bottom">
-                                    <NavLink to='/admin-dashboard/admin-support-chat' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-comments pe-4"></i> Support Chat <span>{messagesCount < 9  ? messagesCount : '9+' }</span></NavLink> {/* add limit for messageCount (max 9 , after 9 return 9+) */}
-                                </div>
+                                <span className='p-2 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>MANAGMENT</span>
+
+                                <NavLink to='/admin-dashboard' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-chart-pie pe-4"></i> Admin Dashboard</NavLink>
+                                <Link to='/admin-dashboard#manage-products' className={isActiveHash("#manage-products") ? "active-link" : ""}><i class="fa-solid fa-box pe-4"></i> Manage Products</Link>
+                                <Link to='/admin-dashboard#reports' className={isActiveHash("#reports") ? "active-link" : ""}><i class="fa-solid fa-newspaper pe-4"></i> Reports</Link>
+                                <Link to='/admin-dashboard#feedbacks' className={isActiveHash("#feedbacks") ? "active-link" : ""}><i class="fa-solid fa-message pe-4"></i> Feedbacks</Link>
+                                
+                                <NavLink to='/admin-dashboard/admin-support-chat' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-comments pe-4"></i> Support Chat <span>{messagesCount < 9  ? messagesCount : '9+' }</span></NavLink> {/* add limit for messageCount (max 9 , after 9 return 9+) */}
+                                
                             </div> : <></>
                         }
                     </div>
                     <div className="center-auth col-12 h-auto">
                         {!cookies.token ? <div className="text d-flex flex-column">
+                            <span className='p-2 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>SIGNUP / LOGIN</span>
                             <NavLink to='/login' className={({ isActive }) => isActive ? "active-link" : ""}>Login</NavLink>
                             <NavLink to='/sign' className={({ isActive }) => isActive ? "active-link" : ""}>Sign</NavLink>
                         </div> : <></>}
                     </div>
                 </div>
-                <div className="sidebar-end"> 
-                    <div className="end-start d-flex flex-column">
-                        <NavLink to={'/faq'} className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-circle-question pe-4"></i> FAQ</NavLink>
-                        <NavLink to={`/leave-feedback`} className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-comment-dots pe-4"></i> Feedback</NavLink>
-                        <NavLink to={'/report-platform'} className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-flag pe-4"></i> Report</NavLink>
-                    </div>
-                    
+                <div className="sidebar-end  d-flex flex-column"> 
+                    <span className='p-2 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>HELP</span>
+                    <NavLink to={'/faq'} className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-circle-question pe-4"></i> FAQ</NavLink>
+                    <NavLink to={`/leave-feedback`} className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-comment-dots pe-4"></i> Feedback</NavLink>
+                    <NavLink to={'/report-platform'} className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-flag pe-4"></i> Report</NavLink>
                 </div>
             </div>
         </div>
