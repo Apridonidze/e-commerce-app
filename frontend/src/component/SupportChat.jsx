@@ -3,7 +3,7 @@ import { BACKEND_URL } from "../../config";//importing backend url from config f
 import { useLayoutEffect, useEffect , useRef, useState } from "react";//importing react hooks
 
 
-const SupportChat = ({setToggleChat }) => {
+const SupportChat = ({ setToggleChat, setToggleAlert }) => {
 
     const [ cookies ] = useCookies(['token']); //defining cookie
 
@@ -29,12 +29,12 @@ const SupportChat = ({setToggleChat }) => {
             const data = JSON.parse(event.data); //defining data that comes from backend websocket
             
             if (data.type === "token_error") {
-                alert("Token error: " + data.message); //returning error message
+                setToggleAlert({status: true, type: "Failed", statusCode: 400, message: String(data.message || 'Unknown error')}); //toggling error message component
                 socketRef.current.close();//closing websockect connection
             }; //recieving token error message
 
             if(data.type === 'internal_error'){
-                console.log(data) //returnign internal error message
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: 500, message: String(data.message || 'Unknown error')}); //toggling internal error message component
                 socketRef.current.close(); //closing connection
             }; //recieving internal errror message
 
@@ -43,6 +43,9 @@ const SupportChat = ({setToggleChat }) => {
             }; //recieveing messages
 
             if(data.type === 'recieve_convid'){
+
+                if(!data.convId) return setToggleAlert({status: true, type: "Internal_Error", statusCode: 500, message: 'Could Not Recieve Conversation Id. Try Later...'}); //returning internal error message if convId is undefined
+
                 setConvId(data.convId); //setting conversation id in state
             }; //recieving conversation id as user
 
@@ -52,6 +55,7 @@ const SupportChat = ({setToggleChat }) => {
 
             if(data.type === 'recieve_chat_end'){
                 setToggleChat(false); //closing support chat
+                setToggleAlert({status: true, type: "Info", statusCode: 200, message: 'Support Closed Conversation'}); //toggling intenral error  message
             }; //recieving recieve_chat_end status when admin ends conversation after help
 
         };
@@ -116,8 +120,8 @@ const SupportChat = ({setToggleChat }) => {
             <div className="support-chat-footer">
                 <form onSubmit={(e) => handleMessageSend(e)}>
                     <div className="input-group">
-                        <input type="text" className="form-control" placeholder="Write a message..." disabled={count > 0 ? false : true} onChange={(e) => setInput(e.target.value)} value={input}/>
-                        <button type="submit" className="btn border-0" disabled={count > 0 ? false : true} style={{backgroundColor : "#10b981"}}><i class="fa-solid fa-paper-plane text-white"></i></button>
+                        <input type="text" className="form-control" placeholder="Write a message..." disabled={count > 0 && convId ? false : true} onChange={(e) => setInput(e.target.value)} value={input}/>
+                        <button type="submit" className="btn border-0" disabled={count > 0 && convId ? false : true} style={{backgroundColor : "#10b981"}}><i class="fa-solid fa-paper-plane text-white"></i></button>
                     </div>
                 </form>
             </div>

@@ -1,7 +1,7 @@
 import { useState } from "react"; //importing react hook
 import SupportChat from "./SupportChat";//importing componnent
 
-const SupportChatContainer = () =>{
+const SupportChatContainer = ({ setToggleAlert }) =>{
 
     const [toggleChat, setToggleChat] = useState(false) ; //state to toggle SupportChat.jsx component
 
@@ -14,7 +14,7 @@ const SupportChatContainer = () =>{
                 </div> : 
             <></>}
 
-            {toggleChat ? <SupportChat  setToggleChat={setToggleChat}/> : <></> }
+            {toggleChat ? <SupportChat  setToggleChat={setToggleChat} setToggleAlert={setToggleAlert}/> : <></> }
 
         </div>
     );

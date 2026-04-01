@@ -120,7 +120,7 @@ function SupportChatSocket (server) {
                     return; //returningnin empty promise if any unhandled event occurs
 
                 }catch(err){
-                    ws.send(JSON.stringify({type : 'internal_error' ,message : "Message Sent Failed"})); //sending internal error message
+                    ws.send(JSON.stringify({type : 'internal_error' ,message : "Could Not Send Message. Try Later..."})); //sending internal error message
                     ws.close();//closing connection if internal errror occurs
                 };
               };
