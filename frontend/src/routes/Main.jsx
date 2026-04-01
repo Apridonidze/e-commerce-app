@@ -80,11 +80,11 @@ const Main = () => {
             
             {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
 
-            <div className="main-body d-flex" >
+            <div className="main-body d-flex gap-2" >
                 <div className="main-start">
                     <Sidebar /> 
                 </div>
-                <div className="main-end">
+                <div className="main-end ">
 
                     <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
                     <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>

@@ -1,3 +1,10 @@
+:root {
+    --component-bg : #f0f3ff;
+}
+
+[data-theme='dark']{
+  --component-bg : #080f20;
+}
 .products {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -13,6 +20,11 @@
 .product-container{
     display: flex;
     padding: 10px 15px;
+}
+
+.product-top{
+    align-items: center;
+    background-color: var(--component-bg)  !important;
 }
 
 .product-wrapper {

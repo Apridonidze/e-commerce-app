@@ -7,7 +7,6 @@
   --border-2 : 2px solid #00a571;
   --component-bg : #f0f3ff;
 }
-
 [data-theme='dark'] {
   --bg-color: #020617;
   --text-color: #94a3b8;
@@ -30,6 +29,10 @@ div {
 ul, li {
   list-style-type: none;
   border-color: var(--text-color);
+}
+.main-end{
+  width: 100%;
+  margin-right: 5px;
 }
 
 .product-container , .more-button, .more, .more button:focus , .more button:active, .support-chat-container {
@@ -152,6 +155,13 @@ i , small, a, span , strong{
   background-color: var(--component-bg);
 }
 
+@media (max-width: 1265px){
+  .main-end{
+    max-width: 73vw;
+    margin: auto;
+  }
+}
+
 @media (max-width: 925px) {
 
   .no-product-container{
@@ -159,6 +169,11 @@ i , small, a, span , strong{
   }
   .main-container{
     gap: 0px;
+  }
+  
+  .main-end{
+    max-width: 95vw;
+    margin: 0;
   }
 }
 

@@ -47,7 +47,7 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
     },[cartIds]) //logic executes on render and on cartIds change
    
     return(
-        <div className="product-container d-flex flex-column rounded-1 " style={{cursor: 'pointer' , maxWidth : '370px'}} key={prod.products_id} >
+        <div className="product-container d-flex flex-column rounded-1 " style={{cursor: 'pointer'}} key={prod.products_id} >
             <div className="product-more-background position-absolute w-100 h-100 start-0 top-0 opacity-0" style={{zIndex: 99, display : toggleMore ? 'flex' : 'none'}} onClick={() => setToggleMore(false)}></div>
             <div className="product-wrapper" onMouseEnter={() => setToggleBtn(true)} onMouseLeave={() => setToggleBtn(() => (toggleMore ? true : false))}>
 
@@ -75,8 +75,8 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
                     </div>
                 }
 
-                <div className="product-top w-100 d-flex justify-content-center rounded-1 pt-2" style={{minHeight : '190px'}} onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
-                    {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{maxWidth:'100%', maxHeight : '190px'}}/>}
+                <div className="product-top w-100 d-flex justify-content-center rounded-1 pt-2 " style={{minHeight : '200px'}} onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
+                    {<img className="w-100 h-100 rounded-2 pb-2" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{ minWidth:'290px', maxWidth:'290px', maxHeight : '190px'}}/>}
                 </div>
                     
                 <div className="product-main ">
