@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";; //importing hooks
 
 import '../styles/layout.css'; //importing css file
 
-const Category = ({ setCategory, category, fetchProducts,offset }) => {
+const Category = ({ setCategory, setDropDownIndex, category, fetchProducts,offset, dropDownIndex }) => {
 
     const categories = [
         {
@@ -93,7 +93,6 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
 
     const [openIndex, setOpenIndex] = useState(null); //state to toggle subCategory list
     const [dropDownPos, setDropdownPos] = useState({top: null,left: null}); //state to define max cordinates for dropdown components
-    const [dropDownIndex ,setDropDownIndex] = useState({id : null , category : null});
 
     const toggleSubmenu = (e, index) => {
         const location = e.currentTarget.getBoundingClientRect()
@@ -118,6 +117,8 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
         
     };
 
+console.log(dropDownIndex)
+
     useEffect(() => {
         handleScroll();
     }, []); //calling function on mount to avoid undefined refs errors 
@@ -137,7 +138,7 @@ const Category = ({ setCategory, category, fetchProducts,offset }) => {
                 {categories.map((cat, index) => (                
                     <li key={cat.slug} className="d-flex flex-column" >
                         
-                        <button className="toggleDropDown btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '240px', borderBottom : openIndex === index ? '2px solid #10b981' : '', backgroundColor : dropDownIndex.category == cat.name && '#10b981', color : dropDownIndex?.category == cat.name && 'white'}} onClick={(e) => toggleSubmenu(e, index)}>{cat.icon} {cat.name} <span style={{rotate : openIndex === index ? '180deg' : "0deg", transition: 'all 0.2s'}}><i class="fa-solid fa-angle-down"></i></span></button>
+                        <button className="toggleDropDown btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '240px', borderBottom : openIndex === index ? '2px solid #10b981' : '', backgroundColor : dropDownIndex?.category == cat.name && '#10b981', color : dropDownIndex?.category == cat.name && 'white'}} onClick={(e) => toggleSubmenu(e, index)}>{cat.icon} {cat.name} <span style={{rotate : openIndex === index ? '180deg' : "0deg", transition: 'all 0.2s'}}><i class="fa-solid fa-angle-down"></i></span></button>
                         <div className={`list-unstyled-background ${openIndex !== null ? 'd-flex' : 'd-none'} opacity-0 position-absolute w-100 h-100 bg-dark start-0 top-0`} style={{zIndex : 1000 }} onClick={() => setOpenIndex(null)}></div>
                         
                         <ul className={`subcategory-list-unstyled rounded-2 position-absolute p-3 mt-1 ${openIndex === index ? 'd-flex' : 'd-none'} flex-column`} style={{zIndex : 1001, left : dropDownPos?.left , top : dropDownPos?.top}}>

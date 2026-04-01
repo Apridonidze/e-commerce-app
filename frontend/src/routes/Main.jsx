@@ -36,6 +36,7 @@ const Main = () => {
     const [products, setProducts] = useState([]);
     const [offset, setOffset] = useState(0);
     const [category, setCategory] = useState(null);//states for product and its parameters
+    const [dropDownIndex ,setDropDownIndex] = useState({id : null , category : null}); //state for category dropdowns
 
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
@@ -86,11 +87,11 @@ const Main = () => {
             <div className="main-end px-4">
 
                 <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
-                <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset}/>
+                <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
 
                 <div className="products">
                     {!isLoading ? 
-                        products?.length < 1 ? <NoProduct />
+                        products?.length < 1 ? <NoProduct fetchProducts={fetchProducts} setCategory={setCategory} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
                         : products?.map((prod,_) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>) 
                     : [...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}
                 </div>
