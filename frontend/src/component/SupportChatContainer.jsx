@@ -1,10 +1,9 @@
-import { useState } from "react"
-import SupportChat from "./SupportChat"
-
+import { useState } from "react"; //importing react hook
+import SupportChat from "./SupportChat";//importing componnent
 
 const SupportChatContainer = () =>{
 
-    const [toggleChat, setToggleChat] = useState(false)
+    const [toggleChat, setToggleChat] = useState(false) ; //state to toggle SupportChat.jsx component
 
     return(
         <div className="support-chat-main-container text-center align-items-center rounded-2" style={{cursor: 'pointer'}}>
@@ -15,10 +14,10 @@ const SupportChatContainer = () =>{
                 </div> : 
             <></>}
 
-            {toggleChat ? <SupportChat  setToggleChat={setToggleChat}/> :<></> }
+            {toggleChat ? <SupportChat  setToggleChat={setToggleChat}/> : <></> }
 
         </div>
-    )
-}
+    );
+};
 
-export default SupportChatContainer
+export default SupportChatContainer; //exporting component
