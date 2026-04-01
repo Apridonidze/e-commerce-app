@@ -65,11 +65,6 @@ const SupportChat = ({setToggleChat }) => {
                 setToggleChat(false);
             }
 
-//             no_online_admins
-// error
-
-
-
         };
 
         return () => {socketRef.current?.close() };
@@ -95,7 +90,6 @@ const SupportChat = ({setToggleChat }) => {
 
     useEffect(() => {
         if(messageRefs && messageRefs.current && statusRefs && statusRefs.current){
-            console.log(statusRefs.current)
             statusRefs.current.forEach((el, i) => {
                 if (!el) return;
 
@@ -134,8 +128,8 @@ const SupportChat = ({setToggleChat }) => {
             <div className="support-chat-footer">
                 <form onSubmit={(e) => handleMessageSend(e)}>
                     <div className="input-group">
-                        <input type="text" className="form-control" placeholder="Write a message..." onChange={(e) => setInput(e.target.value)} value={input}/>
-                        <button type="submit" className="btn border-0" style={{backgroundColor : "#10b981"}}><i class="fa-solid fa-paper-plane text-white"></i></button>
+                        <input type="text" className="form-control" placeholder="Write a message..." disabled={count > 0 ? false : true} onChange={(e) => setInput(e.target.value)} value={input}/>
+                        <button type="submit" className="btn border-0" disabled={count > 0 ? false : true} style={{backgroundColor : "#10b981"}}><i class="fa-solid fa-paper-plane text-white"></i></button>
                     </div>
                 </form>
             </div>

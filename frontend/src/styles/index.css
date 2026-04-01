@@ -54,7 +54,7 @@ ul, li {
 .product-main{
   color: var(--text-color);
 }
-.headerSearchInput , .headerSearchInput input , .headerSearchInput i, .headerSearchInput span , .headerSearchInput ::placeholder ,.support-chat-footer , .support-chat-footer input, .support-chat-footer input::placeholder, .support-chat-footer :focus {
+.headerSearchInput , .headerSearchInput input , .headerSearchInput i, .headerSearchInput span , .headerSearchInput ::placeholder ,.support-chat-footer , .support-chat-footer input, .support-chat-footer input::placeholder, .support-chat-footer :focus, .support-chat-footer input:disabled {
     background-color:  var(--product-bg-color);
     border: none;
     color: var(--text-color);
