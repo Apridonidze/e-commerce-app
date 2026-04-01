@@ -7,7 +7,7 @@ const SupportChatContainer = () =>{
     const [toggleChat, setToggleChat] = useState(false)
 
     return(
-        <div className="support-chat-main-container position-fixed text-center align-items-center rounded-2 bottom-0 end-0 m-5" style={{cursor: 'pointer'}}>
+        <div className="support-chat-main-container text-center align-items-center rounded-2" style={{cursor: 'pointer'}}>
            
             {!toggleChat ? 
                 <div className="support-chat-toggle p-2 rounded-3"  onClick={() => setToggleChat(!toggleChat)} style={{backgroundColor : '#10b981'}} >
