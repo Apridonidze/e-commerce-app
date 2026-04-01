@@ -1,7 +1,6 @@
 import axios from "axios"; //importing axios
 import { BACKEND_URL } from "../../config";  //importing backend url from env file
 
-import { useCookies } from "react-cookie"; //importing react library
 import { useEffect, useState, useContext } from "react"; //importing react hooks
 
 import { UserContext } from "../context/UserContext"; //importing user context
@@ -9,6 +8,7 @@ import { ProductContext } from "../context/ProductContext"; //importing products
 
 import Category from "../component/Category";
 import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 import Sidebar from "../layout/Sidebar"; //importing layout components
 
 import SupportChatContainer from "../component/SupportChatContainer";
@@ -70,7 +70,7 @@ const Main = () => {
     },[category, offset]); //logic executes on first mount and after dependencies change
 
     return(
-        <div className="main-container container-fluid"> 
+        <div className="main-container container-fluid d-flex flex-column"> 
 
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             
@@ -80,30 +80,34 @@ const Main = () => {
             
             {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
 
-            <div className="main-start">
-                <Sidebar /> 
-            </div>
-            <div className="main-end px-4">
-
-                <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
-                <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
-
-                <div className="products-container" style={{minHeight : '80vh'}}>
-                    {!isLoading ? 
-                        products?.length < 1 ? <NoProduct fetchProducts={fetchProducts} setCategory={setCategory} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
-                        : <div className="products">
-                            {products?.map((prod,_) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>)}
-                        </div> 
-                    : [...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}
+            <div className="main-body d-flex">
+                <div className="main-start">
+                    <Sidebar /> 
                 </div>
-                
-                {products?.length % 15 !== 0 || products?.length === 0 ? 
-                    <></> : 
-                <button className="btn d-flex text-white fw-bold my-5 align-items-center py-2 justify-content-center mx-auto w-25 " style={{backgroundColor : "#10b981", height : '50px', textAlign: 'center'}} onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More Items...</button>}
-                
-                {!user ||  user?.role == 'admin'  ? <></> : <SupportChatContainer setToggleAlert={setToggleAlert}/>}
-                
+                <div className="main-end px-4">
+
+                    <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
+                    <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
+
+                    <div className="products-container" style={{minHeight : '80vh'}}>
+                        {!isLoading ? 
+                            products?.length < 1 ? <NoProduct fetchProducts={fetchProducts} setCategory={setCategory} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
+                            : <div className="products">
+                                {products?.map((prod,_) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>)}
+                            </div> 
+                        : [...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}
+                    </div>
+                    
+                    {products?.length % 15 !== 0 || products?.length === 0 ? 
+                        <></> : 
+                    <button className="btn d-flex text-white fw-bold my-5 align-items-center py-2 justify-content-center mx-auto w-25 " style={{backgroundColor : "#10b981", height : '50px', textAlign: 'center'}} onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More Items...</button>}
+                    
+                    {!user ||  user?.role == 'admin'  ? <></> : <SupportChatContainer setToggleAlert={setToggleAlert}/>}
+                    
+                </div>
             </div>
+
+            <Footer />
         </div>
     );
 };
