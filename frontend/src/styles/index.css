@@ -43,6 +43,7 @@ ul, li {
 
 #message{
   background-color: var(--product-bg-color) ;
+  color: var(--product-color);
 }
 .avalability{
   background-color: var(--bg-color);

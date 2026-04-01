@@ -95,7 +95,7 @@ const SupportChat = ({setToggleChat }) => {
 
     useEffect(() => {
         if(messageRefs && messageRefs.current && statusRefs && statusRefs.current){
-
+            console.log(statusRefs.current)
             statusRefs.current.forEach((el, i) => {
                 if (!el) return;
 
@@ -123,8 +123,12 @@ const SupportChat = ({setToggleChat }) => {
                 </div>
             </div>
 
-            <div className="support-chat-main d-flex flex-column border-0" style={{overflowY : 'scroll'}} ref={messagesRef}>
-                {messages?.map((m , mId) => <span key={mId}> <span id="message" ref={(e) => messageRefs.current[mId] = e}  style={{backgroundColor : m.sender_name !== 'You' && '#10b981' , color : m.sender_name !== 'You' && 'white'}} className={`${m.sender_name === 'You' ? 'align-self-end' : 'align-self-start'} px-2 py-1 rounded-3 fw-medium my-1`}>{m.content}</span> <span className="d-none" ref={(e) => statusRefs.current[mId] = e}>{m.status}</span></span>)}
+            <div className="support-chat-main d-flex flex-column border-0 text-end " style={{overflowY : 'scroll'}} ref={messagesRef}>
+                {messages?.map((m , mId) => 
+                    <span key={mId} className={`d-flex flex-column ${m.sender_name == 'You' ? 'align-self-end' : 'align-self-start'}`} style={{maxWidth : '60%', height:'auto'}}> 
+                        <span id="message" ref={(e) => messageRefs.current[mId] = e}  style={{backgroundColor : m.sender_name !== 'You' && '#10b981' , color : m.sender_name !== 'You' && 'white', width: 'fit-content'}} className={`text-start ${m.sender_name == 'You' ? 'align-self-end' : 'align-self-start'} px-2 py-1 rounded-3 fw-medium my-1 text-break`} >{m.content}</span> 
+                        <small style={{fontSize : "14px"}} className={`d-none ${m.sender_name == 'You' ? 'align-self-end' : 'align-self-start'}`} ref={(e) => statusRefs.current[mId] = e}>{m.sender_name !== 'You' ? <></> :m.status}</small>
+                    </span>)}
             </div>
 
             <div className="support-chat-footer">
