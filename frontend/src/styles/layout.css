@@ -1,3 +1,12 @@
+
+:root {
+    --icon-bg : #f3f4f6 ; 
+}
+
+[data-theme='dark']{
+    --icon-bg : #0f172a; 
+}
+
 .sidebar-container{
     position: relative;
     min-width: 15vw;
@@ -117,6 +126,42 @@
 
 .support-chat-footer{
     margin: 10px;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background: var(--icon-bg);
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.icon::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 20px;
+  height:30px;
+  border-left: 6px solid #10b981;
+  border-top: 6px solid #10b981;
+  border-bottom: 6px solid #10b981;
+  border-right: none;
+  border-radius: 6px;
+}
+
+.icon::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
 }
 
 @media (max-width: 925px) {
