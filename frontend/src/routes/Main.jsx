@@ -18,16 +18,15 @@ import RemoveProduct from "../admin/components/RemoveProduct";
 import AddToCart from "../component/AddToCart";
 import ReportProduct from "../component/ReportProduct"; //importing components
 
+import NoProduct from "../component/NoProduct";//importing notFound product component
 import StatusMessage from "../alerts/StatusMessage"; //importing skeletons for loading and component to  dissplay messages (error, warning)
 import ProductSkeleton from "../skeletons/ProductSkeleton"; //importing loading skeleton for products
 
 import '../styles/products.css';
 import '../styles/index.css'; //importing css files
-import NoProduct from "../component/NoProduct";
 
 const Main = () => {
 
-    const [ cookies ] = useCookies(['token']); //defining cookies
     const { prevProducts } = useContext(ProductContext); //defining main products from context api
     const { user } = useContext(UserContext);//defining user data from context
 
@@ -97,7 +96,7 @@ const Main = () => {
                 </div>
                 {products?.length % 15 !== 0 || products?.length === 0 ? <></> : <button className="btn d-flex text-white fw-bold my-5 align-items-center py-2 justify-content-center mx-auto w-25 " style={{backgroundColor : "#10b981", height : '50px', textAlign: 'center'}} onClick={() => setOffset((prev) => {if(products.length % 15 === 0){return prev + 15} return})}>Load More Items...</button>}
                 
-                {!cookies ||  user?.role == 'admin'  ? <></> : <SupportChatContainer />}
+                {!user ||  user?.role == 'admin'  ? <></> : <SupportChatContainer />}
                 
             </div>
         </div>
