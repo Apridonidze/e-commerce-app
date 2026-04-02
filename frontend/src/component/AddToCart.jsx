@@ -54,26 +54,29 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
     };
 
     return(
-        <div className="add-to-cart-container" style={{zIndex : 999}} key={toggleAddToCart.product.prodcuts_id} >
+        <div className="add-to-cart-container overflow-hidden" style={{zIndex : 999}} key={toggleAddToCart.product.prodcuts_id} >
+
+            <div className="close-button-toggle">
+                <button className="btn btn-none border-0"><i class="fa-solid fa-xmark"></i></button>
+            </div>
 
             <div className="add-to-cart-start d-flex align-items-center h-100">
                 <img src={`data:image/svg+xml;base64,${JSON.parse(toggleAddToCart.product.images)[0]}`}/>
             </div>
 
-
             <div className="add-to-cart-end w-100 h-100">
 
-                <div className="close-button d-flex justify-content-end">
+                <div className="close-button ">
                     <button className="btn btn-none border-0"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                       
-                <div className="product-main">
+                <div className="product-main py-2 px-3">
         
-                    <h2>{toggleAddToCart.product.title}</h2>
+                    <h2 className="py-1">{toggleAddToCart.product.title.length > 20 ? `${toggleAddToCart.product.title.slice(0, 20)}...` : toggleAddToCart.product.title}</h2>
                     <small className="text-break">{toggleAddToCart.product.description.length > 300 ? `${toggleAddToCart.product.description.slice(0,300)}...` : toggleAddToCart.product.description}</small>
-                    <h5 style={{backgroundColor : '#10b981', color : 'white', width : 'fit-content', fontSize : '14px'}} className="px-2 py-1 rounded-2">{`${toggleAddToCart.product.category} / ${toggleAddToCart.product.subcategory}`}</h5>
+                    <h5 style={{backgroundColor : '#10b981', color : 'white', width : 'fit-content', fontSize : '14px'}} className="px-2 py-1 my-2 rounded-2">{`${toggleAddToCart.product.category} / ${toggleAddToCart.product.subcategory}`}</h5>
                     
-                    <div className="product-amounts d-flex justify-content-between align-items-end">
+                    <div className="product-amounts py-2 d-flex justify-content-between align-items-end">
 
                         <div className="amounts-start">
                             {!toggleAddToCart.product?.sales_price ? 
@@ -86,32 +89,32 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
                         </div>
 
                         <div className="amounts-end">
-                            <h5>{`Items Left: ${toggleAddToCart.product?.amount}`|| <Skeleton/>}</h5>
+                            <span className="avalability rounded-5" style={{fontSize:'14px', padding : '2px 10px'}}>{toggleAddToCart.product.amount} Items Left</span>
                         </div>
                     
                     </div>
         
                 </div>
 
-                <div className="row">
-                    <div className="d-flex justify-content-between ">
-                        <div className="row-start">
-                            <span>QUANTITY</span>
+                <div className="row" >
+                    <div className="d-flex justify-content-between px-4 align-items-center">
+                        <div className="row-start px-1">
+                            <span className="avalability rounded-5"  style={{fontSize:'14px', padding : '2px 10px', letterSpacing : '1px'}}>QUANTITY</span>
                         </div>
-                        <div className="row-end">
-                            <button disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev - 1 <= 0) return 0;return prev - 1})}>-</button>
+                        <div className="row-buttons row-end d-flex gap-2 align-items-center">
+                            <button className="btn border-0" disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev - 1 <= 0) return 0;return prev - 1})}>-</button>
                             <span>{isInCart ? inCartAmount : amount}</span>
-                            <button disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev + 1 > toggleAddToCart.product.amount)return prev; return prev + 1})}>+</button>
+                            <button className="btn border-0" disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev + 1 > toggleAddToCart.product.amount)return prev; return prev + 1})}>+</button>
                         </div>
                     </div>
 
-                    <button onClick={() => handleAddToCart(toggleAddToCart.product.products_id)} disabled={isInCart || amount == 0 ? true : false}>Add To Cart</button>
+                    <button className="btn border-0 px-3 py-2 mx-auto my-3 w-100 fw-bold" style={{backgroundColor : '#10b981', color :'white', maxWidth : '90%', height : '50px'}} onClick={() => handleAddToCart(toggleAddToCart.product.products_id)} disabled={isInCart || amount == 0 ? true : false}><i class="fa-solid fa-cart-shopping text-white me-2"></i> Add To Cart</button>
 
                 </div>
         
-                <div className="product-bottom d-flex align-items-center" >
-                    <span>Free Shipping</span>
-                
+                <div className="product-bottom d-flex gap-2 align-items-center p-3 fw-medium" style={{letterSpacing : '1px'}}>
+                    <span className="productTags text-break"><i class="fa-solid fa-truck me-2"></i>FREE SHIPPING</span>
+                    <span className="productTags"><i class="fa-solid fa-certificate me-2"></i>2 YEAR WARRANTY</span>
                 </div>
 
             </div>
