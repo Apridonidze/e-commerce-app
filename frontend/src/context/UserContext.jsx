@@ -64,12 +64,12 @@ export const UserProvider = ({children}) => {
             }
         }
 
-        return () => {fetchUser()}
+        fetchUser()
 
     }, []);
 
     return(
-        <UserContext.Provider value={{ user, cartIds, cardDetails }}>{children}</UserContext.Provider>
+        <UserContext.Provider value={{ user, cartIds, cardDetails, setCartIds }}>{children}</UserContext.Provider>
     )
 }
 

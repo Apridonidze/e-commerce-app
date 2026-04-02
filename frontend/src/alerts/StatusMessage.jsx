@@ -8,7 +8,7 @@ const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
     const [targetIcon, setTargetIcon] = useState()
     const [second, setSecond] = useState(3);
     const icons = [
-        {type : "Success", statusCode : 200 , icon : <i className="fa-solid fa-check d-flex justify-content-center rounded-5 h-auto fs-6" style={{border : '3px solid #035b41', padding : '5px 13px' }}></i>},
+        {type : "Success", statusCode : 200 , icon : <i className="fa-solid fa-check d-flex justify-content-center rounded-5 h-auto fs-6" style={{border : '3px solid #10b981', color : '#10b981', padding : '5px 13px' }}></i>},
         {type : "Info" , statusCode : 200, icon : <i class="fa-solid fa-exclamation fs-4"></i>},
         {type : "Warning" , statusCode : 200, icon : <i className='fa-solid fa-circle-exclamation fs-4'></i>},
         {type : "Failed" ,statusCode : 400 , icon : <i className="fa-solid fa-circle-exclamation fs-4" style={{ color : '#ba1a1a'}}></i>},
@@ -49,11 +49,10 @@ const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
 
     
     return(
-        <div className="status-message-container" ref={statusRef}>
-            {targetIcon}
+        <div className="status-message-container w-auto" ref={statusRef}>
+            <span>{targetIcon}</span>
             <h6>{toggleAlert.message}</h6>
-            {/* {toggleAlert} */}
-            {second}
+            <span>{second}</span>
         </div>
     )
 }

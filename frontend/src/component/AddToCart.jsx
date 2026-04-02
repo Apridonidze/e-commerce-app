@@ -2,12 +2,15 @@ import axios from "axios";
 import { useCookies } from "react-cookie"; //impoirting react libraries 
 
 import { BACKEND_URL } from "../../config"; //importing backend url from config file
-import { useState, useEffect } from "react"; //importing react hook
+import { useState, useEffect, useContext } from "react"; //importing react hook
+import { UserContext } from "../context/UserContext";
 
 const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
 
     const [ cookies ] = useCookies(['token']); //defining user cookeis for api call
- 
+
+    const { user , cartIds, setCartIds } = useContext(UserContext); //importing user data from state manager
+
     const [isInCart, setIsInCart] = useState(false);
     const [amount, setAmount] = useState(0);
     const [inCartAmount, setInCartAmount] = useState(0); //states for product references
@@ -21,7 +24,8 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
 
                 setInCartAmount(amount); //updating how many pieces of item we ordered
                 setAmount(0); //reseting input button for pieces
-                
+
+                setCartIds((prev) => [...prev, {id : user.id , product_id : productId , amount}]); //updating cart state instantly
                 setIsInCart(true); // updating isInCart state
                 
                 setToggleAlert({status: true, type: "Success", statusCode: response.status, message: response.data.message}); //toggling success message
@@ -36,7 +40,8 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
                 setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});//toggling error message
             
                 setIsInCart(false); //updating state to false 
-            
+                setCartIds(cartIds); //setting state in default position of cardIds
+
                 setInCartAmount(0);
                 setAmount(amount); //reseting count states
 
@@ -46,9 +51,11 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
 
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling internal error message
             
+            setIsInCart(false); //updating state to false 
+            setCartIds(cartIds);//setting state in default position of cardIds
+
             setInCartAmount(0);
-            setAmount(amount);
-            setIsInCart(false); //reseting states
+            setAmount(amount); //reseting states
             
         };
     };

@@ -53,8 +53,8 @@
 }
 
 .status-message-container.Success{
-    background-color: #f2fbfa;
-    color: #035b41;
+    background-color: var(--icon-bg);
+    color: #10b981;
 }
 .status-message-container.Failed{
     background-color: #f5edf3;
