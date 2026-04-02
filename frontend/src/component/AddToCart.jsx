@@ -54,20 +54,21 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
     };
 
     useEffect(() => {
-  if (toggleAddToCart.status) {
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    document.body.style.overflow = 'hidden';
-    document.body.style.paddingRight = `${scrollbarWidth}px`;
-  } else {
-    document.body.style.overflow = '';
-    document.body.style.paddingRight = '';
-  }
 
-  return () => {
-    document.body.style.overflow = '';
-    document.body.style.paddingRight = '';
-  };
-}, [toggleAddToCart.status]);
+        if (toggleAddToCart.status) {//triggering logic if status is true
+        
+            const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth; //defining scrollbar width
+
+            document.body.style.overflow = 'hidden'; //hiding overflowed elements from body
+            document.body.style.paddingRight = `${scrollbarWidth}px`; //defining padding position based on scrollbar width
+        };
+     
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = ''; //clearing styles if toggleAddToCart status is not true
+    
+        return () => {document.body.style.overflow = ''; document.body.style.paddingRight = ''}; //cleanup function
+
+    }, [toggleAddToCart.status]); //toggling useEffect on status change
 
     return(
         <div className="add-to-cart-container overflow-hidden" key={toggleAddToCart.product.prodcuts_id} style={{
