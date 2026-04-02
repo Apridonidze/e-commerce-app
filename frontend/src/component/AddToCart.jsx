@@ -2,7 +2,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie"; //impoirting react libraries 
 
 import { BACKEND_URL } from "../../config"; //importing backend url from config file
-import { useState } from "react"; //importing react hook
+import { useState, useEffect } from "react"; //importing react hook
 
 const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
 
@@ -53,8 +53,29 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
         };
     };
 
+    useEffect(() => {
+  if (toggleAddToCart.status) {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+  } else {
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+  }
+
+  return () => {
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+  };
+}, [toggleAddToCart.status]);
+
     return(
-        <div className="add-to-cart-container overflow-hidden" style={{zIndex : 999}} key={toggleAddToCart.product.prodcuts_id} >
+        <div className="add-to-cart-container overflow-hidden" key={toggleAddToCart.product.prodcuts_id} style={{
+            position: window.innerWidth < 598 ? 'fixed' : 'absolute',
+            top: window.innerWidth >= 598 ? `${window.scrollY}px` : undefined,
+            bottom: window.innerWidth < 598 ? '8rem' : undefined,
+            width: window.innerWidth < 598 ? '95%' : undefined,
+        }}>
 
             <div className="close-button-toggle">
                 <button className="btn btn-none border-0"><i class="fa-solid fa-xmark"></i></button>
