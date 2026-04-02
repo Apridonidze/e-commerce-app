@@ -42,7 +42,11 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart }) => {
             <div className="add-to-cart-start">
                 <img src={`data:image/svg+xml;base64,${JSON.parse(toggleAddToCart.product.images)[0]}`}/>
             </div>
-            <div className="add-to-cart-end">
+            <div className="add-to-cart-end w-100">
+
+                <div className="close-button d-flex justify-content-end">
+                    <button className="btn btn-none border-0"><i class="fa-solid fa-xmark"></i></button>
+                </div>
                       
                 <div className="product-main">
         
