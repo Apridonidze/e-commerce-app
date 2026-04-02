@@ -78,7 +78,7 @@ const Main = () => {
             {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }
             {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
             
-            {toggleAddToCart.status ? <div className="add-to-cart-wrapper"><div className="add-to-cart-background" onClick={() => setToggleAddToCart({status : false , product : null})}></div> <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/></div> : <></>}
+            {toggleAddToCart.status ? <div className="add-to-cart-wrapper"><div className="add-to-cart-background" onClick={() => setToggleAddToCart({status : false , product : null})}></div> <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart} setToggleAlert={setToggleAlert}/></div> : <></>}
 
             <div className="main-body d-flex gap-2" >
                 <div className="main-start">

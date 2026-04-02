@@ -1,41 +1,50 @@
-import { useState, useEffect } from "react";
-
-import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
-
 import axios from "axios";
-import { BACKEND_URL } from "../../config";
-import { useCookies } from "react-cookie";
+import { useCookies } from "react-cookie"; //impoirting react libraries 
 
+import { BACKEND_URL } from "../../config"; //importing backend url from config file
+import { useState } from "react"; //importing react hook
 
+const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
 
-const AddToCart = ({ setToggleAddToCart, toggleAddToCart }) => {
-
-    const [ cookies ] = useCookies(['token'])
+    const [ cookies ] = useCookies(['token']); //defining user cookeis for api call
  
     const [isInCart, setIsInCart] = useState(false);
     const [amount, setAmount] = useState(0);
-    const [inCartAmount, setInCartAmount] = useState(0);
+    const [inCartAmount, setInCartAmount] = useState(0); //states for product references
 
     const handleAddToCart = async (productId) => {
         try {
 
-            await axios.post(`${BACKEND_URL}/api/cart/${productId}`,{ amount },{ headers: { Authorization: `Bearer ${cookies.token}` } })
+            const response = await axios.post(`${BACKEND_URL}/api/cart/${productId}` ,{ amount }, {headers: { Authorization: `Bearer ${cookies.token}`}})
+            
+            if(response.status === 200){
+
+                setInCartAmount(amount)
+                setAmount(0)
+                
+                setToggleAlert({status: true, type: "Success", statusCode: response.status, message: response.data.message});
+
+                setToggleAddToCart({status : false, product : null})
+            }
+
             setIsInCart(true)
-            setInCartAmount(amount)
-            setAmount(0)
-            // toggle success message
-            setToggleAddToCart({status : false, product : null})
 
         } catch (err) {
-            // toggle alert message
+
+            if(err.status === 400){
+                setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+                setIsInCart(false)
+            setInCartAmount(0)
+            setAmount(amount)
+            }
+
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
             setIsInCart(false)
             setInCartAmount(0)
             setAmount(amount)
+            
         }
     }
-
-// refactor
 
     return(
         <div className="add-to-cart-container" style={{zIndex : 999}} key={toggleAddToCart.product.prodcuts_id} >
@@ -94,7 +103,7 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart }) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default AddToCart;
+export default AddToCart; //exporting component
