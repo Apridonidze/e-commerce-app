@@ -38,7 +38,7 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart }) => {
 // refactor
 
     return(
-        <div className="add-to-cart-container position-relative bg-white border top-50" style={{zIndex : 999}} key={toggleAddToCart.product.prodcuts_id} >
+        <div className="add-to-cart-container" style={{zIndex : 999}} key={toggleAddToCart.product.prodcuts_id} >
             <div className="product-wrapper">
         
                 {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(toggleAddToCart.product.images)[0]}`} style={{maxWidth:'200px'}}/> || <Skeleton />}
