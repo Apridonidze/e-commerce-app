@@ -39,10 +39,11 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart }) => {
 
     return(
         <div className="add-to-cart-container" style={{zIndex : 999}} key={toggleAddToCart.product.prodcuts_id} >
-            <div className="product-wrapper">
-        
-                {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(toggleAddToCart.product.images)[0]}`} style={{maxWidth:'200px'}}/> || <Skeleton />}
-                            
+            <div className="add-to-cart-start">
+                <img src={`data:image/svg+xml;base64,${JSON.parse(toggleAddToCart.product.images)[0]}`}/>
+            </div>
+            <div className="add-to-cart-end">
+                      
                 <div className="product-main">
         
                     <h5>{toggleAddToCart.product.title || <Skeleton count={1} width={'12vw'}/>}</h5>
@@ -64,9 +65,7 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart }) => {
                     <button onClick={() => handleAddToCart(toggleAddToCart.product.products_id)} disabled={isInCart || amount == 0 ? true : false}>Add To Cart</button>
 
                 </div>
-        
             </div>
-                    
         </div>
     )
 }
