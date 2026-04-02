@@ -84,7 +84,7 @@ const Main = () => {
                 <div className="main-start">
                     <Sidebar /> 
                 </div>
-                <div className="main-end ">
+                <div className="main-end overflow-hidden">
 
                     <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
                     <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>

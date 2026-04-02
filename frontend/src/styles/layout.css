@@ -85,10 +85,9 @@
 }
 
 .list-unstyled{
-    overflow: hidden;
+    overflow-x: hidden;
     height :50px;
-    max-width: 78vw;
-    width :100%
+    width :100%;
 }
 
 .headerSearchInput{
@@ -98,7 +97,14 @@
 
 .btn1, .btn2{
     padding: 2px 5px;
-    z-index: 99;
+    z-index: 1000;
+    background-color: var(--bg);
+}
+
+
+.btn1 button, .btn2 button{
+    background-color: var(--bg);
+    border: var(--icon-bg);
 }
 
 .support-chat-main-container{
