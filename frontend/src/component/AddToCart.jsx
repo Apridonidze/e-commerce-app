@@ -79,7 +79,7 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
         }}>
 
             <div className="close-button-toggle">
-                <button className="btn btn-none border-0"><i class="fa-solid fa-xmark"></i></button>
+                <button className="btn btn-none border-0" onClick={() => setToggleAddToCart({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
             </div>
 
             <div className="add-to-cart-start d-flex align-items-center h-100">
@@ -89,7 +89,7 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
             <div className="add-to-cart-end w-100 h-100">
 
                 <div className="close-button ">
-                    <button className="btn btn-none border-0"><i class="fa-solid fa-xmark"></i></button>
+                    <button className="btn btn-none border-0" onClick={() => setToggleAddToCart({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
                 </div>
                       
                 <div className="product-main py-2 px-3">

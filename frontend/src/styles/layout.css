@@ -90,6 +90,17 @@
     width :100%;
 }
 
+.list-unstyled-background{
+    border: 1px solid red;
+    position:fixed;
+    width: 1000vw;
+    height: 1000vw;
+    z-index: 99;
+    left: 0rem;
+    top: 0rem;
+    opacity: 0;
+}
+
 .headerSearchInput{
     padding: 3px 0px;
     max-width: 20vw;

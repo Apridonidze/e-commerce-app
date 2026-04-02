@@ -141,7 +141,7 @@ const Category = ({ setCategory, setDropDownIndex, category, fetchProducts,offse
                     <li key={cat.slug} className="d-flex flex-column" >
                         
                         <button className="toggleDropDown btn btn-light d-flex justify-content-between align-items-center flex-shrink-0" style={{minWidth : '240px', borderBottom : openIndex === index ? '2px solid #10b981' : '', backgroundColor : dropDownIndex?.category == cat.name && '#10b981', color : dropDownIndex?.category == cat.name && 'white'}} onClick={(e) => toggleSubmenu(e, index)}>{cat.icon} {cat.name} <span style={{rotate : openIndex === index ? '180deg' : "0deg", transition: 'all 0.2s'}}><i class="fa-solid fa-angle-down"></i></span></button>
-                        <div className={`list-unstyled-background ${openIndex !== null ? 'd-flex' : 'd-none'} opacity-0 position-absolute w-100 h-100 bg-dark start-0 top-0`} style={{zIndex : 1001 }} onClick={() => setOpenIndex(null)}></div>
+                        <div className={`list-unstyled-background ${openIndex !== null ? 'd-flex' : 'd-none'}`} onClick={() => setOpenIndex(null)}></div>
                         
                         <ul className={`subcategory-list-unstyled rounded-2 position-absolute p-3 mt-3 ${openIndex === index ? 'd-flex' : 'd-none'} flex-column`} style={{zIndex : 1002, left : dropDownPos?.left , top : dropDownPos?.top}}>
                             {cat.subcategories.map((sub, i) => (
