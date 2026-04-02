@@ -48,17 +48,27 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     align-items: center;
-
     position: absolute;
     top: 5rem;
     left: 50%;
     transform: translateX(-50%);
-
     width: 90%;
     max-width: 880px;
+    min-height: 400px;
+    border-radius: 5px;
+}
+
+.add-to-cart-container div{
+    border-radius: 5px;
+}
+
+.add-to-cart-start{
+    padding: 5px 10px;
+    background-color: var(--component-bg);
 }
 
 .add-to-cart-start img{
+    border-radius: 5px;
     width: 100%;
     height: auto;
     min-width: 400px;
@@ -67,6 +77,7 @@
 .add-to-cart-end{
     display: flex;
     flex-direction: column;
+    padding: 5px 10px;
 }
 
 @media (max-width: 925px) {
