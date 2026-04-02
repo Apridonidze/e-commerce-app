@@ -54,21 +54,20 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
     };
 
     useEffect(() => {
-
-        if (toggleAddToCart.status) {//triggering logic if status is true
         
-            const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth; //defining scrollbar width
+        if (toggleAddToCart.status) { //executing logic if status is true
 
+            document.documentElement.style.overflow = 'hidden';
             document.body.style.overflow = 'hidden'; //hiding overflowed elements from body
-            document.body.style.paddingRight = `${scrollbarWidth}px`; //defining padding position based on scrollbar width
-        };
-     
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = ''; //clearing styles if toggleAddToCart status is not true
-    
-        return () => {document.body.style.overflow = ''; document.body.style.paddingRight = ''}; //cleanup function
 
-    }, [toggleAddToCart.status]); //toggling useEffect on status change
+        } else { //executing logic if status is not true (false, null , undefined)
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';//reseting styles
+        };
+
+        return () => {document.documentElement.style.overflow = ''; document.body.style.overflow = ''}; //cleanup funciton
+
+    }, [toggleAddToCart.status]); //triggering fucntion on toggleAddToCart status chagnes
 
     return(
         <div className="add-to-cart-container overflow-hidden" key={toggleAddToCart.product.prodcuts_id} style={{
@@ -92,11 +91,11 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
                     <button className="btn btn-none border-0" onClick={() => setToggleAddToCart({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
                 </div>
                       
-                <div className="product-main py-2 px-3">
+                <div className="product-main w-100 py-2 px-3">
         
                     <h2 className="py-1">{toggleAddToCart.product.title.length > 20 ? `${toggleAddToCart.product.title.slice(0, 20)}...` : toggleAddToCart.product.title}</h2>
-                    <small className="text-break">{toggleAddToCart.product.description.length > 300 ? `${toggleAddToCart.product.description.slice(0,300)}...` : toggleAddToCart.product.description}</small>
-                    <h5 style={{backgroundColor : '#10b981', color : 'white', width : 'fit-content', fontSize : '14px'}} className="px-2 py-1 my-2 rounded-2">{`${toggleAddToCart.product.category} / ${toggleAddToCart.product.subcategory}`}</h5>
+                    <small >{toggleAddToCart.product.description.length > 300 ? `${toggleAddToCart.product.description.slice(0,300)}...` : toggleAddToCart.product.description}</small>
+                    <h5 style={{backgroundColor : '#10b981', color : 'white', width : 'fit-content', fontSize : '12px'}} className="px-2 py-1 my-2 rounded-2">{`${toggleAddToCart.product.category} / ${toggleAddToCart.product.subcategory}`}</h5>
                     
                     <div className="product-amounts py-2 d-flex justify-content-between align-items-end">
 
@@ -118,8 +117,8 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
         
                 </div>
 
-                <div className="row" >
-                    <div className="d-flex justify-content-between px-4 align-items-center">
+                <div className="row mx-auto" style={{overflow: 'hidden'}}>
+                    <div className="d-flex justify-content-between px-3 align-items-center ">
                         <div className="row-start px-1">
                             <span className="avalability rounded-5"  style={{fontSize:'14px', padding : '2px 10px', letterSpacing : '1px'}}>QUANTITY</span>
                         </div>
@@ -134,9 +133,9 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
 
                 </div>
         
-                <div className="product-bottom d-flex gap-2 align-items-center p-3 fw-medium" style={{letterSpacing : '1px'}}>
-                    <span className="productTags text-break"><i class="fa-solid fa-truck me-2"></i>FREE SHIPPING</span>
-                    <span className="productTags"><i class="fa-solid fa-certificate me-2"></i>2 YEAR WARRANTY</span>
+                <div className="product-bottom d-flex flex-shrink gap-2 align-items-center p-3 fw-medium" style={{letterSpacing : '1px'}}>
+                    <span style={{minWidth : '160px'}} className="productTags text-break"><i class="fa-solid fa-truck me-2"></i>FREE SHIPPING</span>
+                    <span  style={{minWidth : '190px'}}className="productTags"><i class="fa-solid fa-certificate me-2"></i>2 YEAR WARRANTY</span>
                 </div>
 
             </div>

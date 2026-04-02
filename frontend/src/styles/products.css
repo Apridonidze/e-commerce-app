@@ -47,7 +47,8 @@
 .add-to-cart-background{
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    overflow: hidden;
     left: 0px;
     background-color: black;
     opacity: 50%;
@@ -70,14 +71,9 @@
     z-index: 1000;
 }
 
-.add-to-cart-container div{
-    border-radius: 5px;
-    background-color: var(--product-bg-color)
-}
-
 .add-to-cart-start{
+    background-color: var(--product-bg-color) !important;
     padding: 5px 10px;
-    background-color: var(--component-bg) !important
 }
 
 .add-to-cart-start img{
@@ -122,6 +118,15 @@
     border-top: var(--border);
     font-size:14px ;
     color: var(--text-color);
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 180px));
+    justify-content: center;
+    text-align: center;
+    max-width: 100%;
+}
+
+.product-bottom span{
+    margin: auto;
 }
 
 .productTags{

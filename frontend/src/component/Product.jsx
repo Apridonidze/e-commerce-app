@@ -101,7 +101,7 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
 
                 </div>
 
-                <div className="product-bottom d-flex align-items-center" >
+                <div className="product-footer d-flex align-items-center border-0" >
                     
                     {!user ? <></> : isInCart ? 
                         <button className="btn w-100 fw-bold" style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => handleDeleteFromCart(prod?.products_id)}><i class="fa-solid fa-cart-shopping text-white me-2"></i> In Cart</button> : 
