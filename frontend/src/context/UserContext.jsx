@@ -15,8 +15,6 @@ export const UserProvider = ({children}) => {
     const [cartIds , setCartIds] = useState([]); //states for user data
 
     useEffect(() => {
-        
-        if(!cookies.token) return; 
 
         const fetchUser = async() => {
 
@@ -28,14 +26,6 @@ export const UserProvider = ({children}) => {
                     
                 let data = user.data.user
                 setUser({...data, role : user.data.role})
-
-                console.log(user)
-
-                
-
-                
-
-                return;
 
             }catch(err){
                 console.log(err)
@@ -72,7 +62,15 @@ export const UserProvider = ({children}) => {
                 }
         } 
 
-        fetchUser()
+        if(!cookies.token) return; 
+
+        const fetchData = async () => {
+            await fetchUser();
+            await fetchCartDetails();
+            await fetchCartIds();
+        }
+
+        fetchData()
 
     }, [cookies.token]);
 

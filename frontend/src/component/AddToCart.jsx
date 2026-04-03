@@ -25,7 +25,14 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
                 setInCartAmount(amount); //updating how many pieces of item we ordered
                 setAmount(0); //reseting input button for pieces
 
-                setCartIds((prev) => [...prev, {id : user.id , product_id : productId , amount}]); //updating cart state instantly
+                setCartIds(prev => {
+
+                    const exists = prev.find(item => item.product_id === productId); //checking if product already exists in state array
+                    if (exists) return prev.map(item =>item.product_id === productId ? { ...item, amount: amount } : item); //if exists then return same product
+                    
+                    return [...prev, { id: user.id, product_id: productId, amount: amount }]; //else pushing into array
+                }); //updating cartIds state safetly
+                
                 setIsInCart(true); // updating isInCart state
                 
                 setToggleAlert({status: true, type: "Success", statusCode: response.status, message: response.data.message}); //toggling success message
@@ -33,9 +40,11 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
                 
             };
 
-        } catch (err) { //handling eeeors
+        } catch (err) { //handling errors
 
-            if(err.status === 400){ //handling 400 status code error
+            const status = err.response?.status
+
+            if(status === 400){ //handling 400 status code error
                 
                 setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});//toggling error message
             
@@ -44,6 +53,8 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
 
                 setInCartAmount(0);
                 setAmount(amount); //reseting count states
+
+                return; //returning empty promise to not trigger logic below
 
             };
 
@@ -77,7 +88,7 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
     }, [toggleAddToCart.status]); //triggering fucntion on toggleAddToCart status chagnes
 
     return(
-        <div className="add-to-cart-container overflow-hidden" key={toggleAddToCart.product.prodcuts_id} style={{
+        <div className="add-to-cart-container overflow-hidden" key={toggleAddToCart.product?.products_id} style={{
             position: window.innerWidth < 598 ? 'fixed' : 'absolute',
             top: window.innerWidth >= 598 ? `${window.scrollY}px` : undefined,
             bottom: window.innerWidth < 598 ? '8rem' : undefined,

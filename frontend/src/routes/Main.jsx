@@ -93,7 +93,7 @@ const Main = () => {
                         {!isLoading ? 
                             products?.length < 1 ? <NoProduct  setCategory={setCategory} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
                             : <div className="products">
-                                {products?.map((prod,_) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>)}
+                                {products?.map((prod) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>)}
                             </div> 
                         : <div className="products">{[...Array(15)].map((_,i) => (<ProductSkeleton key={i}/>))}</div> }
                     </div>

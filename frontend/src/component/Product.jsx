@@ -42,7 +42,8 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
 
     useEffect(() => {
 
-        if(cartIds?.some(cart => cart.product_id == prod?.products_id)) return setIsInCart(true); // checking if current product is included in cartIds array and if so setting isInCart state as true, if its not we are returning empty promise
+        if(cartIds?.some(cart => cart.product_id == prod?.products_id)) return setIsInCart(true);
+        return;  // checking if current product is included in cartIds array and if so setting isInCart state as true, if its not we are returning empty promise
 
     },[cartIds]) //logic executes on render and on cartIds change
    
