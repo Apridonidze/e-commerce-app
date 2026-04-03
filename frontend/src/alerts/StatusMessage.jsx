@@ -9,7 +9,7 @@ const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
     const [targetIcon, setTargetIcon] = useState(); //state to store icon of status message given
 
     const icons = [
-        {type : "Success", statusCode : 200 , icon : <i className="fa-solid fa-check d-flex justify-content-center rounded-5 h-auto fs-6"></i>},
+        {type : "Success", statusCode : 200 , icon : <i class="fa-solid fa-circle-check fs-4"></i>},
         {type : "Info" , statusCode : 200, icon : <i class="fa-solid fa-exclamation fs-4"></i>},
         {type : "Warning" , statusCode : 200, icon : <i className='fa-solid fa-circle-exclamation fs-4'></i>},
         {type : "Failed" ,statusCode : 400 , icon : <i className="fa-solid fa-circle-exclamation fs-4" ></i>},
@@ -58,9 +58,9 @@ const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
     return(
         <div className="status-message-container w-auto" ref={statusRef}>
             
-            <div className="status-message">
-                <span>{targetIcon}</span>
-                <h6>{toggleAlert.message}</h6>
+            <div className="status-message d-flex align-items-center justify-content-start gap-3 h-auto ">
+                <span className='d-flex align-items-center h-auto'>{targetIcon}</span>
+                <h6 className='my-auto'>{toggleAlert.message}</h6>
             </div>
             
             <div className="progress-bar">

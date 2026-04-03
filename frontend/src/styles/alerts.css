@@ -1,104 +1,42 @@
 :root{
     --success-bg: #10b981;
-  --success-text: #ffffff;
-  --success-bar: #0f9f75;
+    --success-text: #ffffff;
+    --success-bar: #0f9f75;
 
-  /* Error */
-  --error-bg: #ef4444;
-  --error-text: #ffffff;
-  --error-bar: #dc2626;
+    --error-bg: #ef4444;
+    --error-text: #ffffff;
+    --error-bar: #dc2626;
 
-  /* Info */
-  --info-bg: #3b82f6;
-  --info-text: #ffffff;
-  --info-bar: #2563eb;
+    --info-bg: #3b82f6;
+    --info-text: #ffffff;
+    --info-bar: #2563eb;
 
-  /* Warning */
-  --warning-bg: #f59e0b;
-  --warning-text: #1f2937; /* dark text works better than white here */
-  --warning-bar: #d97706;
+    --warning-bg: #f59e0b;
+    --warning-text: #1f2937;
+    --warning-bar: #d97706;
 }
 
 [data-theme = 'dark']{
     --success-bg: #059669;
-  --success-text: #ffffff;
-  --success-bar: #047857;
+    --success-text: #ffffff;
+    --success-bar: #047857;
 
-  /* Error */
-  --error-bg: #dc2626;
-  --error-text: #ffffff;
-  --error-bar: #b91c1c;
+    --error-bg: #dc2626;
+    --error-text: #ffffff;
+    --error-bar: #b91c1c;
 
-  /* Info */
-  --info-bg: #2563eb;
-  --info-text: #ffffff;
-  --info-bar: #1d4ed8;
+    --info-bg: #2563eb;
+    --info-text: #ffffff;
+    --info-bar: #1d4ed8;
 
-  /* Warning */
-  --warning-bg: #d97706;
-  --warning-text: #111827;
-  --warning-bar: #b45309;
+    --warning-bg: #d97706;
+    --warning-text: #111827;
+    --warning-bar: #b45309;
 }
-
-.status-message-container {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  background-color: inherit;
-}
-
-.status-message-container * {
-  background-color: transparent !important;
-}
-
-
-.progress-bar {
-  height: 4px;
-  width: 100%;
-  background: rgba(0,0,0,0.08);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-[data-theme="dark"] .progress-bar {
-  background: rgba(255,255,255,0.08);
-}
-
-/* per status */
-.progress-fill.success { background: var(--success-bar); }
-.progress-fill.error { background: var(--error-bar); }
-.progress-fill.info { background: var(--info-bar); }
-.progress-fill.warning { background: var(--warning-bar); }
-
-@keyframes shrink {
-  from { width: 100%; }
-  to { width: 0%; }
-}
-
-.status-message-container.Success {
-  background-color: var(--success-bg);
-  color: var(--success-text);
-}
-
-.status-message-container.Failed,
-.status-message-container.Internal_Error {
-  background-color: var(--error-bg);
-  color: var(--error-text);
-}
-
-.status-message-container.Info {
-  background-color: var(--info-bg);
-  color: var(--info-text);
-}
-
-.status-message-container.Warning {
-  background-color: var(--warning-bg);
-  color: var(--warning-text);
-}
-
 
 .status-message-container{
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 20px;
     text-align: start;
@@ -111,25 +49,65 @@
     padding: 10px 20px;
     border-radius: 5px;
     font-size: 12px;
+    background-color: inherit;
 }
 
-.status-message-container.Success {
+.status-message-container * {
+  background-color: transparent;
+}
+
+.status-message-container.Success , .status-message-container.Success *{
   background-color: var(--success-bg);
   color: var(--success-text);
 }
 
-.status-message-container.Failed,
-.status-message-container.Internal_Error {
-  background-color: var(--error-bg);
-  color: var(--error-text);
-}
-
-.status-message-container.Info {
+.status-message-container.Info , .status-message-container.Info *{
   background-color: var(--info-bg);
   color: var(--info-text);
 }
 
-.status-message-container.Warning {
+.status-message-container.Warning, .status-message-container.Warning * {
   background-color: var(--warning-bg);
   color: var(--warning-text);
+}
+
+.status-message-container.Failed , .status-message-container.Failed * {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+}
+
+.progress-bar {
+  height: 4px;
+  width: 100%;
+  background: rgba(0,0,0,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 100%;
+  animation: shrink linear forwards;
+}
+
+.status-message-container.Success .progress-fill {
+  background: var(--success-bar);
+}
+
+.status-message-container.Failed .progress-fill,
+.status-message-container.Internal_Error .progress-fill {
+  background: var(--error-bar);
+}
+
+.status-message-container.Info .progress-fill {
+  background: var(--info-bar);
+}
+
+.status-message-container.Warning .progress-fill {
+  background: var(--warning-bar);
+}
+
+@keyframes shrink {
+  from { width: 100%; }
+  to { width: 0%; }
 }
