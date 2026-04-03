@@ -69,6 +69,7 @@
 .progress-fill.error { background: var(--error-bar); }
 .progress-fill.info { background: var(--info-bar); }
 .progress-fill.warning { background: var(--warning-bar); }
+
 @keyframes shrink {
   from { width: 100%; }
   to { width: 0%; }

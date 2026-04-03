@@ -1,52 +1,59 @@
-import { useEffect, useRef, useState } from "react";
-
-import '../styles/alerts.css'
+import '../styles/alerts.css'; //importing css file
+import { useEffect, useRef, useState } from "react"; //importing react hooks
 
 const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
 
-    const statusRef = useRef(null);
-    const [targetIcon, setTargetIcon] = useState()
-    const [second, setSecond] = useState(3);
+    const statusRef = useRef(null); //ref for component to style it based on status code recieved from parent component
+
+    const [second, setSecond] = useState(3); //countdown till component unmounts
+    const [targetIcon, setTargetIcon] = useState(); //state to store icon of status message given
+
     const icons = [
-        {type : "Success", statusCode : 200 , icon : <i className="fa-solid fa-check d-flex justify-content-center rounded-5 h-auto fs-6" style={{border : '3px solid #10b981', color : '#10b981', padding : '5px 13px' }}></i>},
+        {type : "Success", statusCode : 200 , icon : <i className="fa-solid fa-check d-flex justify-content-center rounded-5 h-auto fs-6"></i>},
         {type : "Info" , statusCode : 200, icon : <i class="fa-solid fa-exclamation fs-4"></i>},
         {type : "Warning" , statusCode : 200, icon : <i className='fa-solid fa-circle-exclamation fs-4'></i>},
-        {type : "Failed" ,statusCode : 400 , icon : <i className="fa-solid fa-circle-exclamation fs-4" style={{ color : '#ba1a1a'}}></i>},
-        {type : "Internal_Error" , statusCode : 500 , icon : <i className='fa-solid fa-circle-exclamation fs-4' style={{ color : '#ba1a1a'}}></i>},
-    ]
+        {type : "Failed" ,statusCode : 400 , icon : <i className="fa-solid fa-circle-exclamation fs-4" ></i>},
+        {type : "Internal_Error" , statusCode : 500 , icon : <i className='fa-solid fa-circle-exclamation fs-4'></i>},
+    ]; //default status messages
 
     useEffect(() => {
 
-        if(statusRef && statusRef.current){
+        if(!statusRef && !statusRef.current) return; //returning empty promise if statusRef is undefined or null\
 
-            for(let i = 0 ; i < icons.length ; i ++){
-                if (icons[i].type === toggleAlert.type) {
-                    setTargetIcon(icons[i].icon);
-                    statusRef.current.classList.add(icons[i].type)
-                    break; 
-                };
+        for(let i = 0 ; i < icons.length ; i ++){ //looping status message array
+
+            if (icons[i].type === toggleAlert.type) { //checking what status code is given at the index
+                    
+                setTargetIcon(icons[i].icon); //setting icon in state
+                statusRef.current.classList.add(icons[i].type); //adding status stypes as classlist to statusRef container
+                break;  //stopping function after we succesfully find correct icon.
+                
             };
-        }
+        };
 
-    },[statusRef, toggleAlert])
+    },[statusRef, toggleAlert]); //tirggers once a statusRef and toggleAlert dependencies change
 
     useEffect(() => {
-        if (second <= 0) return;
 
-        const timer = setTimeout(() => {
+        if (second <= 0) return; //returning empty promise if seconds are less or equal to 0
+
+        const timer = setTimeout(() => { //defining timer to make count down
            
             setSecond((prev) => {
-                if (prev <= 1) {
-                    setToggleAlert({status : false , type: '', statusCode : null, message : ''});
-                    return 0;
-                }
-                return prev - 1;
+
+                if (prev <= 1) {//checking if seconds previous number is one
+                    setToggleAlert({status : false , type: '', statusCode : null, message : ''}); //untoggling component
+                    return 0; //setting state to zero
+                };
+                return prev - 1; //executing prev -1 logic if seconds are not less than 1
+
             });
-        }, 1000);
 
-        return () => clearTimeout(timer);
-    }, [second]);
+        }, 1000); //executing function in every 1 second 
 
+        return () => clearTimeout(timer); //cleanup function
+
+    }, [second]); //triggering function on seconds change
     
     return(
         <div className="status-message-container w-auto" ref={statusRef}>
@@ -61,7 +68,7 @@ const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
             </div>
 
         </div>
-    )
-}
+    );
+};
 
-export default StatusMessage;
+export default StatusMessage; //exporting component
