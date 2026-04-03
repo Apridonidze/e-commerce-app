@@ -1,6 +1,6 @@
 import '../styles/index.css'; //importing css file
 
-const NoProduct = ({ fetchProducts, setCategory, setDropDownIndex }) => {
+const NoProduct = ({ setCategory, setDropDownIndex }) => {
     return(
         <div className="no-product-container mx-auto mt-5 ">
             
@@ -14,7 +14,7 @@ const NoProduct = ({ fetchProducts, setCategory, setDropDownIndex }) => {
             </div>
 
             <div className="row mx-auto">
-                <button className="btn border-0 fw-medium w-50 mx-auto py-2" style={{backgroundColor : '#10b981' , color : 'white'}} onClick={() => {setCategory(null);setDropDownIndex({id : null , category : null}) ; fetchProducts(0,null)}}>Clear All Filters</button>
+                <button className="btn border-0 fw-medium w-50 mx-auto py-2" style={{backgroundColor : '#10b981' , color : 'white'}} onClick={() => {setCategory(null);setDropDownIndex({id : null , category : null})}}>Clear All Filters</button>
             </div>
         </div>
     );

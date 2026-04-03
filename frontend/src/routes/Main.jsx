@@ -1,7 +1,7 @@
 import axios from "axios"; //importing axios
 import { BACKEND_URL } from "../../config";  //importing backend url from env file
 
-import { useEffect, useState, useContext, useRef } from "react"; //importing react hooks
+import { useEffect, useState, useContext } from "react"; //importing react hooks
 
 import { UserContext } from "../context/UserContext"; //importing user context
 import { ProductContext } from "../context/ProductContext"; //importing products from context (to avoid api calls everytime user visits this route)
@@ -87,11 +87,11 @@ const Main = () => {
                 <div className="main-end overflow-hidden">
 
                     <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
-                    <Category setCategory={setCategory} category={category} fetchProducts={fetchProducts} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
+                    <Category setCategory={setCategory} category={category} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
 
                     <div className="products-container" style={{minHeight : '80vh'}}>
                         {!isLoading ? 
-                            products?.length < 1 ? <NoProduct fetchProducts={fetchProducts} setCategory={setCategory} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
+                            products?.length < 1 ? <NoProduct  setCategory={setCategory} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
                             : <div className="products">
                                 {products?.map((prod,_) => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>)}
                             </div> 

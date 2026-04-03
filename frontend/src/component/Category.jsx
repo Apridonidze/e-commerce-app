@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";; //importing hooks
 
 import '../styles/layout.css'; //importing css file
 
-const Category = ({ setCategory, setDropDownIndex, category, fetchProducts,offset, dropDownIndex }) => {
+const Category = ({ setCategory, setDropDownIndex, category,offset, dropDownIndex }) => {
 
     const categories = [
         {
