@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import '../styles/layout.css'
+import '../styles/alerts.css'
 
 const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
 
@@ -50,9 +50,16 @@ const StatusMessage = ({ setToggleAlert, toggleAlert }) => {
     
     return(
         <div className="status-message-container w-auto" ref={statusRef}>
-            <span>{targetIcon}</span>
-            <h6>{toggleAlert.message}</h6>
-            <span>{second}</span>
+            
+            <div className="status-message">
+                <span>{targetIcon}</span>
+                <h6>{toggleAlert.message}</h6>
+            </div>
+            
+            <div className="progress-bar">
+                <div className="progress-fill" style={{ animationDuration: "3s" }} />
+            </div>
+
         </div>
     )
 }
