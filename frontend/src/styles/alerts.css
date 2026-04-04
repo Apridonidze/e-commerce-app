@@ -1,38 +1,37 @@
+
+/* defining component colors for type of status messages statuses */
+
 :root{
-    --success-bg: #10b981;
-    --success-text: #ffffff;
-    --success-bar: #0f9f75;
-
-    --error-bg: #ef4444;
-    --error-text: #ffffff;
-    --error-bar: #dc2626;
-
-    --info-bg: #3b82f6;
-    --info-text: #ffffff;
-    --info-bar: #2563eb;
-
-    --warning-bg: #f59e0b;
-    --warning-text: #1f2937;
-    --warning-bar: #d97706;
+  --success-bg: #10b981;
+  --success-text: #ffffff;
+  --success-bar: #0f9f75;
+  --error-bg: #ef4444;
+  --error-text: #ffffff;
+  --error-bar: #dc2626;
+  --info-bg: #3b82f6;
+  --info-text: #ffffff;
+  --info-bar: #2563eb;
+  --warning-bg: #f59e0b;
+  --warning-text: #1f2937;
+  --warning-bar: #d97706;
 }
 
 [data-theme = 'dark']{
-    --success-bg: #059669;
-    --success-text: #ffffff;
-    --success-bar: #047857;
-
-    --error-bg: #dc2626;
-    --error-text: #ffffff;
-    --error-bar: #b91c1c;
-
-    --info-bg: #2563eb;
-    --info-text: #ffffff;
-    --info-bar: #1d4ed8;
-
-    --warning-bg: #d97706;
-    --warning-text: #111827;
-    --warning-bar: #b45309;
+  --success-bg: #059669;
+  --success-text: #ffffff;
+  --success-bar: #047857;
+  --error-bg: #dc2626;
+  --error-text: #ffffff;
+  --error-bar: #b91c1c;
+  --info-bg: #2563eb;
+  --info-text: #ffffff;
+  --info-bar: #1d4ed8;
+  --warning-bg: #d97706;
+  --warning-text: #111827;
+  --warning-bar: #b45309;
 }
+
+/* styling component */
 
 .status-message-container{
     display: flex;
@@ -56,6 +55,16 @@
   background-color: transparent;
 }
 
+.progress-bar {
+  height: 4px;
+  width: 100%;
+  background: rgba(0,0,0,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* styling status messages based on classList */
+
 .status-message-container.Success , .status-message-container.Success *{
   background-color: var(--success-bg);
   color: var(--success-text);
@@ -76,19 +85,7 @@
     color: var(--error-text);
 }
 
-.progress-bar {
-  height: 4px;
-  width: 100%;
-  background: rgba(0,0,0,0.08);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  width: 100%;
-  animation: shrink linear forwards;
-}
+/* styling progress bar based on status message clasList */
 
 .status-message-container.Success .progress-fill {
   background: var(--success-bar);
@@ -106,6 +103,16 @@
 .status-message-container.Warning .progress-fill {
   background: var(--warning-bar);
 }
+
+/* attaching animation to progress bar */
+
+.progress-fill {
+  height: 100%;
+  width: 100%;
+  animation: shrink linear forwards;
+}
+
+/* definign animation parameters */
 
 @keyframes shrink {
   from { width: 100%; }

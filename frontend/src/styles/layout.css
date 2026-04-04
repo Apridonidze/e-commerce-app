@@ -1,25 +1,25 @@
 :root {
-      --bg-color: #f9f9ff;
-
+    --bg-color: #f9f9ff;
     --icon-bg : #f3f4f6 ; 
-    --text-color: #111c2d;
     --bg : white;
-    
-  --product-color : '#111c2d';
+    --text-color: #111c2d;
+    --product-bg-color : white;
+    --product-color : '#111c2d';
+    --border : 2px solid #f4f5fc;
+    --border-2 : 2px solid #00a571;
+    --component-bg : #f0f3ff;
 }
 
-[data-theme='dark']{
-      --bg-color: #020617;
-
+[data-theme='dark'] {
+    --bg-color: #020617;
     --icon-bg : #020617; 
-    --text-color: #94a3b8;
     --bg : #0f172a;
-
-   
-  --product-bg-color : #0f172a;
+    --text-color: #94a3b8;
+    --product-bg-color : #0f172a;
+    --product-color : '#ffffff';
+    --border : none;
+    --component-bg : #080f20;
 }
-
-
 
 
 .category-sidebar{
@@ -27,7 +27,9 @@
     margin-top: 10px;
     border-radius: 5px;
 }
-
+.category-sidebar .toggleDropDown ,.category-sidebar .allCat {
+    background-color: var(--bg-color) ;
+}
 .header-container , .header-container div{
     background-color: var(--product-bg-color);
 }
