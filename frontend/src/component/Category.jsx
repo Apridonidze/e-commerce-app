@@ -123,14 +123,14 @@ const Category = ({ setCategory, setDropDownIndex, category,offset, dropDownInde
     }, []); //calling function on mount to avoid undefined refs errors 
 
     return(
-        <div className="category-sidebar d-flex align-items-start gap-2 position-relative" style={{maxWidth : '1648px'}}>  
+        <div className="category-sidebar d-flex align-items-start gap-2 position-relative pt-2 " style={{maxWidth : '1645px', maxHeight : '60px'}}>  
 
-            <span className="button-div position-absolute start-0 translate-middle-y" style={{top : '35%'}}>
-                <button onClick={scrollLeft} ref={leftRef} className="btn2 btn rounded-5"><i className="fa-solid fa-angle-left"></i></button>
+            <span className="button-div position-absolute start-0 translate-middle-y ms-1" style={{top : '55%' , zIndex: 999}} onClick={scrollLeft}>
+                <button ref={leftRef} className="btn2 btn rounded-5"><i className="fa-solid fa-angle-left"></i></button>
             </span>
 
-            <span className="button-div position-absolute end-0 translate-middle-y" style={{top : '35%'}}>
-                <button onClick={scrollRight} ref={rightRef} className="btn1 btn rounded-5"><i className="fa-solid fa-angle-right"></i></button>
+            <span className="button-div position-absolute end-0 translate-middle-y me-1" style={{top : '55%', zIndex: 999}} onClick={scrollRight}>
+                <button ref={rightRef} className="btn1 btn rounded-5"><i className="fa-solid fa-angle-right"></i></button>
             </span>          
             
             <ul className="list-unstyled d-flex flex-nowrap gap-2 align-items-center ms-2" onScroll={handleScroll} ref={listRef}>

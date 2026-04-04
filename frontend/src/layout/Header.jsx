@@ -49,7 +49,7 @@ const Header = ({ setProducts, setToggleAlert }) => {
     },[searchItem]); //logic executes on searchItem dependency change
 
     return(
-        <header className="header-container d-flex justify-content-between align-items-center py-3 px-2" >
+        <header className="header-container d-flex justify-content-between align-items-center px-2 py-3 rounded-3" >
 
             <div className="header-start">
                 <div className="headerSearchInput input-group">

@@ -65,7 +65,7 @@ const Main = () => {
         setProducts(prevProducts); //setting context provided products in products state
         fetchProducts(offset,category); //declearing funnction and passing offset, category arguments
 
-        return () => fetchProducts(); //cleanup function to run function once on unmount
+        fetchProducts(); //declearing function
 
     },[category, offset]); //logic executes on first mount and after dependencies change
 
@@ -84,11 +84,13 @@ const Main = () => {
                 <div className="main-start">
                     <Sidebar /> 
                 </div>
-                <div className="main-end overflow-hidden">
+                <div className="main-end">
 
-                    <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
-                    <Category setCategory={setCategory} category={category} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
-
+                    <div className="main-header">
+                        <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
+                        <Category setCategory={setCategory} category={category} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
+                    </div>
+                    
                     <div className="products-container" style={{minHeight : '80vh'}}>
                         {!isLoading ? 
                             products?.length < 1 ? <NoProduct  setCategory={setCategory} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>

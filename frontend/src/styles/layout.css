@@ -1,16 +1,35 @@
 :root {
+      --bg-color: #f9f9ff;
+
     --icon-bg : #f3f4f6 ; 
     --text-color: #111c2d;
     --bg : white;
     
+  --product-color : '#111c2d';
 }
 
 [data-theme='dark']{
+      --bg-color: #020617;
+
     --icon-bg : #020617; 
     --text-color: #94a3b8;
     --bg : #0f172a;
 
    
+  --product-bg-color : #0f172a;
+}
+
+
+
+
+.category-sidebar{
+    background-color: var(--bg);
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.header-container , .header-container div{
+    background-color: var(--product-bg-color);
 }
 
 .sidebar-container{
@@ -36,7 +55,6 @@
 .headerSearchInput{
     background-color:#f3f6fa ;
     border-radius: 10px;
-    
 }
 
 .alert-box {
@@ -74,7 +92,6 @@
 }
 
 .list-unstyled-background{
-    border: 1px solid red;
     position:fixed;
     width: 1000vw;
     height: 1000vw;
@@ -200,6 +217,18 @@
 .sidebar-container a.active-link i {
     color: #33d298;
 }
+
+.main-header{
+    background-color : var(--bg-color);
+    position: sticky;
+    top: 0px;
+    padding: 0.7rem 0rem;
+    margin-bottom: 0.5rem ;
+    z-index: 101;
+}
+
+
+
 
 @media (max-width: 925px) {
 

@@ -68,7 +68,7 @@
     min-height: 400px;
     border-radius: 5px;
     color: var(--text-color);
-    z-index: 1000;
+    z-index: 1001;
 }
 
 .add-to-cart-start{
