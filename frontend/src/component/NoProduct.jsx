@@ -1,4 +1,4 @@
-import '../styles/index.css'; //importing css file
+import '../styles/products.css'; //importing css file
 
 const NoProduct = ({ setCategory, setDropDownIndex }) => {
     return(

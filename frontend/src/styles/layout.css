@@ -1,3 +1,6 @@
+
+/* defining styling variables for dark/light themes */
+
 :root {
     --bg-color: #f9f9ff;
     --icon-bg : #f3f4f6 ; 
@@ -26,6 +29,7 @@
     background-color: var(--bg);
     margin-top: 10px;
     border-radius: 5px;
+    width: 100%;
 }
 .category-sidebar .toggleDropDown ,.category-sidebar .allCat {
     background-color: var(--bg-color) ;
@@ -33,6 +37,63 @@
 .header-container , .header-container div{
     background-color: var(--product-bg-color);
 }
+
+.main-header{
+    background-color : var(--bg-color);
+    position: sticky;
+    top: 0px;
+    padding: 0.7rem 0rem;
+    margin-bottom: 0.5rem ;
+    width: 100%;
+    z-index: 101;
+}
+
+.main-body{
+    display: flex;
+    width: 100%;
+    gap: 0.2rem;
+}
+
+.main-end{
+    margin: 0px 10px;
+    width: 100%;
+}
+
+.main-container{
+  display: flex;
+  justify-content: space-between;
+  min-height: 100vh;
+  border: 1px solid red;
+}
+
+.main-body{
+  display: flex;
+  width: 100%;
+  max-width: 100vw;
+  margin: auto;
+  border: 1px solid yellow;
+}
+
+@media (max-width: 1265px){
+  .main-end{
+    max-width: 100vw;
+    margin: auto;
+  }
+}
+
+@media (max-width : 925px){
+
+  .main-container{
+    gap: 0px;
+  }
+  .main-end{
+    max-width: 95vw;
+    margin: 0;
+  }
+
+}
+
+
 
 .sidebar-container{
     border-radius: 2%;
@@ -120,43 +181,7 @@
     border: var(--icon-bg);
 }
 
-.support-chat-main-container{
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-}
-
-.support-chat-container{
-    width: 100%;
-    display: flex;
-    flex-direction:column;
-    justify-content: space-between;
-    min-width: 400px;
-    max-width: 400px;
-    min-height: 350px;
-    max-height: 350px;
-    border-radius: 0.5rem;
-    border: 1px solid;
-}
-
-.support-chat-header{
-    border-bottom: 1px solid ;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-}
-
-.support-chat-main{
-    padding: 5px 10px;
-    height: 100%;
-}
-
-.support-chat-footer{
-    margin: 10px;
-}
-
+/* main-body */
 .icon {
   width: 53px;
   height: 53px;
@@ -220,14 +245,7 @@
     color: #33d298;
 }
 
-.main-header{
-    background-color : var(--bg-color);
-    position: sticky;
-    top: 0px;
-    padding: 0.7rem 0rem;
-    margin-bottom: 0.5rem ;
-    z-index: 101;
-}
+
 
 
 
@@ -251,14 +269,7 @@
         width: 100%;
     }
 
-    .support-chat-container{
-        width: 100%;
-        margin: 0rem 1rem;
-        min-width: 80vw;
-        max-width: 100vw;
-        min-height: 600px;
-        z-index: 10000;
-    }
+    
     
     .btn1{
         left: 85vw
@@ -297,11 +308,5 @@
         top: 1.5px;
         left: 76.3vw;
     }
-    .support-chat-footer input{
-        height: 50px;
-    }
-
-    .support-chat-footer {
-        margin: 0px;
-    }
+    
 }

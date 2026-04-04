@@ -22,6 +22,7 @@ import NoProduct from "../component/NoProduct";//importing notFound product comp
 import StatusMessage from "../alerts/StatusMessage"; //importing skeletons for loading and component to  dissplay messages (error, warning)
 import ProductSkeleton from "../skeletons/ProductSkeleton"; //importing loading skeleton for products
 
+import '../styles/layout.css'
 import '../styles/products.css';
 import '../styles/index.css'; //importing css files
 
@@ -70,7 +71,7 @@ const Main = () => {
     },[category, offset]); //logic executes on first mount and after dependencies change
 
     return(
-        <div className="main-container container-fluid d-flex flex-column" style={{maxWidth : '3000px'}}> 
+        <div className="main-container container-fluid d-flex flex-column justify-content-start" style={{maxWidth : '3000px'}}> 
 
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             
@@ -80,7 +81,7 @@ const Main = () => {
             
             {toggleAddToCart.status ? <div className="add-to-cart-wrapper" style={{top : `${window.scrollY}px`}}><div className="add-to-cart-background" style={{top : `${window.scrollY}px`}} onClick={() => setToggleAddToCart({status : false , product : null})}></div> <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart} setToggleAlert={setToggleAlert}/></div> : <></>}
 
-            <div className="main-body d-flex gap-2" >
+            <div className="main-body " >
                 <div className="main-start">
                     <Sidebar /> 
                 </div>
