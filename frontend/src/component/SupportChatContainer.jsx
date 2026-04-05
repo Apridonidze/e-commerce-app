@@ -8,7 +8,7 @@ const SupportChatContainer = ({ setToggleAlert }) =>{
     const [toggleChat, setToggleChat] = useState(false) ; //state to toggle SupportChat.jsx component
 
     return(
-        <div className="support-chat-main-container text-center align-items-center rounded-2" style={{cursor: 'pointer'}}>
+        <div className="support-chat-main-container text-center align-items-center rounded-5" style={{cursor: 'pointer'}}>
            
             {!toggleChat ? 
                 <div className="support-chat-toggle p-2 rounded-3"  onClick={() => setToggleChat(!toggleChat)} style={{backgroundColor : '#10b981'}} >

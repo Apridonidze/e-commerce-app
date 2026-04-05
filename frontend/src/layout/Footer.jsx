@@ -1,10 +1,21 @@
+import { Link } from "react-router-dom"
+
 const Footer = () => {
     return(
-        <footer>sakmdasmaklsdmlsakmdklsamd
-            asdadaskldmsakmdklsamdklsam 
-        </footer>
-    )
-    // add footer compoientn tha will display information about platform (implement it in all routes except 404.jsx)
-}
+        <footer className="footer-component mt-5 mb-2 d-flex">
 
-export default Footer
+            <div className="footer-row"><span className='fs-3 fw-bold' style={{color : "#10b981"}}>Shoptic</span></div>
+            <div className="footer-row">
+                <Link to={'/faq'}>FAQ</Link>
+                <Link to={'/legal'}>Terms & Policy</Link>
+                <Link to={'/report-platform'} >Report</Link>   
+            </div>
+            <div className="footer-row">
+                <span>© {new Date().getFullYear()} Shoptic. All rights reserved.</span>
+            </div>
+
+        </footer>
+    );
+};
+
+export default Footer;
