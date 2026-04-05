@@ -75,23 +75,26 @@
     gap: 5px;
 }
 
-.headerSearchInput{
-    padding: 3px 0px;
-    background-color:#f3f6fa ;
-    border-radius: 10px;
-    max-width: 20vw;
+.user{
+    background-color: var(--bg-color)!important;
+    padding:5px 10px ;
+    border-radius: 5px;
 }
 
 .header-container , .header-container div{
     background-color: var(--product-bg-color);
 }
 
-.headerSearchInput input:focus{
-    color: var(--text-color);
-    background-color: var(--product-bg-color);
+.header-start{
+    background-color: var(--bg-) !important;
 }
 
-/* styling Sidebar.jsx component */
+.header-start span , .header-start input , .header-start input:focus, .header-start input::placeholder {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: none;
+    height: 40px;
+}
 
 .sidebar-container a{
     text-decoration: none;
@@ -200,6 +203,7 @@
 
 .main-header{
     background-color : var(--bg-color);
+    border-bottom: var(--border);
     position: sticky;
     top: 0px;
     padding: 0.7rem 0rem;
@@ -215,6 +219,7 @@
 .main-end {
   flex: 1;
   min-width: 0;
+  margin-right: 1rem;
 }
 
 /* styling buttons for category */
@@ -253,10 +258,15 @@
 
   .main-container{
     gap: 0px;
+    margin: 0px;
+  }
+  .main-container{
+    margin: 0px;
+    padding: 0px;
   }
   .main-end{
     max-width: 95vw;
-    margin: 0;
+    margin: 0px;
   }
 
   .menu{
@@ -275,8 +285,6 @@
         max-width: 50vw;
         width: 100%;
     }
-
-    
     
     .btn1{
         left: 85vw

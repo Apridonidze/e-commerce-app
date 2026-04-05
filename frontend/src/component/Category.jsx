@@ -123,7 +123,7 @@ const Category = ({ setCategory, setDropDownIndex, category,offset, dropDownInde
     }, []); //calling function on mount to avoid undefined refs errors 
 
     return(
-        <div className="category-sidebar d-flex align-items-start gap-2 position-relative py-2 px-3" style={{maxHeight : '60px'}}>  
+        <div className="category-sidebar d-flex align-items-start gap-2 position-relative py-2 px-1" style={{maxHeight : '60px'}}>  
 
             <span className="button-div position-absolute start-0 translate-middle-y ms-1" style={{top : '55%' , zIndex: 999}} onClick={scrollLeft}>
                 <button ref={leftRef} className="btn2 btn rounded-5"><i className="fa-solid fa-angle-left"></i></button>
