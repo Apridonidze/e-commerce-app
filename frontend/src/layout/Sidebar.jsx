@@ -52,7 +52,7 @@ const location = useLocation()
     },[])
 
     return(
-        <div className="sidebar-main-container position-sticky top-0">
+        <div className="sidebar-main-container position-sticky" style={{top : '0.7rem'}}>
             <div className="sidebar-background" ref={backgroundRef} onClick={() => toggleSidebar(false)}></div>
             <div className="sidebar-container d-flex flex-column justify-content-between "  ref={containerRef} >
                 <div className="sidebar-top" style={{minHeight : "87px"}}>

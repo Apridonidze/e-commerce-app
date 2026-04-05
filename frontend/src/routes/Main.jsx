@@ -83,7 +83,7 @@ const Main = () => {
 
             <div className="main-body " >
 
-                <Sidebar /> 
+                <div className="main-start"><Sidebar /></div>
                 
                 <div className="main-end">
 

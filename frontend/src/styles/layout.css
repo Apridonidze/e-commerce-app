@@ -96,13 +96,9 @@
 .sidebar-container a{
     text-decoration: none;
     font-size: 16px;
-    padding: 10px 10px;
     margin-left: 5px;
     border-radius: 2%;
-}
-.sidebar-container a {
     color: var(--text-color);
-    text-decoration: none;
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
@@ -113,29 +109,22 @@
     color: var(--text-color);
 }
 
-.sidebar-container a.active-link {
+.sidebar-container a.active-link , .sidebar-container a.active-link  i {
     background: var(--icon-bg);
     color: #33d298;
 }
 
-.sidebar-container a.active-link i {
-    color: #33d298;
-}
-
 .sidebar-container{
-    border-radius: 2%;
-    margin-top: 10px;
-}
-
-.sidebar-container{
-    overflow-x: hidden;
+    overflow: hidden;
     padding: 5px 7px;
     position: relative;
     max-width: 235px;
     min-width: 235px;
     min-height: 855px;
     max-height: 97vh;
-    background-color: var(--bg)
+    background-color: var(--bg);
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
 .sidebar-container div{
