@@ -237,22 +237,6 @@
   color: var(--text-color);
 }
 
-/* styling load more button */
-
-.more , .more-button button{
-  border: var(--border);
-}
-
-.more {
-    border-radius: 25%;
-    padding: 0px;
-    background-color: none;
-}
-
-.more-button, .more, .more button:focus , .more button:active {
-  border: var(--border);
-}
-
 /* styling footer */
 
 .footer-component{

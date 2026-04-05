@@ -180,6 +180,24 @@
   background-color: var(--component-bg);
 }
 
+.more , .more-button button{
+  border: var(--border);
+}
+
+.more {
+  border-radius: 25%;
+  padding: 0px;
+  background-color: var(--bg-color) !important;
+}
+
+.more-button, .more, .more button:focus , .more button:active {
+  border: var(--border) !important;
+}
+
+.toggle-more{
+  background-color: var(--bg-color) !important;
+}
+
 /* handling tablet-sized devices */
 
 @media (max-width: 925px) {
