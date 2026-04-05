@@ -302,6 +302,12 @@
 
 
 
+.more {
+    border-radius: 25%;
+    padding: 0px;
+    background-color: none;
+}
+
 
 @media (max-width: 925px) {
 

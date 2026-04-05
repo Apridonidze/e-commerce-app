@@ -77,7 +77,7 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
                 }
 
                 <div className="product-top w-100 d-flex justify-content-center rounded-1 pt-2 " style={{minHeight : '200px'}} onClick={() => {navigator(`/product/${prod.products_id}`); window.location.reload()}}>
-                    {<img className="w-100 h-100 rounded-2 pb-2" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{ minWidth:'290px', maxWidth:'290px', maxHeight : '190px'}}/>}
+                    {<img className="w-100 h-100 pb-2" src={`data:image/svg+xml;base64,${JSON.parse(prod.images)[0]}`} style={{ minWidth:'90%', maxWidth:'290px', maxHeight : '190px', borderRadius : '10px'}}/>}
                 </div>
                     
                 <div className="product-main ">
