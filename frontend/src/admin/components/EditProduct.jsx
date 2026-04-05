@@ -125,7 +125,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
     const [selectedCat , setSelectedCat] = useState(toggleEdit.product.category);
     const [selectedSub, setSelectedSub] = useState(toggleEdit.product.subcategory);
     const [price ,setPrice] = useState(toggleEdit.product.price);
-    const [toggleSalesPrice, setToggleSalesPrice] = useState(toggleEdit.product.sales_price === null ? false : true);
+    const [toggleSalesPrice, setToggleSalesPrice] = useState(toggleEdit.product.sales_price == null ? false : true);
     const [salesPrice,setSalesPrice] = useState(toggleEdit.product.sales_price);
     const [amount, setAmount] = useState(JSON.stringify(toggleEdit.product.amount)); //setting products data in states by default
 
@@ -277,9 +277,10 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
     },[]); //disabling body scrolling when component is triggered
 
     return(
-        <div className="manage-product-container bg-white" style={{left : '40vw' }} tabIndex={9999}>
-            <div className="manage-products-top">
+        <div className="manage-product-container" style={{left : '40vw' }} tabIndex={9999}>
+            <div className="manage-products-top d-flex justify-content-between">
                 <h4>Edit Product</h4>
+                <button className="btn btn-none border-0" onClick={() => setToggleEdit({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
             </div>
 
             <div className="manage-products-main">
@@ -314,7 +315,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                     </div>
 
                     <div className="form-group">
-                        <input type="checkbox" id="salesCheckbox" onChange={() => setToggleSalesPrice(!toggleSalesPrice)}/>
+                        <input type="checkbox" id="salesCheckbox" checked={!toggleSalesPrice ? true : false} onChange={() => setToggleSalesPrice(!toggleSalesPrice)}/>
                         <label htmlFor="salesCheckbox">On Sale</label>
                     </div>
 
