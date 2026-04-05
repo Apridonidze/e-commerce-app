@@ -49,7 +49,7 @@ const Main = () => {
 
             setIsLoading(true)
 
-            const product = await axios.get(`${BACKEND_URL}/api/product`, { params : {offset, category} }); //fetching products from backend on offsets or category changes
+            const product = await axios.get(`${BACKEND_URL}/api/product`, { params : {offset : offset || 0, category : category || null} }); //fetching products from backend on offsets or category changes
             
             if(product.status === 204) {setProducts([]); setIsLoading(false) ;return} //handing 204 status code
             setProducts(product.data.products); setIsLoading(false) //storing products in state if status code is 200
@@ -65,8 +65,6 @@ const Main = () => {
 
         setProducts(prevProducts); //setting context provided products in products state
         fetchProducts(offset,category); //declearing funnction and passing offset, category arguments
-
-        fetchProducts(); //declearing function
 
     },[category, offset]); //logic executes on first mount and after dependencies change
 
@@ -88,7 +86,7 @@ const Main = () => {
                 <div className="main-end">
 
                     <div className="main-header">
-                        <Header setProducts={setProducts} setToggleAlert={setToggleAlert} />
+                        <Header setProducts={setProducts} setToggleAlert={setToggleAlert} fetchProducts={fetchProducts}/>
                         <Category setCategory={setCategory} category={category} offset={offset} setDropDownIndex={setDropDownIndex} dropDownIndex={dropDownIndex}/>
                     </div>
                     

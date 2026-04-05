@@ -11,7 +11,7 @@ import { useTheme, useToggle } from "../context/ThemeContext"; //importing conte
 
 import '../styles/layout.css'; //importing css file
 
-const Header = ({ setProducts, setToggleAlert }) => {
+const Header = ({ setProducts, setToggleAlert, fetchProducts }) => {
 
     const { user } = useContext(UserContext);
 
@@ -26,17 +26,16 @@ const Header = ({ setProducts, setToggleAlert }) => {
 
         if(searchItem.trim().length < 1 || searchItem.trim() === "" || searchItem === "" || 
         searchItem.trim() === undefined || searchItem.trim() === null || searchItem.length > 30 || 
-        regexContainsSpecial.test(searchItem))return; //validating search input and returning empty promise if input is invalid
+        regexContainsSpecial.test(searchItem)) return fetchProducts() ; //validating search input and returning empty promise if input is invalid
 
         try{
 
             const response = await axios.post(`${BACKEND_URL}/api/product/search-product` , {searchItem : searchItem , type : location?.pathname.split('/')[1]}); //calling api and passing parameters
-            console.log(response)
+ 
             if(response.status === 204)setProducts([]); //handing 204 status code
             if(response.status === 200)setProducts(response.data.products) ; //handling 200 status code 
 
         }catch(err){
-            console.log(err)
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
         };
     };
