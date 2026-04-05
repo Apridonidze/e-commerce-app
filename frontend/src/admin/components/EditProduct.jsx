@@ -113,6 +113,9 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
     };
 
     const getImageSrc = (img) => {//formatting images based on image type passed down to make images displayable
+
+        if(!img) return;
+
         if (typeof img === "string") { //checking if type of given imaage is string
             return `data:image/jpeg;base64,${img}`; //returning image in base64 format
         }
@@ -291,11 +294,11 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                     <div className="form-start">
 
                         <div className="target-image-container">
-                            <img src={getImageSrc(images[targetImage])} alt="taget-image" className="targetImage mb-2"/>
+                            {<img src={getImageSrc(images[targetImage])} alt="No Image " className="targetImage mb-2" onClick={() => {const newImages = images.filter((_, id) => id !== targetImage) ; setImages(newImages)}}/> }
                         </div>
 
                         <div className="images-container d-flex gap-1">
-                            {images.map((img, imgId) => {return <img src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} alt={img.name} key={imgId} onClick={() => {const newImages = images.filter((_, id) => id !== imgId) ; setImages(newImages)}}/>})}
+                            {images.map((img, imgId) => {return <img src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} alt={img.name} key={imgId} />})}
                         </div>
 
                         <div className="form-floating">

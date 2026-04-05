@@ -264,6 +264,7 @@
 
 .target-image-container{
   max-width: 480px;
+  min-height: 220px;
   padding: 10px;
   border-radius: 5px;
   background-color: var(--component-bg) !important;
@@ -284,11 +285,6 @@
   width: 100%;
 }
 
-/* .manage-product-container , .manage-product-container input , .manage-product-container input:focus, .manage-product-container input::placeholder , .manage-product-container select {
-  background-color: var(--product-bg-color) !important;
-  color: var(--text-color);
-  border: none;
-} */
 
 @keyframes productModalPopup {
   from {
