@@ -264,16 +264,25 @@ const EditProduct = ({ setToggleEdit, toggleEdit }) => {
         };
     }, [images]);//checking each images if they have string type , if not (then it should already be url) then preventing images from turning into urls to prevent errors
 
+    useEffect(() => {
+
+        document.body.style.overflow = 'hidden'
+        return () => document.body.style.overflow = ''
+
+    },[]); //disabling body scrolling when component is triggered
+
     return(
-        <div className="create-product-container position-fixed bg-white" style={{left : '40vw' }} tabIndex={9999}>
-            <div className="create-products-top">
+        <div className="manage-product-container position-fixed bg-white" style={{left : '40vw' }} tabIndex={9999}>
+            <div className="manage-products-top">
                 <h4>Edit Product</h4>
             </div>
-            <div className="create-products-main">
+
+            <div className="manage-products-main">
+
                 <form onSubmit={handleUploadProduct} enctype="multipart/form-data">
 
                     <div className="images-container">
-                        {images.map((img, imgId) => {return <img src={getImageSrc(img)} style={{maxWidth: '200px' , height : 'auto', cursor : 'pointer'}} alt={img.name} key={imgId} onClick={(e) => {const newImages = images.filter((_, id) => id !== imgId) ; setImages(newImages)}}/>})}
+                        {images.map((img, imgId) => {return <img src={getImageSrc(img)} style={{maxWidth: '200px' , height : 'auto', cursor : 'pointer'}} alt={img.name} key={imgId} onClick={() => {const newImages = images.filter((_, id) => id !== imgId) ; setImages(newImages)}}/>})}
                     </div>
 
                     <div className="form-floating">
@@ -333,7 +342,9 @@ const EditProduct = ({ setToggleEdit, toggleEdit }) => {
                     <input type="submit" value='Edit Product'/>
                     <button className="btn btn-danger" onClick={() => setToggleEdit({status : false , product : null})}>Cancel</button>
                 </form>
+
             </div>
+
         </div>
     );
 };

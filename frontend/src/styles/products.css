@@ -223,6 +223,19 @@
   background-color: var(--bg-color) !important;
 }
 
+
+/* styling product manageer components */
+
+.manage-product-background{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  left: 0px;
+  top: 0px;
+  background-color: black;
+  opacity: 50%;
+}
+
 /* handling tablet-sized devices */
 
 @media (max-width: 925px) {

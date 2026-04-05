@@ -207,13 +207,20 @@ const CreateProduct = () => {
         }
     }
 
+    useEffect(() => {
+    
+        document.body.style.overflow = 'hidden'
+        return () => document.body.style.overflow = ''
+    
+    },[]); //disabling body scrolling when component is triggered
+
     
     return(
-        <div className="create-product-container position-fixed bg-white" style={{left : '40vw' }} tabIndex={9999}>
-            <div className="create-products-top">
+        <div className="manage-product-container position-fixed bg-white" style={{left : '40vw' }} tabIndex={9999}>
+            <div className="manage-products-top">
                 <h4>Create New Product</h4>
             </div>
-            <div className="create-products-main">
+            <div className="manage-products-main">
                 <form onSubmit={handleUploadProduct} enctype="multipart/form-data">
 
                     <div className="images-container">
