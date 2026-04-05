@@ -1,5 +1,5 @@
 import { useCookies } from 'react-cookie'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, replace, useLocation, useNavigate } from 'react-router-dom'
 import { BACKEND_URL } from '../../config'
 
 import { useEffect , useState, useRef, useContext } from 'react'
@@ -10,6 +10,7 @@ import '../styles/layout.css'
 
 const Sidebar = () => {
 
+    const navigator = useNavigate()
     const [ cookies ] = useCookies(['token'])
     const [ messagesCount , setMessagesCount] = useState(0)
     const socketRef = useRef(null)
@@ -56,7 +57,7 @@ const location = useLocation()
             <div className="sidebar-background" ref={backgroundRef} onClick={() => toggleSidebar(false)}></div>
             <div className="sidebar-container d-flex flex-column justify-content-between "  ref={containerRef} >
                 <div className="sidebar-top" style={{minHeight : "87px"}}>
-                    <div className="icon-container d-flex align-items-center gap-3 p-2">
+                    <div className="icon-container d-flex align-items-center gap-3 p-2" onClick={() => navigator('/', {replace : true})} style={{cursor : 'pointer'}}>
                         <span className="icon"></span>
                         <span className='fs-3 fw-bold' style={{color : "#10b981"}}>Shoptic</span>
                     </div>
