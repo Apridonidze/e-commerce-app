@@ -344,7 +344,7 @@
         height: 100vh;
         background-color: black;
         opacity: 50%;
-        top: 0px;
+        top: -11px;
         left: 0px;
         z-index: 999;
     }

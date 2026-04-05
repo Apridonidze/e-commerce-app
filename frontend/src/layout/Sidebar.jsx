@@ -26,8 +26,8 @@ const location = useLocation()
     useEffect(() => {
         if(containerRef && containerRef.current && backgroundRef && backgroundRef.current){
         
-            if(toggle){containerRef.current.classList.add("active") ; backgroundRef.current.classList.add('active')}
-            if(!toggle){containerRef.current.classList.remove("active") ; backgroundRef.current.classList.remove('active')}
+            if(toggle){containerRef.current.classList.add("active") ; backgroundRef.current.classList.add('active'); document.documentElement.style.overflow = 'hidden'}
+            if(!toggle){containerRef.current.classList.remove("active") ; backgroundRef.current.classList.remove('active'); document.documentElement.style.overflow = 'visible'}
         }
     },[toggle,containerRef, backgroundRef])
 
