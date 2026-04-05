@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie"; //importing react libraries
 import { BACKEND_URL } from "../../../config"; //importing backend url from config file
 import { useRef, useState, useEffect } from "react"; //importing react states
 
-const EditProduct = ({ setToggleEdit, toggleEdit }) => {
+const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
 
     const categories = [
         {
@@ -249,11 +249,16 @@ const EditProduct = ({ setToggleEdit, toggleEdit }) => {
 
                 const response = await axios.put(`${BACKEND_URL}/api/product/${toggleEdit.product.products_id}`, formData ,{headers: {Authorization: `Bearer ${cookies.token}`,"Content-Type": "multipart/form-data"}});
                 
-
-                //handle repsonses 
+                if(response.status === 200) setToggleAlert({status: true, type: "Success", statusCode: response.status, message: "Product Edited Successfully."});
+                
+                setTimeout(() => {setToggleEdit({status : false, product: null})}, 3000)
 
             } catch (err) {
-                console.log(err);
+
+                if(err.status === 400) return setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+
+                return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+
             };
         };
     };
@@ -272,7 +277,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit }) => {
     },[]); //disabling body scrolling when component is triggered
 
     return(
-        <div className="manage-product-container position-fixed bg-white" style={{left : '40vw' }} tabIndex={9999}>
+        <div className="manage-product-container bg-white" style={{left : '40vw' }} tabIndex={9999}>
             <div className="manage-products-top">
                 <h4>Edit Product</h4>
             </div>

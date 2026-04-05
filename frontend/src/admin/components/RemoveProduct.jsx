@@ -6,7 +6,7 @@ import { useEffect } from "react"
 
 
 
-const RemoveProduct = ({ setToggleRemove, toggleRemove }) => {
+const RemoveProduct = ({ setToggleRemove, toggleRemove, setToggleAlert }) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -23,14 +23,16 @@ const RemoveProduct = ({ setToggleRemove, toggleRemove }) => {
         try{
 
             const response = await axios.delete(`${BACKEND_URL}/api/product/${toggleRemove.productId}`, {headers : {Authorization : `Bearer ${cookies.token}`}})
-            console.log(response)
-            if(response.status === 400){
-                // toggle error message
-            }
-            // toggle success message
-            navigator('/' , {replace : true})  
+            
+            if(response.status === 200) setToggleAlert({status: true, type: "Success", statusCode: response.status, message: "Product Deleted Successfully."});
+                
+            setTimeout(() => {setToggleEdit({status : false, product: null})}, 3000)
+
         }catch(err){
-            console.log(err)
+
+            if(err.status === 400) return setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+            return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+
         }
     }
 

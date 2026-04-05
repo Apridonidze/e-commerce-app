@@ -227,13 +227,41 @@
 /* styling product manageer components */
 
 .manage-product-background{
-  position: absolute;
-  width: 100vw;
+  position: fixed;
+  inset: 0;
   height: 100vh;
-  left: 0px;
-  top: 0px;
-  background-color: black;
-  opacity: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: backdropFade 0.25s ease forwards;
+  z-index: 1000;
+}
+
+.manage-product-container{
+  z-index: 1001 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-30%) translateY(30%); 
+  width: 50%;
+  max-width: 880px;
+  min-height: 400px;
+  border-radius: 5px;
+  color: var(--text-color);
+  animation: productModalPopup 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+@keyframes productModalPopup {
+  from {
+    opacity: 0;
+    transform: translateX(-30%) translateY(100%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-30%) translateY(30%) scale(1);
+  }
 }
 
 /* handling tablet-sized devices */
