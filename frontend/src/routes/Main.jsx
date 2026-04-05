@@ -71,7 +71,7 @@ const Main = () => {
     },[category, offset]); //logic executes on first mount and after dependencies change
 
     return(
-        <div className="main-container container-fluid d-flex flex-column justify-content-start" style={{maxWidth : '3000px'}}> 
+        <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}> 
 
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             
@@ -82,9 +82,9 @@ const Main = () => {
             {toggleAddToCart.status ? <div className="add-to-cart-wrapper" style={{top : `${window.scrollY}px`}}><div className="add-to-cart-background" style={{top : `${window.scrollY}px`}} onClick={() => setToggleAddToCart({status : false , product : null})}></div> <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart} setToggleAlert={setToggleAlert}/></div> : <></>}
 
             <div className="main-body " >
-                <div className="main-start">
-                    <Sidebar /> 
-                </div>
+
+                <Sidebar /> 
+                
                 <div className="main-end">
 
                     <div className="main-header">
