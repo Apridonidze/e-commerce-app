@@ -222,5 +222,8 @@
   .close-button{
     display: none;
   }
-  
+  .product-container{
+    margin: auto;
+    width: 100%;
+  }
 }

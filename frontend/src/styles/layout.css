@@ -255,12 +255,14 @@
 
 @media (max-width : 925px){
 
+
   .main-container{
     gap: 0px;
     margin: 0px;
   }
   .main-container{
     margin: 0px;
+    gap: 0px;
     padding: 0px;
   }
   .main-end{
@@ -307,7 +309,6 @@
         background-color: red;
         top: 0px;
         left: 0px;
-        z-index: 990;
     }
     .sidebar-background.active{
         display: flex;
@@ -316,6 +317,20 @@
 }
 
 @media (max-width : 598px){
+    .main-header{
+        margin: auto;
+
+    }
+    .main-end{
+        margin: auto;
+    }
+    .main-body{
+        gap: 0px;
+    }
+    .headerSearchInput {
+        max-width: 60vw;
+        width: 100%;
+    }
     .category-sidebar{
         padding: 0px 0px;
     }
