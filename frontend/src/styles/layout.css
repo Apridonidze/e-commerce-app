@@ -26,7 +26,6 @@
 
 /* styling icon for Header.jsx component */
 
-/* disabling burger icon for sidebar toggle on larger device sizes */
 
 .icon {
   width: 53px;
@@ -84,6 +83,7 @@
 .header-container , .header-container div{
     background-color: var(--product-bg-color);
 }
+
 .header-start{
     background-color: var(--bg-) !important;
 }
@@ -114,6 +114,14 @@
 .sidebar-container a.active-link , .sidebar-container a.active-link  i {
     background: var(--icon-bg);
     color: #33d298;
+}
+
+.main-header {
+    z-index: 50 !important;
+}
+
+.sidebar-main-container{
+    z-index: 999 !important; 
 }
 
 .sidebar-container{
@@ -266,6 +274,11 @@
     text-decoration: underline;
 }
 
+@keyframes shrink {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
 @media (max-width : 925px){
 
 
@@ -304,24 +317,36 @@
         left: 85vw
     }
 
-    .sidebar-container{
+    .sidebar-container {
         position: absolute;
-        left: 0px;
-        width: 80vw;
-        transform: translateX(-700px);
+        left: 0;
+        width: 100%;
+        max-width: 450px;
+        min-width: 250px;
+        margin: 0px;
+        top: -10px;
+        overflow-y: scroll;
+        height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 0.35s ease-in-out;
         z-index: 999;
+        will-change: transform;
     }
-    .sidebar-container.active{
-        transform: translateX(0px);
+
+    .sidebar-container.active {
+        transform: translateX(0);
     }
+
     .sidebar-background{
         display: none;
         position: absolute;
         width: 100vw;
         height: 100vh;
-        background-color: red;
+        background-color: black;
+        opacity: 50%;
         top: 0px;
         left: 0px;
+        z-index: 999;
     }
     .sidebar-background.active{
         display: flex;
