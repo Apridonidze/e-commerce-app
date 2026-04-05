@@ -17,6 +17,9 @@
 }
 
 
+.stock small{
+  color: black;
+}
 .products {
     width: 100%;
     max-width: 100%;

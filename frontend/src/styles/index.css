@@ -20,7 +20,7 @@
   --component-bg : #080f20;
 }
 
-/* styling body */
+/* styling elements based on theme mode */
 
 body {
   width: 100%;
@@ -39,65 +39,6 @@ ul, li {
   border-color: var(--text-color);
 }
 
-.more-button, .more, .more button:focus , .more button:active, .support-chat-container {
-  border: var(--border);
-}
-
-
-#message{
-  background-color: var(--product-bg-color) ;
-  color: var(--product-color);
-}
-
-.allCat , .allCat button{
-  color: var(--text-color);
-  background-color: var(--product-bg-color);
-}
-.headerSearchInput input:focus{
-    color: var(--text-color);
-    background-color: var(--product-bg-color);
-}
-.stock small{
-  color: black;
-}
-
-
 i , small, a, span , strong{
   color:  var(--text-color);
-}
-
-
-.more , .more-button button{
-  border: var(--border);
-}
-
-.button-div .btn:hover,
-.button-div .btn:active,
-.button-div .btn:focus {
-  background-color: var(--bg-color) ;
-  border: var(--border-2);
-  box-shadow: none ;
-}
-
-.button-div button{
-  border: 1px solid var(--text-color);
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
-
-
-.toggleDropDown {
-  border: none;
-  background-color: var(--product-bg-color) ;
-  color: var(--product-color);
-}
-.subcategory-list-unstyled li, .subcategory-list-unstyled {
-  border: none;
-  background-color: var(--product-bg-color);
-  color: var(--product-color);
-}
-
-.toggleDropDown:hover{
-  background-color: var(--component-bg);
-  color: var(--product-color);
 }

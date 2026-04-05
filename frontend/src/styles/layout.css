@@ -50,13 +50,16 @@
 
 .main-body{
     display: flex;
+    align-items: start;
+    justify-content: start;
     width: 100%;
     gap: 0.2rem;
 }
 
 .main-end{
-    margin: 0px 10px;
-    width: 100%;
+    padding: 0px 10px;
+    border: 1px solid blue;
+    width: auto;
 }
 
 .main-container{
@@ -69,10 +72,62 @@
 .main-body{
   display: flex;
   width: 100%;
+  justify-content:center;
   max-width: 100vw;
-  margin: auto;
   border: 1px solid yellow;
 }
+
+.allCat , .allCat button{
+  color: var(--text-color);
+  background-color: var(--product-bg-color);
+}
+
+.headerSearchInput input:focus{
+    color: var(--text-color);
+    background-color: var(--product-bg-color);
+}
+
+
+.toggleDropDown {
+  border: none;
+  background-color: var(--product-bg-color) ;
+  color: var(--product-color);
+}
+.subcategory-list-unstyled li, .subcategory-list-unstyled {
+  border: none;
+  background-color: var(--product-bg-color);
+  color: var(--product-color);
+}
+
+.toggleDropDown:hover{
+  background-color: var(--component-bg);
+  color: var(--product-color);
+}
+
+
+
+.more , .more-button button{
+  border: var(--border);
+}
+
+.button-div .btn:hover,
+.button-div .btn:active,
+.button-div .btn:focus {
+  background-color: var(--bg-color) ;
+  border: var(--border-2);
+  box-shadow: none ;
+}
+
+.button-div button{
+  border: 1px solid var(--text-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.more-button, .more, .more button:focus , .more button:active {
+  border: var(--border);
+}
+
 
 @media (max-width: 1265px){
   .main-end{
@@ -92,8 +147,6 @@
   }
 
 }
-
-
 
 .sidebar-container{
     border-radius: 2%;
