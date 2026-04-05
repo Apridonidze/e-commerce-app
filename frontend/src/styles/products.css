@@ -205,6 +205,7 @@
 }
 
 .more {
+  z-index: 99   !important;
   border-radius: 25%;
   padding: 0px;
   background-color: var(--bg-color) !important;
@@ -213,8 +214,12 @@
 .more-button, .more, .more button:focus , .more button:active {
   border: var(--border) !important;
 }
+.product-more-background {
+  z-index: 99 !important;
+}
 
 .toggle-more{
+  z-index: 1001 !important;
   background-color: var(--bg-color) !important;
 }
 
