@@ -96,7 +96,7 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
                             </div>
                             <div className="product-main-end d-flex flex-column text-end">
                                 <small className="fw-medium mb-1">Avalability</small>
-                                <span className="avalability rounded-5" style={{fontSize:'14px', padding : '2px 10px'}}>{prod.amount} Items Left</span>
+                                <span className="avalability rounded-5" style={{fontSize:'14px', padding : '2px 10px'}}>{prod.amount > 0 ? `${prod.amount} Items Left` : 'Out Of Stock'}</span>
                             </div>
                         </div>
 
@@ -106,7 +106,7 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
                     
                     {!user ? <></> : isInCart ? 
                         <button className="btn w-100 fw-bold" style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => handleDeleteFromCart(prod?.products_id)}><i class="fa-solid fa-cart-shopping text-white me-2"></i> In Cart</button> : 
-                        <button className="btn w-100 fw-bold" style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => setToggleAddToCart({status : true , product : prod})}><i class="fa-solid fa-cart-shopping text-white me-2"></i>Add To Cart</button>
+                        <button className="btn w-100 fw-bold" disabled={prod.amount == 0 ? true : false} style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => setToggleAddToCart({status : true , product : prod})}><i class="fa-solid fa-cart-shopping text-white me-2"></i>Add To Cart</button>
                     }
                 </div>
 

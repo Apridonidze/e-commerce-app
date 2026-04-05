@@ -315,7 +315,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                     </div>
 
                     <div className="form-group">
-                        <input type="checkbox" id="salesCheckbox" checked={!toggleSalesPrice ? true : false} onChange={() => setToggleSalesPrice(!toggleSalesPrice)}/>
+                        <input type="checkbox" id="salesCheckbox" checked={toggleSalesPrice ? true : false} onChange={() => setToggleSalesPrice(!toggleSalesPrice)}/>
                         <label htmlFor="salesCheckbox">On Sale</label>
                     </div>
 
