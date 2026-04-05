@@ -237,7 +237,7 @@
 }
 
 .manage-product-container{
-  background-color: var(--component-bg) !important;
+  background-color: var(--product-bg-color) !important;
   z-index: 1001 !important;
   display: flex;
   flex-direction: column;
@@ -253,6 +253,28 @@
   color: var(--text-color);
   animation: productModalPopup 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
+.manage-product-container div {
+  background-color: var(--product-bg-color);
+}
+.manage-product-main .form-container{
+  display: flex;
+  align-items: start;
+  gap: 10px;
+}
+
+.target-image-container{
+  max-width: 480px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--component-bg) !important;
+}
+
+.targetImage{
+  border-radius: 5px;
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+}
 
 .images-container img:hover {
   content: 'asdasd';
@@ -260,15 +282,13 @@
 
 .manage-product-container div{
   width: 100%;
-  background-color: var(--component-bg) !important;
 }
 
-.manage-product-container , .manage-product-container input , .manage-product-container input:focus, .manage-product-container input::placeholder , .manage-product-container select {
-  background-color: var(--bg-color);
+/* .manage-product-container , .manage-product-container input , .manage-product-container input:focus, .manage-product-container input::placeholder , .manage-product-container select {
+  background-color: var(--product-bg-color) !important;
   color: var(--text-color);
   border: none;
-}
-
+} */
 
 @keyframes productModalPopup {
   from {

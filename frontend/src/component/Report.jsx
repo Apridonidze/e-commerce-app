@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Report = ( { report, reportId ,key, setToggleDeleteReport, setToggleRespondReport } ) => {
+const Report = ( { report, reportId ,key, setToggleDeleteReport, setToggleRespondReport,setToggleAlert } ) => {
     return(
         <div className="report-container d-flex justify-content-between" key={reportId}>
             <div className="report-start">
