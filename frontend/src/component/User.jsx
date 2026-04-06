@@ -32,13 +32,20 @@ const User = () => {
 
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
 
-            <div className="user-container border border-2">
-                <span className='position-relative' style={{bottom: '15px'}}>Account</span>
+            <div className="user-container">
 
-                <h1>{user?.fullname} {user !== null && user.role === 'admin' ? `Admin` : <></>}</h1>
-                <h1>{user?.email}</h1>
-                <h1>{[user?.country_code , ' ' , user?.phone]}</h1>
-                <button className='btn btn-danger' onClick={() => {handleLogout()}}>Logout</button>
+                <div className="user-container-top">
+                    
+
+                </div>
+
+                <div className="user-container-bottom">
+                    <h1>{user?.fullname} {user !== null && user.role === 'admin' ? `Admin` : <></>}</h1>
+                    <h1>{user?.email}</h1>
+                    <h1>{[user?.country_code , ' ' , user?.phone]}</h1>
+                    <button className='btn btn-danger' onClick={() => {handleLogout()}}>Logout</button>
+                </div>
+
             </div>
 
         </section>

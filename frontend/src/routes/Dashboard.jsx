@@ -21,6 +21,8 @@ import { useCookies } from "react-cookie"; //importing react libraries
 import { UserContext } from "../context/UserContext"; //importing  user context
 import { BACKEND_URL, STRIPE_PUBLIC_KEY } from '../../config'; //importing keys from config.jsx file
 
+import '../styles/dashboard.css'; //importing css file
+
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY); //creating stripe promise
 
 
@@ -87,11 +89,12 @@ const Dashboard = () => {
                 <div className="main-end">
 
                     <div className="main-header mb-3"><Header /></div>
-                    <User />
                     
+                    <User />
                     <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId}/>
 
                     {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
+
                     {toggleOrder && cardDetails?.last4 ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div>  : <></>}
 
                     <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 const Footer = () => {
     return(
-        <footer className="footer-component mt-5 mb-2 pt-2 d-flex flex-column w-100 justify-content-space-between">
+        <footer className="footer-component mt-5 pt-5 d-flex flex-column w-100 justify-content-space-between">
 
             <div className="footer-row1 w-100 justify-content-evenly align-items-start">
                 <div className="footer-row">
