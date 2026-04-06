@@ -242,7 +242,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
+  position: fixed;
   left: 50%;
   transform: translateX(-30%) translateY(15%); 
   width: 70%;
@@ -250,11 +250,14 @@
   height: auto;
   border-radius: 5px;
   padding: 20px;
+  margin: auto;
   color: var(--text-color);
   animation: productModalPopup 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .manage-product-container div {
   background-color: var(--product-bg-color);
+  width: 100%;
+  margin: auto;
 }
 .manage-product-main .form-container{
   display: flex;
@@ -266,6 +269,7 @@
   max-width: 480px;
   padding: 10px;
   min-height: 250px;
+  max-height: 250px;
   display: flex;
   border-radius: 5px;
   background-color: var(--component-bg) !important;
@@ -329,7 +333,7 @@
 }
 
 .form-row input{
-  width: auto;
+  width: 100%;
   color: var(--text-color);
   background-color: var(--component-bg);
   border: var(--border);
@@ -361,6 +365,23 @@
   align-items: center;
 }
 
+.form-buttons{
+  display: flex;
+  align-items: center ;
+  gap: 10px;
+  font-size: 20px !important;
+  font-weight:900;
+  margin: 10px 0px !important;
+}
+.form-buttons input{
+  height: 45px;
+  width: 60%;
+}
+.form-buttons button{
+  height: 45px;
+  width: 40%;
+}
+
 @keyframes productModalPopup {
   from {
     opacity: 0;
@@ -375,6 +396,10 @@
 /* handling tablet-sized devices */
 
 @media (max-width: 925px) {
+  .manage-product-container{
+    overflow-y: scroll;
+    height: 80%;
+  }
   .form-container{
     display: flex;
     flex-direction: column;
@@ -400,7 +425,8 @@
   }
 
   .manage-product-container {
-    transform: translateX(-40%) translateY(15%); 
+    animation: smallProductModalPopup 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform: translateX(-40%) translateY(25%) !important; 
     width: 95%;
   }
 
@@ -415,10 +441,10 @@
     }
 }
 
-@keyframes productModalPopup {
+@keyframes smallProductModalPopup {
   from {
     opacity: 0;
-    transform: translateX(-40%) translateY(100%) scale(0.96);
+    transform: translateX(-40%) translateY(20%) scale(0.96);
   }
   to {
     opacity: 1;

@@ -164,6 +164,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
 
         // validating images field
         if(images.length === 0){isValid = false ; setImageErr(`No Image Provided.`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
+        else if (images.length > 5){isValid = false ; setImageErr(`Image Limit Reached (max 6).`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
         else {isValid = true; setImageErr('') ;imageRef.current.classList.add('is-valid') ;imageRef.current.classList.remove('is-invalid')};
 
         // validating input field
@@ -304,7 +305,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                             {images.map((img, imgId) => {return <img className="rounded-2" src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} onClick={() => setTargetImage(imgId)} alt={img.name} key={imgId} />})}
                         <div className="form-floating">
                         
-                        <button type="button" className="upload-btn" onClick={() => imageRef.current.click()}><i class="fa-regular fa-image fw-medium"></i> <br /> Add Images</button>
+                        {images?.length > 5 ? <></> : <button type="button" className="upload-btn" onClick={() => imageRef.current.click()}><i class="fa-regular fa-image fw-medium"></i> <br /> Add Images</button>}
                         
                         <input type="file" ref={imageRef} hidden multiple accept="image/*" onChange={(e) => {const files = Array.from(e.target.files);setImages(prev => [...prev, ...files]);e.target.value = null;}}/>
 
@@ -378,7 +379,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                             <span>{amountErr}</span>
                         </div>
                         
-                        <div className="form-line">
+                        <div className="form-buttons">
                             <input type="submit" disabled={images.length == 0 ? true : false} className="btn border-0 fw-medium" value='Save Changes' style={{backgroundColor : '#10b981', color : "white"}}/>
                             <button className="btn btn-danger " onClick={() => setToggleEdit({status : false , product : null})}>Cancel</button>
                         </div>
