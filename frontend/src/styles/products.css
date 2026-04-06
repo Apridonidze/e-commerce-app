@@ -264,7 +264,6 @@
 
 .target-image-container{
   max-width: 480px;
-  min-height: 220px;
   padding: 10px;
   border-radius: 5px;
   background-color: var(--component-bg) !important;
@@ -277,14 +276,15 @@
   height: auto;
 }
 
-.images-container img:hover {
-  content: 'asdasd';
-}
-
 .manage-product-container div{
   width: 100%;
 }
 
+.toggleDeleteImg{
+  cursor: pointer;
+  color: white;
+  position: fixed;
+}
 
 @keyframes productModalPopup {
   from {

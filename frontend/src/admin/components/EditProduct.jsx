@@ -123,6 +123,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
     };
 
     const [targetImage, setTargetImage] = useState(0)
+    const [toggleDeleteImg,setToggleDeleteImg] = useState(false);
     const [images,setImages] = useState(imagesArray);
     const [name , setName] = useState(toggleEdit.product.title);
     const [description , setDescription] = useState(toggleEdit.product.description);
@@ -293,12 +294,13 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
 
                     <div className="form-start">
 
-                        <div className="target-image-container">
-                            {<img src={getImageSrc(images[targetImage])} alt="No Image " className="targetImage mb-2" onClick={() => {const newImages = images.filter((_, id) => id !== targetImage) ; setImages(newImages)}}/> }
+                        <div className="target-image-container" onMouseEnter={() => setToggleDeleteImg(true)} onMouseLeave={() => setToggleDeleteImg(false)}>
+                            <span className="toggleDeleteImg  bg-danger p-2 rounded-3 m-1 " onClick={() => {const newImages = images.filter((_, id) => id !== targetImage) ; setImages(newImages); setTargetImage(0)}}><i class="fa-solid fa-trash text-white fs-6"></i></span> 
+                            <img src={getImageSrc(images[targetImage])} alt="No Images" className="targetImage mb-2" /> 
                         </div>
 
                         <div className="images-container d-flex gap-1">
-                            {images.map((img, imgId) => {return <img src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} alt={img.name} key={imgId} />})}
+                            {images.map((img, imgId) => {return <img src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} onClick={() => setTargetImage(imgId)} alt={img.name} key={imgId} />})}
                         </div>
 
                         <div className="form-floating">
