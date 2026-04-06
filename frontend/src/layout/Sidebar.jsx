@@ -93,7 +93,7 @@ const location = useLocation()
                             </div> : <></>
                         }
                     </div>
-                    <div className="center-auth col-12 h-auto">
+                    <div className="center-auth col-12 h-auto my-5">
                         {!cookies.token ? <div className="text d-flex flex-column">
                             <span className='p-2 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>SIGNUP / LOGIN</span>
                             <NavLink to='/login' className={({ isActive }) => isActive ? "active-link" : ""}>Login</NavLink>
