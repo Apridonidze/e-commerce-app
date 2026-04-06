@@ -65,7 +65,7 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
                             {user?.role == 'admin' ? 
                                 <>
                                     <button className="btn text-primary d-flex align-items-center py-2 w-100 rounded-0" onClick={() => setToggleEdit({status : true , product : prod})}><i class="fa-regular fa-pen-to-square text-primary"></i> Edit</button>
-                                    <button className="btn text-danger d-flex align-items-center py-2 w-100" onClick={() => setToggleRemove({status : true , productId : prod?.products_id})}><i class="fa-regular fa-trash-can text-danger"></i> Remove</button>
+                                    <button className="btn text-danger d-flex align-items-center py-2 w-100" onClick={() => setToggleRemove({status : true , product : prod})}><i class="fa-regular fa-trash-can text-danger"></i> Remove</button>
                                 </>
                             :
                                 <>
