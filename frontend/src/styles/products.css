@@ -322,6 +322,44 @@
   color: white;
   position: fixed;
 }
+.form-line{
+  display: flex;
+  gap: 10px;
+  margin: 5px 0px;
+}
+
+.form-row input{
+  width: auto;
+  color: var(--text-color);
+  background-color: var(--component-bg);
+  border: var(--border);
+}
+
+.form-row textarea, .form-row textarea:focus{
+  resize: none;
+  color: var(--text-color);
+  background-color: var(--component-bg);
+  border: var(--border);
+}
+.form-check-input:checked {
+    background-color: #10b981 !important;
+    border-color: #10b981 !important;
+}
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.25) !important;
+}
+.form-row input:focus, .form-row input:active, .form-row select, .form-row input:disabled , .form-row input::placeholder{
+  color: var(--text-color);
+  background-color: var(--component-bg);
+  border: var(--border);
+}
+.form-row span{
+  color: #dc3545;
+}
+.form-line{
+  display: flex;
+  align-items: center;
+}
 
 @keyframes productModalPopup {
   from {

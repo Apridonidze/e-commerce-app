@@ -314,55 +314,74 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                     </div>
 
                     <div className="form-end">
+                        
+                        <div className="form-row">
                             <label htmlFor="title">Product Name</label>
                             <input className="form-control" type="text" id="title" placeholder="Product Name" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name}/>
                             <span>{nameErr}</span>
+                        </div>
 
-                        <div className="form-floating">
-                            <input className="form-control" type="text" id="title" placeholder="Product Description" ref={descRef} onChange={(e) => setDescription(e.target.value)} value={description}/>
+                        <div className="form-row">
                             <label htmlFor="title">Product Description</label>
+                            <textarea className="form-control" type="text" id="title" style={{height : '10rem'}} placeholder="Product Description" ref={descRef} onChange={(e) => setDescription(e.target.value)} value={description}/>
                             <span>{descErr}</span>
                         </div>
 
-                        <div className="form-floating">
-                            <input className="form-control" id="priceId" placeholder="Product Price (In GEL)" ref={priceRef} onChange={(e) => setPrice(e.target.value)} value={price}/>
-                            <label htmlFor="priceId">Product Price (In GEL)</label>
-                            <span>{priceErr}</span>
-                        </div>
+                        <div className="form-line">
 
-                        <div className="form-check form-switch"style={{cursor : 'pointer'}} >
-                            <input className="form-check-input" style={{cursor : 'pointer'}} type="checkbox" role="switch" id="salesCheckbox" checked={toggleSalesPrice ? true : false} onChange={(e) => {setToggleSalesPrice(e.target.checked)}}/>
-                            <label htmlFor="salesCheckbox" style={{cursor : 'pointer'}}>On Sale</label>
-                        </div>
+                            <div className="form-row">
+                                <label htmlFor="priceId">Product Price (In GEL)</label>
+                                <input className="form-control" id="priceId" placeholder="Product Price (In GEL)" ref={priceRef} onChange={(e) => setPrice(e.target.value)} value={price}/>
+                                <span>{priceErr}</span>
+                            </div>
 
-                        <div className="form-floating">
+                            
+                        
+
+                        <div className="form-row">
+                            <div className="form-check form-switch"style={{cursor : 'pointer'}} >
+                                <input className="form-check-input" style={{cursor : 'pointer'}} type="checkbox" role="switch" id="salesCheckbox" checked={toggleSalesPrice ? true : false} onChange={(e) => {setToggleSalesPrice(e.target.checked)}}/>
+                                <label htmlFor="salesCheckbox" style={{cursor : 'pointer'}}>On Sale</label>
+                            </div>
                             <input className="form-control" id="salesPriceId" placeholder="Product Sales Price (In GEL)" disabled={!toggleSalesPrice} ref={salesPriceRef} onChange={(e) => setSalesPrice(e.target.value)} value={salesPrice}/>
-                            <label htmlFor="salesPriceId">Sales Price (In GEL)</label>
                             <span>{salesPriceErr}</span>
                         </div> 
 
-                        <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
-                            {categories.map((cat, catId) => (
-                                <option value={cat.name} key={catId}>{cat.name}</option>
-                            ))}
-                        </select>
-                        <span>{categoryErr}</span>
+                        </div>
 
-                        {selectedCat && 
-                            <select className="form-select" onChange={(e) => setSelectedSub(e.target.value)} value={selectedSub} ref={subCategoryRef}>
-                                {categories.filter(cat => cat.name === selectedCat)[0].subcategories.map((sub, subId) => <option key={subId} value={sub}>{sub}</option>)}
+                        <div className="form-line">
+                            
+                        <div className="form-row">
+                            <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
+                                {categories.map((cat, catId) => (
+                                    <option value={cat.name} key={catId}>{cat.name}</option>
+                                ))}
                             </select>
-                        }
-                        <span>{subCategoryErr}</span>
+                            <span>{categoryErr}</span>
+                        </div>
 
-                        <div className="form-floating">
-                            <input className="form-control" id="amountId" placeholder="Stock / Amount In WareHouse" ref={amountRef} onChange={(e) => setAmount(e.target.value)} value={amount}/>
+                            <div className="form-row">
+                            {selectedCat && 
+                                <select className="form-select" onChange={(e) => setSelectedSub(e.target.value)} value={selectedSub} ref={subCategoryRef}>
+                                    {categories.filter(cat => cat.name === selectedCat)[0].subcategories.map((sub, subId) => <option key={subId} value={sub}>{sub}</option>)}
+                                </select>
+                            }
+                            <span>{subCategoryErr}</span>
+                        </div>
+
+                        
+                        </div>
+
+                        <div className="form-row">
                             <label htmlFor="priceId">Stock / Amount In WareHouse</label>
+                            <input className="form-control" id="amountId" placeholder="Stock / Amount In WareHouse" ref={amountRef} onChange={(e) => setAmount(e.target.value)} value={amount}/>
                             <span>{amountErr}</span>
                         </div>
                         
-                        <input type="submit" value='Edit Product'/>
-                        <button className="btn btn-danger" onClick={() => setToggleEdit({status : false , product : null})}>Cancel</button>
+                        <div className="form-line">
+                            <input type="submit" className="btn border-0 fw-medium" value='Save Changes' style={{backgroundColor : '#10b981', color : "white"}}/>
+                            <button className="btn btn-danger " onClick={() => setToggleEdit({status : false , product : null})}>Cancel</button>
+                        </div>
                     </div>
                 </form>
 
