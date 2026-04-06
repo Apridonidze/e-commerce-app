@@ -289,9 +289,6 @@ const CreateProduct = () => {
                                 <span>{priceErr}</span>
                             </div>
 
-                            
-                        
-
                         <div className="form-row">
                             <div className="form-check form-switch"style={{cursor : 'pointer'}} >
                                 <input className="form-check-input" style={{cursor : 'pointer'}} type="checkbox" role="switch" id="salesCheckbox" checked={toggleSalesPrice ? true : false} onChange={(e) => {setToggleSalesPrice(e.target.checked)}}/>
