@@ -86,7 +86,7 @@ const Dashboard = () => {
                 
                 <div className="main-end">
 
-                    <div className="main-header"><Header /></div>
+                    <div className="main-header mb-3"><Header /></div>
                     <User />
                     
                     <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId}/>
@@ -96,7 +96,7 @@ const Dashboard = () => {
 
                     <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
                     <section id='order-list'><OrderList /></section>
-                
+                    
                 </div>
             </div>
         </div>

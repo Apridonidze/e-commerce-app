@@ -48,15 +48,18 @@ const { user } = useContext(UserContext);//defining user data from context
     const fetchProducts = async(offset, category) => {
 
         try{
-
+            setIsLoading(true)
             const product = await axios.get(`${BACKEND_URL}/api/product/sales-products`, { params : {offset, category} })
             
             if(product.status === 204) setProducts([])
-            setProducts(product.data.products)
+            if(product.status === 200) setProducts(product.data.products) 
+
+            setIsLoading(false)
 
         }catch(err){
             setProducts(prevProducts)
-            console.log(err)
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+            setIsLoading(false)
             //toggle allert message and pass errors
         }
     }
