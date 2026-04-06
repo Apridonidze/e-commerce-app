@@ -292,20 +292,23 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
 
                 <form className="form-container" onSubmit={handleUploadProduct} enctype="multipart/form-data">
 
-                    <div className="form-start">
+                    <div className="form-start ">
 
-                        <div className="target-image-container" onMouseEnter={() => setToggleDeleteImg(true)} onMouseLeave={() => setToggleDeleteImg(false)}>
+                        <div className="target-image-container " onMouseEnter={() => setToggleDeleteImg(true)} onMouseLeave={() => setToggleDeleteImg(false)}>
                             <span className="toggleDeleteImg  bg-danger p-2 rounded-3 m-1 " onClick={() => {const newImages = images.filter((_, id) => id !== targetImage) ; setImages(newImages); setTargetImage(0)}}><i class="fa-solid fa-trash text-white fs-6"></i></span> 
                             <img src={getImageSrc(images[targetImage])} alt="No Images" className="targetImage mb-2" /> 
                         </div>
 
-                        <div className="images-container d-flex gap-1">
-                            {images.map((img, imgId) => {return <img src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} onClick={() => setTargetImage(imgId)} alt={img.name} key={imgId} />})}
-                        </div>
-
+                        <div className="images-container my-3">
+                            {images.map((img, imgId) => {return <img className="rounded-2" src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} onClick={() => setTargetImage(imgId)} alt={img.name} key={imgId} />})}
                         <div className="form-floating">
-                            <input type="file" multiple  className="form-control" onChange={(e) => {const files = Array.from(e.target.files); setImages(prev => [...prev, ...files])}}  accept="image/*" ref={imageRef}/>
-                            <span>{imageErr}</span>
+                        
+                        <button type="button" className="upload-btn" onClick={() => imageRef.current.click()}><i class="fa-regular fa-image fw-medium"></i> <br /> Add Images</button>
+                        
+                        <input type="file" ref={imageRef} hidden multiple accept="image/*" onChange={(e) => {const files = Array.from(e.target.files);setImages(prev => [...prev, ...files]);e.target.value = null;}}/>
+
+                            <span className="error-text">{imageErr}</span>
+                        </div>
                         </div>
                     </div>
 
