@@ -36,6 +36,9 @@ const Dashboard = () => {
     const { cardDetails } = useContext(UserContext)
 
     const [cart , setCart] = useState([])
+    
+
+        const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
     useEffect(() => {
         if (hash) {
@@ -73,23 +76,28 @@ const Dashboard = () => {
     }, [toggleOrder, cardDetails]);
 
     return(
-        <div className="dashboard-container container-fluid d-flex">
+        <div className="main-container container-fluid d-flex flex-column justify-content-start">
             
-            <div className="dashboard-start col">
-                <Sidebar />
-            </div>
-            <div className="dashboard-end col">
-                <Header />
-                <User />
-                
-                <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId}/>
+            {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
+            
+            <div className="main-body " >
 
-                {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
-                {toggleOrder && cardDetails?.last4 ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div>  : <></>}
-
-                <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
-                <section id='order-list'><OrderList /></section>
+                <div className="main-start"><Sidebar /></div>
                 
+                <div className="main-end">
+
+                    <div className="main-header"><Header /></div>
+                    <User />
+                    
+                    <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId}/>
+
+                    {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
+                    {toggleOrder && cardDetails?.last4 ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div>  : <></>}
+
+                    <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
+                    <section id='order-list'><OrderList /></section>
+                
+                </div>
             </div>
         </div>
     )

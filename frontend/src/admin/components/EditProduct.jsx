@@ -164,7 +164,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
 
         // validating images field
         if(images.length === 0){isValid = false ; setImageErr(`No Image Provided.`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
-        else if (images.length > 5){isValid = false ; setImageErr(`Image Limit Reached (max 6).`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
+        else if (images.length > 6){isValid = false ; setImageErr(`Image Limit Reached (max 6).`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
         else {isValid = true; setImageErr('') ;imageRef.current.classList.add('is-valid') ;imageRef.current.classList.remove('is-invalid')};
 
         // validating input field
@@ -262,6 +262,8 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
 
             } catch (err) {
 
+                console.log(err)
+
                 if(err.status === 400) return setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
 
                 return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
@@ -302,7 +304,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                         </div>
 
                         <div className="images-container my-3">
-                            {images.map((img, imgId) => {return <img className="rounded-2" src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} onClick={() => setTargetImage(imgId)} alt={img.name} key={imgId} />})}
+                            {images.map((img, imgId) => {return <div className="img-holder"><img className="rounded-2" src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} onClick={() => setTargetImage(imgId)} alt={img.name} key={imgId} /></div>})}
                         <div className="form-floating">
                         
                         {images?.length > 5 ? <></> : <button type="button" className="upload-btn" onClick={() => imageRef.current.click()}><i class="fa-regular fa-image fw-medium"></i> <br /> Add Images</button>}

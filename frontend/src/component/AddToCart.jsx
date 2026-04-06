@@ -99,8 +99,8 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
                 <button className="btn btn-none border-0" onClick={() => setToggleAddToCart({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <div className="add-to-cart-start d-flex align-items-center h-100">
-                <img src={`data:image/svg+xml;base64,${JSON.parse(toggleAddToCart.product.images)[0]}`}/>
+            <div className="add-to-cart-start d-flex align-items-center h-100" >
+                <img src={`data:image/svg+xml;base64,${JSON.parse(toggleAddToCart.product.images)[0]}`} style={{maxHeight : '200px'}}/>
             </div>
 
             <div className="add-to-cart-end w-100 h-100">
