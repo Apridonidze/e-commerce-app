@@ -44,34 +44,34 @@ const Sales = () => {
     const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null});
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
-    const fetchProducts = async(offset, category) => {
+    const fetchProducts = async(offset, category) => { //fecthing products on sale 
 
         try{
-            setIsLoading(true)
-            const product = await axios.get(`${BACKEND_URL}/api/product/sales-products`, { params : {offset, category} })
+
+            setIsLoading(true); //updating state to true to load LoadingSkeleton
+
+            const product = await axios.get(`${BACKEND_URL}/api/product/sales-products`, { params : {offset, category} }); //making api call and passing params
             
-            if(product.status === 204) setProducts([])
-            if(product.status === 200) setProducts(product.data.products) 
+            if(product.status === 204) setProducts([]);
+            if(product.status === 200) setProducts(product.data.products); //handling response status codes
 
-            setIsLoading(false)
+            setIsLoading(false); //updating state to remove loading skeleton
 
-        }catch(err){
-            setProducts(products)
+        }catch(err){ //catching error messages
+            setIsLoading(false); //updating state to remove loading skeleton
+            setProducts(products); //setting old products in state
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
-            setIsLoading(false)
             //toggle allert message and pass errors
-        }
-    }
+        };
+    };
     
     useEffect(() => {
 
-        setProducts(products)
-        fetchProducts(offset,category);
+        setProducts(products); //setting procducts in state by default
+        fetchProducts(offset,category); //calling function to fetch products
 
         return () => {fetchProducts()}
-    },[category, offset])
-
-    console.log(products)
+    },[category, offset]); //declearing fetchProducts function on dependencies change
     
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start" style={{maxWidth : '3000px'}}>
@@ -115,7 +115,7 @@ const Sales = () => {
 
             <Footer />
         </div>
-    )
-}
+    );
+};
 
-export default Sales
+export default Sales; //exporting component
