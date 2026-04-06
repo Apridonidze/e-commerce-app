@@ -294,7 +294,6 @@
 
 .footer-column a:hover {
     color: #00a571;
-    text-decoration: underline;
   opacity: 1;
   transform: translateX(3px);
 }
