@@ -323,7 +323,6 @@ const CreateProduct = () => {
                             }
                             <span>{subCategoryErr}</span>
                         </div>
-
                         
                         </div>
 

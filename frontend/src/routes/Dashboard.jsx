@@ -18,6 +18,7 @@ import { useCookies } from "react-cookie"
 import CardHolder from "../component/CardHolder"
 import Order from "../component/Order"
 import OrderList from "../component/OrderList"
+import Footer from "../layout/Footer"
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
@@ -99,8 +100,10 @@ const Dashboard = () => {
                     
                 </div>
             </div>
-        </div>
-    )
-}
 
-export default Dashboard
+            <Footer />
+        </div>
+    );
+};
+
+export default Dashboard; //exporting component
