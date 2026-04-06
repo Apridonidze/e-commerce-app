@@ -187,8 +187,8 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
         // validating in sale price field
         if(toggleSalesPrice){ //checking if product is checked to be in sale , if so then filter is activated
 
-            if(salesPrice.trim() == '' || salesPrice.trim() == null || salesPrice.trim() == undefined){isValid = false ; setSalesPriceErr(`This Field Can't Be Empty`); salesPriceRef.current.classList.add('is-invalid');salesPriceRef.current.classList.remove('is-valid')}
-            else if(Number(salesPrice) === 0 || Number(price) >= 100000 || Number(price) <= 0){isValid = false; setSalesPriceErr('Enter Valid Price'); salesPriceRef.current.classList.add('is-invalid');salesPriceRef.current.classList.remove('is-valid')}
+            if(!Number(salesPrice)){isValid = false ; setSalesPriceErr(`This Field Can't Be Empty`); salesPriceRef.current.classList.add('is-invalid');salesPriceRef.current.classList.remove('is-valid')}
+            else if(Number(salesPrice) === 0 || Number(salesPrice) >= 100000 || Number(salesPrice) <= 0){isValid = false; setSalesPriceErr('Enter Valid Price'); salesPriceRef.current.classList.add('is-invalid');salesPriceRef.current.classList.remove('is-valid')}
             else if (NumberRegex.test(salesPrice) === false){isValid = false ; setSalesPriceErr('Enter Valid Price (Numbers Only)'); salesPriceRef.current.classList.add('is-invalid');salesPriceRef.current.classList.remove('is-valid')}
             else if (Number(salesPrice) > Number(price) || Number(salesPrice) === Number(price)){isValid = false ; setSalesPriceErr('Sales Price Should Not Be Greater Than Original Price'); salesPriceRef.current.classList.add('is-invalid');salesPriceRef.current.classList.remove('is-valid')}
             else {isValid = true; setSalesPriceErr('') ;salesPriceRef.current.classList.add('is-valid') ;salesPriceRef.current.classList.remove('is-invalid'); data = {...data, salesPrice : Number(salesPrice)}}
@@ -203,8 +203,9 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
             salesPriceRef.current.classList.remove('is-invalid'); //removing styling
 
             setSalesPriceErr('');//reseting error message
+            isValid = true
             data = { ...data, salesPrice: null };//defining salesPrice as null (valid for backend)
-
+            
         };
         
         // validating category field
@@ -313,11 +314,9 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                     </div>
 
                     <div className="form-end">
-                        <div className="form-floating">
-                            <input className="form-control" type="text" id="title" placeholder="Product Name" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name}/>
                             <label htmlFor="title">Product Name</label>
+                            <input className="form-control" type="text" id="title" placeholder="Product Name" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name}/>
                             <span>{nameErr}</span>
-                        </div>
 
                         <div className="form-floating">
                             <input className="form-control" type="text" id="title" placeholder="Product Description" ref={descRef} onChange={(e) => setDescription(e.target.value)} value={description}/>
@@ -328,19 +327,19 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                         <div className="form-floating">
                             <input className="form-control" id="priceId" placeholder="Product Price (In GEL)" ref={priceRef} onChange={(e) => setPrice(e.target.value)} value={price}/>
                             <label htmlFor="priceId">Product Price (In GEL)</label>
-                            <span>{salesPriceErr}</span>
+                            <span>{priceErr}</span>
                         </div>
 
                         <div className="form-check form-switch"style={{cursor : 'pointer'}} >
-                            <input className="form-check-input" style={{cursor : 'pointer'}} type="checkbox" role="switch" id="salesCheckbox" checked={toggleSalesPrice ? true : false} onChange={() => setToggleSalesPrice(!toggleSalesPrice)}/>
+                            <input className="form-check-input" style={{cursor : 'pointer'}} type="checkbox" role="switch" id="salesCheckbox" checked={toggleSalesPrice ? true : false} onChange={(e) => {setToggleSalesPrice(e.target.checked)}}/>
                             <label htmlFor="salesCheckbox" style={{cursor : 'pointer'}}>On Sale</label>
                         </div>
 
-                        {toggleSalesPrice ? <div className="form-floating">
-                            <input className="form-control" id="salesPriceId" placeholder="Product Sales Price (In GEL)" ref={salesPriceRef} onChange={(e) => setSalesPrice(e.target.value)} value={salesPrice}/>
+                        <div className="form-floating">
+                            <input className="form-control" id="salesPriceId" placeholder="Product Sales Price (In GEL)" disabled={!toggleSalesPrice} ref={salesPriceRef} onChange={(e) => setSalesPrice(e.target.value)} value={salesPrice}/>
                             <label htmlFor="salesPriceId">Sales Price (In GEL)</label>
-                            <span>{priceErr}</span>
-                        </div> : <></>}
+                            <span>{salesPriceErr}</span>
+                        </div> 
 
                         <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
                             {categories.map((cat, catId) => (
