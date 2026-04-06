@@ -28,8 +28,7 @@ import '../styles/index.css'; //importing css files
 
 const Sales = () => {
 
-    const { prevProducts } = useContext(ProductContext)
-const { user } = useContext(UserContext);//defining user data from context
+    const { user } = useContext(UserContext);//defining user data from context
 
 
    const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +56,7 @@ const { user } = useContext(UserContext);//defining user data from context
             setIsLoading(false)
 
         }catch(err){
-            setProducts(prevProducts)
+            setProducts(products)
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
             setIsLoading(false)
             //toggle allert message and pass errors
@@ -66,11 +65,13 @@ const { user } = useContext(UserContext);//defining user data from context
     
     useEffect(() => {
 
-        setProducts(prevProducts)
+        setProducts(products)
         fetchProducts(offset,category);
 
         return () => {fetchProducts()}
     },[category, offset])
+
+    console.log(products)
     
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start" style={{maxWidth : '3000px'}}>
