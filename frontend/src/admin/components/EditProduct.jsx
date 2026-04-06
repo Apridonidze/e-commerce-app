@@ -163,7 +163,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
         const date = now.toLocaleDateString('en-GB'); //defining current date to seee when product is edited
 
         // validating images field
-        if(images.length < 1){isValid = false ; setImageErr(`This Field Can't Be Empty`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
+        if(images.length === 0){isValid = false ; setImageErr(`No Image Provided.`); imageRef.current.classList.add('is-invalid');imageRef.current.classList.remove('is-valid')}
         else {isValid = true; setImageErr('') ;imageRef.current.classList.add('is-valid') ;imageRef.current.classList.remove('is-invalid')};
 
         // validating input field
@@ -296,8 +296,8 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                     <div className="form-start ">
 
                         <div className="target-image-container " onMouseEnter={() => setToggleDeleteImg(true)} onMouseLeave={() => setToggleDeleteImg(false)}>
-                            <span className="toggleDeleteImg  bg-danger p-2 rounded-3 m-1 " onClick={() => {const newImages = images.filter((_, id) => id !== targetImage) ; setImages(newImages); setTargetImage(0)}}><i class="fa-solid fa-trash text-white fs-6"></i></span> 
-                            <img src={getImageSrc(images[targetImage])} alt="No Images" className="targetImage mb-2" /> 
+                            {images?.length === 0 ? <></> : <span className="toggleDeleteImg  bg-danger p-2 rounded-3 m-1 " onClick={() => {const newImages = images.filter((_, id) => id !== targetImage) ; setImages(newImages); setTargetImage(0)}}><i class="fa-solid fa-trash text-white fs-6"></i></span>} 
+                            <img src={getImageSrc(images[targetImage])} alt="No Images" className="targetImage mb-2 justify-content-center d-flex align-items-center" /> 
                         </div>
 
                         <div className="images-container my-3">
@@ -379,7 +379,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                         </div>
                         
                         <div className="form-line">
-                            <input type="submit" className="btn border-0 fw-medium" value='Save Changes' style={{backgroundColor : '#10b981', color : "white"}}/>
+                            <input type="submit" disabled={images.length == 0 ? true : false} className="btn border-0 fw-medium" value='Save Changes' style={{backgroundColor : '#10b981', color : "white"}}/>
                             <button className="btn btn-danger " onClick={() => setToggleEdit({status : false , product : null})}>Cancel</button>
                         </div>
                     </div>
