@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 
 import { BACKEND_URL } from "../../../config";
 import { useCookies } from "react-cookie";
@@ -99,6 +99,8 @@ const CreateProduct = () => {
     const regexContainsSpecial = /[^\w\s]/;
     const NumberRegex = /\d/;
 
+    const [targetImage, setTargetImage] = useState(0)
+    const [toggleDeleteImg,setToggleDeleteImg] = useState(false);
     const [images,setImages] = useState([])
     const [name , setName] = useState('')
     const [description , setDescription] = useState('')
@@ -213,83 +215,132 @@ const CreateProduct = () => {
     }
 
     useEffect(() => {
-    
+        return () => {
+            images.forEach(img => {if (typeof img !== "string") URL.revokeObjectURL(img)});
+        };
+    }, [images]);//checking each images if they have string type , if not (then it should already be url) then preventing images from turning into urls to prevent errors
+
+    useEffect(() => {
+
         document.body.style.overflow = 'hidden'
         return () => document.body.style.overflow = ''
-    
-    },[]); //disabling body scrolling when component is triggered
 
+    },[]); //disabling body scrolling when component is triggered
+    const getImageSrc = (img) => {//formatting images based on image type passed down to make images displayable
+
+        if(!img) return;
+
+        if (typeof img === "string") { //checking if type of given imaage is string
+            return `data:image/jpeg;base64,${img}`; //returning image in base64 format
+        }
+        return URL.createObjectURL(img);// else creating url for image if its type is not string
+    };
     
     return(
-        <div className="manage-product-container position-fixed bg-white" style={{left : '40vw' }} tabIndex={9999}>
-            <div className="manage-product-top">
-                <h4>Create New Product</h4>
+<div className="manage-product-container" style={{left : '40vw' }} tabIndex={9999}>
+            <div className="manage-product-top d-flex justify-content-between">
+                <h4>Edit Product</h4>
+                <button className="btn btn-none border-0" onClick={() => setToggleEdit({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
             </div>
+
             <div className="manage-product-main">
-                <form onSubmit={handleUploadProduct} enctype="multipart/form-data">
 
-                    <div className="images-container">
-                        {images.map((img, imgId) => {return <img src={URL.createObjectURL(img)} style={{maxWidth: '200px' , height : 'auto', cursor : 'pointer'}} alt={img.name} key={imgId} onClick={(e) => {const newImages = images.filter((_, id) => id !== imgId) ; setImages(newImages)}}/>})}
+                <form className="form-container" onSubmit={handleUploadProduct} enctype="multipart/form-data">
+
+                    <div className="form-start ">
+
+                        <div className="target-image-container " onMouseEnter={() => setToggleDeleteImg(true)} onMouseLeave={() => setToggleDeleteImg(false)}>
+                            {images?.length === 0 ? <></> : <span className="toggleDeleteImg  bg-danger p-2 rounded-3 m-1 " onClick={() => {const newImages = images.filter((_, id) => id !== targetImage) ; setImages(newImages); setTargetImage(0)}}><i class="fa-solid fa-trash text-white fs-6"></i></span>} 
+                            <img src={getImageSrc(images[targetImage])} alt="No Images" className="targetImage mb-2 justify-content-center d-flex align-items-center" /> 
+                        </div>
+
+                        <div className="images-container my-3">
+                            {images.map((img, imgId) => {return <img className="rounded-2" src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} onClick={() => setTargetImage(imgId)} alt={img.name} key={imgId} />})}
+                        <div className="form-floating">
+                        
+                        {images?.length > 5 ? <></> : <button type="button" className="upload-btn" onClick={() => imageRef.current.click()}><i class="fa-regular fa-image fw-medium"></i> <br /> Add Images</button>}
+                        
+                        <input type="file" ref={imageRef} hidden multiple accept="image/*" onChange={(e) => {const files = Array.from(e.target.files);setImages(prev => [...prev, ...files]);e.target.value = null;}}/>
+
+                            <span className="error-text">{imageErr}</span>
+                        </div>
+                        </div>
                     </div>
 
-                    <div className="form-floating">
-                        <input type="file" multiple  className="form-control" onChange={(e) => {const files = Array.from(e.target.files); setImages(prev => [...prev, ...files])}}  accept="image/*" ref={imageRef}/>
-                        <span>{imageErr}</span>
+                    <div className="form-end">
+                        
+                        <div className="form-row">
+                            <label htmlFor="title">Product Name</label>
+                            <input className="form-control" type="text" id="title" placeholder="Product Name" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name}/>
+                            <span>{nameErr}</span>
+                        </div>
+
+                        <div className="form-row">
+                            <label htmlFor="title">Product Description</label>
+                            <textarea className="form-control" type="text" id="title" style={{height : '10rem'}} placeholder="Product Description" ref={descRef} onChange={(e) => setDescription(e.target.value)} value={description}/>
+                            <span>{descErr}</span>
+                        </div>
+
+                        <div className="form-line">
+
+                            <div className="form-row">
+                                <label htmlFor="priceId">Product Price (In GEL)</label>
+                                <input className="form-control" id="priceId" placeholder="Product Price (In GEL)" ref={priceRef} onChange={(e) => setPrice(e.target.value)} value={price}/>
+                                <span>{priceErr}</span>
+                            </div>
+
+                            
+                        
+
+                        <div className="form-row">
+                            <div className="form-check form-switch"style={{cursor : 'pointer'}} >
+                                <input className="form-check-input" style={{cursor : 'pointer'}} type="checkbox" role="switch" id="salesCheckbox" checked={toggleSalesPrice ? true : false} onChange={(e) => {setToggleSalesPrice(e.target.checked)}}/>
+                                <label htmlFor="salesCheckbox" style={{cursor : 'pointer'}}>On Sale</label>
+                            </div>
+                            <input className="form-control" id="salesPriceId" placeholder="Product Sales Price (In GEL)" disabled={!toggleSalesPrice} ref={salesPriceRef} onChange={(e) => setSalesPrice(e.target.value)} value={salesPrice}/>
+                            <span>{salesPriceErr}</span>
+                        </div> 
+
+                        </div>
+
+                        <div className="form-line">
+                            
+                        <div className="form-row">
+                            <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
+                                {categories.map((cat, catId) => (
+                                    <option value={cat.name} key={catId}>{cat.name}</option>
+                                ))}
+                            </select>
+                            <span>{categoryErr}</span>
+                        </div>
+
+                            <div className="form-row">
+                            {selectedCat && 
+                                <select className="form-select" onChange={(e) => setSelectedSub(e.target.value)} value={selectedSub} ref={subCategoryRef}>
+                                    {categories.filter(cat => cat.name === selectedCat)[0].subcategories.map((sub, subId) => <option key={subId} value={sub}>{sub}</option>)}
+                                </select>
+                            }
+                            <span>{subCategoryErr}</span>
+                        </div>
+
+                        
+                        </div>
+
+                        <div className="form-row">
+                            <label htmlFor="priceId">Stock / Amount In WareHouse</label>
+                            <input className="form-control" id="amountId" placeholder="Stock / Amount In WareHouse" ref={amountRef} onChange={(e) => setAmount(e.target.value)} value={amount}/>
+                            <span>{amountErr}</span>
+                        </div>
+                        
+                        <div className="form-buttons">
+                            <input type="submit" disabled={images.length == 0 ? true : false} className="btn border-0 fw-medium" value='Add Product' style={{backgroundColor : '#10b981', color : "white"}}/>
+                            <button className="btn btn-danger " onClick={() => setToggleEdit({status : false , product : null})}>Cancel</button>
+                        </div>
                     </div>
-
-                    <div className="form-floating">
-                        <input className="form-control" type="text" id="title" placeholder="Product Name" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name}/>
-                        <label htmlFor="title">Product Name</label>
-                        <span>{nameErr}</span>
-                    </div>
-
-                    <div className="form-floating">
-                        <input className="form-control" type="text" id="title" placeholder="Product Description" ref={descRef} onChange={(e) => setDescription(e.target.value)} value={description}/>
-                        <label htmlFor="title">Product Description</label>
-                        <span>{descErr}</span>
-                    </div>
-
-                    <div className="form-floating">
-                        <input className="form-control" id="priceId" placeholder="Product Price (In GEL)" ref={priceRef} onChange={(e) => setPrice(e.target.value)} value={price}/>
-                        <label htmlFor="priceId">Product Price (In GEL)</label>
-                        <span>{salesPriceErr}</span>
-                    </div>
-
-                    <div className="form-group">
-                        <input type="checkbox" id="salesCheckbox" onChange={() => setToggleSalesPrice(!toggleSalesPrice)}/>
-                        <label htmlFor="salesCheckbox">On Sale</label>
-                    </div>
-
-                    {toggleSalesPrice ? <div className="form-floating">
-                        <input className="form-control" id="salesPriceId" placeholder="Product Sales Price (In GEL)" ref={salesPriceRef} onChange={(e) => setSalesPrice(e.target.value)} value={salesPrice}/>
-                        <label htmlFor="salesPriceId">Sales Price (In GEL)</label>
-                        <span>{priceErr}</span>
-                    </div> : <></>}
-
-                    <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
-                        {categories.map((cat, catId) => (
-                            <option value={cat.name} key={catId}>{cat.name}</option>
-                        ))}
-                    </select>
-                    <span>{categoryErr}</span>
-
-                    {selectedCat && 
-                        <select className="form-select" onChange={(e) => setSelectedSub(e.target.value)} value={selectedSub} ref={subCategoryRef}>
-                            {categories.filter(cat => cat.name === selectedCat)[0].subcategories.map((sub, subId) => <option key={subId} value={sub}>{sub}</option>)}
-                        </select>
-                    }
-                    <span>{subCategoryErr}</span>
-
-                    <div className="form-floating">
-                        <input className="form-control" id="amountId" placeholder="Stock / Amount In WareHouse" ref={amountRef} onChange={(e) => setAmount(e.target.value)} value={amount}/>
-                        <label htmlFor="priceId">Stock / Amount In WareHouse</label>
-                        <span>{amountErr}</span>
-                    </div>
-                    
-                    <input type="submit" value='Add Product'/>
-                    
                 </form>
+
             </div>
+
         </div>
     )
 }
