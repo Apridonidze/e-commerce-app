@@ -36,11 +36,17 @@ const User = () => {
 
                 <div className="user-container-top">
                     
-
+                    <div className="user-container-top-start">
+                        
+                    </div>
+                    <div className="user-container-top-end">
+                        <h6>{user?.fullname}</h6>
+                        <small>{user !== null && user.role === 'admin' ? `Admin` : "Customer"}</small>
+                    </div>
+    
                 </div>
 
                 <div className="user-container-bottom">
-                    <h1>{user?.fullname} {user !== null && user.role === 'admin' ? `Admin` : <></>}</h1>
                     <h1>{user?.email}</h1>
                     <h1>{[user?.country_code , ' ' , user?.phone]}</h1>
                     <button className='btn btn-danger' onClick={() => {handleLogout()}}>Logout</button>

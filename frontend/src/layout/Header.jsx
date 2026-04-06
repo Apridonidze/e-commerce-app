@@ -63,11 +63,11 @@ const Header = ({ setProducts, setToggleAlert, fetchProducts }) => {
 
                 <div className="side-buttons gap-3">
                     <button className="btn" style={{fontSize: "18px", border : 'none'}} onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
-                    {user ? <div className="user d-flex gap-2 align-items-center">
+                    {user ? <div className="user d-flex gap-2 align-items-center" >
                         <Link to='/dashboard' className="text-decoration-none ">
-                            <small><strong>{user?.fullname}</strong> <br /> <span >{user?.email.length > 20 ? user?.email.slice(0, 21) : user?.email}</span></small>
+                            <small ><strong>{user?.fullname}</strong> <br /> <span >{user?.email.length > 20 ? user?.email.slice(0, 21) : user?.email}</span></small>
                         </Link>
-                        <Link to='/dashboard'><i class="fa-regular fa-user border border-2 border-dark rounded-5 px-3 py-2 d-flex align-items-center justify-content-center" style={{fontSize: "18px", border : 'none'}}></i></Link>
+                        <Link to='/dashboard'><i class="fa-regular fa-user border border-2 border-dark rounded-3 px-3 py-2 d-flex align-items-center justify-content-center" style={{fontSize: "18px", border : 'none'}}></i></Link>
                     </div> : <></>}
                 </div>
                 <button className="menu btn border-0" onClick={() => toggleSidebar(!toggle)}><i class="fa-solid fa-bars" style={{fontSize: "18px", border : 'none'}}></i></button>

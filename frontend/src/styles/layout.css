@@ -74,6 +74,17 @@
     gap: 5px;
 }
 
+
+.user span, .user strong,  .user i  {
+  color: #10b981 !important;
+}
+
+.user i {
+  height: 100%;
+
+    border: 2px solid #10b981 !important;
+}
+
 .user{
     background-color: var(--bg-color)!important;
     padding:5px 10px ;
