@@ -45,8 +45,8 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
 
             <div className="cart-main">
                 <div className="cart-start p-3">
-                    {cart?.length !== 0 ? cart.slice(0, 5).map((prod , prodId) => (       
-                        <Item prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} />
+                    {cart?.length !== 0 ? cart.slice(0, 5).map((prod) => (       
+                        <Item prod={prod} setCart={setCart} cart={cart}/>
                     )) : 'no cart items'}
                 </div>
 

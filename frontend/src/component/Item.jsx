@@ -2,7 +2,7 @@ import axios from 'axios'
 import { BACKEND_URL } from '../../config'
 import { useCookies } from 'react-cookie'
 
-const Item = ({ prod, cartIds}) => {
+const Item = ({ prod, setCart, cart}) => {
 
     const [cookies] = useCookies(['token'])
 
@@ -11,7 +11,7 @@ const Item = ({ prod, cartIds}) => {
         try{
 
             await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setCart()})
-            cartIds.filter(c => c.product_id !== prod.product_id)
+            setCart(cart.filter(c => c.product_id !== prod.product_id))
             
         }catch(err){
 
