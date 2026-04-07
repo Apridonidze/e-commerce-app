@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useCookies } from "react-cookie"; //importing react libraries
 
-import { BACKEND_URL } from "../../config"; //importing backend url from config file
+import { BACKEND_URL } from "../../../config"; //importing backend url from config file
 
 import Item from "./Item"; 
-import EmptyCart from "../empty/EmptyCart"; //importing react components
+import EmptyCart from "../../empty/EmptyCart"; //importing react components
 
 const Cart = ({ setToggleAlert, setToggleOrder, setCartIds, cartIds }) => {
 

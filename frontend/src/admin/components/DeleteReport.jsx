@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import axios from "axios"
-import { BACKEND_URL } from "../../config"
+import { BACKEND_URL } from "../../../config"
 import { useCookies } from "react-cookie"
 
 const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports }) => {

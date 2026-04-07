@@ -4,10 +4,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie"; //importing react libraries
 
-import { UserContext } from "../context/UserContext"; //importing user context
-import { BACKEND_URL } from "../../config";//importing backend url from config file for api calls
-
-import '../styles/products.css'; //importing css file
+import { UserContext } from "../../context/UserContext"; //importing user context
+import { BACKEND_URL } from "../../../config";//importing backend url from config file for api calls
 
 const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduct, setToggleAddToCart, setToggleAlert } ) => {
 

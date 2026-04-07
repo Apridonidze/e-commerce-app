@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useCookies } from "react-cookie"; //impoirting react libraries 
 
-import { BACKEND_URL } from "../../config"; //importing backend url from config file
+import { BACKEND_URL } from "../../../config"; //importing backend url from config file
 import { useState, useEffect, useContext } from "react"; //importing react hook
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 
 const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
 

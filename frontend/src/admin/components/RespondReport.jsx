@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { useCookies } from "react-cookie"
 import { useRef, useState, useEffect } from "react"
 
-import { BACKEND_URL } from "../../config"
+import { BACKEND_URL } from "../../../config"
 
 const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setReports }) => {
 

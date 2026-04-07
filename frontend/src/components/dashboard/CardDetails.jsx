@@ -1,8 +1,8 @@
 import axios from "axios";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { BACKEND_URL } from "../../config";
+import { BACKEND_URL } from "../../../config";
 import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import { useCookies } from "react-cookie";
 import { useRef } from "react";
 

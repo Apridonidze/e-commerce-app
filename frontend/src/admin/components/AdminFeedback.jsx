@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { BACKEND_URL } from "../../config";
+import { BACKEND_URL } from "../../../config";
 
 import { useState } from "react"
 import { Link } from "react-router-dom"

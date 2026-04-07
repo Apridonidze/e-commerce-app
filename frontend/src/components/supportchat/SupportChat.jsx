@@ -1,5 +1,5 @@
 import { useCookies } from "react-cookie"; //importing cookies react library
-import { BACKEND_URL } from "../../config";//importing backend url from config file
+import { BACKEND_URL } from "../../../config";//importing backend url from config file
 import { useLayoutEffect, useEffect , useRef, useState } from "react";//importing react hooks
 
 
