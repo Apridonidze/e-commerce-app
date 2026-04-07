@@ -9,6 +9,7 @@
   --border : 2px solid #f4f5fc;
   --border-2 : 2px solid #00a571;
   --component-bg : #f0f3ff;
+  --dark-bg : #dee8ff;
 }
 
 [data-theme='dark'] {
@@ -18,6 +19,7 @@
   --product-color : '#ffffff';
   --border : none;
   --component-bg : #080f20;
+  --dark-bg :  #080f20;
 }
 
 
@@ -167,6 +169,21 @@
 .card-row span:hover {
     color: #00a571;
     text-decoration:underline ;
+}
+
+/*  */
+
+.cart-center {
+    background-color: var(--component-bg);
+    color: var(--text-color);
+}
+
+.cart-end{
+    background-color: var(--dark-bg);
+}
+
+.cart-end div{
+    background-color: var(--dark-bg);
 }
 
 @media (max-width: 768px) {

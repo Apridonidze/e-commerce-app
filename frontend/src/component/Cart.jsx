@@ -10,7 +10,6 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
 
     const [cookies] = useCookies(['token']); //defining user cookies
 
-
     useEffect(() => {
 
         const fetchCartItems = async() => {//fetching user cart items from backend
@@ -33,21 +32,35 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
 
     },[]);
 
+    const total = cart.reduce((sum, item) => {
+        const price = item.sales_price ?? item.price ?? 0;
+        const amount = item.amount ?? 1;
+
+        return sum + Number(price) * Number(amount);
+    }, 0);
+
     return(
         <div className="cart-container">
-            <div className="cart-start">
-                <h3>Cart</h3>
+            <h3>Current Cart</h3>
+
+            <div className="cart-main rounded-3">
+                <div className="cart-start">
+                    {cart?.length !== 0 ? cart.slice(0, 5).map((prod , prodId) => (       
+                        <Item prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} />
+                    )) : 'no cart items'}
+                </div>
+
+                <div className="cart-end d-flex justify-content-between align-items-center">
+                    <div className="cart-end-left d-flex flex-column">
+                        <span className="fw-light">Total</span>
+                        <span className="price fs-5 fw-bold">${total.toFixed(2)}</span>
+                    </div>
+                    <div className="cart-end-right">
+                        <button onClick={() => setToggleOrder(true)} disabled={cart.length == 0 ? true : false}>Order Items</button>
+                    </div>
+                </div>
             </div>
-            <div className="cart-center">
-                {cart?.length !== 0 ? cart.map((prod , prodId) => (
-                    
-                    <Item prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} />
-                )) : 'no cart items'}
-                {/* display only first 5 cart items */}
-            </div>
-            <div className="cart-end">
-                {cart.length === 0 ? <button disabled>Order Items</button> : <button onClick={() => setToggleOrder(true)}>Order Items</button>}
-            </div>
+            
         </div >
     );
 };

@@ -26,6 +26,8 @@ const Item = ({ prod, cartIds}) => {
             </div>
             <div className="item-main">
                 <h5>{prod?.title}</h5>
+                {prod.sales_price}
+                {prod.price}
                 <small>{prod.description?.length < 40 ? `${prod?.description.slice(0,40)}...` : prod?.description}</small>
             </div>
             <div className="item-end">

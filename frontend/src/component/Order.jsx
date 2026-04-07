@@ -21,7 +21,7 @@ const Order = ({ setCart, cart }) => {
 
     const orderItems = async() => {
         
-        let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.price}))
+        let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.salesPrice || prod.price}))
         
         try{
 
@@ -85,14 +85,15 @@ const Order = ({ setCart, cart }) => {
         }else {
             selectAllRef.current.checked = false
         }
-        console.log(selectedItems)
+
         let total = selectedItems.reduce((sum, item) => sum + Number(item.price) * Number(item.amount), 0);     
+
         setTotalPrice(total)
         
     },[selectedItems, selectAllRef])
 
     return(
-        <div className="order-container bg-white position-relative" style={{right : '25vw', bottom : '25vw'}}>
+        <div className="order-container bg-white position-relative" style={{right : '25vw', bottom : '25vw', zIndex : 99999}}>
 
             {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setToggleOrder(false), setAddress('')}}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
             {togglePayment ? <div><div className="payment-success-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setTogglePayment(false)}}></div> <PaymentMessage /> </div> : <></>}
