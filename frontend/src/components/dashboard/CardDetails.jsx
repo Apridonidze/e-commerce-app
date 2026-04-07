@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { CardElement,CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { BACKEND_URL } from "../../../config";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
@@ -23,10 +23,10 @@ const CardDetails = ({ toggleCard }) => {
         try{
             const { data } = await axios.post(`${BACKEND_URL}/api/stripe/create-setup-intent`, {customerId: cardDetails.customer_id} , {headers : {Authorization : `Bearer ${cookies.token}`}});
 
-            const cardElement = elements.getElement(CardElement);
+            const cardNumber = elements.getElement(CardNumberElement);
+            const result = await stripe.confirmCardSetup(data.clientSecret, { payment_method: { card: cardNumber } });
 
             submitRef.current.disabled = true;
-            const result = await stripe.confirmCardSetup(data.clientSecret, {payment_method: {card: cardElement}});
 
             if (result.error) {
                 console.log(result.error.message);
@@ -42,7 +42,7 @@ const CardDetails = ({ toggleCard }) => {
     }
 
     useEffect(() => {
-        
+
         if (toggleCard) {
             document.documentElement.scrollTop = 0;
 
@@ -55,6 +55,23 @@ const CardDetails = ({ toggleCard }) => {
 
         return () => {document.body.style.overflow = ''; document.documentElement.style.overflow = ''};
     }, [toggleCard]);
+
+
+        const options = {
+        style: {
+            base: {
+            color: '#fff',
+            fontSize: '16px',
+            '::placeholder': {
+                color: '#9ca3af',
+            },
+            },
+            invalid: {
+            color: '#dc3545',
+            },
+        },
+    };
+
 
     return(
         <div className="card-details-container w-50 mx-auto mt-5 p-3 rounded-2">
@@ -73,7 +90,11 @@ const CardDetails = ({ toggleCard }) => {
 
             <div className="card-details-main">
                 <form onSubmit={handleSaveCard}>
-                    <CardElement />
+                    <div className="stripe-cart-wrapper">
+                        <CardNumberElement />
+                        <CardExpiryElement />
+                        <CardCvcElement />
+                    </div>
                     <div className="card-details-buttons d-flex flex-column">
                         <button type="submit" ref={submitRef}>Save Card Details</button>   
                         <button className="btn btn-none">Cancle</button>    

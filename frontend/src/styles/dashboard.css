@@ -279,6 +279,8 @@
 
 /*  */
 
+
+
 .card-details-background{
     background-color: transparent;
 }
@@ -286,6 +288,7 @@
 .card-details-container{
     z-index: 1001;
 }
+
 
 @media (max-width: 768px) {
     .user-container{
