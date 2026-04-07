@@ -242,6 +242,20 @@
     background: transparent;
 }
 /*  */
+
+.item-container{
+    border-bottom: var(--border);
+}
+
+.amount-buttons{
+    background-color: var(--dark-bg) !important;
+    border-radius: 5px;
+}
+
+.amount-buttons *{
+    background-color: var(--dark-bg) !important;
+}
+
 @media (max-width: 768px) {
     .user-container{
         display: flex;

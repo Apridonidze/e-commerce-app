@@ -51,7 +51,7 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCartIds, cartIds }) => {
             <div className="cart-main">
                 <div className="cart-start p-3">
                     {cartIds?.length !== 0 ? cartIds.map((prod) => (       
-                        <Item prod={prod} handleDeleteFromCart={handleDeleteFromCart}/>
+                        <Item prod={prod} handleDeleteFromCart={handleDeleteFromCart}/> || 'loading'
                     )) : <EmptyCart />}
                 </div>
 

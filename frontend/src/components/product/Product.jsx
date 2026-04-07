@@ -90,7 +90,7 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
                                     <span style={{textDecoration: 'line-through', fontSize: '14px'}}>${prod.price} </span>
                                     <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${prod.sales_price} </span>
                                 </div>    
-                            }
+                                }
                             </div>
                             <div className="product-main-end d-flex flex-column text-end">
                                 <small className="fw-medium mb-1">Avalability</small>
