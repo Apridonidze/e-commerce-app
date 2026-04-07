@@ -29,7 +29,7 @@ const Item = ({ prod, handleDeleteFromCart}) => {
                             <button className="btn border-0" disabled>+</button>
                         </div>
 
-                        <span style={{letterSpacing : '0.7px', fontSize : '12px'}} onClick={() => {handleDeleteFromCart(prod?.products_id)}}>REMOVE</span>
+                        <span style={{letterSpacing : '0.7px', fontSize : '14px', cursor : "pointer"}} className="fw-medium" onClick={() => {handleDeleteFromCart(prod?.products_id)}}>REMOVE</span>
                     </div>
                 </div>
 

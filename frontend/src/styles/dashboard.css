@@ -256,6 +256,27 @@
     background-color: var(--dark-bg) !important;
 }
 
+/*  */
+
+.order-list-end{
+    display: flex;
+    gap: 0.2rem;
+    background-color: var(--dark-bg);
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.order-list-end button{
+    font-size: 15px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.order-list-end button.active{
+    background-color: var(--bg-color);
+    color: #10b981;
+}
+
 @media (max-width: 768px) {
     .user-container{
         display: flex;

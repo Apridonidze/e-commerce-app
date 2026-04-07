@@ -45,8 +45,8 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCartIds, cartIds }) => {
     }, 0); //calculating total price of items 
 
     return(
-        <div className="cart-container overflow-hidden rounded-3">
-            <h3>Current Cart</h3>
+        <div className="cart-container overflow-hidden rounded-3 mb-5">
+            <h3 className="mb-3">Current Cart</h3>
 
             <div className="cart-main">
                 <div className="cart-start p-3">
