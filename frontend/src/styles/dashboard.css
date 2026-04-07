@@ -23,7 +23,7 @@
 .user-container{
     background: var(--component-bg);
     width: 100%;
-    max-width: fit-content;
+    max-width: 250px;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -81,7 +81,59 @@
 .logoutBtn:hover i {
     color: white !important;
 }
+/*  */
 
+
+.card-holder-container{
+    width: 100%;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 2rem !important;
+}
+
+.card-container *{
+    color: white;
+    background-color:#161f32;
+}
+
+.card-container{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color:#161f32;
+}
+
+.card-container-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cardIcon i{
+    font-size: 22px;
+    color: #10b981;
+}
+
+.card-row{
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-row span {
+    color: #10b981;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.card-row span:hover {
+    color: #00a571;
+    text-decoration:underline ;
+}
 
 @media (max-width: 768px) {
     .user-container{

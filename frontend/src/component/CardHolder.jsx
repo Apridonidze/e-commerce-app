@@ -1,26 +1,20 @@
-import { useContext } from "react"
-import { UserContext } from "../context/UserContext"
-
-const CardHolder = ({ setToggleCard, generateCustomerId }) => {
-
-    const { cardDetails } = useContext(UserContext)
-
+const CardHolder = ({ setToggleCard, generateCustomerId, cardDetails }) => {
     return(
         <div className="card-holder-container">
-            <div className="col">
-                <h1>Card Details</h1>
-                <button onClick={() => {cardDetails?.customer_id ? setToggleCard(true) :  generateCustomerId()}}>{cardDetails?.last4 ? 'Edit Card' : 'Add Card'}</button>
+            <div className="card-row">
+                <h5 className="my-auto">Card Details</h5>
+                <span className="my-auto" onClick={() => {cardDetails?.customer_id ? setToggleCard(true) :  generateCustomerId()}}>{cardDetails?.last4 ? 'Edit Card' : 'Add Card'}</span>
             </div>
-            
-            <div className="col">
-                {cardDetails ? 
-                    <div className="card-details">
-                        <h4>**** **** **** {cardDetails.last4}</h4>
-                        <h4>{cardDetails.brand}</h4>
-                    </div> : <></>}
+
+            <div className="card-container p-3 rounded-2">
+                <div className="card-container-header">
+                    <h6>Primary Account</h6>
+                    <span className="cardIcon">{cardDetails.brand == 'visa' ? <i class="fa-brands fa-cc-visa"></i> : cardDetails.brand == 'mastercard' ? <i class="fa-brands fa-cc-mastercard"></i> : <i class="fa-regular fa-credit-card"></i>}</span>
+                </div>
+                <h4>**** **** **** {cardDetails.last4 ? cardDetails.last4 : '****'}</h4>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CardHolder
+export default CardHolder;

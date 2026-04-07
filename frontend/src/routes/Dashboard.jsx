@@ -96,8 +96,8 @@ const Dashboard = () => {
                     <div className="dashboard-container">
 
                         <div className="dashboard-start">
-                            {user == null ? 'loadingg' : <User />  } {/* add user skeleton here */}
-                            <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId}/>
+                            {!user ? 'loadingg' : <User />  } {/* add user skeleton here */}
+                            {!cardDetails ? 'loading' : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }{/* add cardholder loading */}
                         </div>
 
                         <div className="dashboard-end">
