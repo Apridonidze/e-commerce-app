@@ -79,8 +79,8 @@ const Dashboard = () => {
             
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             
-            {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
-            {toggleOrder && cardDetails?.last4 ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCartIds={setCartIds} cartIds={cartIds}/></div>  : <></>}
+            {toggleCard ? <div className="bg cursor" onClick={() => setToggleCard(false)}><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
+            {toggleOrder && cardDetails?.last4 ? <div><div className="bg" onClick={() => setToggleOrder(false)}></div> <Order setCartIds={setCartIds} cartIds={cartIds}/></div>  : <></>}
             
             <div className="main-body " >
 

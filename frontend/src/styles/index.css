@@ -42,3 +42,14 @@ ul, li {
 i , small, a, span , strong{
   color:  var(--text-color);
 }
+
+.bg {
+  cursor: pointer;
+  position: absolute;
+  inset: 0;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: backdropFade 0.25s ease forwards;
+  z-index: 1000;
+}
