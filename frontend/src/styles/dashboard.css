@@ -173,22 +173,39 @@
 
 /*  */
 
-.cart-container{
+.cart-container {
     max-width: 880px;
-    width: 100% !important;
+    width: 100%;
 }
 
-.empty-cart-container{
+.cart-start {
     width: 100%;
     max-width: 880px;
 }
 
+.empty-cart-container {
+    width: 100%;
+}
+
+.empty-cart-wrapper {
+    width: 100%;
+}
 .cart-center {
     background-color: var(--component-bg);
     color: var(--text-color);
 }
 
+.empty-cart-container{
+    width: 100%;
+    max-width: 880px; /* same as .cart-start */
+}
+
+.empty-cart-wrapper{
+    width: 100%;
+}
 .cart-start{
+    width: 100%;
+    max-width: 880px;
     background-color: var(--component-bg);
     overflow: hidden;
     border-top-left-radius: 5px;
@@ -217,6 +234,7 @@
     background-color: #10b981;
     color: white;
 }
+
 
 .buttonComponent i {
     color: white;
