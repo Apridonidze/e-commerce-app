@@ -3,8 +3,8 @@ import { useCookies } from "react-cookie"; //importing react libraries
 
 import { BACKEND_URL } from "../../config"; //importing backend url from config file
 
-import Item from "./Item"; //importing Item component to display cart items 
-import EmptyCart from "./EmptyCart";
+import Item from "./Item"; 
+import EmptyCart from "./EmptyCart"; //importing react components
 
 const Cart = ({ setToggleAlert, setToggleOrder, setCartIds, cartIds }) => {
 
@@ -16,27 +16,33 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCartIds, cartIds }) => {
 
             const response = await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}})
             
-            if(response.status === 200) {
-                setCartIds(cartIds.filter(c => c.product_id !== e))
+            if(response.status === 200) { //hadning response success event
+                setCartIds(cartIds.filter(c => c.product_id !== e)); //removing item from cartIds state
                 setToggleAlert({status: true, type: "Success", statusCode: 200, message: "Product Removed From Cart Successfully"}); //toggling error message if customer intent could not be geneated
-            }
+            };
             
         }catch(err){
             if(err.response?.status === 404) { //handling 404 status code
                 setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: "Item Not Found In Your Cart"}); //toggling error message if customer intent could not be geneated
-                return
-            }
+                setCartIds(cartIds); //setting cartIds state as default items
+                return; //breaking action
+            };
 
+            // handling internal error event
+            
+            setCartIds(cartIds); //setting cartIds state as default items
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
 
-        }
-    }
+        };
+    };
 
     const total = cartIds.reduce((sum, item) => {
-        const price = item.sales_price ?? item.price ?? 0;
-        const amount = item.amount ?? 1;
 
-        return sum + Number(price) * Number(amount);
+        const price = item.sales_price ?? item.price ?? 0; //defining items price (if it has sales price or regular one)
+        const amount = item.amount ?? 1; //defining items amount
+
+        return sum + Number(price) * Number(amount); //returning total price
+
     }, 0); //calculating total price of items 
 
     return(
