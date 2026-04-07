@@ -258,11 +258,9 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                 
                 if(response.status === 200) setToggleAlert({status: true, type: "Success", statusCode: response.status, message: "Product Edited Successfully."});
                 
-                setTimeout(() => {setToggleEdit({status : false, product: null})}, 3000)
+                setTimeout(() => {setToggleEdit({status : false, product: null}), window.location.reload()}, 3000)
 
             } catch (err) {
-
-                console.log(err)
 
                 if(err.status === 400) return setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
 

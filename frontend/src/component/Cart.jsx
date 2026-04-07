@@ -5,6 +5,7 @@ import { useEffect } from "react"; //importing react state
 import { BACKEND_URL } from "../../config"; //importing backend url from config file
 
 import Item from "./Item"; //importing Item component to display cart items 
+import EmptyCart from "./EmptyCart";
 
 const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
 
@@ -47,7 +48,7 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
                 <div className="cart-start p-3">
                     {cart?.length !== 0 ? cart.slice(0, 5).map((prod) => (       
                         <Item prod={prod} setCart={setCart} cart={cart}/>
-                    )) : 'no cart items'}
+                    )) : <EmptyCart />}
                 </div>
 
                 <div className="cart-end p-3 d-flex justify-content-between align-items-center">

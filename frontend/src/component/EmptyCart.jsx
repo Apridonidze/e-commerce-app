@@ -1,13 +1,13 @@
 const EmptyCart = () => {
     return(
-        <div className="empty-cart-container">
+        <div className="empty-cart-container d-flex flex-column align-items-center text-center p-3 ">
             
-            <i class="fa-regular fa-compass"></i>
-            
-            <h4>Your Cart Is Empty</h4>
-            <h6>Browse products and add them to your cart.</h6>
+            <div class="icon-bg my-2"><i class="fa-solid fa-cart-shopping"></i></div>
 
-            <button className="buttonComponent btn btn-none text-white px-2 py-2"><i class="fa-regular fa-compass"></i> Explore</button>
+            <h4>Your Cart Is Empty</h4>
+            <small>Browse products and add them to your cart.</small>
+
+            <button className="buttonComponent mt-4 btn btn-none text-white px-2 py-2"><i class="fa-regular fa-compass"></i> Explore</button>
 
         </div>
     );
