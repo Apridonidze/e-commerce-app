@@ -9,11 +9,11 @@ import Sidebar from "../layout/Sidebar"
 import AdminList from '../admin/components/AdminList'
 import CreateProduct from "../admin/components/CreateProduct"
 import AdminOrder from "../admin/components/AdminOrder"
-import Report from '../component/Report'
+import Report from '../components/report/Report'
 import { Link } from "react-router-dom"
-import DeleteReport from "../component/DeleteReport"
-import RespondReport from "../component/RespondReport"
-import AdminFeedback from "../component/AdminFeedback"
+import DeleteReport from "../admin/components/DeleteReport"
+import RespondReport from "../admin/components/RespondReport"
+import AdminFeedback from "../admin/components/AdminFeedback"
 import ManageAdmins from "../admin/components/ManageAdmins"
 
 const AdminDashboard = () => {

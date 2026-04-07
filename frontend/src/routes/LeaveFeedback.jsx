@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../context/UserContext"
 
 import Sidebar from "../layout/Sidebar"
-import PlatformFeedback from "../component/PlatformFeedback"
-import Feedback from "../component/Feedback"
+import PlatformFeedback from "../components/feedback/PlatformFeedback"
+import Feedback from "../components/feedback/Feedback"
 import axios from "axios"
 import { BACKEND_URL } from "../../config"
 const LeaveFeedback = () => {

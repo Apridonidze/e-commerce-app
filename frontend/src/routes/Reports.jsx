@@ -6,9 +6,9 @@ import { useCookies } from "react-cookie";
 import { BACKEND_URL } from "../../config";
 
 import Sidebar from "../layout/Sidebar";
-import Report from "../component/Report";
-import DeleteReport from "../component/DeleteReport";
-import RespondReport from "../component/RespondReport";
+import Report from "../components/report/Report";
+import DeleteReport from "../admin/components/DeleteReport";
+import RespondReport from "../admin/components/RespondReport";
 
 
 const Reports = () => {

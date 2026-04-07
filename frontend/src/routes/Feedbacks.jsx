@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 
 import Sidebar from "../layout/Sidebar";
-import AdminFeedback from "../component/AdminFeedback";
+import AdminFeedback from "../admin/components/AdminFeedback";
 
 import { BACKEND_URL } from "../../config";
 

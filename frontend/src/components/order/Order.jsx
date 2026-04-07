@@ -3,7 +3,7 @@ import { BACKEND_URL } from "../../../config"
 import axios from "axios"
 import OrderCheckbox from "./OrderCheckbox"
 import { useEffect, useRef, useState } from "react"
-import SubmitOrder from "../SubmitOrder"
+import SubmitOrder from "../order/SubmitOrder"
 import PaymentMessage from "../../alerts/PaymentMessage"
 
 const Order = ({ setCart, cart }) => {

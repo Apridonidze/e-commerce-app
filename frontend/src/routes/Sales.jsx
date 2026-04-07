@@ -4,21 +4,20 @@ import { BACKEND_URL } from "../../config";  //importing backend url from env fi
 import { useEffect, useState, useContext } from "react"; //importing react hooks
 
 import { UserContext } from "../context/UserContext"; //importing user context
-import { ProductContext } from "../context/ProductContext"; //importing products from context (to avoid api calls everytime user visits this route)
 
-import Category from "../component/Category";
+import Category from "../layout/Category";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import Sidebar from "../layout/Sidebar"; //importing layout components
 
-import SupportChatContainer from "../component/SupportChatContainer";
+import SupportChatContainer from '../components/supportchat/SupportChatContainer'
 import EditProduct from "../admin/components/EditProduct";
-import Product from "../component/Product";
+import Product from "../components/product/Product";
 import RemoveProduct from "../admin/components/RemoveProduct";
-import AddToCart from "../component/AddToCart";
-import ReportProduct from "../component/ReportProduct"; //importing components
+import AddToCart from "../components/product/AddToCart";
+import ReportProduct from "../components/report/ReportProduct"; //importing components
 
-import NoProduct from "../component/NoProduct";//importing notFound product component
+import NoProduct from "../empty/NoProduct";//importing notFound product component
 import StatusMessage from "../alerts/StatusMessage"; //importing skeletons for loading and component to  dissplay messages (error, warning)
 import ProductSkeleton from "../skeletons/ProductSkeleton"; //importing loading skeleton for products
 

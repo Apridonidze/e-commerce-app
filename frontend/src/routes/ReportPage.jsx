@@ -1,5 +1,5 @@
 import Sidebar from "../layout/Sidebar"
-import ReportOption from "../component/ReportOption"
+import ReportOption from "../components/report/ReportOption"
 
 import { useEffect, useState, useRef } from "react"
 

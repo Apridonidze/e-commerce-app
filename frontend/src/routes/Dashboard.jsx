@@ -1,13 +1,13 @@
 import Header from '../layout/Header';
 import Sidebar from '../layout/Sidebar';
 import Footer from "../layout/Footer"
-import User from "../components/User";
-import Cart from '../components/Cart';
-import Order from "../components/Order"
-import OrderList from "../components/OrderList"
-import CardHolder from "../components/CardHolder"
+import User from "../components/dashboard/User";
+import Cart from '../components/dashboard/Cart';
+import Order from "../components/order/Order"
+import OrderList from "../components/order/OrderList"
+import CardHolder from "../components/dashboard/CardHolder"
 import StatusMessage from '../alerts/StatusMessage';
-import CardDetails from '../components/CardDetails'; //importing UI components
+import CardDetails from '../components/dashboard/CardDetails'; //importing UI components
 
 import { useContext, useEffect, useState } from "react"; ///importign react hooks
 

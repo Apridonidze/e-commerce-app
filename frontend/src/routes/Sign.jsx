@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-import CountryCode from "../component/CountryCode";
+import CountryCode from "../components/auth/CountryCode";
 import axios from "axios";
 
 import { BACKEND_URL } from '../../config'

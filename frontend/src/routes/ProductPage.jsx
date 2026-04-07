@@ -4,14 +4,14 @@ import { useEffect, useState, useContext } from 'react';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 import { BACKEND_URL } from '../../config';
-import Product from '../component/Product';
+import Product from '../components/product/Product';
 import { useCookies } from 'react-cookie';
-import { UserContext, UserProvider } from '../context/UserContext';
-import FeedbackInput from '../component/FeedbackInput';
+import { UserContext } from '../context/UserContext';
+import FeedbackInput from '../components/feedback/FeedbackInput';
 
 import EditProduct from '../admin/components/EditProduct';
 import RemoveProduct from '../admin/components/RemoveProduct';
-import ReportProduct from '../component/ReportProduct';
+import ReportProduct from '../components/report/ReportProduct';
 const ProductPage = () => {
 
     const [cookies] = useCookies(['token'])

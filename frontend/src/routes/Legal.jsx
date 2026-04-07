@@ -1,6 +1,6 @@
+import Privacy from "../components/legal/Privacy"
+import Terms from "../components/legal/Terms"
 import Sidebar from "../layout/Sidebar"
-import Privacy from "../component/Privacy"
-import Terms from "../component/Terms"
 import { useEffect } from "react"
 import { useLocation } from "react-router-dom"
 
