@@ -1,17 +1,14 @@
-import { useEffect, useRef, useState } from "react"
 import { useCookies } from "react-cookie"
-import { useParams } from "react-router-dom"
 
-import axios from "axios"
-import { BACKEND_URL } from "../../config"
+import { UserContext } from "../../context/UserContext"
+import { useEffect, useState, useRef, useContext } from "react"
 
+const PlatformFeedback = ({ setFeedbacks }) => {
 
-const FeedbackInput = () => {
-
+    const { user } = useContext(UserContext)
     const [cookies] = useCookies(['token'])
-    const [feedbackData, setFeedbackData] = useState({})
 
-    const { id } = useParams()
+    const [feedbackData, setFeedbackData] = useState({})
 
     const postRef = useRef(null)
 
@@ -22,10 +19,11 @@ const FeedbackInput = () => {
 
         try{
 
-            const postFeedback = await axios.post(`${BACKEND_URL}/api/feedback/product-feedback/${id}` , feedbackData , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const postFeedback = await axios.post(`${BACKEND_URL}/api/feedback/` , feedbackData , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-            console.log(postFeedback)
-            //toggle success message
+            if(postFeedback.status === 200){return setFeedbacks(prev => [...prev, {fullname : user.fullname, stars : feedbackData.star , content : feedbackData.content }])}
+           
+            //if status === 400 toggle error message
 
         }catch(err){
             //toggle eerror message
@@ -58,4 +56,4 @@ const FeedbackInput = () => {
     )
 }
 
-export default FeedbackInput
+export default PlatformFeedback

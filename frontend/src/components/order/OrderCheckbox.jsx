@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useCookies } from "react-cookie"
 
-import { BACKEND_URL } from "../../config"
+import { BACKEND_URL } from "../../../config"
 
 const OrderCheckbox = ({ prod, prodId, key, setCart, cart, handleCheckbox, checkboxRef }) => {
 

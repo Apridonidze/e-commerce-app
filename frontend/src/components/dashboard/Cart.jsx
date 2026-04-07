@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie"; //importing react libraries
 import { BACKEND_URL } from "../../config"; //importing backend url from config file
 
 import Item from "./Item"; 
-import EmptyCart from "./EmptyCart"; //importing react components
+import EmptyCart from "../empty/EmptyCart"; //importing react components
 
 const Cart = ({ setToggleAlert, setToggleOrder, setCartIds, cartIds }) => {
 
@@ -29,7 +29,6 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCartIds, cartIds }) => {
             };
 
             // handling internal error event
-            
             setCartIds(cartIds); //setting cartIds state as default items
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
 

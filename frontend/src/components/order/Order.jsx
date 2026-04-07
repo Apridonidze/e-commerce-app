@@ -1,10 +1,10 @@
 import { useCookies } from "react-cookie"
-import { BACKEND_URL } from "../../config"
+import { BACKEND_URL } from "../../../config"
 import axios from "axios"
 import OrderCheckbox from "./OrderCheckbox"
 import { useEffect, useRef, useState } from "react"
-import SubmitOrder from "./SubmitOrder"
-import PaymentMessage from "../alerts/PaymentMessage"
+import SubmitOrder from "../SubmitOrder"
+import PaymentMessage from "../../alerts/PaymentMessage"
 
 const Order = ({ setCart, cart }) => {
 
