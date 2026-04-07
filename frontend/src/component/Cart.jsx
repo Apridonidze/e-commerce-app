@@ -1,16 +1,15 @@
-import { useState } from "react"
-
-import { useCookies } from "react-cookie"
-import Item from "./Item"
-import { useEffect } from "react"
 import axios from "axios"
+import { useCookies } from "react-cookie"
+
+import { useEffect } from "react"
 import { BACKEND_URL } from "../../config"
 
+import Item from "./Item"
 
-const Cart = ({ setToggleOrder, setCart, cart }) => {
+const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
 
     const [cookies] = useCookies(['token'])
-    //remove useeefect and use userContext for acartitems
+
     useEffect(() => {
 
         const fetchCartItems = async() => {
@@ -23,9 +22,8 @@ const Cart = ({ setToggleOrder, setCart, cart }) => {
                 setCart(cartItems.data.cartItems)
 
             }catch(err){
-                // toggle error message
                 setCart([])
-                console.log(err)
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
             }
         }
 

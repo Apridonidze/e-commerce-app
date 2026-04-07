@@ -2,7 +2,7 @@ import axios from 'axios'
 import { BACKEND_URL } from '../../config'
 import { useCookies } from 'react-cookie'
 
-const Item = ({ prod, prodId, key, setCart, cart }) => {
+const Item = ({ prod, cartIds}) => {
 
     const [cookies] = useCookies(['token'])
 
@@ -11,7 +11,7 @@ const Item = ({ prod, prodId, key, setCart, cart }) => {
         try{
 
             await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setCart()})
-            setCart(cart.filter(c => c.product_id !== prod.product_id))
+            cartIds.filter(c => c.product_id !== prod.product_id)
             
         }catch(err){
 
@@ -20,7 +20,7 @@ const Item = ({ prod, prodId, key, setCart, cart }) => {
     }
 
     return(
-        <div className="item-container d-flex">
+        <div className="item-container d-flex" key={prod.products_id}>
             <div className="item-start">
                 {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod?.images)[0]}`} style={{maxHeight:'80px' , maxWidth : '80px'}}/>}
             </div>

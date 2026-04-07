@@ -32,8 +32,8 @@ const Dashboard = () => {
     
     const [ cookies ] = useCookies(['token']); //defining user cookies
     const { user } = useContext(UserContext);
-    const { cardDetails } = useContext(UserContext); //defining user data from user context
-    
+    const { cardDetails} = useContext(UserContext); //defining user data from user context
+
     const [cart , setCart] = useState([]);//state to store cart items
     
     const [toggleCard,setToggleCard] = useState(false);
@@ -96,13 +96,13 @@ const Dashboard = () => {
                     <div className="dashboard-container">
 
                         <div className="dashboard-start">
-                            {!user ? 'loadingg' : <User />  } {/* add user skeleton here */}
+                            {!user ? 'loadingg' : <User setToggleAlert={setToggleAlert}/>  } {/* add user skeleton here */}
                             {!cardDetails ? 'loading' : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }{/* add cardholder loading */}
                         </div>
 
                         <div className="dashboard-end">
-                            {/* add loading skeleton here */}
-                            <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
+                            {/* add loading skeleton here  .load cart when cartIds is defined*/}
+                            <section id='cart-items'><Cart setToggleAlert={setToggleAlert} setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
                             <section id='order-list'><OrderList /></section>
                         </div>
 
