@@ -181,6 +181,7 @@
 .cart-start {
     width: 100%;
     max-width: 880px;
+    min-height: 180px;
 }
 
 .empty-cart-container {
@@ -189,7 +190,7 @@
 
 .empty-cart-wrapper {
     width: 100%;
-}
+}   
 .cart-center {
     background-color: var(--component-bg);
     color: var(--text-color);

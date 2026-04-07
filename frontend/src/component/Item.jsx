@@ -1,24 +1,4 @@
-import axios from 'axios'
-import { BACKEND_URL } from '../../config'
-import { useCookies } from 'react-cookie'
-
-const Item = ({ prod, setCart, cart}) => {
-
-    const [cookies] = useCookies(['token'])
-
-
-    const handleDeleteFromCart = async(e) => {
-        try{
-
-            await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp); setCart()})
-            setCart(cart.filter(c => c.product_id !== prod.product_id))
-            
-        }catch(err){
-
-            return
-        }
-    }
-
+const Item = ({ prod, handleDeleteFromCart}) => {
     return(
         <div className="item-container d-flex" key={prod.products_id}>
             <div className="item-start">
@@ -34,8 +14,7 @@ const Item = ({ prod, setCart, cart}) => {
                 <img src='' alt="cart-icon" onClick={() => {handleDeleteFromCart(prod?.products_id)}}/> {/* add image */}
             </div>
         </div>
-    )
-}
+    );
+};
 
-
-export default Item
+export default Item; //exporting component

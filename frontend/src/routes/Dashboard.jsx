@@ -31,10 +31,7 @@ const Dashboard = () => {
     const { hash } = useLocation(); //defining hash from current url
     
     const [ cookies ] = useCookies(['token']); //defining user cookies
-    const { user } = useContext(UserContext);
-    const { cardDetails} = useContext(UserContext); //defining user data from user context
-
-    const [cart , setCart] = useState([]);//state to store cart items
+    const { user , cardDetails , cartIds, setCartIds } = useContext(UserContext); //defining user data from user context
     
     const [toggleCard,setToggleCard] = useState(false);
     const [toggleOrder,setToggleOrder] = useState(false);
@@ -83,7 +80,7 @@ const Dashboard = () => {
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             
             {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
-            {toggleOrder && cardDetails?.last4 ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div>  : <></>}
+            {toggleOrder && cardDetails?.last4 ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCartIds={setCartIds} cartIds={cartIds}/></div>  : <></>}
             
             <div className="main-body " >
 
@@ -102,7 +99,7 @@ const Dashboard = () => {
 
                         <div className="dashboard-end w-100 h-100">
                             {/* add loading skeleton here  .load cart when cartIds is defined*/}
-                            <section id='cart-items'><Cart setToggleAlert={setToggleAlert} setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
+                            <section id='cart-items'><Cart setToggleAlert={setToggleAlert} setToggleOrder={setToggleOrder} cartIds={cartIds} setCartIds={setCartIds}/></section>
                             <section id='order-list'><OrderList /></section>
                         </div>
 

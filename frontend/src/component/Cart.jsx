@@ -1,39 +1,38 @@
 import axios from "axios";
 import { useCookies } from "react-cookie"; //importing react libraries
 
-import { useEffect } from "react"; //importing react state
 import { BACKEND_URL } from "../../config"; //importing backend url from config file
 
 import Item from "./Item"; //importing Item component to display cart items 
 import EmptyCart from "./EmptyCart";
 
-const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
+const Cart = ({ setToggleAlert, setToggleOrder, setCartIds, cartIds }) => {
 
     const [cookies] = useCookies(['token']); //defining user cookies
 
-    useEffect(() => {
+    const handleDeleteFromCart = async(e) => {
 
-        const fetchCartItems = async() => {//fetching user cart items from backend
-            try{
+        try{
 
-                const cartItems = await axios.get(`${BACKEND_URL}/api/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}}); //calling api
-                
-                if(cartItems.status === 204)return setCart([]); //handing 204 status code and setting cart state as empty array
-                setCart(cartItems.data.cartItems); //storing data in state
-
-            }catch(err){ //handling errors
-
-                setCart([]); //setting cart state as empty array
-                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+            const response = await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}})
             
-            };
-        };
+            if(response.status === 200) {
+                setCartIds(cartIds.filter(c => c.product_id !== e))
+                setToggleAlert({status: true, type: "Success", statusCode: 200, message: "Product Removed From Cart Successfully"}); //toggling error message if customer intent could not be geneated
+            }
+            
+        }catch(err){
+            if(err.response?.status === 404) { //handling 404 status code
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: "Item Not Found In Your Cart"}); //toggling error message if customer intent could not be geneated
+                return
+            }
 
-        fetchCartItems(); //declearing function
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
 
-    },[]);
+        }
+    }
 
-    const total = cart.reduce((sum, item) => {
+    const total = cartIds.reduce((sum, item) => {
         const price = item.sales_price ?? item.price ?? 0;
         const amount = item.amount ?? 1;
 
@@ -46,21 +45,23 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
 
             <div className="cart-main">
                 <div className="cart-start p-3">
-                    {cart?.length !== 0 ? cart.map((prod) => (       
-                        <Item prod={prod} setCart={setCart} cart={cart}/>
+                    {cartIds?.length !== 0 ? cartIds.map((prod) => (       
+                        <Item prod={prod} handleDeleteFromCart={handleDeleteFromCart}/>
                     )) : <EmptyCart />}
                 </div>
 
-                <div className="cart-end p-3 d-flex justify-content-between align-items-center">
-                    <div className="cart-end-left d-flex flex-column">
-                        <span className="fw-light" style={{fontSize : '12px', letterSpacing : '0.5px'}}>CART TOTAL</span>
-                        <span className="price fs-4 fw-bold">${total.toFixed(2)}</span>
-                        <span style={{fontSize : '12px'}}>{total < 39 ? "*Cart total should be more than 40.00$ to place an order" : ""}</span>
-                    </div>
-                    <div className="cart-end-right">
-                        <button className="buttonComponent btn btn-none text-white px-2 py-2" onClick={() => setToggleOrder(true)} disabled={cart.length !== 0 && total > 39 ? false: true}>Checkout Now <i class="fa-solid fa-arrow-right"></i></button>
-                    </div>
-                </div>
+                {cartIds.length !== 0 ? 
+                    <div className="cart-end p-3 d-flex justify-content-between align-items-center">
+                        <div className="cart-end-left d-flex flex-column">
+                            <span className="fw-light" style={{fontSize : '12px', letterSpacing : '0.5px'}}>CART TOTAL</span>
+                            <span className="price fs-4 fw-bold">${total.toFixed(2)}</span>
+                            <span style={{fontSize : '12px'}}>{total < 39 ? "*Cart total should be more than 40.00$ to place an order" : ""}</span>
+                        </div>
+                        <div className="cart-end-right">
+                            <button className="buttonComponent btn btn-none text-white px-2 py-2" onClick={() => setToggleOrder(true)} disabled={cartIds.length !== 0 && total > 39 ? false: true}>Checkout Now <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div> 
+                :  <></>}
             </div>
             
         </div >

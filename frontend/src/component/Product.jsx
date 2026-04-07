@@ -29,7 +29,7 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
             if(response.status === 200)setIsInCart(false); //removing from state if api success
             
         } catch(err){ //handling errors
-            if(err.status === 404){ //reutrning 404 status code if product is not found in your cart 
+            if(err.response?.status === 404){ //reutrning 404 status code if product is not found in your cart 
                 setIsInCart(false);//returning false state since we do not have item in cart
                 setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message and passing error message
             }else{ //handling internal error
