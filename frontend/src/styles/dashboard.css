@@ -24,8 +24,69 @@
     background: var(--component-bg);
     width: 100%;
     max-width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .user-container div {
     background-color: var(--component-bg);
+}
+
+.icon-bg {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  min-height: 64px;
+  background: rgba(16, 185, 129, 0.15) !important;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-bg i {
+  font-size: 28px;
+  color: #10b981;
+  line-height: 1;
+}
+
+.user-row {
+    padding: 0.3rem 0rem;
+}
+
+.user-row span{
+    font-weight: 500;
+    font-size: 15px;
+    color: #10b981;
+}
+
+.user-row h6{
+    font-size: 20px;
+}
+
+.logoutBtn i {
+    color: #dc3545;
+}
+
+.logoutBtn {
+    color: #dc3545;
+    border: 2px solid #dc354526;
+}
+
+.logoutBtn:hover{
+    background-color: #dc3545;
+    color: white;
+}
+.logoutBtn:hover i {
+    color: white !important;
+}
+
+
+@media (max-width: 768px) {
+    .user-container{
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+    }
 }

@@ -32,24 +32,34 @@ const User = () => {
 
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
 
-            <div className="user-container">
+            <div className="user-container p-3 rounded-2">
 
-                <div className="user-container-top">
+                <div className="user-container-top d-flex align-items-center gap-2">
                     
                     <div className="user-container-top-start">
-                        
+                        <div class="icon-bg"><i class="fa-regular fa-circle-user"></i></div>
                     </div>
+
                     <div className="user-container-top-end">
-                        <h6>{user?.fullname}</h6>
+                        <h5 className='fw-medium'>{user.fullname}</h5>
                         <small>{user !== null && user.role === 'admin' ? `Admin` : "Customer"}</small>
                     </div>
     
                 </div>
 
                 <div className="user-container-bottom">
-                    <h1>{user?.email}</h1>
-                    <h1>{[user?.country_code , ' ' , user?.phone]}</h1>
-                    <button className='btn btn-danger' onClick={() => {handleLogout()}}>Logout</button>
+                    
+                    <div className="user-row">
+                        <span>Email Address</span>
+                        <h6>{user.email}</h6>
+                    </div>
+
+                    <div className="user-row">
+                        <span>Contact Number</span>
+                        <h6>{[user.country_code , ' ' , user.phone]}</h6>
+                    </div>
+                    
+                    <button className='logoutBtn btn w-100' onClick={() => {handleLogout()}}><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
                 </div>
 
             </div>

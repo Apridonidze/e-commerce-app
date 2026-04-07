@@ -82,6 +82,9 @@ const Dashboard = () => {
             
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             
+            {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
+            {toggleOrder && cardDetails?.last4 ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div>  : <></>}
+            
             <div className="main-body " >
 
                 <div className="main-start"><Sidebar /></div>
@@ -90,15 +93,19 @@ const Dashboard = () => {
 
                     <div className="main-header mb-3"><Header /></div>
                     
-                    <User />
-                    <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId}/>
+                    <div className="dashboard-container">
 
-                    {toggleCard ? <div className="card-details-container bg-dark position-absolute w-100 h-100 start-0 top-0"><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
+                        <div className="dashboard-start">
+                            {user == null ? 'loadingg' : <User />  } {/* add user skeleton here */}
+                            <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId}/>
+                        </div>
 
-                    {toggleOrder && cardDetails?.last4 ? <div><div className="bg-dark position-absolute w-100 h-100 start-0 top-0" onClick={() => setToggleOrder(false)}></div> <Order setCart={setCart} cart={cart}/></div>  : <></>}
+                        <div className="dashboard-end">
+                            <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
+                            <section id='order-list'><OrderList /></section>
+                        </div>
 
-                    <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
-                    <section id='order-list'><OrderList /></section>
+                    </div>
                     
                 </div>
             </div>
