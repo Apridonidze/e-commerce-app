@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";//importing link from react-router-dom library
+
 const EmptyCart = () => {
     return (
         <div className="empty-cart-container w-100">
@@ -5,9 +7,9 @@ const EmptyCart = () => {
                 <div className="icon-bg my-2"><i className="fa-solid fa-cart-shopping"></i></div>
                 <h4>Your Cart Is Empty</h4>
                 <small>Browse products and add them to your cart.</small>
-                <button className="buttonComponent mt-4 btn btn-none text-white px-2 py-2">
+                <Link to='/'><button  className="buttonComponent mt-4 btn btn-none text-white px-2 py-2">
                     <i className="fa-regular fa-compass"></i> Explore
-                </button>
+                </button></Link>
             </div>
         </div>
     );

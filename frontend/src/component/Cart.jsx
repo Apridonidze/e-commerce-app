@@ -46,7 +46,7 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
 
             <div className="cart-main">
                 <div className="cart-start p-3">
-                    {cart?.length !== 0 ? cart.slice(0, 5).map((prod) => (       
+                    {cart?.length !== 0 ? cart.map((prod) => (       
                         <Item prod={prod} setCart={setCart} cart={cart}/>
                     )) : <EmptyCart />}
                 </div>
@@ -55,9 +55,10 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
                     <div className="cart-end-left d-flex flex-column">
                         <span className="fw-light" style={{fontSize : '12px', letterSpacing : '0.5px'}}>CART TOTAL</span>
                         <span className="price fs-4 fw-bold">${total.toFixed(2)}</span>
+                        <span style={{fontSize : '12px'}}>{total < 39 ? "*Cart total should be more than 40.00$ to place an order" : ""}</span>
                     </div>
                     <div className="cart-end-right">
-                        <button className="buttonComponent btn btn-none text-white px-2 py-2" onClick={() => setToggleOrder(true)} disabled={cart.length == 0 ? true : false}>Checkout Now <i class="fa-solid fa-arrow-right"></i></button>
+                        <button className="buttonComponent btn btn-none text-white px-2 py-2" onClick={() => setToggleOrder(true)} disabled={cart.length !== 0 && total > 39 ? false: true}>Checkout Now <i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>

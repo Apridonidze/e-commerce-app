@@ -100,7 +100,7 @@ const Dashboard = () => {
                             {!cardDetails ? 'loading' : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }{/* add cardholder loading */}
                         </div>
 
-                        <div className="dashboard-end border w-100 h-100">
+                        <div className="dashboard-end w-100 h-100">
                             {/* add loading skeleton here  .load cart when cartIds is defined*/}
                             <section id='cart-items'><Cart setToggleAlert={setToggleAlert} setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
                             <section id='order-list'><OrderList /></section>
