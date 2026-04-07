@@ -56,7 +56,7 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
                         <span className="price fs-4 fw-bold">${total.toFixed(2)}</span>
                     </div>
                     <div className="cart-end-right">
-                        <button className="btn btn-none text-white px-2 py-2" onClick={() => setToggleOrder(true)} disabled={cart.length == 0 ? true : false}>Checkout Now <i class="fa-solid fa-arrow-right"></i></button>
+                        <button className="buttonComponent btn btn-none text-white px-2 py-2" onClick={() => setToggleOrder(true)} disabled={cart.length == 0 ? true : false}>Checkout Now <i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>
