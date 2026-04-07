@@ -6,7 +6,7 @@ import { UserContext } from "../../context/UserContext";
 import { useCookies } from "react-cookie";
 import { useRef } from "react";
 
-const CardDetails = () => {
+const CardDetails = ({ toggleCard }) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -42,10 +42,19 @@ const CardDetails = () => {
     }
 
     useEffect(() => {
-        document.body.style.overflow = 'hidden'
+        
+        if (toggleCard) {
+            document.documentElement.scrollTop = 0;
 
-        return () => document.body.style.overflow = ''
-    } , [])
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+        }
+
+        return () => {document.body.style.overflow = ''; document.documentElement.style.overflow = ''};
+    }, [toggleCard]);
 
     return(
         <div className="card-details-container w-50 mx-auto mt-5 p-3 rounded-2">

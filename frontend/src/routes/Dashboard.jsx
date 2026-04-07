@@ -79,7 +79,7 @@ const Dashboard = () => {
             
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             
-            {toggleCard ? <div className="bg cursor" onClick={() => setToggleCard(false)}><div className="card-details-background"></div><Elements stripe={stripePromise}><CardDetails /></Elements></div> : <></>}
+            {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background" onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard}/></Elements></div></div>: <></>}
             {toggleOrder && cardDetails?.last4 ? <div><div className="bg" onClick={() => setToggleOrder(false)}></div> <Order setCartIds={setCartIds} cartIds={cartIds}/></div>  : <></>}
             
             <div className="main-body " >
