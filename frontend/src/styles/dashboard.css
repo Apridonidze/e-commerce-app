@@ -178,6 +178,16 @@
     color: var(--text-color);
 }
 
+.cart-start{
+    background-color: var(--component-bg);
+    overflow: hidden;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.cart-start * {
+    background-color: var(--component-bg);
+}
+
 .cart-end{
     background-color: var(--dark-bg);
 }
@@ -186,6 +196,20 @@
     background-color: var(--dark-bg);
 }
 
+.cart-end-right button,
+.cart-end-right button:hover,
+.cart-end-right button:active,
+.cart-end-right button:focus,
+.cart-end-right button:focus-visible {
+    font-weight: 600;
+    background-color: #10b981;
+    color: white;
+}
+
+.cart-end-right i {
+    color: white;
+}
+/*  */
 @media (max-width: 768px) {
     .user-container{
         display: flex;

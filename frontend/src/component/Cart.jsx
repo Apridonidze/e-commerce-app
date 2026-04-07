@@ -37,26 +37,26 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
         const amount = item.amount ?? 1;
 
         return sum + Number(price) * Number(amount);
-    }, 0);
+    }, 0); //calculating total price of items 
 
     return(
-        <div className="cart-container">
+        <div className="cart-container overflow-hidden rounded-3">
             <h3>Current Cart</h3>
 
-            <div className="cart-main rounded-3">
-                <div className="cart-start">
+            <div className="cart-main">
+                <div className="cart-start p-3">
                     {cart?.length !== 0 ? cart.slice(0, 5).map((prod , prodId) => (       
                         <Item prod={prod} prodId={prodId} key={prodId} setCart={setCart} cart={cart} />
                     )) : 'no cart items'}
                 </div>
 
-                <div className="cart-end d-flex justify-content-between align-items-center">
+                <div className="cart-end p-3 d-flex justify-content-between align-items-center">
                     <div className="cart-end-left d-flex flex-column">
-                        <span className="fw-light">Total</span>
-                        <span className="price fs-5 fw-bold">${total.toFixed(2)}</span>
+                        <span className="fw-light" style={{fontSize : '12px', letterSpacing : '0.5px'}}>CART TOTAL</span>
+                        <span className="price fs-4 fw-bold">${total.toFixed(2)}</span>
                     </div>
                     <div className="cart-end-right">
-                        <button onClick={() => setToggleOrder(true)} disabled={cart.length == 0 ? true : false}>Order Items</button>
+                        <button className="btn btn-none text-white px-2 py-2" onClick={() => setToggleOrder(true)} disabled={cart.length == 0 ? true : false}>Checkout Now <i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>
