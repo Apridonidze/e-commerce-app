@@ -101,6 +101,7 @@ const Dashboard = () => {
                         </div>
 
                         <div className="dashboard-end">
+                            {/* add loading skeleton here */}
                             <section id='cart-items'><Cart setToggleOrder={setToggleOrder} setCart={setCart} cart={cart}/></section>
                             <section id='order-list'><OrderList /></section>
                         </div>
@@ -114,5 +115,7 @@ const Dashboard = () => {
         </div>
     );
 };
+
+// create loading sjkeletons for selected components
 
 export default Dashboard; //exporting component
