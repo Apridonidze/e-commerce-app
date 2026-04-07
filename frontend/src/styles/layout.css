@@ -270,9 +270,9 @@
   gap: 2rem;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0rem 2rem;
 }
 
-/* BRAND */
 .footer-brand {
   display: flex;
   align-items: flex-start;
@@ -284,7 +284,6 @@
   color: #10b981;
 }
 
-/* COLUMNS */
 .footer-column {
   display: flex;
   flex-direction: column;
@@ -309,10 +308,9 @@
   transform: translateX(3px);
 }
 
-/* BOTTOM SECTION */
 .footer-row2 {
   margin-top: 2rem;
-  padding-top: 1rem;
+  padding: 1rem 0rem;
 
   display: flex;
   justify-content: space-between;
@@ -325,7 +323,6 @@
   margin-right: auto;
 }
 
-/* ICONS */
 .footer-icons {
   display: flex;
   gap: 1rem;
@@ -343,7 +340,6 @@
   color: var(--text-color);
 }
 
-/* ICONS */
 .footer-icons {
   display: flex;
   align-items: center;
@@ -405,10 +401,10 @@
 .delete-product-container {
   overflow: hidden;
   background-color: var(--product-bg-color) !important;
-  position: fixed; /* use fixed to overlay screen */
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* centers both vertically and horizontally */
+  transform: translate(-50%, -50%); 
   z-index: 1001 !important;
   width: 70%;
   max-width: 500px;
@@ -417,7 +413,7 @@
   padding: 20px;
   color: var(--text-color);
   text-align: center;
-  display: flex; /* optional, if you want to align content inside */
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -471,8 +467,6 @@
 
 @media (max-width : 925px){
 
-
- 
 
   .main-container{
     gap: 0px;
