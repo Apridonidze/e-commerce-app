@@ -1,35 +1,37 @@
-import axios from "axios"
-import { useCookies } from "react-cookie"
+import axios from "axios";
+import { useCookies } from "react-cookie"; //importing react libraries
 
-import { useEffect } from "react"
-import { BACKEND_URL } from "../../config"
+import { useEffect } from "react"; //importing react state
+import { BACKEND_URL } from "../../config"; //importing backend url from config file
 
-import Item from "./Item"
+import Item from "./Item"; //importing Item component to display cart items 
 
 const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
 
-    const [cookies] = useCookies(['token'])
+    const [cookies] = useCookies(['token']); //defining user cookies
+
 
     useEffect(() => {
 
-        const fetchCartItems = async() => {
+        const fetchCartItems = async() => {//fetching user cart items from backend
             try{
 
-                const cartItems = await axios.get(`${BACKEND_URL}/api/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
+                const cartItems = await axios.get(`${BACKEND_URL}/api/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}}); //calling api
                 
-                if(cartItems.status === 204)return setCart([]);
+                if(cartItems.status === 204)return setCart([]); //handing 204 status code and setting cart state as empty array
+                setCart(cartItems.data.cartItems); //storing data in state
 
-                setCart(cartItems.data.cartItems)
+            }catch(err){ //handling errors
 
-            }catch(err){
-                setCart([])
+                setCart([]); //setting cart state as empty array
                 setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
-            }
-        }
+            
+            };
+        };
 
-        return () => fetchCartItems()
+        fetchCartItems(); //declearing function
 
-    },[])
+    },[]);
 
     return(
         <div className="cart-container">
@@ -47,9 +49,7 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCart, cart }) => {
                 {cart.length === 0 ? <button disabled>Order Items</button> : <button onClick={() => setToggleOrder(true)}>Order Items</button>}
             </div>
         </div >
-    )
-}
+    );
+};
 
-//TODO : create loading skeleton for compoentn
-
-export default Cart
+export default Cart; //exporting component
