@@ -1,7 +1,7 @@
 import axios from "axios";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { BACKEND_URL } from "../../../config";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
 import { useCookies } from "react-cookie";
 import { useRef } from "react";
@@ -41,17 +41,39 @@ const CardDetails = () => {
 
     }
 
+    useEffect(() => {
+        document.body.style.overflow = 'hidden'
+
+        return () => document.body.style.overflow = ''
+    } , [])
+
     return(
-        <div className="bg-white">
-            <form onSubmit={handleSaveCard}>
-                <CardElement />
-                <button type="submit" ref={submitRef}>Save Card Details</button>    
-            </form>
+        <div className="card-details-container w-50 mx-auto mt-5 p-3 rounded-2">
+
+            <div className="card-details-top d-flex align-items-start gap-1 justify-content-between">
+                <div className="card-details-top-start">
+                    <h2>Payment Method</h2>
+                    <span>Add secure card for your future purchases.</span>
+                </div>
+                <div className="card-details-top-end">
+                    <div className="close-button ">
+                    <button className="btn btn-none border-0"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="card-details-main">
+                <form onSubmit={handleSaveCard}>
+                    <CardElement />
+                    <div className="card-details-buttons d-flex flex-column">
+                        <button type="submit" ref={submitRef}>Save Card Details</button>   
+                        <button className="btn btn-none">Cancle</button>    
+                    </div> 
+                </form>
+            </div>
         </div>
     );
 };
 
-//TODO : add card details here
-//TODO : create loading skeletons for whole component
 
 export default CardDetails;
