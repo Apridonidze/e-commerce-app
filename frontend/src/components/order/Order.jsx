@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import SubmitOrder from "../order/SubmitOrder"
 import PaymentMessage from "../../alerts/PaymentMessage"
 
-const Order = ({ setCartIds, cartIds}) => {
+const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
     
     const [cookies] = useCookies(['token'])
     const [selectedItems, setSelectedItems] = useState([])
@@ -125,7 +125,7 @@ const Order = ({ setCartIds, cartIds}) => {
             </div>
             
             {cartIds?.map(prod => (
-                <OrderCheckbox prod={prod} cartIds={cartIds} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef}/>
+                <OrderCheckbox prod={prod} cartIds={cartIds} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef} handleDeleteFromCart={handleDeleteFromCart}/>
             ))}
 
             <div className="order-bottom">

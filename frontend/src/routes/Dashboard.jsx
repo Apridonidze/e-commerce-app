@@ -74,13 +74,38 @@ const Dashboard = () => {
 
     }, [toggleOrder, cardDetails]); //triggering logic once these dependencies change
 
+    const handleDeleteFromCart = async(e) => {
+
+        try{
+
+            const response = await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            
+            if(response.status === 200) { //hadning response success event
+                setCartIds(cartIds.filter(c => c.product_id !== e)); //removing item from cartIds state
+                setToggleAlert({status: true, type: "Success", statusCode: 200, message: "Product Removed From Cart Successfully"}); //toggling error message if customer intent could not be geneated
+            };
+            
+        }catch(err){
+            if(err.response?.status === 404) { //handling 404 status code
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: "Item Not Found In Your Cart"}); //toggling error message if customer intent could not be geneated
+                setCartIds(cartIds); //setting cartIds state as default items
+                return; //breaking action
+            };
+
+            // handling internal error event
+            setCartIds(cartIds); //setting cartIds state as default items
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+
+        };
+    };
+
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start">
             
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
             
             {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background mx-auto"  onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard} setToggleCard={setToggleCard} setToggleAlert={setToggleAlert}/></Elements></div></div> : <></>}
-            {toggleOrder && cardDetails?.last4 ? <div className="bg" onClick={() => setToggleOrder(false)}><div className="order-background m-auto rounded-2 mt-5 p-2"  onClick={(e) => e.stopPropagation()}><Order setCartIds={setCartIds} cartIds={cartIds}/></div></div>  : <></>}
+            {toggleOrder && cardDetails?.last4 ? <div className="bg" onClick={() => setToggleOrder(false)}><div className="order-background m-auto rounded-2 mt-5 p-2"  onClick={(e) => e.stopPropagation()}><Order setCartIds={setCartIds} cartIds={cartIds} handleDeleteFromCart={handleDeleteFromCart}/></div></div>  : <></>}
             
             <div className="main-body " >
 
@@ -99,7 +124,7 @@ const Dashboard = () => {
 
                         <div className="dashboard-end w-100 h-100">
                             {/* add loading skeleton here  .load cart when cartIds is defined*/}
-                            <section id='cart-items'><Cart setToggleAlert={setToggleAlert} setToggleOrder={setToggleOrder} cartIds={cartIds} setCartIds={setCartIds}/></section>
+                            <section id='cart-items'><Cart setToggleAlert={setToggleAlert} setToggleOrder={setToggleOrder} cartIds={cartIds} setCartIds={setCartIds} handleDeleteFromCart={handleDeleteFromCart}/></section>
                             <section id='order-list'><OrderList /></section>
                         </div>
 

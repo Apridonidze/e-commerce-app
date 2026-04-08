@@ -1,23 +1,5 @@
-import axios from "axios"
-import { useCookies } from "react-cookie"
+const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef, handleDeleteFromCart }) => {
 
-import { BACKEND_URL } from "../../../config"
-
-const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef }) => {
-
-    const [cookies] = useCookies(['token'])
-
-    const handleDeleteFromCart = async(e) => {
-        try{
-
-            await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp)})
-            setCart(cart.filter(c => c.product_id !== prod.product_id))
-            
-        }catch(err){
-
-            return
-        }
-    }
     return(
         <div className="order-checkbox-container d-flex justify-content-between" key={prod.products_id}>
 
@@ -38,7 +20,7 @@ const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef }) => {
                                 <h5>{prod?.title}</h5>
                                 <small>{prod.description?.length < 25 ? `${prod?.description.slice(0,25)}...` : prod?.description}</small>
                             </div>
-                            
+
                             <div className="item-bottom">
                                 <div className="d-flex align-items-center gap-3 my-2" >
                                 {!prod?.sales_price ? 
