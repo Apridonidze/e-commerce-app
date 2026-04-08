@@ -7,6 +7,8 @@ import SubmitOrder from "../order/SubmitOrder"
 import PaymentMessage from "../../alerts/PaymentMessage"
 import '../../styles/checkbox.css'
 
+import { Link } from "react-router-dom"
+
 const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
     
     const [cookies] = useCookies(['token'])
@@ -152,8 +154,13 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
             </div>
 
             <div className="order-bottom">
-                <button className="btn bg-none">Cancle</button>
-                <button className="btn" onClick={() => setToggleOrder(true)} disabled={totalPrice < 40 ? true : false}>Order Items</button>
+                <div className="order-bottom-start">
+                    <Link to='/'><i class="fa-solid fa-arrow-left-long me-2"></i>Continue Browsing</Link>
+                </div>
+                <div className="order-bottom-end d-flex gap-2">
+                    <button className="btn bg-none">Cancle</button>
+                    <button className="btn" onClick={() => setToggleOrder(true)} disabled={totalPrice < 40 ? true : false}>Order Items</button>
+                </div>
             </div>
         </div>
     )

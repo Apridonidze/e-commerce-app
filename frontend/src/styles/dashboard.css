@@ -388,15 +388,32 @@
     border-top: var(--btn-border);
     display: flex;
     gap: 10px;
+    max-width: 100%;
+    justify-content: space-between !important;
+}
+
+.order-bottom-end{
+    display: flex;
+    align-items: center ;
+    justify-content: end !important;
+}
+
+.order-bottom button {
+    height: 45px;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .order-bottom button:nth-child(1){
-    width: 30%;
+    width: 10%;
+    min-width: fit-content;
+    color: white;
     border: var(--border);
     background-color: var(--component-bg);
 }
 .order-bottom button:nth-child(2) {
-    width: 70%;
+    width: 25%;
+    min-width: fit-content;
     border: none;
     color: white;
     background-color: #10b981;

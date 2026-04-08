@@ -12,7 +12,7 @@ const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef, handleDeleteFromCart
     };
 
     return(
-        <div className="order-checkbox-container d-flex justify-content-between py-2 border-bottom mb-2 mx-2 gap-2" key={prod.products_id}>
+        <div className="order-checkbox-container d-flex justify-content-between py-2 mb-2 mx-2 gap-2" key={prod.products_id}>
 
             <div className="checkbox-start d-flex justify-content-between">
 
@@ -52,7 +52,7 @@ const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef, handleDeleteFromCart
                 </div>
 
                 <div className="checkbox-end mx-2">
-                    <i class="fa-solid fa-trash-can text-center justify-content-center d-flex fs-4" onClick={() => {handleDeleteFromCart(prod?.products_id)}}></i>
+                    <i class="fa-solid fa-trash-can text-center justify-content-center d-flex fs-5" onClick={() => {handleDeleteFromCart(prod?.products_id)}}></i>
                 </div>
 
             </div>
