@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./checkbox.css";
+import "../../styles/checkbox.css";
 
 export default function CustomCheckbox({ checked: initial = false, onChange }) {
   const [checked, setChecked] = useState(initial);
@@ -12,7 +12,7 @@ export default function CustomCheckbox({ checked: initial = false, onChange }) {
 
   return (
     <div className={`checkbox ${checked ? "checked" : ""}`} onClick={handleToggle}>
-      {checked && <span className="checkmark">✔</span>}
+      {checked && <span className="checkmark"><i class="fa-solid fa-check text-white"></i></span>}
     </div>
   );
 }
