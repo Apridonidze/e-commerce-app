@@ -16,23 +16,24 @@ const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef, handleDeleteFromCart
                         </div>
                         <div className="item-end d-flex flex-column text-start gap-3">
                             
-                            <div className="item-top d-flex align-items-center justify-content-between">
+                            <div className="item-top d-flex flex-column align-items-start justify-content-start">
                                 <h5>{prod?.title}</h5>
                                 <small>{prod.description?.length < 25 ? `${prod?.description.slice(0,25)}...` : prod?.description}</small>
                             </div>
 
-                            <div className="item-bottom">
-                                <div className="d-flex align-items-center gap-3 my-2" >
+                            <div className="item-bottom d-flex align-items-center gap-3 my-2">
+                                
+                                <span className="amount">{prod.amount} Pieces In Cart</span>
+
                                 {!prod?.sales_price ? 
                                 <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${prod.price * prod.amount} </span> : 
 
-                                <div className="sales-price">
+                                  <div className="sales-price d-flex align-items-center  gap-2">
                                     <span style={{textDecoration: 'line-through', fontSize: '14px'}}>${prod.price} </span>
                                     <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${prod.sales_price * prod.amount} </span>
                                 </div>    
                             }
-                                    <span>{prod.amount}</span>
-                                </div>
+                                
                             </div>
 
                         </div>

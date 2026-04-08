@@ -113,7 +113,7 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
             {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setToggleOrder(false), setAddress('')}}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
             {togglePayment ? <div><div className="payment-success-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setTogglePayment(false)}}></div> <PaymentMessage /> </div> : <></>}
             <div className="order-top d-flex flex-column mb-2">
-                <div className="order-top-start d-flex align-items-center justify-content-between">
+                <div className="order-top-start d-flex align-items-start justify-content-between">
                     <div className="order-top-left">
                         <h4>Choose Products To Be Ordered</h4>
                         <span>Review your cart items before finalizing the order.</span>

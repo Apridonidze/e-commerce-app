@@ -390,6 +390,19 @@
     border-radius: 5px;
 }
 
+.item-bottom .amount {
+    background-color: #10b981;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 0.1rem 0.5rem ;
+    border-radius: 5px;
+}
+
+.order-checkbox-container input:checked{
+    background-color: red !important;
+}
+
 @media (max-width: 768px) {
     .user-container{
         display: flex;
