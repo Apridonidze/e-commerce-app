@@ -97,16 +97,29 @@ const Order = ({ setCartIds, cartIds}) => {
 
             {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setToggleOrder(false), setAddress('')}}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
             {togglePayment ? <div><div className="payment-success-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setTogglePayment(false)}}></div> <PaymentMessage /> </div> : <></>}
-            <div className="order-top">
-                <div className="top-start">
-                    <h3>Choose Products To Be Ordered</h3>
+            <div className="order-top d-flex flex-column mb-2">
+                <div className="order-top-start d-flex align-items-center justify-content-between">
+                    <div className="order-top-left">
+                        <h4>Choose Products To Be Ordered</h4>
+                        <span>Review your cart items before finalizing the order.</span>
+                    </div>
+                    <div className="order-top-right">
+                        <button className="btn btn-none border-0"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
                 </div>
+                
 
-                <div className="top-end d-flex">
-                    <h4>Total Price : {totalPrice}</h4>
+                <div className="order-top-end d-flex my-2 px-2 py-3 rounded-2 gap-3 align-items-center justify-content-start">
+                    
+                    <div className="d-flex align-items-center my-auto gap-2">
+                        <input type="checkbox" id="selectAll" name="selectAll" ref={selectAllRef} onChange={(e) => handleSelectAll(e)}/>
+                        <label htmlFor="selectAll">Select All ({cartIds.length})</label>
+                    </div>
 
-                    <label htmlFor="selectAll">Select All ({cartIds.length})</label>
-                    <input type="checkbox" id="selectAll" name="selectAll" ref={selectAllRef} onChange={(e) => handleSelectAll(e)}/>
+                    <div className="d-flex">
+                        <h5 className="my-auto d-flex align-items-center fs-6 gap-1">Total Price : <span className="fs-5" style={{color : '#10b981'}}>${totalPrice.toFixed(2)}</span></h5>
+                    </div>
+
                 </div>
 
             </div>
