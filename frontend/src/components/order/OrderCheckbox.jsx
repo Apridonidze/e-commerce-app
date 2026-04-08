@@ -8,8 +8,7 @@ const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef, handleDeleteFromCart
             <div className="checkbox-start d-flex justify-content-between">
 
                 <div className="d">
-                    <CheckBox />
-                    <input type="checkbox" id={prod?.product_id} onChange={(e) => handleCheckbox(e, Number(prod?.amount) , prod.sales_price ?? prod.price ?? 0)} ref={(e) => (checkboxRef.current[prod?.product_id] = e)}/>
+                    <CheckBox id={prod?.product_id} checkboxRef={checkboxRef} onChange={(e) => handleCheckbox(e, Number(prod?.amount), prod.sales_price ?? prod.price ?? 0)}/>
                 </div>
 
                 <div className="d-flex gap-3 pb-2">

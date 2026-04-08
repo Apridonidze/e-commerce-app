@@ -1,18 +1,12 @@
-import { useState } from "react";
-import "../../styles/checkbox.css";
+import '../../styles/checkbox.css'
 
-export default function CustomCheckbox({ checked: initial = false, onChange }) {
-  const [checked, setChecked] = useState(initial);
-
-  const handleToggle = () => {
-    const newValue = !checked;
-    setChecked(newValue);
-    onChange?.(newValue);
-  };
-
-  return (
-    <div className={`checkbox ${checked ? "checked" : ""}`} onClick={handleToggle}>
-      {checked && <span className="checkmark"><i class="fa-solid fa-check text-white"></i></span>}
-    </div>
+const CheckBox = ({id, onChange, checkboxRef, defaultChecked = false }) => {
+    return (
+        <label className="checkbox-wrapper">
+            <input type="checkbox" id={id} defaultChecked={defaultChecked} onChange={onChange} ref={(el) => (checkboxRef.current[id] = el)}/>
+            <span className="custom-box "><span className="checkmark"><i class="fa-solid fa-check text-white"></i></span></span>
+        </label>
   );
-}
+};
+
+export default CheckBox;
