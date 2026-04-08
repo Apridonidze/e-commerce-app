@@ -320,6 +320,10 @@
   margin-bottom: 8px;
 }
 
+.stripe-input-group.fail label{
+    color: #dd3c4c;
+}
+
 .stripe-input-group label {
   font-size: 14px;
   color: #6b7280;

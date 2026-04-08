@@ -114,7 +114,7 @@ const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
             base: {
                 color: '#94a3b8',
                 fontSize: '16px',
-                '::placeholder': {color: '#94a3b8',},
+                '::placeholder': {color: '#94a3b8'},
                 fontFamily: 'Arial, sans-serif',
                 letterSpacing: '0.5px',
                 lineHeight: '1.5',
@@ -144,22 +144,22 @@ const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
                 <form onSubmit={handleSaveCard}>
                    <div className="stripe-cart-wrapper">
 
-                        <div className={`stripe-input-group ${cardState.number.complete ? 'success' : ''}`} ref={numberRef}>
+                        <div className={`stripe-input-group ${cardState.number.complete ? 'success' : 'fail'}`} ref={numberRef}>
                             <label htmlFor="card-number">* Card Number</label>
                             <div className="stripe-input-wrapper" id="card-number" >
                             <CardNumberElement  options={options} onChange={(e) => {setCardState(prev => ({...prev, number: {complete : e.complete, error : e.error}}))}}/>
                             </div>
                         </div>
 
-                        <div className={`stripe-cart-row d-flex align-items-center borders ${cardState.expiry.complete ? 'success' : ''}`} ref={expireRef}>
-                            <div className="stripe-input-group flex-fill me-2">
+                        <div className="stripe-cart-row d-flex align-items-center borders" ref={expireRef}>
+                            <div className={`stripe-input-group flex-fill me-2 ${cardState.expiry.complete ? 'success' : 'fail'}`}>
                                 <label htmlFor="card-expiry">* Expiry</label>
                                 <div className="stripe-input-wrapper" id="card-expiry" >
                                     <CardExpiryElement options={options} onChange={(e) => {setCardState(prev => ({...prev, expiry: {complete : e.complete, error : e.error}}))}}/>
                                 </div>  
                             </div>
 
-                            <div className={`stripe-input-group flex-fill ${cardState.cvc.complete ? 'success' : ''}`} ref={cvcRef} >
+                            <div className={`stripe-input-group flex-fill ${cardState.cvc.complete ? 'success' : 'fail'}`} ref={cvcRef} >
                                 <label htmlFor="card-cvc">* CVC</label>
                                 <div className="stripe-input-wrapper" id="card-cvc" >
                                     <CardCvcElement  options={options} onChange={(e) => {setCardState(prev => ({...prev, cvc: {complete : e.complete, error : e.error}}))}}/>
