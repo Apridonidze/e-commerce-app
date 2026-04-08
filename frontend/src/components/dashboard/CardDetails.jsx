@@ -6,7 +6,7 @@ import { UserContext } from "../../context/UserContext";
 import { useCookies } from "react-cookie";
 import { useRef } from "react";
 
-const CardDetails = ({ toggleCard }) => {
+const CardDetails = ({ toggleCard, setToggleCard }) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -85,7 +85,7 @@ const options = {
                 </div>
                 <div className="card-details-top-end">
                     <div className="close-button ">
-                    <button className="btn btn-none border-0"><i class="fa-solid fa-xmark"></i></button>
+                    <button className="btn btn-none border-0" onClick={() => setToggleCard(false)}><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 </div>
             </div>
@@ -120,7 +120,7 @@ const options = {
 
                     <div className="card-details-buttons mt-3 d-flex flex-column">
                         <button className="cardSaveBtn btn text-white fw-medium border-none" type="submit" ref={submitRef}>Save Details</button>   
-                        <button className="btn btn-none fw-medium mt-2">Cancle</button>    
+                        <button className="btn btn-none fw-medium mt-2" onClick={() => setToggleCard(false)}>Cancle</button>    
                     </div> 
                 </form>
             </div>
