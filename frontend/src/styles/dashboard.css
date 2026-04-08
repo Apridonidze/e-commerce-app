@@ -246,7 +246,7 @@
 /*  */
 
 .item-container{
-    border-bottom: var(--border);
+    border-top: var(--border);
 }
 
 .amount-buttons{
@@ -278,6 +278,7 @@
     background-color: var(--bg-color);
     color: #10b981;
 }
+
 /*  */
 
 .card-details-background{
@@ -376,6 +377,37 @@
 
 /*  */
 
+.order-body{
+    height: 100%;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.order-bottom {
+    padding-top: 2rem;
+    border-top: var(--btn-border);
+    display: flex;
+    gap: 10px;
+}
+
+.order-bottom button:nth-child(1){
+    width: 30%;
+    border: var(--border);
+    background-color: var(--component-bg);
+}
+.order-bottom button:nth-child(2) {
+    width: 70%;
+    border: none;
+    color: white;
+    background-color: #10b981;
+}
+
+.checkbox-end i{
+    padding: 5px;
+    margin: auto;
+    color: var(--text-color);
+}
+
 .order-background{
     width: 100%;
     max-width: 1200px;
@@ -399,13 +431,16 @@
     border-radius: 5px;
 }
 
-.order-checkbox-container input:checked{
-    background-color: red !important;
-}
-
 /*  */
 
 @media(max-width : 540px){
+    .order-body {
+        width: 100%;
+    }
+    .order-container{
+        margin: 0px;
+        padding: 10px 5px;
+    }
     .order-checkbox-container .checkbox-main {
         display: flex;
         flex-direction: column;

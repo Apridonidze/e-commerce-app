@@ -5,9 +5,6 @@ import OrderCheckbox from "./OrderCheckbox"
 import { useEffect, useRef, useState } from "react"
 import SubmitOrder from "../order/SubmitOrder"
 import PaymentMessage from "../../alerts/PaymentMessage"
-import CheckBox from "./CheckBox"
-
-
 import '../../styles/checkbox.css'
 
 const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
@@ -116,6 +113,7 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
 
             {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setToggleOrder(false), setAddress('')}}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
             {togglePayment ? <div><div className="payment-success-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setTogglePayment(false)}}></div> <PaymentMessage /> </div> : <></>}
+            
             <div className="order-top d-flex flex-column mb-2">
                 <div className="order-top-start d-flex align-items-start justify-content-between">
                     <div className="order-top-left">
@@ -147,12 +145,15 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
 
             </div>
             
-            {cartIds?.map(prod => (
+            <div className="order-body">
+                {cartIds?.map(prod => (
                 <OrderCheckbox prod={prod} cartIds={cartIds} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef} handleDeleteFromCart={handleDeleteFromCart}/>
-            ))}
+                ))}
+            </div>
 
             <div className="order-bottom">
-                <button className="btn btn-primary" onClick={() => setToggleOrder(true)} disabled={totalPrice < 40 ? true : false}>Order Items</button>
+                <button className="btn bg-none">Cancle</button>
+                <button className="btn" onClick={() => setToggleOrder(true)} disabled={totalPrice < 40 ? true : false}>Order Items</button>
             </div>
         </div>
     )
