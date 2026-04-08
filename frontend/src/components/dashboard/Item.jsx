@@ -21,7 +21,7 @@ const Item = ({ prod, handleDeleteFromCart}) => {
                 <div className="item-bottom">
                     
                     <small>{prod.description?.length < 25 ? `${prod?.description.slice(0,25)}...` : prod?.description}</small>
-                    <div className="d-flex align-items-center gap-3" >
+                    <div className="d-flex align-items-center gap-3 my-2" >
 
                         <div className="amount-buttons row-end d-flex gap-2 align-items-center" style={{cursor : 'pointer'}}>
                             <button className="btn border-0" disabled>-</button>

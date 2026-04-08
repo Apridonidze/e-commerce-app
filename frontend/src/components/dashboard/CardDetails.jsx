@@ -56,28 +56,30 @@ const CardDetails = ({ toggleCard }) => {
         return () => {document.body.style.overflow = ''; document.documentElement.style.overflow = ''};
     }, [toggleCard]);
 
-
-        const options = {
-        style: {
-            base: {
-            color: '#fff',
-            fontSize: '16px',
-            '::placeholder': {
-                color: '#9ca3af',
-            },
-            },
-            invalid: {
-            color: '#dc3545',
-            },
-        },
-    };
+const options = {
+  style: {
+    base: {
+      color: '#94a3b8',          // text color
+      fontSize: '16px',
+      '::placeholder': {
+        color: '#94a3b8',        // placeholder text color
+      },
+      fontFamily: 'Arial, sans-serif',
+      letterSpacing: '0.5px',
+      lineHeight: '1.5',
+    },
+    invalid: {
+      color: '#dc3545',          // invalid/error text
+    },
+  },
+};
 
 
     return(
-        <div className="card-details-container w-50 mx-auto mt-5 p-3 rounded-2">
+        <div className="card-details-container w-100 mt-5 p-3 rounded-2">
 
             <div className="card-details-top d-flex align-items-start gap-1 justify-content-between">
-                <div className="card-details-top-start">
+                <div className="card-details-top-start mb-4">
                     <h2>Payment Method</h2>
                     <span>Add secure card for your future purchases.</span>
                 </div>
@@ -90,14 +92,35 @@ const CardDetails = ({ toggleCard }) => {
 
             <div className="card-details-main">
                 <form onSubmit={handleSaveCard}>
-                    <div className="stripe-cart-wrapper">
-                        <CardNumberElement />
-                        <CardExpiryElement />
-                        <CardCvcElement />
-                    </div>
-                    <div className="card-details-buttons d-flex flex-column">
-                        <button type="submit" ref={submitRef}>Save Card Details</button>   
-                        <button className="btn btn-none">Cancle</button>    
+                   <div className="stripe-cart-wrapper">
+
+                        <div className="stripe-input-group">
+                            <label htmlFor="card-number">Card Number</label>
+                            <div className="stripe-input-wrapper" id="card-number">
+                            <CardNumberElement  options={options}/>
+                            </div>
+                        </div>
+
+                        <div className="stripe-cart-row d-flex align-items-center borders">
+                            <div className="stripe-input-group flex-fill me-2">
+                            <label htmlFor="card-expiry">Expiry</label>
+                            <div className="stripe-input-wrapper" id="card-expiry">
+                                <CardExpiryElement options={options}/>
+                            </div>
+                            </div>
+                            <div className="stripe-input-group flex-fill">
+                            <label htmlFor="card-cvc">CVC</label>
+                            <div className="stripe-input-wrapper" id="card-cvc">
+                                <CardCvcElement  options={options}/>
+                            </div>
+                            </div>
+                        </div>
+
+                        </div>
+
+                    <div className="card-details-buttons mt-3 d-flex flex-column">
+                        <button className="cardSaveBtn btn text-white fw-medium border-none" type="submit" ref={submitRef}>Save Details</button>   
+                        <button className="btn btn-none fw-medium mt-2">Cancle</button>    
                     </div> 
                 </form>
             </div>
