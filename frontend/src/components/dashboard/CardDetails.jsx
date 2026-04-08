@@ -22,7 +22,7 @@ const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
         cvc: { complete: false, error: null }
     }); //state for stirpe element input
 
-    const [alertText ,setAlertText] = useState('')
+    const [alertText ,setAlertText] = useState(''); //state for small alert text at the bottom of component
 
     const numberRef = useRef(null);
     const expireRef = useRef(null);
@@ -34,7 +34,7 @@ const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
         e.preventDefault(); //preventing page reload on function tirgger
         submitRef.current.disabled = true; //disabling button after function is tirggered to avoid user spammnig requests to third party api 
 
-        setAlertText('Do Not Close Window Yet. Wait For Response Message')
+        setAlertText('Card Details Processing. Do Not Close Window Yet!'); //setting alert message
 
         if(!numberRef && !numberRef.current && !expireRef && !expireRef.current && !cvcRef && !cvcRef.current) return; //returning empty promise if refs are undefined || null
         
@@ -46,6 +46,7 @@ const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
             const result = await stripe.confirmCardSetup(data.clientSecret, { payment_method: { card: cardNumber } }); //validating user card intent 
 
             setToggleAlert({status: true, type: "Success", statusCode:200, message: 'Card Details Saved Successfully!'}); //toggling success message
+            setAlertText(''); //clearing small alert messasge
 
             const refs = [expireRef, numberRef, cvcRef]; //array of stripe element refs
             const errorCodes = [{code : 'incomplete_expiry', ref : expireRef} , {code : 'incomplete_number', ref: numberRef}, {code :'incomplete_cvc', ref : cvcRef}]; //array for stripe errro codes and targeted elements that cause eerror to style them based on response
@@ -60,13 +61,16 @@ const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
                     };
                 });
 
+                setAlertText(''); //clearing small alert messasge
                 return submitRef.current.disabled = true; //disabling submit button if error is occured
             };
             
+            setAlertText(''); //clearing small alert messasge
             refs.map(ref => {ref.current.classList.remove('error') ; ref.current.classList.add('success')}); //addding success states to valid stirpe element contents
             setTimeout(() => { setToggleCard(false) }, 3000); //disabling component after 3 seconds after successfully saving card details
 
         }catch(err){ //handling internal errors
+            setAlertText(''); //clearing small alert messasge
             setToggleAlert({status: true, type: "Internal_Error", statusCode: 500, message: String(err.response?.data?.message || err.message || 'Provider Error')}); //triggerring 
         };
     };
@@ -164,7 +168,14 @@ const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
                     <div className="card-details-buttons mt-3 d-flex flex-column">
                         <button className="cardSaveBtn btn text-white fw-medium border-none" type="submit" ref={submitRef}>Save Details</button>   
                         <button className="btn btn-none fw-medium mt-2" onClick={() => setToggleCard(false)}>Cancle</button>
-                        <span className="mt-3 text-center" style={{fontSize : '12px'}}>{alertText}</span>
+                        
+                        <span style={{height: '35px'}}>
+                                {alertText !== '' ? <span className="mt-3 text-center d-flex align-items-center gap-2 justify-contents-center mx-auto" style={{fontSize : '12px'}}>
+                                <div className="dots-loader"><span></span><span></span><span></span></div>    
+                                {alertText}
+                            </span>  : <></>}
+                        </span>
+
                     </div> 
                 </form>
             </div>
