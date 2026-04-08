@@ -314,14 +314,6 @@
   height: 48px;
 }
 
-.stripe-input-wrapper.focused {
-  border-color: #10b981;
-}
-
-.stripe-input-wrapper.error {
-  border-color: #dc3545;
-}
-
 .stripe-input-group {
   display: flex;
   flex-direction: column;
@@ -339,7 +331,7 @@
     color: var(--text-color);
 }
 
-.cardSaveBtn, .cardSaveBtn:hover, .cardSaveBtn:focus , .cardSaveBtn:active{
+.cardSaveBtn, .cardSaveBtn:hover, .cardSaveBtn:focus , .cardSaveBtn:active, .cardSaveBtn:disabled{
     background-color: #10b981;
     height: 50px;
     font-size: 17px;
