@@ -1,4 +1,4 @@
-import '../../styles/checkbox.css'
+import '../../styles/checkbox.css'; //importing css file
 
 const CheckBox = ({id, onChange, checkboxRef, defaultChecked = false }) => {
     return (
@@ -9,4 +9,4 @@ const CheckBox = ({id, onChange, checkboxRef, defaultChecked = false }) => {
   );
 };
 
-export default CheckBox;
+export default CheckBox; //exporting component
