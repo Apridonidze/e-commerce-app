@@ -3,7 +3,7 @@ import CheckBox from './CheckBox'
 const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef, handleDeleteFromCart }) => {
 
     return(
-        <div className="order-checkbox-container d-flex justify-content-between" key={prod.products_id}>
+        <div className="order-checkbox-container d-flex justify-content-between py-2 border-bottom mb-2" key={prod.products_id}>
 
             <div className="checkbox-start d-flex justify-content-between">
 
@@ -11,7 +11,7 @@ const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef, handleDeleteFromCart
                     <CheckBox id={prod?.product_id} checkboxRef={checkboxRef} onChange={(e) => handleCheckbox(e, Number(prod?.amount), prod.sales_price ?? prod.price ?? 0)}/>
                 </div>
 
-                <div className="d-flex gap-3 pb-2">
+                <div className="checkbox-main d-flex gap-3 pb-2">
 
                         <div className="item-start" style={{maxHeight:'120px' , maxWidth : '180px', maxWidth: '180px'}}>
                             {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod?.images)[0]}`} />}

@@ -5,6 +5,10 @@ import OrderCheckbox from "./OrderCheckbox"
 import { useEffect, useRef, useState } from "react"
 import SubmitOrder from "../order/SubmitOrder"
 import PaymentMessage from "../../alerts/PaymentMessage"
+import CheckBox from "./CheckBox"
+
+
+import '../../styles/checkbox.css'
 
 const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
     
@@ -127,8 +131,12 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
                 <div className="order-top-end d-flex my-2 px-2 py-3 rounded-2 gap-3 align-items-center justify-content-start">
                     
                     <div className="d-flex align-items-center my-auto gap-2">
-                        <input type="checkbox" id="selectAll" name="selectAll" ref={selectAllRef} onChange={(e) => handleSelectAll(e)}/>
-                        <label htmlFor="selectAll">Select All ({cartIds.length})</label>
+                        <label className="checkbox-wrapper">
+                            <input type="checkbox" id="selectAll" name="selectAll" ref={selectAllRef} onChange={(e) => handleSelectAll(e)}/>
+
+                            <span className="custom-box"><span className="checkmark"><i class="fa-solid fa-check text-white"></i></span></span>
+                            <span className="checkbox-label ps-2 my-auto">Select All ({cartIds.length})</span>
+                        </label>
                     </div>
 
                     <div className="d-flex">

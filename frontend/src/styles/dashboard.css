@@ -403,6 +403,26 @@
     background-color: red !important;
 }
 
+/*  */
+
+@media(max-width : 540px){
+    .order-checkbox-container .checkbox-main {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .order-checkbox-container .checkbox-main image {
+        width: 100%;
+        max-width: 100% !important;
+    }
+    .item-start{
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: 100% !important;
+    }
+}
+
 @media (max-width: 768px) {
     .user-container{
         display: flex;
