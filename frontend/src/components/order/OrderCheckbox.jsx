@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie"
 
 import { BACKEND_URL } from "../../../config"
 
-const OrderCheckbox = ({ prod, prodId, key, setCart, cart, handleCheckbox, checkboxRef }) => {
+const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef }) => {
 
     const [cookies] = useCookies(['token'])
 
@@ -19,29 +19,51 @@ const OrderCheckbox = ({ prod, prodId, key, setCart, cart, handleCheckbox, check
         }
     }
     return(
-        <div className="order-checkbox-container d-flex justify-content-between">
+        <div className="order-checkbox-container d-flex justify-content-between" key={prod.products_id}>
 
             <div className="checkbox-start d-flex justify-content-between">
+
                 <div className="d">
                     <input type="checkbox" id={prod?.product_id} onChange={(e) => handleCheckbox(e, Number(prod?.amount) , Number(prod?.price))} ref={(e) => (checkboxRef.current[prod?.product_id] = e)}/>
-                    {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod?.images)[0]}`} style={{maxHeight:'80px' , maxWidth : '80px'}}/>}
                 </div>
-                <div className="d">
-                    <h3>{prod?.title}</h3>
-                    <small>{prod.description?.length < 40 ? `${prod?.description.slice(0,40)}...` : prod?.description}</small>
+
+                <div className="d-flex gap-3 pb-2">
+
+                        <div className="item-start" style={{maxHeight:'120px' , maxWidth : '180px', maxWidth: '180px'}}>
+                            {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod?.images)[0]}`} />}
+                        </div>
+                        <div className="item-end d-flex flex-column text-start gap-3">
+                            
+                            <div className="item-top d-flex align-items-center justify-content-between">
+                                <h5>{prod?.title}</h5>
+                                <small>{prod.description?.length < 25 ? `${prod?.description.slice(0,25)}...` : prod?.description}</small>
+                            </div>
+                            
+                            <div className="item-bottom">
+                                <div className="d-flex align-items-center gap-3 my-2" >
+                                {!prod?.sales_price ? 
+                                <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${prod.price * prod.amount} </span> : 
+
+                                <div className="sales-price">
+                                    <span style={{textDecoration: 'line-through', fontSize: '14px'}}>${prod.price} </span>
+                                    <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${prod.sales_price * prod.amount} </span>
+                                </div>    
+                            }
+                                    <span>{prod.amount}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
                 </div>
-                <div className="d">
-                    <h3>{prod?.amount} Pieces In Cart</h3>
-                    <small>{prod?.price * prod?.amount}GEL</small>
+
+                <div className="checkbox-end">
+                    <i class="fa-solid fa-trash-can" onClick={() => {handleDeleteFromCart(prod?.products_id)}}></i>
                 </div>
+
             </div>
+    );
+};
 
-            <div className="checkbox-end">
-                <img src='' alt="delete-icon" onClick={() => {handleDeleteFromCart(prod?.products_id)}}/> {/* add image */}
-            </div>
-
-        </div>
-    )
-}
-
-export default OrderCheckbox
+export default OrderCheckbox;
