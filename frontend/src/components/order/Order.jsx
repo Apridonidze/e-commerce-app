@@ -47,7 +47,14 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
         if(checked && cartIds.length !== 0){
 
             let items = cartIds.map((cartIds, _) => (cartIds.price * cartIds.amount))
-            let total = items.reduce((sum, item) => sum + item);
+            const total = items.reduce((sum, item) => {
+
+            const price = item.sales_price ?? item.price ?? 0; //defining items price (if it has sales price or regular one)
+            const amount = item.amount ?? 1; //defining items amount
+
+            return sum + Number(price) * Number(amount); //returning total price
+
+    }, 0); //calculating total price of items 
             let allItems = cartIds.map((cartIds,_) => (cartIds))
             
             setTotalPrice(total)
@@ -71,6 +78,7 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
         const checked = e.target.checked;
 
         if (checked) {
+            
             setSelectedItems((prev) => [...prev, {id , amount, price}]);
         } else {
             setSelectedItems((prev) => prev.filter((item) => item.id !== id));
@@ -86,7 +94,14 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
             selectAllRef.current.checked = false
         }
 
-        let total = selectedItems.reduce((sum, item) => sum + Number(item.price) * Number(item.amount), 0);     
+        const total = selectedItems.reduce((sum, item) => {
+
+        const price = item.sales_price ?? item.price ?? 0; //defining items price (if it has sales price or regular one)
+        const amount = item.amount ?? 1; //defining items amount
+
+        return sum + Number(price) * Number(amount); //returning total price
+
+    }, 0); //calculating total price of items 
 
         setTotalPrice(total)
         
