@@ -22,15 +22,19 @@ const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
         cvc: { complete: false, error: null }
     }); //state for stirpe element input
 
+    const [alertText ,setAlertText] = useState('')
+
     const numberRef = useRef(null);
     const expireRef = useRef(null);
     const cvcRef = useRef(null);
     const submitRef = useRef(null); //refs for CardDetails.jsx elements
 
-
     const handleSaveCard = async (e) => {
         
         e.preventDefault(); //preventing page reload on function tirgger
+        submitRef.current.disabled = true; //disabling button after function is tirggered to avoid user spammnig requests to third party api 
+
+        setAlertText('Do Not Close Window Yet. Wait For Response Message')
 
         if(!numberRef && !numberRef.current && !expireRef && !expireRef.current && !cvcRef && !cvcRef.current) return; //returning empty promise if refs are undefined || null
         
@@ -56,7 +60,7 @@ const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
                     };
                 });
 
-                return submitRef.current.disabled = false; //disabling submit button if error is occured
+                return submitRef.current.disabled = true; //disabling submit button if error is occured
             };
             
             refs.map(ref => {ref.current.classList.remove('error') ; ref.current.classList.add('success')}); //addding success states to valid stirpe element contents
@@ -159,7 +163,8 @@ const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
 
                     <div className="card-details-buttons mt-3 d-flex flex-column">
                         <button className="cardSaveBtn btn text-white fw-medium border-none" type="submit" ref={submitRef}>Save Details</button>   
-                        <button className="btn btn-none fw-medium mt-2" onClick={() => setToggleCard(false)}>Cancle</button>    
+                        <button className="btn btn-none fw-medium mt-2" onClick={() => setToggleCard(false)}>Cancle</button>
+                        <span className="mt-3 text-center" style={{fontSize : '12px'}}>{alertText}</span>
                     </div> 
                 </form>
             </div>

@@ -341,6 +341,21 @@
     font-size: 17px;
     border: none;
 }
+/*  */
+
+.order-background{
+    width: 100%;
+    max-width: 1200px;
+    background-color: var(--component-bg);
+    overflow: hidden;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.order-container{
+    padding: 1rem 2rem;
+    border-radius: 5px;
+}
 
 @media (max-width: 768px) {
     .user-container{

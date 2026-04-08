@@ -93,7 +93,7 @@ const Order = ({ setCartIds, cartIds}) => {
     },[selectedItems, selectAllRef])
 
     return(
-        <div className="order-container bg-white position-relative" style={{right : '25vw', bottom : '25vw', zIndex : 99999}}>
+        <div className="order-container w-100" >
 
             {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setToggleOrder(false), setAddress('')}}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
             {togglePayment ? <div><div className="payment-success-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setTogglePayment(false)}}></div> <PaymentMessage /> </div> : <></>}
