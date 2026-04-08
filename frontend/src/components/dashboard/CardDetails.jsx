@@ -1,115 +1,103 @@
 import axios from "axios";
-import { CardElement,CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { BACKEND_URL } from "../../../config";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../context/UserContext";
-import { useCookies } from "react-cookie";
-import { useRef } from "react";
+import { useCookies } from "react-cookie"; //importing react libraries
+
+import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from "@stripe/react-stripe-js"; //importing stripe library and components
+
+import { useContext, useEffect, useState, useRef } from "react"; //importing react hooks
+import { UserContext } from "../../context/UserContext"; //importing user context
+
+import { BACKEND_URL } from "../../../config"; //importing backend url from config file
 
 const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
 
-    const [ cookies ] = useCookies(['token'])
+    const [ cookies ] = useCookies(['token']); //defining user cookies
+    const { cardDetails } = useContext(UserContext); //defining user card context
 
     const stripe = useStripe();
-    const elements = useElements();
-
-    const { cardDetails } = useContext(UserContext)
+    const elements = useElements(); //defining stripe elements variables
 
     const [cardState, setCardState] = useState({
         number: { complete: false, error: null },
         expiry: { complete: false, error: null },
         cvc: { complete: false, error: null }
-    });
+    }); //state for stirpe element input
 
-    const submitRef = useRef(null)
+    const numberRef = useRef(null);
+    const expireRef = useRef(null);
+    const cvcRef = useRef(null);
+    const submitRef = useRef(null); //refs for CardDetails.jsx elements
 
-    const numberRef = useRef(null)
-    const expireRef = useRef(null)
-    const cvcRef = useRef(null)
 
     const handleSaveCard = async (e) => {
-        e.preventDefault();
-
-        if(!numberRef && !numberRef.current && !expireRef && !expireRef.current && !cvcRef && !cvcRef.current) return;
         
-        try{
-            const { data } = await axios.post(`${BACKEND_URL}/api/stripe/create-setup-intent`, {customerId: cardDetails.customer_id} , {headers : {Authorization : `Bearer ${cookies.token}`}});
+        e.preventDefault(); //preventing page reload on function tirgger
 
-            const cardNumber = elements.getElement(CardNumberElement);
-            const result = await stripe.confirmCardSetup(data.clientSecret, { payment_method: { card: cardNumber } });
-
-            const refs = [expireRef, numberRef, cvcRef];
-            const errorCodes = [{code : 'incomplete_expiry', ref : expireRef} , {code : 'incomplete_number', ref: numberRef}, {code :'incomplete_cvc', ref : cvcRef}]
-
-            if (result.error) {
-
-                
-                errorCodes.forEach(err => {
-                    if(err.code == result.error.code){
-                        err.ref.current.classList.add('error');
-                    }else {
-                        err.ref.current.classList.remove('error');
-                    }
-                })
-
-                setToggleAlert({status: true, type: "Failed", statusCode:400, message: result.error.message});
-                submitRef.current.disabled = false;
-
-                return;
-            } 
+        if(!numberRef && !numberRef.current && !expireRef && !expireRef.current && !cvcRef && !cvcRef.current) return; //returning empty promise if refs are undefined || null
+        
+        try{//triggering stripe card functions to save user card details
             
-            refs.map(ref => {ref.current.classList.remove('error') ; ref.current.classList.add('success')})
-            setToggleAlert({status: true, type: "Success", statusCode:200, message: 'Card Details Saved Successfully!'});
+            const { data } = await axios.post(`${BACKEND_URL}/api/stripe/create-setup-intent`, {customerId: cardDetails.customer_id} , {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api call 
 
-        }catch(err){
-            setToggleAlert({status: true, type: "Internal_Error", statusCode: 500, message: String(err.response?.data?.message || err.message || 'Provider Error')});
+            const cardNumber = elements.getElement(CardNumberElement); //defining card number from stripe elements
+            const result = await stripe.confirmCardSetup(data.clientSecret, { payment_method: { card: cardNumber } }); //validating user card intent 
+
+            setToggleAlert({status: true, type: "Success", statusCode:200, message: 'Card Details Saved Successfully!'}); //toggling success message
+
+            const refs = [expireRef, numberRef, cvcRef]; //array of stripe element refs
+            const errorCodes = [{code : 'incomplete_expiry', ref : expireRef} , {code : 'incomplete_number', ref: numberRef}, {code :'incomplete_cvc', ref : cvcRef}]; //array for stripe errro codes and targeted elements that cause eerror to style them based on response
+
+            if (result.error) { //handling stripe errror messages
+                
+                errorCodes.forEach(err => { //mapping on errorCodes to check which stripe element caused errror
+                    if(err.code == result.error.code){ //adding error state to element that caused stripe error
+                        err.ref.current.classList.add('error');
+                    }else { //else removing stripe error message if any other input does not cause eerrors
+                        err.ref.current.classList.remove('error');
+                    };
+                });
+
+                return submitRef.current.disabled = false; //disabling submit button if error is occured
+            };
+            
+            refs.map(ref => {ref.current.classList.remove('error') ; ref.current.classList.add('success')}); //addding success states to valid stirpe element contents
+            setTimeout(() => { setToggleCard(false) }, 3000); //disabling component after 3 seconds after successfully saving card details
+
+        }catch(err){ //handling internal errors
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: 500, message: String(err.response?.data?.message || err.message || 'Provider Error')}); //triggerring 
         };
     };
 
-    useEffect(() => {
+    useEffect(() => { //handing page scrolling for bg and mian container aligmnet
 
-        if (toggleCard) {
-            document.documentElement.scrollTop = 0;
+        if (toggleCard) { //checking if toggleCard is true (if this component is mounted)
+            document.documentElement.scrollTop = 0; //scrolling user at the very top of the page
 
             document.body.style.overflow = 'hidden';
-            document.documentElement.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden'; // hidding page overflow to prevent users from scrolling page when component is triggered
         } else {
             document.body.style.overflow = '';
-            document.documentElement.style.overflow = '';
+            document.documentElement.style.overflow = ''; //disabling overflow styling if component is not triggered
         }
 
-        return () => {document.body.style.overflow = ''; document.documentElement.style.overflow = ''};
-    }, [toggleCard]);
+        return () => {document.body.style.overflow = ''; document.documentElement.style.overflow = ''}; //cleanup function to remove styling after component unmounts
+
+    }, [toggleCard]); //logic executes on toggleCard dependency change
+
 
     useEffect(() => {
         
-        if(!numberRef?.current || !expireRef?.current || !cvcRef?.current || !submitRef?.current) return;
+        if(!numberRef?.current || !expireRef?.current || !cvcRef?.current || !submitRef?.current) return; //returning empty promise if refs are undefined
 
-        const fields = [
-            { ref: numberRef, complete: cardState.number.complete },
-            { ref: expireRef, complete: cardState.expiry.complete },
-            { ref: cvcRef, complete: cardState.cvc.complete }
-        ];
+        const fields = [{ ref: numberRef, complete: cardState.number.complete },{ ref: expireRef, complete: cardState.expiry.complete },{ ref: cvcRef, complete: cardState.cvc.complete }]; //defining fields with refs and complete statuses to style them
 
-        fields.forEach(({ ref, complete }) => {
-            ref.current.classList.toggle('success', complete);
-        });
+        fields.forEach(({ ref, complete }) => ref.current.classList.toggle('success', complete)); //checking every filed and toggling success state if field input is valid
        
-       const isFormComplete = fields.every(f => f.complete);
-        submitRef.current.disabled = !isFormComplete;
+        const isFormComplete = fields.every(f => f.complete); //checking if every filed if valid
+        submitRef.current.disabled = !isFormComplete; // disabling/enabling submit button baed on if every field is valid/invalid 
 
-        console.log({
-        number: cardState.number.complete,
-        expiry: cardState.expiry.complete,
-        cvc: cardState.cvc.complete
-        });
+    },[cardState]); //logic executes on cardState dependency change
 
-
-    },[cardState])
-
-    
-
-    const options = {
+    const options = { //object to style base of stripe elements
         style: {
             base: {
                 color: '#94a3b8',
@@ -180,4 +168,4 @@ const CardDetails = ({ toggleCard, setToggleCard, setToggleAlert}) => {
 };
 
 
-export default CardDetails;
+export default CardDetails; //exporting component
