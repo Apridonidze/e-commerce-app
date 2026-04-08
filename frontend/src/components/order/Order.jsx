@@ -149,7 +149,7 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
             
             <div className="order-body">
                 {cartIds?.map(prod => (
-                <OrderCheckbox prod={prod} cartIds={cartIds} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef} handleDeleteFromCart={handleDeleteFromCart}/>
+                <   OrderCheckbox prod={prod} cartIds={cartIds} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef} handleDeleteFromCart={handleDeleteFromCart}/>
                 ))}
             </div>
 
