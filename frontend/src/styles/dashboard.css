@@ -491,6 +491,12 @@
     color: #10b981;
 }
 
+.form-group input , .form-group input:active , .form-group input:focus , .form-group input::placeholder , .form-group select:focus , .form-group select , .form-group select::placeholder , .form-group select:default {
+    background-color: var(--dark-bg) ;
+    border: none;
+    color: var(--text-color);
+}
+
 .form-group:has(.invalid) label {
     color: #dc3545 !important;
 }
