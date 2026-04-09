@@ -2,7 +2,10 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 
 import { useEffect, useState } from "react";
+
 import ToggleAddress from "./ToggleAddress";
+
+import { BACKEND_URL } from "../../../config";
 
 const Address = ({ setToggleAlert }) => {
 
@@ -45,7 +48,7 @@ const Address = ({ setToggleAlert }) => {
                 <h5 className="my-auto">Address Book</h5>
             </div>
 
-            {isLoading ? "Loading..." : 
+            {!isLoading ? "Loading..." : 
                 <div className="address-wrapper">
 
                     {addresses.length === 0 ? "No address Component" : addresses.map(address => 
