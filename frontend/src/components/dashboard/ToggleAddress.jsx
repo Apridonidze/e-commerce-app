@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BACKEND_URL } from "../../../config";
 import { useCookies } from "react-cookie";
 
-const ToggleAddress = ({ setToggleAdd, setToggleAlert }) => {
+const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd }) => {
 
     const regions = [
         "Tbilisi",
@@ -188,11 +188,26 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert }) => {
 
             };
         };
-    };;
+    };
 
+    useEffect(() => { //handing page scrolling for bg and mian container aligmnet
+
+        if (toggleAdd) { //checking if toggleCard is true (if this component is mounted)
+            document.documentElement.scrollTop = 0; //scrolling user at the very top of the page
+
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden'; // hidding page overflow to prevent users from scrolling page when component is triggered
+        } else {
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = ''; //disabling overflow styling if component is not triggered
+        }
+
+        return () => {document.body.style.overflow = ''; document.documentElement.style.overflow = ''}; //cleanup function to remove styling after component unmounts
+
+    }, [toggleAdd]); //logic executes on toggleCard dependency change
 
     return(
-        <div className="toggle-address-container">
+        <div className="toggle-address-container position-relative">
             <div className="toggle-address-top d-flex align-items-center justify-content-between">
                 <h4>Add New Address</h4>
                 <button className="btn btn-none border-0" onClick={() => setToggleAdd(false)}><i class="fa-solid fa-xmark"></i></button>

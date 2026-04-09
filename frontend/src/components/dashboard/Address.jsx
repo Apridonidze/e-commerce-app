@@ -38,6 +38,10 @@ const Address = ({ setToggleAlert, setToggleAdd }) => {
     return(
         <div className="addresses-container my-3">
 
+            <div className="address-row">
+                <h5 className="my-auto">Address Book</h5>
+            </div>
+
             {!isLoading ? "Loading..." : 
                 <div className="address-wrapper">
 
