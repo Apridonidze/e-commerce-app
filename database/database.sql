@@ -137,3 +137,13 @@ CREATE TABLE `support_messages` (
   KEY `fk_support_sender` (`sender_id`),
   CONSTRAINT `fk_support_sender` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=376 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ========================
+-- TABLE: address
+-- ========================
+CREATE TABLE `address` (
+  `user_id` int(11) DEFAULT NULL,
+  `address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`address`)),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci |
