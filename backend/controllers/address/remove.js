@@ -2,11 +2,11 @@ const db = require("../../utils/db");
 
 async function remove (req,res){
 
-    if(!Number(req.query.id)) return res.status(400).json({message : "Invalid Address Id"}) 
+    if(!Number(req.body.id)) return res.status(400).json({message : "Invalid Address Id"}) 
 
     try{
 
-        const { id } = req.query;
+        const { id } = req.body;
 
         const [ row ] = await db.query('delete from address where id = ?' , [ id ]);
         if(row.affectedRows === 0) return res.status(400).json({message : "Address Id Not Found"})

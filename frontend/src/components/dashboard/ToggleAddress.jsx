@@ -169,7 +169,12 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert }) => {
 
         };
 
+        if(!isValid) submitRef.current.disabled = true;
+
         if(isValid){
+            
+            submitRef.current.disabled = false;
+            
             try{
 
                 const response = axios.post(`${BACKEND_URL}/api/address/`, { address, apartment, city, state, zipcode } , {headers : {Authorization : `Bearer ${cookies.token}`}});
@@ -195,28 +200,28 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert }) => {
             <form onSubmit={(e) => validateForm(e)}>
                 <div className="toggle-address-main">
 
-                    <div className="form-group my-2" ref={addressRef}>
+                    <div className="form-group" >
                         <label htmlFor="address">Street Address</label>
-                        <input className="form-control" maxLength={100} type="text" placeholder="1221 Tbilisis Qucha" name="address" onChange={(e) => setAddress(e.target.value)} value={address} />
+                        <input className="form-control" ref={addressRef} maxLength={100} type="text" placeholder="1221 Tbilisis Qucha" name="address" onChange={(e) => setAddress(e.target.value)} value={address} />
                         <span>{addressErr}</span>
                     </div>
 
-                    <div className="form-group my-2" ref={apartmentRef}>
+                    <div className="form-group" >
                         <label htmlFor="apartment">Apartment (optional)</label>
-                        <input className="form-control" maxLength={20} type="text" placeholder="Studio 403" name="apartment" onChange={(e) => setApartment(e.target.value)} value={apartment} />
+                        <input className="form-control" ref={apartmentRef} maxLength={20} type="text" placeholder="Studio 403" name="apartment" onChange={(e) => setApartment(e.target.value)} value={apartment} />
                         <span>{apartmentErr}</span>
                     </div>
 
-                    <div className="form-group my-2" ref={cityRef}>
+                    <div className="form-group" >
                         <label htmlFor="city">City</label>
-                        <input className="form-control" maxLength={50} type="text" placeholder="Tbilisi" name="city" onChange={(e) => setCity(e.target.value)} value={city} />
+                        <input className="form-control" ref={cityRef} maxLength={50} type="text" placeholder="Tbilisi" name="city" onChange={(e) => setCity(e.target.value)} value={city} />
                         <span>{cityErr}</span>
                     </div>
 
-                    <div className="form-group my-2" ref={stateRef}>
+                    <div className="form-group" >
 
                         <label htmlFor="state">State / Province</label>
-                        <select className="select-region form-control" name="state" onChange={(e) => setState(e.target.value)} value={state} >
+                        <select className="select-region form-control" ref={stateRef} name="state" onChange={(e) => setState(e.target.value)} value={state} >
                             <option value="">Select Region</option>
                             {regions.map(region => (<option key={region} value={region}>{region}</option>))}
                         </select>
@@ -224,16 +229,16 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert }) => {
                         <span>{stateErr}</span>
                     </div>
 
-                    <div className="form-group my-2" ref={zipcodeRef}>
+                    <div className="form-group" >
                         <label htmlFor="zip">ZIP / Postal Code</label>
-                        <input className="form-control" maxLength={10} type="text" placeholder="E.g 0144" name="zip" onChange={(e) => setZipCode(e.target.value)} value={zipcode} />
+                        <input className="form-control" ref={zipcodeRef} maxLength={10} type="text" placeholder="E.g 0144" name="zip" onChange={(e) => setZipCode(e.target.value)} value={zipcode} />
                         <span>{zipcodeErr}</span>
                     </div>
                 </div>
 
-                <div className="toggle-address-end">
+                <div className="toggle-address-end mt-5 d-flex align-items-center justify-content-between">
                     <button className="btn btn-none">Cancle</button>
-                    <button className="btn" ref={submitRef}>Save Address</button>
+                    <button className="btn" ref={submitRef} >Save Address</button>
                 </div>
             </form>
         </div>
