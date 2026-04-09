@@ -3,7 +3,7 @@ const CardHolder = ({ setToggleCard, generateCustomerId, cardDetails }) => {
         <div className="card-holder-container">
             <div className="card-row">
                 <h5 className="my-auto">Card Details</h5>
-                <span className="my-auto" onClick={() => {cardDetails?.customer_id ? setToggleCard(true) :  generateCustomerId()}}>{cardDetails?.last4 ? 'Edit Card' : 'Add Card'}</span>
+                <span className="my-auto" onClick={() => {cardDetails?.customer_id ? setToggleCard(true) :  generateCustomerId()}}>{cardDetails?.last4 ? 'Edit Card' : ''}</span>
             </div>
 
             <div className="card-container p-3 rounded-2">
