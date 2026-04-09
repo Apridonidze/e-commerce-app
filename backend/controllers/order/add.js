@@ -30,7 +30,6 @@ async function add(req, res) {
         return res.status(200).json({message: "Your Items Have Been Ordered Successfully, Wait For Delivery"});//returning success message
 
     } catch (err) {
-        console.log(err)
         if (err.code === 'ER_NO_REFERENCED_ROW_2') return res.status(400).json({ message: 'Order Items Not Found In Database'}); //returns 400 status message if no product is same as productid is in db
         if (err.code === 'ER_DUPLICATE') return res.status(400).json({ message: 'Duplicate Order Creation'});//returns 400 status message if order_id is duplicated in db
         return res.status(500).json({message: "Could Not Create Order. Try Later"}); //returning 500 status code error if internal error occurs
