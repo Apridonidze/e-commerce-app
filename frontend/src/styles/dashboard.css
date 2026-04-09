@@ -400,6 +400,11 @@
     text-decoration: underline;
 }
 
+.item-container-top h5:hover{
+    color: cornflowerblue;
+    text-decoration: underline;
+}
+
 .order-bottom-end{
     display: flex;
     align-items: center ;
