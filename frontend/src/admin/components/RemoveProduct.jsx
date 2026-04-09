@@ -40,7 +40,7 @@ const RemoveProduct = ({ setToggleRemove, toggleRemove, setToggleAlert }) => {
     },[])
 
     return(
-        <div className="delete-product-container position-absolute bg-danger h-auto border-top border-5 border-danger" style={{zIndex : 999}}>
+        <div className="delete-product-container position-fixed bg-danger h-auto border-top border-5 border-danger" style={{zIndex : 999}}>
             
             <div className="delete-close w-100 text-end">
                 <button className="btn btn-none border-0" onClick={() => setToggleRemove({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
