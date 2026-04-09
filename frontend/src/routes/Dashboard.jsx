@@ -38,7 +38,8 @@ const Dashboard = () => {
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
     const [orders,setOrders] = useState([]); //state to store users orders
-
+    const [addresses, setAddresses] = useState([]);//state to display addresses 
+    
     useEffect(() => {//scrolling user to sections if user chooses section from sidebar
         
         if(!hash) return; //returning empty promise if hash is not defiend from url
@@ -117,7 +118,21 @@ const Dashboard = () => {
             };
         };
 
-        fetchOrders(); //declearing function
+        const fetchAddresses = async() => {
+            try{
+
+                const addresses = await axios.get(`${BACKEND_URL}/api/address`, {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api call
+                
+                if(addresses.status === 204) return setAddresses([]); //handling 204 status code
+                if(addresses.status === 200) return setAddresses(addresses.data.addresses); //handling 200 staus code
+
+            }catch(err){
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+            }
+        }
+
+        fetchAddresses();
+        fetchOrders(); //declearing functions
 
     },[]); //logic triggers on component mount
 
