@@ -41,8 +41,6 @@ const Sign = () => {
 
     const navigator = useNavigate()
 
-    //TODO add max limits to each inpout (name shoulb be less than 55 chars)
-
     const SubmitForm = async (e) => {
 
         e.preventDefault()
