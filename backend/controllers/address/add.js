@@ -1,38 +1,103 @@
-const db = require('../../utils/db'); //importing db utility
+const db = require('../../utils/db');
 
-async function add (req,res){
-    
+const regions = [
+        "Tbilisi",
+        "Adjara",
+        "Imereti",
+        "Samegrelo-Zemo Svaneti",
+        "Kvemo Kartli",
+        "Shida Kartli",
+        "Kakheti",
+        "Guria",
+        "Racha-Lechkhumi and Kvemo Svaneti",
+        "Samtskhe-Javakheti",
+        "Mtskheta-Mtianeti",
+        "California",
+        "Texas",
+        "Florida",
+        "New York",
+        "Illinois",
+        "Pennsylvania",
+        "Ohio",
+        "Georgia (US)",
+        "North Carolina",
+        "Michigan",
+        "Bavaria",
+        "Baden-Württemberg",
+        "North Rhine-Westphalia",
+        "Hesse",
+        "Saxony",
+        "Berlin",
+        "Hamburg",
+        "Brandenburg",
+        "Lower Saxony",
+        "Thuringia"
+];
+const regionSet = new Set(regions);
+
+async function add(req, res) {
+
     const { address, apartment, city, state, zipcode } = req.body;
-    console.log(req.body)
     const errors = {};
 
-    const addressRegex1 = /^\d+\s+[A-Za-z\s]+$/;
-    const addressRegex2 = /^[A-Za-z\s]+\s+\d+$/;
+    const LIMITS = { address: 100, apartment: 20, city: 50, zipcode: 10};
 
-    if (!address || typeof address !== "string") {
+    const addressRegex = /^(\d+\s+[a-zA-Z0-9\s]+|[a-zA-Z0-9\s]+\s+\d+)$/;
+    const cityRegex = /^[a-zA-Z\s-]+$/;
+    const zipRegex = /^[0-9]{3,10}$/;
+
+    if (!address || typeof address !== "string" || !address.trim()) {
         errors.address = "Address is required.";
-    } else if (!addressRegex1.test(address) && !addressRegex2.test(address)) {
-        errors.address = "Address must include street number and street name (e.g. '12 Main St' or 'Main St 12').";
+    } else if (address.length > LIMITS.address) {
+        errors.address = `Max ${LIMITS.address} characters allowed.`;
+    } else if (!addressRegex.test(address.trim())) {
+        errors.address = "Format must be '12 Rustaveli' or 'Rustaveli 12'.";
     }
 
-    if (apartment && apartment.length > 10)errors.apartment = "Apartment must be less than 10 characters.";
-    if (!city || city.length < 2)errors.city = "City must be at least 2 characters.";
-    if (!state || state.length < 2) errors.state = "state must be at least 2 characters.";
-    if (!state || state.length < 2) errors.state = "State must be at least 2 characters.";
-    if (!zipcode || !/^\d{4,10}$/.test(zipcode)) errors.zipcode = "Zipcode must be between 4–10 digits.";
+    if (apartment) {
+        if (typeof apartment !== "string") {
+            errors.apartment = "Invalid apartment format.";
+        } else if (apartment.length > LIMITS.apartment) {
+            errors.apartment = `Max ${LIMITS.apartment} characters allowed.`;
+        } else if (apartment.length < 2) {
+            errors.apartment = "Too short.";
+        }
+    }
 
-    if (Object.keys(errors).length > 0) return res.status(400).json({message: "Validation failed", errors});
-    
+    if (!city || typeof city !== "string" || !city.trim()) {
+        errors.city = "City is required.";
+    } else if (city.length > LIMITS.city) {
+        errors.city = `Max ${LIMITS.city} characters allowed.`;
+    } else if (!cityRegex.test(city.trim())) {
+        errors.city = "City must contain only letters.";
+    }
+
+    if (!state || typeof state !== "string") {
+        errors.state = "Region is required.";
+    } else if (!regionSet.has(state)) {
+        errors.state = "Invalid region selected.";
+    }
+
+    if (!zipcode || typeof zipcode !== "string") {
+        errors.zipcode = "ZIP code is required.";
+    } else if (zipcode.length > LIMITS.zipcode) {
+        errors.zipcode = `Max ${LIMITS.zipcode} digits allowed.`;
+    } else if (!zipRegex.test(zipcode.trim())) {
+        errors.zipcode = "ZIP must be 3–10 digits.";
+    }
+
+    if (Object.keys(errors).length > 0) return res.status(400).json({message: "Validation failed", errors}); 
 
     try {
 
-        const [row] = await db.query(`insert into address (user_id, address, apartment, city, state, zipcode) values (?, JSON_ARRAY(?), ?, ?, ?, ?, ?)`,[req.user.userId, address, apartment, city, state, state, zipcode]);
+        const [row] = await db.query(`insert into address (user_id, address, apartment, city, state, zipcode) values (?, JSON_ARRAY(?), ?, ?, ?, ?)`,[req.user.userId, address.trim(), apartment || null, city.trim(), state, zipcode.trim()]);
 
-        if (row.affectedRows === 0)return res.status(400).json({message: "Could Not Save Your Address."});
-        return res.status(200).json({message: "Address Saved Successfully"});
+        if (row.affectedRows === 0) return res.status(400).json({ message: "Could not save address." });        
+        return res.status(200).json({ message: "Address saved successfully." });
 
     } catch (err) {
-        return res.status(500).json({message: "Database error occurred"});
+        console.log(err )
+        return res.status(500).json({ message: "Could Not Save Your Address. Try Later!" });
     };
 };
 
