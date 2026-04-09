@@ -17,7 +17,7 @@ async function add(req, res) {
 
     try {
 
-        const { itemsIds, address, totalPrice } = req.body; //defining data from request body
+        const { itemsIds, targetAddress, totalPrice } = req.body; //defining data from request body
         
         const [order] = await db.query('insert into orders (user_id, total_price, status, address) values (?, ?, ?, ?)',[req.user.userId, totalPrice, 'Pending', address]);
 

@@ -20,7 +20,7 @@ const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDelet
     const checkboxRef = useRef([null])
     const selectAllRef = useRef(null)
 
-    const [targetAddress, setTargetAddress] = useState(0);
+    const [targetAddress, setTargetAddress] = useState(null);
 
     const [toggleAddress , setToggleAddress] = useState(false);
     const [toggleAdd, setToggleAdd] = useState(false);
@@ -35,7 +35,7 @@ const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDelet
         try{
             setToggleAddress(false)
             setToggleAdd(false)
-            const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, address , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, targetAddress , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
             if(order.status === 200){
                 setTogglePayment(true)
@@ -53,7 +53,7 @@ const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDelet
         }
     }
 
-        if(targetAddress.length !== 0 || !targetAddress){
+        if(Number(targetAddress) || targetAddress !== null){
             orderItems()
         }
 
