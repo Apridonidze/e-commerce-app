@@ -415,9 +415,6 @@
 .order-bottom button:nth-child(1){
     width: 10%;
     min-width: fit-content;
-    color: white;
-    border: var(--border);
-    background-color: var(--component-bg);
 }
 .order-bottom button:nth-child(2) {
     width: 25%;

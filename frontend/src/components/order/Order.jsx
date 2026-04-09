@@ -173,7 +173,7 @@ const Order = ({ setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart}) => 
                     <Link to='/'><i class="fa-solid fa-arrow-left-long me-2"></i>Continue Browsing</Link>
                 </div>
                 <div className="order-bottom-end d-flex gap-2">
-                    <button className="btn bg-none">Cancle</button>
+                    <button className="btn bg-none border-danger border-2 text-danger" onClick={(() => setToggleOrder(false))}>Cancle</button>
                     <button className="btn" onClick={() => setToggleSubmitOrder(true)} disabled={totalPrice < 40 ? true : false}>Order Items</button>
                 </div>
             </div>
