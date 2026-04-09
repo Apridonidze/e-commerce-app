@@ -384,12 +384,20 @@
 }
 
 .order-bottom {
-    padding-top: 2rem;
+    padding-top: 0.5rem;
     border-top: var(--btn-border);
     display: flex;
     gap: 10px;
     max-width: 100%;
     justify-content: space-between !important;
+}
+
+.order-bottom-start a {
+    text-decoration: none;
+}
+
+.order-bottom-start a:hover {
+    text-decoration: underline;
 }
 
 .order-bottom-end{
@@ -435,6 +443,7 @@
 }
 
 .order-container{
+    cursor: default;
     padding: 1rem 2rem;
     border-radius: 5px;
 }
@@ -446,6 +455,12 @@
     font-size: 14px;
     padding: 0.1rem 0.5rem ;
     border-radius: 5px;
+}
+
+.item-top *:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: cornflowerblue;
 }
 
 /*  */

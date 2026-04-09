@@ -153,7 +153,7 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
                 ))}
             </div>
 
-            <div className="order-bottom">
+            <div className="order-bottom align-items-end">
                 <div className="order-bottom-start">
                     <Link to='/'><i class="fa-solid fa-arrow-left-long me-2"></i>Continue Browsing</Link>
                 </div>
