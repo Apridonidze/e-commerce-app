@@ -2,6 +2,40 @@ import { useRef, useState } from "react";
 
 const ToggleAddress = ({ setToggleAdd }) => {
 
+    const regions = [
+        "Tbilisi",
+        "Adjara",
+        "Imereti",
+        "Samegrelo-Zemo Svaneti",
+        "Kvemo Kartli",
+        "Shida Kartli",
+        "Kakheti",
+        "Guria",
+        "Racha-Lechkhumi and Kvemo Svaneti",
+        "Samtskhe-Javakheti",
+        "Mtskheta-Mtianeti",
+        "California",
+        "Texas",
+        "Florida",
+        "New York",
+        "Illinois",
+        "Pennsylvania",
+        "Ohio",
+        "Georgia (US)",
+        "North Carolina",
+        "Michigan",
+        "Bavaria",
+        "Baden-Württemberg",
+        "North Rhine-Westphalia",
+        "Hesse",
+        "Saxony",
+        "Berlin",
+        "Hamburg",
+        "Brandenburg",
+        "Lower Saxony",
+        "Thuringia"
+    ];
+
     const [address, setAddress] = useState('');
     const [apartment, setApartment] = useState('');
     const [city , setCity] = useState('');
@@ -48,8 +82,13 @@ const ToggleAddress = ({ setToggleAdd }) => {
                 </div>
 
                 <div className="form-group my-2">
+
                     <label htmlFor="state">State / Province</label>
-                    <input className="form-control" type="text" placeholder="Shida Kartli" name="state" onChange={(e) => setState(e.target.value)} value={state} ref={stateRef}/>
+                    <select className="select-region form-control" name="state" onChange={(e) => setState(e.target.value)} value={state} ref={stateRef}>
+                        <option value="">Select Region</option>
+                        {regions.map(region => (<option key={region} value={region}>{region}</option>))}
+                    </select>
+                    
                     <span>{stateErr}</span>
                 </div>
 
