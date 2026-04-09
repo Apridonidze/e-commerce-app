@@ -39,7 +39,7 @@ const Address = ({ setToggleAlert }) => {
     return(
         <div className="addresses-container my-3">
 
-            {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background"></div><ToggleAddress setToggleAdd={setToggleAdd}/></div> : <></>}
+            {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background mx-auto"></div><ToggleAddress setToggleAdd={setToggleAdd}/></div> : <></>}
             
             <div className="address-row">
                 <h5 className="my-auto">Address Book</h5>
