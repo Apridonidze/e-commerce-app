@@ -18,7 +18,7 @@ const Address = ({ setToggleAlert, setToggleAdd }) => {
             try{
 
                 const addresses = await axios.get(`${BACKEND_URL}/api/address`, {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api call
-                
+        
                 if(addresses.status === 204) return setAddresses([]); //handling 204 status code
                 if(addresses.status === 200) return setAddresses(addresses.data.addresses); //handling 200 staus code
 
@@ -47,14 +47,18 @@ const Address = ({ setToggleAlert, setToggleAdd }) => {
 
                     {addresses.length === 0 ? "No address Component" : addresses.map(address => 
                         <div className="address-container">
-                            {address.address}
+                            {JSON.parse(address.address)}
+                            {address.apartment}
+                            {address.state}
+                            {address.zipcode}
+
                             {/* create componennt for address container*/}
                             {/* display empty state  */}
                             {/* implement laoding skeleton */}
                         </div>
                     )}
                     
-                    {addresses?.length >= 3 ? <></> : 
+                    {addresses?.length >= 3 || addresses.length === 0 ? <></> : 
                         <div className="add-new-address d-flex align-items-center gap-2 justify-content-center text-center py-3 my-2" onClick={() => setToggleAdd(true)}>
                             <i class="fa-solid fa-circle-plus"></i>
                             <span>Add New Address</span>
