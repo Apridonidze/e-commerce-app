@@ -1,6 +1,11 @@
+import axios from "axios";
+import { useCookies } from "react-cookie";
+
 import { useEffect, useState } from "react";
 
 const Address = ({ setToggleAlert }) => {
+
+    const [ cookies ] = useCookies(['token'])
 
     const [addresses, setAddresses] = useState([]);//state to display addresses 
     const [isLoading ,setIsLoading] = useState(true);
@@ -29,16 +34,25 @@ const Address = ({ setToggleAlert }) => {
     },[])
 
     return(
-        <div className="addresses-container">
+        <div className="addresses-container my-3">
+            
+            <div className="address-row">
+                <h5 className="my-auto">Address Book</h5>
+            </div>
+
             {isLoading ? "Loading..." : 
                 <div className="address-wrapper">
 
-                {addresses.length === 0 ? "No address Component" : addresses.map(address => 
-                    <div className="address-container">
-                        {address.address}
+                    {addresses.length === 0 ? "No address Component" : addresses.map(address => 
+                        <div className="address-container">
+                            {address.address}
+                        </div>
+                    )}
+                    
+                    <div className="add-new-address d-flex align-items-center gap-2 justify-content-center text-center py-3 my-2">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        <span>Add New Address</span>
                     </div>
-                )}
-
                 </div>
             }
         </div>
