@@ -7,7 +7,7 @@ const Item = ({ prod, handleDeleteFromCart}) => {
     return(
         <div className="item-container d-flex gap-3 pb-2 my-2 pt-2" key={prod.products_id}>
 
-            <div className="item-start" style={{maxHeight:'180px' , maxWidth : '280px', maxWidth: '280px', cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.products_id}`)}>
+            <div className="item-start" style={{maxHeight:'180px' , maxWidth: '280px', cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.products_id}`)}>
                 {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod?.images)[0]}`} />}
             </div>
             <div className="item-end d-flex flex-column text-start gap-3">

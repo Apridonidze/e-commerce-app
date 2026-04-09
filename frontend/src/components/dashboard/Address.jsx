@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 
 import { BACKEND_URL } from "../../../config";
+import AddressRow from "../address/AddressRow";
 
 const Address = ({ setToggleAlert, setToggleAdd }) => {
 
@@ -45,18 +46,7 @@ const Address = ({ setToggleAlert, setToggleAdd }) => {
             {!isLoading ? "Loading..." : 
                 <div className="address-wrapper">
 
-                    {addresses.length === 0 ? "No address Component" : addresses.map(address => 
-                        <div className="address-container">
-                            {JSON.parse(address.address)}
-                            {address.apartment}
-                            {address.state}
-                            {address.zipcode}
-
-                            {/* create componennt for address container*/}
-                            {/* display empty state  */}
-                            {/* implement laoding skeleton */}
-                        </div>
-                    )}
+                    {addresses.length === 0 ? "No address Component" : addresses.map(address => <AddressRow address={address}/>)}
                     
                     {addresses?.length >= 3 || addresses.length === 0 ? <></> : 
                         <div className="add-new-address d-flex align-items-center gap-2 justify-content-center text-center py-3 my-2" onClick={() => setToggleAdd(true)}>

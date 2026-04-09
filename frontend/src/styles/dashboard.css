@@ -524,6 +524,24 @@
     color: white;
 }
 
+/*  */
+
+.address-row-container *{
+    background-color: var(--component-bg) !important;
+}
+.address-row-container{
+    margin: 5px 0px;
+}
+.address-row-wrapper{
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.address-row-wrapper .remove:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 @media(max-width : 540px){
     .order-body {
         width: 100%;
