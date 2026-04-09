@@ -6,10 +6,11 @@ import { useEffect, useRef, useState } from "react"
 import SubmitOrder from "../order/SubmitOrder"
 import PaymentMessage from "../../alerts/PaymentMessage"
 import '../../styles/checkbox.css'
-
+import Address from "../dashboard/Address"
 import { Link } from "react-router-dom"
+import ToggleAddress from "../dashboard/ToggleAddress"
 
-const Order = ({ setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart}) => {
+const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart}) => {
     
     const [cookies] = useCookies(['token'])
     const [selectedItems, setSelectedItems] = useState([])
@@ -19,7 +20,11 @@ const Order = ({ setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart}) => 
     const checkboxRef = useRef([null])
     const selectAllRef = useRef(null)
 
-    const [toggleSubmitOrder , setToggleSubmitOrder] = useState(false)
+    const [targetAddress, setTargetAddress] = useState(0);
+
+
+    const [toggleAddress , setToggleAddress] = useState(false);
+    const [toggleAdd, setToggleAdd] = useState(false);
     const [togglePayment, setTogglePayment] = useState(false)
 
     const orderItems = async() => {
@@ -28,7 +33,7 @@ const Order = ({ setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart}) => 
         
         try{
 
-            setToggleSubmitOrder(false)
+            setToggleAdd(false)
             const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, address , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
             if(order.status === 200){
@@ -128,7 +133,9 @@ const Order = ({ setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart}) => 
     return(
         <div className="order-container w-100" >
 
-            {toggleSubmitOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setToggleSubmitOrder(false), setAddress('')}}></div> <SubmitOrder setToggleSubmitOrder={setToggleSubmitOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
+            {toggleAddress ? <div className="bg" onClick={() => setToggleAddress(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><Address setToggleAlert={setToggleAlert} setToggleAdd={setToggleAdd} setTargetAddress={setTargetAddress}/></div></div> : <></>}
+            {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ToggleAddress setToggleAdd={setToggleAdd} setToggleAlert={setToggleAlert} toggleAdd={toggleAdd}/></div></div> : <></>}
+
             {togglePayment ? <div><div className="payment-success-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setTogglePayment(false)}}></div> <PaymentMessage /> </div> : <></>}
             
             <div className="order-top d-flex flex-column mb-2">
@@ -174,11 +181,11 @@ const Order = ({ setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart}) => 
                 </div>
                 <div className="order-bottom-end d-flex gap-2">
                     <button className="btn bg-none border-danger border-2 text-danger" onClick={(() => setToggleOrder(false))}>Cancle</button>
-                    <button className="btn" onClick={() => setToggleSubmitOrder(true)} disabled={totalPrice < 40 ? true : false}>Order Items</button>
+                    <button className="btn" onClick={() => setToggleAddress(true)} disabled={totalPrice < 40 ? true : false}>Order Items</button>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Order
+export default Order; //exporting component

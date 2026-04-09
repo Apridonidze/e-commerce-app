@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../../../config";
 import AddressRow from "../address/AddressRow";
 
-const Address = ({ setToggleAlert, setToggleAdd }) => {
+const Address = ({ setToggleAlert, setToggleAdd , setTargetAddress }) => {
 
     const [ cookies ] = useCookies(['token'])
 
