@@ -7,6 +7,7 @@ import Order from "../components/order/Order"
 import OrderList from "../components/order/OrderList"
 import CardHolder from "../components/dashboard/CardHolder"
 import StatusMessage from '../alerts/StatusMessage';
+import ToggleAddress from '../components/dashboard/ToggleAddress';
 import CardDetails from '../components/dashboard/CardDetails'; //importing UI components
 
 import { useContext, useEffect, useState } from "react"; ///importign react hooks
@@ -36,6 +37,7 @@ const Dashboard = () => {
     
     const [toggleCard,setToggleCard] = useState(false);
     const [toggleOrder,setToggleOrder] = useState(false);
+    const [toggleAdd, setToggleAdd] = useState(false);
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
     const [orders,setOrders] = useState([]); //state to store users orders
@@ -129,7 +131,12 @@ const Dashboard = () => {
             
             {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background mx-auto"  onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard} setToggleCard={setToggleCard} setToggleAlert={setToggleAlert}/></Elements></div></div> : <></>}
             {toggleOrder && cardDetails?.last4 ? <div className="bg" onClick={() => setToggleOrder(false)}><div className="order-background m-auto rounded-2 mt-5 p-2"  onClick={(e) => e.stopPropagation()}><Order setCartIds={setCartIds} setToggleOrder={setToggleOrder} cartIds={cartIds} handleDeleteFromCart={handleDeleteFromCart} /></div></div>  : <></>}
+
+            {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ToggleAddress setToggleAdd={setToggleAdd}/></div></div> : <></>}
             
+            <div className="address-row">
+                <h5 className="my-auto">Address Book</h5>
+            </div>
             <div className="main-body " >
 
                 <div className="main-start"><Sidebar /></div>
@@ -143,7 +150,7 @@ const Dashboard = () => {
                         <div className="dashboard-start">
                             {!user ? 'loadingg' : <User setToggleAlert={setToggleAlert}/>  } {/* add user skeleton here */}
                             {!cardDetails ? 'loading' : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }{/* add cardholder loading */}
-                            <Address setToggleAlert={setToggleAlert}/>
+                            <Address setToggleAlert={setToggleAlert} setToggleAdd={setToggleAdd}/>
                         </div>
 
                         <div className="dashboard-end w-100 h-100">

@@ -3,18 +3,14 @@ import { useCookies } from "react-cookie";
 
 import { useEffect, useState } from "react";
 
-import ToggleAddress from "./ToggleAddress";
-
 import { BACKEND_URL } from "../../../config";
 
-const Address = ({ setToggleAlert }) => {
+const Address = ({ setToggleAlert, setToggleAdd }) => {
 
     const [ cookies ] = useCookies(['token'])
 
     const [addresses, setAddresses] = useState([]);//state to display addresses 
     const [isLoading ,setIsLoading] = useState(true);
-
-    const [toggleAdd, setToggleAdd] = useState(false);
 
     useEffect(() => {
 
@@ -41,12 +37,6 @@ const Address = ({ setToggleAlert }) => {
 
     return(
         <div className="addresses-container my-3">
-
-            {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background mx-auto"></div><ToggleAddress setToggleAdd={setToggleAdd}/></div> : <></>}
-            
-            <div className="address-row">
-                <h5 className="my-auto">Address Book</h5>
-            </div>
 
             {!isLoading ? "Loading..." : 
                 <div className="address-wrapper">
