@@ -9,7 +9,7 @@ import '../../styles/checkbox.css'
 
 import { Link } from "react-router-dom"
 
-const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
+const Order = ({ setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart}) => {
     
     const [cookies] = useCookies(['token'])
     const [selectedItems, setSelectedItems] = useState([])
@@ -19,7 +19,7 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
     const checkboxRef = useRef([null])
     const selectAllRef = useRef(null)
 
-    const [toggleOrder , setToggleOrder] = useState(false)
+    const [toggleSubmitOrder , setToggleSubmitOrder] = useState(false)
     const [togglePayment, setTogglePayment] = useState(false)
 
     const orderItems = async() => {
@@ -28,7 +28,7 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
         
         try{
 
-            setToggleOrder(false)
+            setToggleSubmitOrder(false)
             const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, address , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
             if(order.status === 200){
@@ -42,6 +42,21 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
             console.log(err)
         }
     }
+
+    useEffect(() => {
+        
+        const total = cartIds.reduce((sum, item) => {
+
+            const price = item.sales_price ?? item.price ?? 0; //defining items price (if it has sales price or regular one)
+            const amount = item.amount ?? 1; //defining items amount
+
+            return sum + Number(price) * Number(amount); //returning total price
+
+        }, 0); //calculating total price of items 
+
+        if(total < 40) return setToggleOrder(false)
+
+    }, [cartIds])
 
     const handleSelectAll = (e) => {
 
@@ -113,7 +128,7 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
     return(
         <div className="order-container w-100" >
 
-            {toggleOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setToggleOrder(false), setAddress('')}}></div> <SubmitOrder setToggleOrder={setToggleOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
+            {toggleSubmitOrder ? <div><div className="order-submit-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setToggleSubmitOrder(false), setAddress('')}}></div> <SubmitOrder setToggleSubmitOrder={setToggleSubmitOrder} orderItems={orderItems} setAddress={setAddress} address={address}/> </div> : <></>}
             {togglePayment ? <div><div className="payment-success-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setTogglePayment(false)}}></div> <PaymentMessage /> </div> : <></>}
             
             <div className="order-top d-flex flex-column mb-2">
@@ -159,7 +174,7 @@ const Order = ({ setCartIds, cartIds , handleDeleteFromCart}) => {
                 </div>
                 <div className="order-bottom-end d-flex gap-2">
                     <button className="btn bg-none">Cancle</button>
-                    <button className="btn" onClick={() => setToggleOrder(true)} disabled={totalPrice < 40 ? true : false}>Order Items</button>
+                    <button className="btn" onClick={() => setToggleSubmitOrder(true)} disabled={totalPrice < 40 ? true : false}>Order Items</button>
                 </div>
             </div>
         </div>
