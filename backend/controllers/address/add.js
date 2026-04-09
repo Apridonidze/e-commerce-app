@@ -2,7 +2,8 @@ const db = require('../../utils/db'); //importing db utility
 
 async function add (req,res){
     
-    const { address, apartment, city, province, state, zipcode } = req.query;
+    const { address, apartment, city, state, zipcode } = req.body;
+    console.log(req.body)
     const errors = {};
 
     const addressRegex1 = /^\d+\s+[A-Za-z\s]+$/;
@@ -16,7 +17,7 @@ async function add (req,res){
 
     if (apartment && apartment.length > 10)errors.apartment = "Apartment must be less than 10 characters.";
     if (!city || city.length < 2)errors.city = "City must be at least 2 characters.";
-    if (!province || province.length < 2) errors.province = "Province must be at least 2 characters.";
+    if (!state || state.length < 2) errors.state = "state must be at least 2 characters.";
     if (!state || state.length < 2) errors.state = "State must be at least 2 characters.";
     if (!zipcode || !/^\d{4,10}$/.test(zipcode)) errors.zipcode = "Zipcode must be between 4–10 digits.";
 
@@ -25,7 +26,7 @@ async function add (req,res){
 
     try {
 
-        const [row] = await db.query(`insert into address (user_id, address, apartment, city, province, state, zipcode) values (?, JSON_ARRAY(?), ?, ?, ?, ?, ?)`,[req.user.userId, address, apartment, city, province, state, zipcode]);
+        const [row] = await db.query(`insert into address (user_id, address, apartment, city, state, zipcode) values (?, JSON_ARRAY(?), ?, ?, ?, ?, ?)`,[req.user.userId, address, apartment, city, state, state, zipcode]);
 
         if (row.affectedRows === 0)return res.status(400).json({message: "Could Not Save Your Address."});
         return res.status(200).json({message: "Address Saved Successfully"});

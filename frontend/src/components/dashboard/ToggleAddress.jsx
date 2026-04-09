@@ -1,6 +1,9 @@
+import axios from "axios";
 import { useRef, useState } from "react";
+import { BACKEND_URL } from "../../../config";
+import { useCookies } from "react-cookie";
 
-const ToggleAddress = ({ setToggleAdd }) => {
+const ToggleAddress = ({ setToggleAdd, setToggleAlert }) => {
 
     const regions = [
         "Tbilisi",
@@ -35,6 +38,8 @@ const ToggleAddress = ({ setToggleAdd }) => {
         "Lower Saxony",
         "Thuringia"
     ];
+
+    const [ cookies ] = useCookies(['token'])
 
     const [address, setAddress] = useState('');
     const [apartment, setApartment] = useState('');
@@ -165,12 +170,20 @@ const ToggleAddress = ({ setToggleAdd }) => {
         };
 
         if(isValid){
+            try{
 
-            
+                const response = axios.post(`${BACKEND_URL}/api/address/`, { address, apartment, city, state, zipcode } , {headers : {Authorization : `Bearer ${cookies.token}`}});
+                
+                if(response.status === 200) return;
 
-        }
+            }catch(err){
 
-    };
+                if(err.response?.status === 400) return setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+                if(err.response?.status === 500) return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+
+            };
+        };
+    };;
 
 
     return(
