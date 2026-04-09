@@ -22,17 +22,18 @@ const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDelet
 
     const [targetAddress, setTargetAddress] = useState(0);
 
-
     const [toggleAddress , setToggleAddress] = useState(false);
     const [toggleAdd, setToggleAdd] = useState(false);
     const [togglePayment, setTogglePayment] = useState(false)
 
-    const orderItems = async() => {
+    useEffect(() => {
+
+        const orderItems = async() => {
         
         let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.sales_price ?? prod.price ?? 0}))
         
         try{
-
+            setToggleAddress(false)
             setToggleAdd(false)
             const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, address , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
@@ -43,10 +44,21 @@ const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDelet
 
         }catch(err){
 
+
+            setToggleAddress(false)
+            setToggleAdd(false)
+
             //toggle error message
             console.log(err)
         }
     }
+
+        if(targetAddress.length !== 0 || !targetAddress){
+            orderItems()
+        }
+
+        return
+    },[targetAddress])
 
     useEffect(() => {
         
