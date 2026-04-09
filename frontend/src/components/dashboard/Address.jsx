@@ -38,8 +38,9 @@ const Address = ({ setToggleAlert, setToggleAdd }) => {
 
 
     const removeAddress = async (id) => {
+
         try{
-            const response = await axios.delete(`${BACKEND_URL}/api/address/:${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}});
+            const response = await axios.delete(`${BACKEND_URL}/api/address/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}});
 
             if(response.status === 200) {
                 setAddresses(addresses.filter(address => address.id !== id))
@@ -47,7 +48,7 @@ const Address = ({ setToggleAlert, setToggleAdd }) => {
             }
 
         }catch(err){
-            if(err.response?.status === 400)return setToggleAlert({status: true, type: "Fail", statusCode: 400, message: response.data.message}); //toggling error message if customer intent could not be geneated
+            if(err.response?.status === 400)return setToggleAlert({status: true, type: "Fail", statusCode: 400, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
             return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
         };
     };

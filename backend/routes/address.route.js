@@ -6,6 +6,6 @@ const routes = require('../controllers/address'); //importing controllers
 
 route.get('/' , ValidateToken , routes.get)
 route.post('/', ValidateToken , routes.add);
-route.delete('/', ValidateToken, routes.remove); //defining routes
+route.delete('/:id', ValidateToken, routes.remove); //defining routes
 
 module.exports = route; //exporting route
