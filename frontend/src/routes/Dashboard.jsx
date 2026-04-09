@@ -22,6 +22,7 @@ import { UserContext } from "../context/UserContext"; //importing  user context
 import { BACKEND_URL, STRIPE_PUBLIC_KEY } from '../../config'; //importing keys from config.jsx file
 
 import '../styles/dashboard.css'; //importing css file
+import Address from '../components/dashboard/Address';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY); //creating stripe promise
 
@@ -38,7 +39,6 @@ const Dashboard = () => {
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
     const [orders,setOrders] = useState([]); //state to store users orders
-    const [addresses, setAddresses] = useState([]);//state to display addresses 
     
     useEffect(() => {//scrolling user to sections if user chooses section from sidebar
         
@@ -118,20 +118,6 @@ const Dashboard = () => {
             };
         };
 
-        const fetchAddresses = async() => {
-            try{
-
-                const addresses = await axios.get(`${BACKEND_URL}/api/address`, {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api call
-                
-                if(addresses.status === 204) return setAddresses([]); //handling 204 status code
-                if(addresses.status === 200) return setAddresses(addresses.data.addresses); //handling 200 staus code
-
-            }catch(err){
-                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
-            }
-        }
-
-        fetchAddresses();
         fetchOrders(); //declearing functions
 
     },[]); //logic triggers on component mount
@@ -157,6 +143,7 @@ const Dashboard = () => {
                         <div className="dashboard-start">
                             {!user ? 'loadingg' : <User setToggleAlert={setToggleAlert}/>  } {/* add user skeleton here */}
                             {!cardDetails ? 'loading' : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }{/* add cardholder loading */}
+                            <Address setToggleAlert={setToggleAlert}/>
                         </div>
 
                         <div className="dashboard-end w-100 h-100">
