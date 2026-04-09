@@ -37,6 +37,8 @@ const Dashboard = () => {
     const [toggleOrder,setToggleOrder] = useState(false);
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
+    const [orders,setOrders] = useState([]); //state to store users orders
+
     useEffect(() => {//scrolling user to sections if user chooses section from sidebar
         
         if(!hash) return; //returning empty promise if hash is not defiend from url
@@ -99,6 +101,26 @@ const Dashboard = () => {
         };
     };
 
+
+    useEffect(() => {
+
+        const fetchOrders = async() => {
+            try{
+
+                const orders = await axios.get(`${BACKEND_URL}/api/order`, {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api call
+                
+                if(orders.status === 204) return setOrders([]); //handling 204 status code
+                if(orders.status === 200) return setOrders(orders.data.orders); //handling 200 staus code
+
+            }catch(err){
+               // add alert messages
+            };
+        };
+
+        fetchOrders(); //declearing function
+
+    },[]); //logic triggers on component mount
+
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start">
             
@@ -125,7 +147,7 @@ const Dashboard = () => {
                         <div className="dashboard-end w-100 h-100">
                             {/* add loading skeleton here  .load cart when cartIds is defined*/}
                             <section id='cart-items'><Cart setToggleAlert={setToggleAlert} setToggleOrder={setToggleOrder} cartIds={cartIds} setCartIds={setCartIds} handleDeleteFromCart={handleDeleteFromCart}/></section>
-                            <section id='order-list'><OrderList /></section>
+                            <section id='order-list'><OrderList orders={orders} setOrders={setOrders}/></section>
                         </div>
 
                     </div>

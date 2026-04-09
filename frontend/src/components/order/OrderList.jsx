@@ -1,40 +1,12 @@
-import axios from "axios";
-import { useCookies } from "react-cookie"; ///importing react libraries
-
-import { useEffect, useRef, useState } from "react"; //importing react hooks
-import { BACKEND_URL } from "../../../config"; //importing backend url from config file
-
+import { useRef, useState } from "react"; //importing react hooks
 import OrderDetails from "./OrderDetails"; //importing react components
 
-const OrderList = () => {
+const OrderList = ({ setOrders, orders }) => {
 
-    const [cookies] = useCookies(['token']); //defining user cookies
-
-    const [orders,setOrders] = useState([]); //state to store users orders
     const [type , setType] = useState('Progress'); //state to store type of orders user want to see
 
     const btn1Ref = useRef(null);
     const btn2Ref = useRef(null);//refs for oders type button
-
-    useEffect(() => {
-
-        const fetchOrders = async() => {
-            try{
-
-                const orders = await axios.get(`${BACKEND_URL}/api/order`, {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api call
-                
-                if(orders.status === 204) return setOrders([]); //handling 204 status code
-                if(orders.status === 200) return setOrders(orders.data.orders); //handling 200 staus code
-
-            }catch(err){
-               // add alert messages
-            };
-        };
-
-        fetchOrders(); //declearing function
-
-    },[]); //logic triggers on component mount
-
 
     const handleToggleOrder = (e) => {
 
