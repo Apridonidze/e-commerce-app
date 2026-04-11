@@ -219,6 +219,24 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd, setAddresses }
 
     }, [toggleAdd]); //logic executes on toggleCard dependency change
 
+    useEffect(() => {
+        if (!submitRef.current) return;
+
+        const addressRegex = /^\d+\s+[A-Za-z\s]+$|^[A-Za-z\s]+\s+\d+$/;
+        const zipcodeRegex = /^\d+$/;
+
+        const isValid =
+            address.trim() !== '' &&
+            addressRegex.test(address.trim()) &&
+            city.trim() !== '' &&
+            state.trim() !== '' &&
+            zipcode.trim() !== '' &&
+            zipcodeRegex.test(zipcode.trim());
+
+        submitRef.current.disabled = !isValid;
+        
+    }, [address, city, state, zipcode]);
+
     return(
         <div className="toggle-address-container position-relative">
             <div className="toggle-address-top d-flex align-items-center mb-2 justify-content-between">
