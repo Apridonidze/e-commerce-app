@@ -42,7 +42,7 @@ const Dashboard = () => {
 
     const [orders,setOrders] = useState([]); //state to store users orders
 
-    const [targetAddress, setTargetAddress] = useState(0);
+    
     
     useEffect(() => {//scrolling user to sections if user chooses section from sidebar
         
@@ -126,6 +126,52 @@ const Dashboard = () => {
 
     },[]); //logic triggers on component mount
 
+
+    const [addresses, setAddresses] = useState([]);//state to display addresses 
+    const [isLoading ,setIsLoading] = useState(true);
+    const [targetAddress, setTargetAddress] = useState(0);
+    useEffect(() => {
+
+        const fetchAddresses = async() => {
+            try{
+
+                const addresses = await axios.get(`${BACKEND_URL}/api/address`, {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api call
+        
+                if(addresses.status === 204) return setAddresses([]); //handling 204 status code
+                if(addresses.status === 200) return setAddresses(addresses.data.addresses); //handling 200 staus code
+
+                setIsLoading(false);
+
+            }catch(err){
+                setIsLoading(false);
+                setAddresses([]);//setting empty array in state if internal error occurs
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+            };
+        };
+
+        fetchAddresses();
+
+    },[])
+
+
+    const removeAddress = async (id) => {
+
+        try{
+            const response = await axios.delete(`${BACKEND_URL}/api/address/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}});
+
+            if(response.status === 200) {
+                setAddresses(addresses.filter(address => address.id !== id))
+                return setToggleAlert({status: true, type: "Success", statusCode: 200, message: response.data.message}); //toggling error message if customer intent could not be geneated
+            }
+
+        }catch(err){
+            if(err.response?.status === 400)return setToggleAlert({status: true, type: "Fail", statusCode: 400, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+            return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+        };
+    };
+
+    console.log(addresses)
+
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start">
             
@@ -134,7 +180,7 @@ const Dashboard = () => {
             {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background mx-auto"  onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard} setToggleCard={setToggleCard} setToggleAlert={setToggleAlert}/></Elements></div></div> : <></>}
             {toggleOrder && cardDetails?.last4 ? <div className="bg" onClick={() => setToggleOrder(false)}><div className="order-background m-auto rounded-2 mt-5 p-2"  onClick={(e) => e.stopPropagation()}><Order setToggleAlert={setToggleAlert} setCartIds={setCartIds} setToggleOrder={setToggleOrder} cartIds={cartIds} handleDeleteFromCart={handleDeleteFromCart} /></div></div>  : <></>}
 
-            {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ToggleAddress setToggleAdd={setToggleAdd} setToggleAlert={setToggleAlert} toggleAdd={toggleAdd}/></div></div> : <></>}
+            {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ToggleAddress setAddresses={setAddresses} setToggleAdd={setToggleAdd} setToggleAlert={setToggleAlert} toggleAdd={toggleAdd}/></div></div> : <></>}
             
             <div className="main-body " >
 
@@ -149,7 +195,7 @@ const Dashboard = () => {
                         <div className="dashboard-start">
                             {!user ? 'loadingg' : <User setToggleAlert={setToggleAlert}/>  } {/* add user skeleton here */}
                             {!cardDetails ? 'loading' : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }{/* add cardholder loading */}
-                            <Address setToggleAlert={setToggleAlert} setToggleAdd={setToggleAdd} setTargetAddress={setTargetAddress}/>
+                            <Address setToggleAdd={setToggleAdd} removeAddress={removeAddress} addresses={addresses} isLoading={isLoading} setTargetAddress={setTargetAddress}/>
                         </div>
 
                         <div className="dashboard-end w-100 h-100">

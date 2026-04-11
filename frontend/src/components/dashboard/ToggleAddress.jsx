@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { BACKEND_URL } from "../../../config";
 import { useCookies } from "react-cookie";
 
-const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd }) => {
+const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd, setAddresses }) => {
 
     const regions = [
         "Tbilisi",
@@ -60,7 +60,7 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd }) => {
     const zipcodeRef = useRef(null);
     const submitRef = useRef(null);
 
-    const validateForm = (e) => {
+    const validateForm = async (e) => {
         e.preventDefault();
 
         let isValid = true;
@@ -177,12 +177,25 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd }) => {
             
             try{
 
-                const response = axios.post(`${BACKEND_URL}/api/address/`, { address, apartment, city, state, zipcode } , {headers : {Authorization : `Bearer ${cookies.token}`}});
+                const response = await axios.post(`${BACKEND_URL}/api/address/`, { address, apartment, city, state, zipcode } , {headers : {Authorization : `Bearer ${cookies.token}`}});
                 
-                if(response.status === 200) return;
+                if(response.status === 200) {
+                    setToggleAlert({status: true, type: "Success", statusCode: response.status, message: response.data.message}); //toggling error message if customer intent could not be geneated
+                    setToggleAdd(false);
+                    setAddresses(prev => 
+                        [...prev , {
+                            address: address,
+                            apartment: apartment ?? null,
+                            city: city,
+                            id: response.data.insertId,
+                            state: state,
+                            user_id: response.data.id,
+                            zipcode: zipcode,
+                        }])
+                }
+
 
             }catch(err){
-
                 if(err.response?.status === 400) return setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
                 if(err.response?.status === 500) return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
 

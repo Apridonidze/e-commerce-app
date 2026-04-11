@@ -93,7 +93,7 @@ async function add(req, res) {
         const [row] = await db.query(`insert into address (user_id, address, apartment, city, state, zipcode) values (?, JSON_ARRAY(?), ?, ?, ?, ?)`,[req.user.userId, address.trim(), apartment || null, city.trim(), state, zipcode.trim()]);
 
         if (row.affectedRows === 0) return res.status(400).json({ message: "Could not save address." });        
-        return res.status(200).json({ message: "Address saved successfully." });
+        return res.status(200).json({ message: "Address saved successfully.", insertId : row.insertId , id : req.user.userId });
 
     } catch (err) {
         console.log(err )

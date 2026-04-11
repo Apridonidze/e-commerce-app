@@ -1,5 +1,14 @@
 const AddressRow = ({ address, removeAddress, setTargetAddress }) => {
 
+
+    let parsedAddress;
+
+    try {
+        parsedAddress = JSON.parse(address.address);
+    } catch {
+        parsedAddress = address.address;
+    }
+
     return(
         <div className="address-row-container" key={address.id} onClick={() => setTargetAddress(address.id)}>
             <div className="address-row-wrapper">
@@ -10,7 +19,7 @@ const AddressRow = ({ address, removeAddress, setTargetAddress }) => {
                 <div className="address-row-main d-flex flex-column gap-2">
                     <span><i class="fa-solid fa-location-dot"></i> <span>{address.state}</span> / {address.city}</span>
                     {address.apartment ? <span><i class="fa-solid fa-building-user"></i> {address.apartment}</span> : <></>}
-                    <span><i class="fa-solid fa-building-user"></i>{JSON.parse(address.address)}</span>
+                    <span><i class="fa-solid fa-building-user"></i>{parsedAddress}</span>
                     <span><i class="fa-solid fa-inbox"></i> Zip Code: {address.zipcode}</span>
                 </div>  
             </div>
