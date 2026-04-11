@@ -208,8 +208,8 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd }) => {
 
     return(
         <div className="toggle-address-container position-relative">
-            <div className="toggle-address-top d-flex align-items-center justify-content-between">
-                <h4>Add New Address</h4>
+            <div className="toggle-address-top d-flex align-items-center mb-2 justify-content-between">
+                <h3>Add New Address</h3>
                 <button className="btn btn-none border-0" onClick={() => setToggleAdd(false)}><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onSubmit={(e) => validateForm(e)}>

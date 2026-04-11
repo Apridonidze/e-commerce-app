@@ -519,6 +519,7 @@
     width: 100%;
     height: 45px;
     font-weight: 500;
+    border: var(--btn-border);
 }
 
 .toggle-address-end :nth-child(2){

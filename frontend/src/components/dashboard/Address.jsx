@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { BACKEND_URL } from "../../../config";
 import AddressRow from "../address/AddressRow";
+import EmptyAddress from "../../empty/EmptyAddress";
 
 const Address = ({ setToggleAlert, setToggleAdd , setTargetAddress }) => {
 
@@ -63,9 +64,9 @@ const Address = ({ setToggleAlert, setToggleAdd , setTargetAddress }) => {
             {!isLoading ? "Loading..." : 
                 <div className="address-wrapper">
 
-                    {addresses.length === 0 ? "No address Component" : addresses.map(address => <AddressRow address={address} removeAddress={removeAddress}/>)}
+                    {addresses.length === 0 ? <EmptyAddress/> : addresses.map(address => <AddressRow setTargetAddress={setTargetAddress} address={address} removeAddress={removeAddress}/>)}
                     
-                    {addresses?.length >= 3 || addresses.length === 0 ? <></> : 
+                    {addresses?.length > 3 ? <></> : 
                         <div className="add-new-address d-flex align-items-center gap-2 justify-content-center text-center py-3 my-2" onClick={() => setToggleAdd(true)}>
                             <i class="fa-solid fa-circle-plus"></i>
                             <span>Add New Address</span>
