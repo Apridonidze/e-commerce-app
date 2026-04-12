@@ -9,8 +9,14 @@ const AddressRow = ({ address, removeAddress, setTargetAddress }) => {
         parsedAddress = address.address;
     }
 
+    const handleTargetAddress = () => {
+
+        setTargetAddress(address.id)
+
+    }
+    
     return(
-        <div className="address-row-container" key={address.id} onClick={() => setTargetAddress(address.id)}>
+        <div className="address-row-container" key={address.id} onClick={() => handleTargetAddress()}>
             <div className="address-row-wrapper">
                 <div className="address-row-top d-flex align-items-center mb-3 justify-content-between">
                     <span className="fw-bold">Primary Address</span>

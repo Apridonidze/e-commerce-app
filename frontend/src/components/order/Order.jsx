@@ -10,7 +10,7 @@ import Address from "../dashboard/Address"
 import { Link } from "react-router-dom"
 import ToggleAddress from "../dashboard/ToggleAddress"
 
-const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart}) => {
+const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart, setToggleAddress}) => {
     
     const [cookies] = useCookies(['token'])
     const [selectedItems, setSelectedItems] = useState([])
@@ -22,7 +22,6 @@ const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDelet
 
     const [targetAddress, setTargetAddress] = useState(null);
 
-    const [toggleAddress , setToggleAddress] = useState(false);
     const [toggleAdd, setToggleAdd] = useState(false);
     const [togglePayment, setTogglePayment] = useState(false)
 
@@ -145,9 +144,6 @@ const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDelet
     return(
         <div className="order-container w-100" >
 
-            {toggleAddress ? <div className="bg" onClick={() => setToggleAddress(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><Address setToggleAlert={setToggleAlert} setToggleAdd={setToggleAdd} setTargetAddress={setTargetAddress}/></div></div> : <></>}
-            {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ToggleAddress setToggleAdd={setToggleAdd} setToggleAlert={setToggleAlert} toggleAdd={toggleAdd}/></div></div> : <></>}
-
             {togglePayment ? <div><div className="payment-success-bg position-absolute start-0 top-0 w-100 h-100 bg-warning"  onClick={() => {setTogglePayment(false)}}></div> <PaymentMessage /> </div> : <></>}
             
             <div className="order-top d-flex flex-column mb-2">
@@ -183,7 +179,7 @@ const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDelet
             
             <div className="order-body">
                 {cartIds?.map(prod => (
-                <OrderCheckbox prod={prod} cartIds={cartIds} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef} handleDeleteFromCart={handleDeleteFromCart}/>
+                    <OrderCheckbox prod={prod} cartIds={cartIds} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef} handleDeleteFromCart={handleDeleteFromCart}/>
                 ))}
             </div>
 

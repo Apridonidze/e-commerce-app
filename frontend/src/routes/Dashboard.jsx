@@ -41,7 +41,7 @@ const Dashboard = () => {
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
     const [orders,setOrders] = useState([]); //state to store users orders
-
+    const [toggleAddress, setToggleAddress] = useState(false);
     
     
     useEffect(() => {//scrolling user to sections if user chooses section from sidebar
@@ -170,17 +170,16 @@ const Dashboard = () => {
         };
     };
 
-    console.log(addresses)
-
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start">
             
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
-            
-            {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background mx-auto"  onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard} setToggleCard={setToggleCard} setToggleAlert={setToggleAlert}/></Elements></div></div> : <></>}
-            {toggleOrder && cardDetails?.last4 ? <div className="bg" onClick={() => setToggleOrder(false)}><div className="order-background m-auto rounded-2 mt-5 p-2"  onClick={(e) => e.stopPropagation()}><Order setToggleAlert={setToggleAlert} setCartIds={setCartIds} setToggleOrder={setToggleOrder} cartIds={cartIds} handleDeleteFromCart={handleDeleteFromCart} /></div></div>  : <></>}
 
-            {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ToggleAddress setAddresses={setAddresses} setToggleAdd={setToggleAdd} setToggleAlert={setToggleAlert} toggleAdd={toggleAdd}/></div></div> : <></>}
+            {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background mx-auto"  onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard} setToggleCard={setToggleCard} setToggleAlert={setToggleAlert}/></Elements></div></div> : <></>}
+            {toggleOrder && cardDetails?.last4 ? <div className="bg" onClick={() => setToggleOrder(false)}><div className="order-background m-auto rounded-2 mt-5 p-2"  onClick={(e) => e.stopPropagation()}><Order setToggleAlert={setToggleAlert} setCartIds={setCartIds} setToggleOrder={setToggleOrder} cartIds={cartIds} handleDeleteFromCart={handleDeleteFromCart} setToggleAddress={setToggleAddress}/></div></div>  : <></>}
+
+            {toggleAddress ? <div className="bg" onClick={() => setToggleAddress(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><Address setToggleAdd={setToggleAdd} removeAddress={removeAddress} addresses={addresses} isLoading={isLoading} setTargetAddress={setTargetAddress}/></div></div> : <></>}
+            {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ToggleAddress setAddresses={setAddresses} setToggleAdd={setToggleAdd} setToggleAlert={setToggleAlert} toggleAdd={toggleAdd} /></div></div> : <></>}
             
             <div className="main-body " >
 
