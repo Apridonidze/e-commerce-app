@@ -189,19 +189,15 @@ const Dashboard = () => {
             setToggleAdd(false)
             const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, targetAddress , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-            if(order.status === 200){
-                setTogglePayment(true)
-                
-            }
+            console.log(order)
 
             }catch(err){
 
+                console.log(err.response)
 
             setToggleAddress(false)
             setToggleAdd(false)
 
-            //toggle error message
-            console.log(err)
             }
             }
 
