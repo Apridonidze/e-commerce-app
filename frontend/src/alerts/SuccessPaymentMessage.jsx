@@ -1,4 +1,4 @@
-const PaymentMesSuccessPaymentMessagesage = () => {
+const SuccessPaymentMessage = () => {
 
 
     return(
@@ -21,4 +21,4 @@ const PaymentMesSuccessPaymentMessagesage = () => {
     )
 }
 
-export default PaymentMesSuccessPaymentMessagesage
+export default SuccessPaymentMessage

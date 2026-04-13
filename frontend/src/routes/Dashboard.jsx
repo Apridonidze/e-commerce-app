@@ -26,6 +26,8 @@ import '../styles/dashboard.css'; //importing css file
 import Address from '../components/dashboard/Address';
 import ChooseAddress from '../components/address/ChooseAddress';
 import PaymentMessage from '../alerts/SuccessPaymentMessage';
+import SuccessPaymentMessage from '../alerts/SuccessPaymentMessage';
+import FailedPaymentMessage from '../alerts/FailedPaymentMessage';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY); //creating stripe promise
 
@@ -213,7 +215,7 @@ const Dashboard = () => {
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start">
             
-            {togglePayment.status ? <PaymentMessage />  : <></>}
+            {togglePayment.status ? togglePayment.success ? <SuccessPaymentMessage /> : <FailedPaymentMessage />   : <></>}
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
 
             {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background mx-auto"  onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard} setToggleCard={setToggleCard} setToggleAlert={setToggleAlert}/></Elements></div></div> : <></>}

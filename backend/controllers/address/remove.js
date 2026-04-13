@@ -14,6 +14,7 @@ async function remove (req,res){
         return res.status(200).json({message : "Address Removed Succesfully"})
 
     }catch(err){
+        if(err.code === 'ER_ROW_IS_REFERENCED_2') return res.status(500).json({message : "This address is linked to an order and cannot be deleted."})
         return res.status(500).json({message : "Could Not Remove Your Address. Try Later!"})
     }
 }
