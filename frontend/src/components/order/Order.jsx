@@ -4,7 +4,7 @@ import axios from "axios"
 import OrderCheckbox from "./OrderCheckbox"
 import { useEffect, useRef, useState } from "react"
 import SubmitOrder from "../order/SubmitOrder"
-import PaymentMessage from "../../alerts/PaymentMessage"
+import PaymentMessage from "../../alerts/SuccessPaymentMessage"
 import '../../styles/checkbox.css'
 import Address from "../dashboard/Address"
 import { Link } from "react-router-dom"

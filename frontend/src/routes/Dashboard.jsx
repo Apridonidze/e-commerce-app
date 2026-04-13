@@ -25,6 +25,7 @@ import { BACKEND_URL, STRIPE_PUBLIC_KEY } from '../../config'; //importing keys 
 import '../styles/dashboard.css'; //importing css file
 import Address from '../components/dashboard/Address';
 import ChooseAddress from '../components/address/ChooseAddress';
+import PaymentMessage from '../alerts/SuccessPaymentMessage';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY); //creating stripe promise
 
@@ -133,6 +134,8 @@ const Dashboard = () => {
     const [targetAddress, setTargetAddress] = useState(0);
     const [ selectedItems, setSelectedItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0)
+    const [togglePayment,  setTogglePayment] = useState({status : true, success : true});
+
     useEffect(() => {
 
         const fetchAddresses = async() => {
@@ -180,31 +183,37 @@ const Dashboard = () => {
     }
     
 
-        const orderItems = async() => {
+    const orderItems = async() => {
         
         let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.sales_price ?? prod.price ?? 0}))
         
         try{
-            setToggleAddress(false)
-            setToggleAdd(false)
+            
             const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, targetAddress , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-            console.log(order)
+            if(order.status === 200) {
+                setToggleAdd(false)
+                setToggleAddress(false)
+                setTogglePayment({status : true , success : true})
+            }
+            
 
-            }catch(err){
+        }catch(err){
 
-                console.log(err.response)
+            console.log(err.response)
 
             setToggleAddress(false)
             setToggleAdd(false)
 
-            }
-            }
+        }
+    }
 
+    console.log(togglePayment)
 
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start">
             
+            {togglePayment.status ? <PaymentMessage />  : <></>}
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
 
             {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background mx-auto"  onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard} setToggleCard={setToggleCard} setToggleAlert={setToggleAlert}/></Elements></div></div> : <></>}
