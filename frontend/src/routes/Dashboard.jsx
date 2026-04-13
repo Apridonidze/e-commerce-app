@@ -24,6 +24,7 @@ import { BACKEND_URL, STRIPE_PUBLIC_KEY } from '../../config'; //importing keys 
 
 import '../styles/dashboard.css'; //importing css file
 import Address from '../components/dashboard/Address';
+import ChooseAddress from '../components/address/ChooseAddress';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY); //creating stripe promise
 
@@ -130,6 +131,8 @@ const Dashboard = () => {
     const [addresses, setAddresses] = useState([]);//state to display addresses 
     const [isLoading ,setIsLoading] = useState(true);
     const [targetAddress, setTargetAddress] = useState(0);
+    const [ selectedItems, setSelectedItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0)
     useEffect(() => {
 
         const fetchAddresses = async() => {
@@ -170,15 +173,48 @@ const Dashboard = () => {
         };
     };
 
+    const handleTargetAddress = (e) => {
+        console.log(e)
+        // call order item function
+        
+    }
+    
+
+        const orderItems = async() => {
+        
+        let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.sales_price ?? prod.price ?? 0}))
+        
+        try{
+            setToggleAddress(false)
+            setToggleAdd(false)
+            const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, targetAddress , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+
+            if(order.status === 200){
+                setTogglePayment(true)
+                
+            }
+
+            }catch(err){
+
+
+            setToggleAddress(false)
+            setToggleAdd(false)
+
+            //toggle error message
+            console.log(err)
+            }
+            }
+
+
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start">
             
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
 
             {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background mx-auto"  onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard} setToggleCard={setToggleCard} setToggleAlert={setToggleAlert}/></Elements></div></div> : <></>}
-            {toggleOrder && cardDetails?.last4 ? <div className="bg" onClick={() => setToggleOrder(false)}><div className="order-background m-auto rounded-2 mt-5 p-2"  onClick={(e) => e.stopPropagation()}><Order setToggleAlert={setToggleAlert} setCartIds={setCartIds} setToggleOrder={setToggleOrder} cartIds={cartIds} handleDeleteFromCart={handleDeleteFromCart} setToggleAddress={setToggleAddress}/></div></div>  : <></>}
+            {toggleOrder && cardDetails?.last4 ? <div className="bg" onClick={() => setToggleOrder(false)}><div className="order-background m-auto rounded-2 mt-5 p-2"  onClick={(e) => e.stopPropagation()}><Order totalPrice={totalPrice} setTotalPrice={setTotalPrice} selectedItems={selectedItems} setSelectedItems={setSelectedItems} setToggleAlert={setToggleAlert} setCartIds={setCartIds} setToggleOrder={setToggleOrder} cartIds={cartIds} handleDeleteFromCart={handleDeleteFromCart} setToggleAddress={setToggleAddress}/></div></div>  : <></>}
 
-            {toggleAddress ? <div className="bg" onClick={() => setToggleAddress(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><Address setToggleAdd={setToggleAdd} removeAddress={removeAddress} addresses={addresses} isLoading={isLoading} setTargetAddress={setTargetAddress}/></div></div> : <></>}
+            {toggleAddress ? <div className="bg" onClick={() => setToggleAddress(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ChooseAddress orderItems={orderItems} targetAddress={targetAddress} handleTargetAddress={handleTargetAddress} setToggleAdd={setToggleAdd} removeAddress={removeAddress} addresses={addresses} isLoading={isLoading} setTargetAddress={setTargetAddress}/></div></div> : <></>}
             {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ToggleAddress setAddresses={setAddresses} setToggleAdd={setToggleAdd} setToggleAlert={setToggleAlert} toggleAdd={toggleAdd} /></div></div> : <></>}
             
             <div className="main-body " >

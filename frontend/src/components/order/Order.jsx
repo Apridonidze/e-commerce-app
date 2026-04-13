@@ -10,54 +10,18 @@ import Address from "../dashboard/Address"
 import { Link } from "react-router-dom"
 import ToggleAddress from "../dashboard/ToggleAddress"
 
-const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart, setToggleAddress}) => {
+const Order = ({ setToggleAlert,setCartIds, cartIds ,setToggleOrder, handleDeleteFromCart, setToggleAddress, setSelectedItems , selectedItems , setTotalPrice , totalPrice}) => {
     
     const [cookies] = useCookies(['token'])
-    const [selectedItems, setSelectedItems] = useState([])
-    const [totalPrice, setTotalPrice] = useState(0)
+    
     const [address, setAddress] = useState('');
 
     const checkboxRef = useRef([null])
     const selectAllRef = useRef(null)
 
-    const [targetAddress, setTargetAddress] = useState(null);
-
-    const [toggleAdd, setToggleAdd] = useState(false);
     const [togglePayment, setTogglePayment] = useState(false)
 
-    useEffect(() => {
 
-        const orderItems = async() => {
-        
-        let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.sales_price ?? prod.price ?? 0}))
-        
-        try{
-            setToggleAddress(false)
-            setToggleAdd(false)
-            const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, targetAddress , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
-
-            if(order.status === 200){
-                setTogglePayment(true)
-                
-            }
-
-        }catch(err){
-
-
-            setToggleAddress(false)
-            setToggleAdd(false)
-
-            //toggle error message
-            console.log(err)
-        }
-    }
-
-        if(Number(targetAddress) || targetAddress !== null){
-            orderItems()
-        }
-
-        return
-    },[targetAddress])
 
     useEffect(() => {
         

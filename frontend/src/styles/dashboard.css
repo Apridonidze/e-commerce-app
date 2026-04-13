@@ -544,6 +544,10 @@
     border-radius: 5px;
 }
 
+.address-row-container.active{
+    border: 1px solid red !important;
+}
+
 .address-row-wrapper .remove:hover{
     cursor: pointer;
     text-decoration: underline;

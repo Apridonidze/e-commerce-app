@@ -4,9 +4,10 @@ const db = require('../../utils/db'); //importing db utility
 async function add(req, res) {
 
     const data = req.body; //definiing request body
+    console.log(data)
     const Schema = z.object({
         itemsIds: z.array(z.object({product_id: z.coerce.number().int().positive(),amount: z.coerce.number().int().positive(),price: z.coerce.number().positive()})).nonempty(),
-        address: z.string().min(5).max(255),
+        address: z.coerce.number().min(0).max(99999),
         totalPrice : z.coerce.number().min(40).max(99999)
     });//defining schema for requests data
             
@@ -19,7 +20,7 @@ async function add(req, res) {
 
         const { itemsIds, targetAddress, totalPrice } = req.body; //defining data from request body
         
-        const [order] = await db.query('insert into orders (user_id, total_price, status, address) values (?, ?, ?, ?)',[req.user.userId, totalPrice, 'Pending', address]);
+        const [order] = await db.query('insert into orders (user_id, total_price, status, address) values (?, ?, ?, ?)',[req.user.userId, totalPrice, 'Pending', targetAddress]);
 
         for (const item of itemsIds) {
             await db.query('insert into ordered_items (order_id, product_id, amount, price) values (?, ?, ?, ?)',[order.insertId, item.product_id, item.amount, Number(item.price)]);

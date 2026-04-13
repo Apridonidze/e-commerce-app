@@ -1,15 +1,15 @@
-const AddressRow = ({ address, removeAddress, setTargetAddress }) => {
+const ChooseAddressRow = ({ targetAddress, address, removeAddress, setTargetAddress, handleTargetAddress }) => {
 
-    let parsedAddress;
+     let parsedAddress;
 
     try {
         parsedAddress = JSON.parse(address.address);
     } catch {
         parsedAddress = address.address;
     }
-    
+
     return(
-        <div className="address-row-container" key={address.id}>
+        <div className={`address-row-container ${address.id == targetAddress ? 'active' : ''}`} key={address.id} onClick={() => setTargetAddress(address.id)}>
             <div className="address-row-wrapper">
                 <div className="address-row-top d-flex align-items-center mb-3 justify-content-between">
                     <span className="fw-bold">Primary Address</span>
@@ -26,4 +26,4 @@ const AddressRow = ({ address, removeAddress, setTargetAddress }) => {
     );
 };
 
-export default AddressRow;
+export default ChooseAddressRow;
