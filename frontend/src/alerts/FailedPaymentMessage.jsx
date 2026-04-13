@@ -1,4 +1,4 @@
-const FailedPaymentMessage = () => {
+const FailedPaymentMessage = ({ setTogglePayment }) => {
     return(
         <div className="payment-message-container d-flex align-items-center justify-content-start gap-3 h-auto">
             <i class="fa-regular fa-circle-xmark"></i>

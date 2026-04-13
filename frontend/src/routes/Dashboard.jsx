@@ -25,7 +25,6 @@ import { BACKEND_URL, STRIPE_PUBLIC_KEY } from '../../config'; //importing keys 
 import '../styles/dashboard.css'; //importing css file
 import Address from '../components/dashboard/Address';
 import ChooseAddress from '../components/address/ChooseAddress';
-import PaymentMessage from '../alerts/SuccessPaymentMessage';
 import SuccessPaymentMessage from '../alerts/SuccessPaymentMessage';
 import FailedPaymentMessage from '../alerts/FailedPaymentMessage';
 
@@ -136,7 +135,7 @@ const Dashboard = () => {
     const [targetAddress, setTargetAddress] = useState(0);
     const [ selectedItems, setSelectedItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0)
-    const [togglePayment,  setTogglePayment] = useState({status : true, success : true});
+    const [togglePayment,  setTogglePayment] = useState({status : true, success : true, orderId : null});
 
     useEffect(() => {
 
@@ -196,7 +195,7 @@ const Dashboard = () => {
             if(order.status === 200) {
                 setToggleAdd(false)
                 setToggleAddress(false)
-                setTogglePayment({status : true , success : true})
+                setTogglePayment({status : true , success : true, orderId : order.data.orderId})
             }
             
 
@@ -210,12 +209,10 @@ const Dashboard = () => {
         }
     }
 
-    console.log(togglePayment)
-
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start">
             
-            {togglePayment.status ? togglePayment.success ? <SuccessPaymentMessage /> : <FailedPaymentMessage />   : <></>}
+            {togglePayment.status ? togglePayment.success ? <SuccessPaymentMessage setTogglePayment={setTogglePayment} togglePayment={togglePayment}/> : <FailedPaymentMessage setTogglePayment={setTogglePayment}/>   : <></>}
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
 
             {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background mx-auto"  onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard} setToggleCard={setToggleCard} setToggleAlert={setToggleAlert}/></Elements></div></div> : <></>}

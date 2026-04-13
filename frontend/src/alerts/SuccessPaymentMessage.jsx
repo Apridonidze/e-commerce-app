@@ -1,4 +1,4 @@
-const SuccessPaymentMessage = () => {
+const SuccessPaymentMessage = ({ setTogglePayment , togglePayment }) => {
 
 
     return(
@@ -9,8 +9,8 @@ const SuccessPaymentMessage = () => {
             <h6>Your payment has been processed successfully. Your order is now confirmed and being prepared.</h6>
 
             <div className="payment-row">
-                <h6>Order Id : </h6>
-                <h6>Excepted Delivery : </h6>
+                <h6>Order Id : {togglePayment.orderId}</h6>
+                <h6>Excepted Delivery : {new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}</h6>
             </div>
 
             <div className="d-flex">
