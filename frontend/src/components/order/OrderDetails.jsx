@@ -60,7 +60,7 @@ const OrderDetails = ({order, orderId, key , setOrders}) => {
             <div className="order-bottom">
                 <div className="d d-flex justify-content-between">
                     <h4>Ordered Items</h4>
-                    <button className="btn btn-primary" onClick={() => fetchOrderDetails(order.order_id)} type="button" data-toggle="collapse" data-target={`#collapseDiv${orderId}`} aria-expanded="false" aria-controls={`collapseDiv${orderId}`}>^</button>
+                    <button className="btn btn-primary" onClick={() => {products.length == [] ? fetchOrderDetails(order.order_id) : ''}} type="button" data-toggle="collapse" data-target={`#collapseDiv${orderId}`} aria-expanded="false" aria-controls={`collapseDiv${orderId}`}>^</button>
                 </div>
                 <div className="collapse" id={`collapseDiv${orderId}`}>
                     {products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId} />)}
