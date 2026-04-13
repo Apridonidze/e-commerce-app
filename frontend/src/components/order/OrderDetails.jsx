@@ -23,7 +23,7 @@ const OrderDetails = ({order, orderId, key , setOrders}) => {
 
         }catch(err){
             // toggle error message
-            console.log(err)
+            console.log(err.response)
         }
     }
     
