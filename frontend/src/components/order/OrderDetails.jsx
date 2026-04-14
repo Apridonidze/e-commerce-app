@@ -44,28 +44,39 @@ const OrderDetails = ({order, orderId, key , setOrders}) => {
 
     return(
         <div className="order-details-container" key={orderId}>
-            <div className="order-top  d-flex justify-content-between">
-                <div className="order-start">
-                    <h1>Order Status : {order.status}</h1>
-                    <h3>Ordered At: {new Date(order.created_at).toLocaleDateString()} {new Date(order.created_at).toLocaleTimeString()}</h3>
-                    <h3>Expected Delivery: {new Date(new Date(order.created_at).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}</h3>
+
+            <div className="order-top border d-flex justify-content-between">
+                <div className="order-start d-flex gap-2">
+                    
+                    <div className="order-icon">{order.status == 'Pending' ? <i class="fa-regular fa-truck"></i> : order.status == 'OnWay' ? <i class="fa-solid fa-clipboard-check"></i> : <i class="fa-solid fa-envelope-circle-check"></i>}</div>
+                    
+                    <div className="d">
+                        <div className="d-flex">
+                            <h4>Order #{order.order_id}</h4>
+                            <span className={`order ${order.status}`}> {order.status}</span>
+                        </div>
+                        <h6>Expected Delivery: {new Date(new Date(order.created_at).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}</h6>
+                    </div>
+
                 </div>
-                <div className="order-end border h-100 d-flex flex-column align-items-end">
+                <div className="order-end border h-100 d-flex flex-column align-items-end border">
                     <button className="btn btn-primary" onClick={() => setToggleDrop(!toggleDrop)}>:</button>
                     <div className="toggle text-white" style={{ display : toggleDrop ? 'flex' : 'none' , flexDirection : 'column',position : 'relative', top : '10px'}}>
                         <button className="btn btn-danger" disabled={order.status === 'OnWay' || order.status === 'Delivered' ? true : false}  onClick={() => discardOrder(order.order_id)}>Discard Order</button>
                     </div>
-                </div>
-            </div>
-            <div className="order-bottom">
-                <div className="d d-flex justify-content-between">
-                    <h4>Ordered Items</h4>
+                    <div className="d d-flex justify-content-between">
                     <button className="btn btn-primary" onClick={() => {products.length == [] ? fetchOrderDetails(order.order_id) : ''}} type="button" data-toggle="collapse" data-target={`#collapseDiv${orderId}`} aria-expanded="false" aria-controls={`collapseDiv${orderId}`}>^</button>
                 </div>
+                </div>
+            </div>
+
+            <div className="order-bottom">
+                
                 <div className="collapse" id={`collapseDiv${orderId}`}>
                     {products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId} />)}
                 </div>
             </div>
+
         </div>
     )
 }

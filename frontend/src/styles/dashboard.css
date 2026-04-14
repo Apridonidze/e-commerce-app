@@ -284,6 +284,10 @@
     color: #10b981;
 }
 
+.order-list-end button:hover{
+    background-color: var(--component-bg);
+}
+
 /*  */
 
 .card-details-background{
@@ -641,6 +645,24 @@
 }
 .empty-orders-container h6{
     font-size: 14px;
+}
+
+
+/*  */
+
+.order-icon i{
+    font-size: 32px !important;
+    color: #10b981;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(16, 185, 129, 0.15);
+}
+
+.order.Pending{
+    border: 2px solid red !important;
 }
 
 @media(max-width : 540px){
