@@ -141,9 +141,9 @@
 .payment-message-container{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   gap: 20px;
-  text-align: start;
+  text-align:left;
   position:fixed;
   z-index: 99999;
   width: auto;
@@ -153,5 +153,57 @@
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 12px;
-  background-color: inherit;
+}
+
+.fail-icon{
+  padding: 5px 10px;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  background-color: rgba(220, 38, 38, 0.3);
+  border: 2px solid rgba(220, 38, 38, 0.3);
+}
+
+.success-icon {
+  padding: 5px 10px;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  background-color: rgba(16, 185, 129, 0.3);
+  border: 2px solid rgba(16, 185, 129, 0.5);
+}
+
+.fail-icon i {
+  color: var(--error-bar);
+}
+
+.success-icon i {
+  color: #10b981;
+}
+
+.payment-message-container small {
+  font-size: 14px;
+}
+
+.payment-message-container .return , .payment-message-container .return:focus{
+  color: white;
+  background-color: #10b981;
+  border: none;
+  font-weight: 500;
+  font-size: 15px !important;
+}
+
+.payment-message-container .return:hover {
+  background-color: #059669;
+}
+
+.payment-message-container .tryAgain , .payment-message-container .tryAgain:focus{
+    color: white;
+    background-color: rgba(220, 38, 38 , 0.8);
+    border: none;
+    font-weight: 500;
+    font-size: 15px !important;
+}
+
+
+.payment-message-container .tryAgain:hover {
+  background-color: rgba(220, 38, 38);
 }

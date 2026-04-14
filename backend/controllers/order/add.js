@@ -24,9 +24,9 @@ async function add(req, res) {
         for (const item of itemsIds) {
             await db.query('insert into ordered_items (order_id, product_id, amount, price) values (?, ?, ?, ?)',[order.insertId, item.product_id, item.amount, Number(item.price)]);
             await db.query('update products set amount = amount - ? where products_id = ?',[item.amount, item.product_id]);
-            await db.query('delete from cart where product_id = ?',[item.product_id]); //clearing users cart
         }
 
+        await db.query('delete from cart where id = ? and product_id in (?)',[req.user.userId, itemsIds.map(item => item.product_id)]); //clearing users cart
         return res.status(200).json({message: "Your Items Have Been Ordered Successfully, Wait For Delivery", orderId : order.insertId});//returning success message
 
     } catch (err) {

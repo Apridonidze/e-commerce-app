@@ -135,7 +135,7 @@ const Dashboard = () => {
     const [targetAddress, setTargetAddress] = useState(0);
     const [ selectedItems, setSelectedItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0)
-    const [togglePayment,  setTogglePayment] = useState({status : true, success : true, orderId : null});
+    const [togglePayment,  setTogglePayment] = useState({status : true, success : false, orderId : null});
 
     useEffect(() => {
 
@@ -211,8 +211,8 @@ const Dashboard = () => {
 
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start">
-            
-            {togglePayment.status ? togglePayment.success ? <SuccessPaymentMessage setTogglePayment={setTogglePayment} togglePayment={togglePayment}/> : <FailedPaymentMessage setTogglePayment={setTogglePayment}/>   : <></>}
+
+            {togglePayment.status ? <div className="bg" onClick={() => setTogglePayment({status : false, success : false , orderId : null})}> <div className="payment-message-background" onClick={(e) => e.stopPropagation()}>{togglePayment.success ? <SuccessPaymentMessage setTogglePayment={setTogglePayment} togglePayment={togglePayment}/> : <FailedPaymentMessage setTogglePayment={setTogglePayment}/> }</div> </div>  : <></>}
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
 
             {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background mx-auto"  onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard} setToggleCard={setToggleCard} setToggleAlert={setToggleAlert}/></Elements></div></div> : <></>}
