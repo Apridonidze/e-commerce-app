@@ -1,7 +1,7 @@
 import EmptyAddress from "../../empty/EmptyAddress";
 import ChooseAddressRow from "./ChooseAddressRow";
 
-const ChooseAddress = ({ setToggleAdd, removeAddress, addresses, isLoading, setTargetAddress, targetAddress,handleTargetAddress, orderItems }) => {
+const ChooseAddress = ({ setToggleAddress, setToggleAdd, removeAddress, addresses, isLoading, setTargetAddress, targetAddress,handleTargetAddress, orderItems }) => {
 
     return(
         <div className="choose-address-container rounded-3 mx-1 p-2 ">
@@ -11,7 +11,7 @@ const ChooseAddress = ({ setToggleAdd, removeAddress, addresses, isLoading, setT
                     <h6>Choose Address Order to be delivered at</h6>
                 </div>
                 <div className="choose-address-header-end">
-                    <button className="btn btn-none border-0" onClick={() => setToggleAdd(false)}><i class="fa-solid fa-xmark"></i></button>
+                    <button className="btn btn-none border-0" onClick={() => setToggleAddress(false)}><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
             <div className="choose-address-main">
@@ -30,8 +30,8 @@ const ChooseAddress = ({ setToggleAdd, removeAddress, addresses, isLoading, setT
             }
             </div>
             <div className="choose-address-foooter">
-                <button className="btn">Cancle</button>
-                <button className="btn" onClick={() => orderItems()} disabled={targetAddress ? false : true}>Order</button>
+                <button className="btn bg-none border-danger border-2 text-danger" onClick={() => setToggleAddress(false)}>Cancle</button>
+                <button className="success btn" onClick={() => orderItems()} disabled={targetAddress ? false : true}>Submit Order</button>
             </div>
         </div>
     );

@@ -284,7 +284,7 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd, setAddresses }
 
                 <div className="toggle-address-end mt-5 d-flex align-items-center justify-content-between">
                     <button className="btn btn-none" onClick={() => setToggleAdd(false)}>Cancle</button>
-                    <button className="btn" ref={submitRef} >Save Address</button>
+                    <button className="btn border-0" ref={submitRef} >Save Address</button>
                 </div>
             </form>
         </div>
