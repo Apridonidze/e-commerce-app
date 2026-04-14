@@ -1,5 +1,7 @@
 import { useRef, useState } from "react"; //importing react hooks
 import OrderDetails from "./OrderDetails"; //importing react components
+import EmptyAddress from "../../empty/EmptyAddress";
+import EmptyOrders from "../../empty/EmptyOrders";
 
 const OrderList = ({ setOrders, orders }) => {
 
@@ -40,9 +42,9 @@ const OrderList = ({ setOrders, orders }) => {
             </div>
 
             <h3>My Orders</h3>
-            {orders?.length > 0 ? orders?.filter((order) => order.status == type).length > 0 ? orders?.filter((order) => order.status == type).map((order,orderId) => (
+            {orders?.filter((order) => order.status == type).length > 0 ? orders?.filter((order) => order.status == type).map((order,orderId) => (
                 <OrderDetails order={order} orderId={orderId} key={orderId} setOrders={setOrders}/>
-            )) : 'no item' : `no ${type}`}
+            )) : <EmptyOrders/>}
 
         </div>
     );

@@ -608,6 +608,41 @@
 }
 
 
+/*  */
+
+.empty-orders-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--component-bg);
+    border-radius: 5px;
+    padding: 3rem 0px;
+    text-align: center;
+}
+
+.empty-orders-container div {
+    background-color: transparent !important;
+}
+
+.empty-orders-container i {
+    font-size: 32px !important;
+    color: #10b981;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(16, 185, 129, 0.15);
+    margin-bottom: 1rem;
+}
+.empty-orders-container h1{
+    font-size: 32px;
+}
+.empty-orders-container h6{
+    font-size: 14px;
+}
+
 @media(max-width : 540px){
     .order-body {
         width: 100%;
