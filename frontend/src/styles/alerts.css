@@ -235,3 +235,13 @@
   border-radius: 5px;
   background-color: var(--dark-bg);
 }
+
+
+@media (max-width : 480px) {
+  .payment-message-container{
+    width: 100% !important;
+    max-width: 90vw !important;
+    margin: auto;
+    top: 15rem;
+  }
+}

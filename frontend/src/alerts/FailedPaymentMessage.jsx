@@ -14,7 +14,7 @@ const FailedPaymentMessage = ({ setTogglePayment , orderItems }) => {
             </div>
 
             <div className="d-flex gap-2">
-                <button className="tryAgain btn" onClick={() => orderItems()}>Try Again</button>
+                <button className="tryAgain btn" onClick={() => {orderItems() ; setTogglePayment({success : false , status : false , orderId : null})}}>Try Again</button>
                 <button className="btn text-decoration-underline border-0" onClick={() => setTogglePayment({success : false , status : false , orderId : null})}>Return To Dashboard</button>
             </div>
 
