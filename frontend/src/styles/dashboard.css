@@ -581,6 +581,22 @@
     }
 }
 
+@media (max-width : 429px){
+    .user-container{
+        flex-direction: column !important;
+        text-align: center;
+    }
+    .user-container * {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .user-container-top-end{
+        text-align: start;
+        margin-left: 5px;
+    }
+}
+
 @media (max-width: 768px) {
     .user-container{
         display: flex;
