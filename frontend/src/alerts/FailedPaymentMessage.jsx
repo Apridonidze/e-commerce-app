@@ -1,4 +1,4 @@
-const FailedPaymentMessage = ({ setTogglePayment }) => {
+const FailedPaymentMessage = ({ setTogglePayment , orderItems }) => {
     return(
         <div className="payment-message-container">
 
@@ -10,12 +10,12 @@ const FailedPaymentMessage = ({ setTogglePayment }) => {
             </div>
 
             <div className="payment-row">
-                <small>We couldn’t process your payment due to a technical issue, declined transaction, failed authentication, insufficient funds, expired session, or network error, and no charges were made to your account, so please check your details, try again, or use a different payment method, and contact support if the issue persists.</small>
+                <small>Payment failed due to a technical issue, declined transaction, authentication error, insufficient funds, expired session, or network problem; no charges were made-please check your details, try again, or use a different payment method.</small>
             </div>
 
             <div className="d-flex gap-2">
-                <button className="tryAgain btn">Try Again</button>
-                <button className="return btn">Return To Dashboard</button>
+                <button className="tryAgain btn" onClick={() => orderItems()}>Try Again</button>
+                <button className="btn text-decoration-underline border-0" onClick={() => setTogglePayment({success : false , status : false , orderId : null})}>Return To Dashboard</button>
             </div>
 
         </div>

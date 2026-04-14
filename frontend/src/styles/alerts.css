@@ -14,6 +14,8 @@
   --warning-bg: #f59e0b;
   --warning-text: #1f2937;
   --warning-bar: #d97706;
+  --dark-bg : #dee8ff;
+  --text-color: #111c2d;
 }
 
 [data-theme = 'dark']{
@@ -29,6 +31,8 @@
   --warning-bg: #d97706;
   --warning-text: #111827;
   --warning-bar: #b45309;
+  --dark-bg : #0f172a;
+  --text-color: #94a3b8;
 }
 
 /* styling alert-box component */
@@ -147,12 +151,27 @@
   position:fixed;
   z-index: 99999;
   width: auto;
+  max-width: 600px;
   top: 3vw;
   left: 50%;
   transform: translateX(-50%);
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 12px;
+}
+
+.payment-message-container span{
+  font-size: 15px;
+  background-color: transparent;
+  font-weight: 500;
+}
+
+.payment-row div{
+  background-color: transparent;
+}
+
+.payment-row-start span{
+  color: #10b981;
 }
 
 .fail-icon{
@@ -183,6 +202,10 @@
   font-size: 14px;
 }
 
+.payment-message-container button{
+  color: var(--text-color);
+}
+
 .payment-message-container .return , .payment-message-container .return:focus{
   color: white;
   background-color: #10b981;
@@ -196,14 +219,19 @@
 }
 
 .payment-message-container .tryAgain , .payment-message-container .tryAgain:focus{
-    color: white;
-    background-color: rgba(220, 38, 38 , 0.8);
-    border: none;
-    font-weight: 500;
-    font-size: 15px !important;
+  color: white;
+  background-color: rgba(220, 38, 38 , 0.8);
+  border: none;
+  font-weight: 500;
+  font-size: 15px !important;
 }
-
 
 .payment-message-container .tryAgain:hover {
   background-color: rgba(220, 38, 38);
+}
+
+.payment-row{
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--dark-bg);
 }
