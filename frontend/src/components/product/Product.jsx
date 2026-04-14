@@ -104,7 +104,7 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
                     
                     {!user ? <></> : isInCart ? 
                         <button className="btn w-100 fw-bold" style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => handleDeleteFromCart(prod?.products_id)}><i class="fa-solid fa-cart-shopping text-white me-2"></i> In Cart</button> : 
-                        <button className="btn w-100 fw-bold" disabled={prod.amount == 0 ? true : false} style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => setToggleAddToCart({status : true , product : prod})}><i class="fa-solid fa-cart-shopping text-white me-2"></i>Add To Cart</button>
+                        <button className="btn w-100 fw-bold" disabled={prod.amount <= 0 ? true : false} style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => setToggleAddToCart({status : true , product : prod})}><i class="fa-solid fa-cart-shopping text-white me-2"></i>Add To Cart</button>
                     }
                 </div>
 

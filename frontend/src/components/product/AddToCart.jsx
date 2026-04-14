@@ -128,7 +128,7 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
                         </div>
 
                         <div className="amounts-end">
-                            <span className="avalability rounded-5" style={{fontSize:'14px', padding : '2px 10px'}}>{toggleAddToCart.product.amount} Items Left</span>
+                                <span className="avalability rounded-5" style={{fontSize:'14px', padding : '2px 10px'}}>{toggleAddToCart.product.amount > 0 ? `${toggleAddToCart.product.amount} Items Left` : 'Out Of Stock'}</span>
                         </div>
                     
                     </div>
