@@ -54,6 +54,9 @@
     display: flex;
     gap: 1rem;
 }
+.dashboard-start{
+    max-width: 255px;
+}
 
 /*  */
 
@@ -650,6 +653,9 @@
 }
 
 @media (max-width: 768px) {
+    .dashboard-start{
+        max-width: 100vw ;
+    }
     .user-container{
         display: flex;
         flex-direction: row;
