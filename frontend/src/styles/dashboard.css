@@ -650,6 +650,17 @@
 
 /*  */
 
+.order-details-container{
+    border: var(--btn-border) !important;
+    overflow: hidden;
+}
+
+.order-details-container * {
+
+    background-color: var(--component-bg);
+    border: none !important;
+}
+
 .order-icon i{
     font-size: 32px !important;
     color: #10b981;
@@ -661,8 +672,54 @@
     background-color: rgba(16, 185, 129, 0.15);
 }
 
-.order.Pending{
-    border: 2px solid red !important;
+.order.Pending {
+    color: #10b981;
+    font-weight: 500;
+    padding: 0px 20px;
+    height: fit-content;
+    border-radius: 5px;
+    font-size: 14px;
+    text-transform:uppercase ;
+    background-color: rgba(16, 185, 129, 0.15);
+}
+.order.OnWay{
+    color: #10b981;
+    font-weight: 500;
+    padding: 0px 20px;
+    height: fit-content;
+    border-radius: 5px;
+    font-size: 14px;
+    text-transform:uppercase ;
+    background-color: rgba(16, 185, 129, 0.15);
+}
+.order.Delivered{
+    color: white;
+    font-weight: 500;
+    padding: 0px 20px;
+    height: fit-content;
+    border-radius: 5px;
+    font-size: 14px;
+    text-transform:uppercase ;
+    background-color: rgba(22, 31, 50, 0.5);
+}
+
+.rotate {
+  transform: rotate(90deg);
+  transition: transform 0.1s ease;
+}
+
+.order-top{
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+    border-bottom: var(--btn-border) !important;
+}
+
+.order-item{
+    width: 100%;
+    max-width: 100%;
+}
+
+.order-details-container{
+    border-left:  3px solid #10b981 !important;
 }
 
 @media(max-width : 540px){
