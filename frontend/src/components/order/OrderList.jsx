@@ -3,7 +3,7 @@ import OrderDetails from "./OrderDetails"; //importing react components
 
 const OrderList = ({ setOrders, orders }) => {
 
-    const [type , setType] = useState('Progress'); //state to store type of orders user want to see
+    const [type , setType] = useState('Pending'); //state to store type of orders user want to see
 
     const btn1Ref = useRef(null);
     const btn2Ref = useRef(null);//refs for oders type button
@@ -34,15 +34,15 @@ const OrderList = ({ setOrders, orders }) => {
                     <h6>Manage your orders</h6>
                 </div>
                 <div className="order-list-end">
-                    <button className="btn border-0 active" id="Progress" onClick={(e) => handleToggleOrder(e)} ref={btn1Ref}>My Order</button>
+                    <button className="btn border-0 active" id="Pending" onClick={(e) => handleToggleOrder(e)} ref={btn1Ref}>My Order</button>
                     <button className="btn border-0" id="Delivered" onClick={(e) => handleToggleOrder(e)} ref={btn2Ref}>Delivered</button>
                 </div>
             </div>
 
             <h3>My Orders</h3>
-            {orders?.length > 0 ? orders?.filter((order) => order.status !== type).map((order,orderId) => (
+            {orders?.length > 0 ? orders?.filter((order) => order.status == type).length > 0 ? orders?.filter((order) => order.status == type).map((order,orderId) => (
                 <OrderDetails order={order} orderId={orderId} key={orderId} setOrders={setOrders}/>
-            )) : `no ${type}`}
+            )) : 'no item' : `no ${type}`}
 
         </div>
     );

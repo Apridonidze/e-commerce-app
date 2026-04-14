@@ -182,8 +182,8 @@ const Dashboard = () => {
         // call order item function
         
     }
-    
-
+    console.log(orders)
+    // console.log())
     const orderItems = async() => {
         
         let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.sales_price ?? prod.price ?? 0}))
@@ -191,17 +191,18 @@ const Dashboard = () => {
         try{
             
             const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, targetAddress , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
-
+            
             if(order.status === 200) {
                 
                 const items = selectedItems?.map(prod => prod.id);                
                 const newCartIds = cartIds.filter(cart => items.some(id => id === cart.product_id))
+
                 setCartIds(newCartIds);
-            
                 setToggleOrder(false)
                 setToggleAdd(false)
                 setToggleAddress(false)
                 setTogglePayment({status : true , success : true, orderId : order.data.orderId})
+                setOrders(prev => [...prev, {...addresses.filter(address => address.id == targetAddress), order_id : order.data.orderId, status : 'Pending', totalPrice , user_id : order.data.id}])
             }
             // update cart instantly
 
@@ -217,7 +218,7 @@ const Dashboard = () => {
     }
 
     return(
-        <div className="main-container container-fluid d-flex flex-column justify-content-start">
+        <div className="main-container container-fluid d-flex flex-column justify-content-start" style={{maxWidth : '3000px'}}>
 
             {togglePayment.status ? <div className="bg" onClick={() => setTogglePayment({status : false, success : false , orderId : null})}> <div className="payment-message-background" onClick={(e) => e.stopPropagation()}>{togglePayment.success ? <SuccessPaymentMessage setTogglePayment={setTogglePayment} togglePayment={togglePayment}/> : <FailedPaymentMessage setTogglePayment={setTogglePayment} orderItems={orderItems}/> }</div> </div>  : <></>}
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
