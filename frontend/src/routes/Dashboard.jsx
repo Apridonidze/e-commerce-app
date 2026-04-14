@@ -135,7 +135,7 @@ const Dashboard = () => {
     const [targetAddress, setTargetAddress] = useState(0);
     const [ selectedItems, setSelectedItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0)
-    const [togglePayment,  setTogglePayment] = useState({status : true, success : true, orderId : 123});
+    const [togglePayment,  setTogglePayment] = useState({status : true, success : false, orderId : 123});
 
     useEffect(() => {
 
@@ -193,6 +193,12 @@ const Dashboard = () => {
             const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, targetAddress , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
             if(order.status === 200) {
+                
+                const items = selectedItems?.map(prod => prod.id);                
+                const newCartIds = cartIds.filter(cart => items.some(id => id === cart.product_id))
+                console.log(newCartIds)
+                setCartIds(newCartIds);
+            
                 setToggleOrder(false)
                 setToggleAdd(false)
                 setToggleAddress(false)
