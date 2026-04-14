@@ -182,7 +182,6 @@ const Dashboard = () => {
         // call order item function
         
     }
-    console.log(orders)
     // console.log())
     const orderItems = async() => {
         
@@ -202,7 +201,7 @@ const Dashboard = () => {
                 setToggleAdd(false)
                 setToggleAddress(false)
                 setTogglePayment({status : true , success : true, orderId : order.data.orderId})
-                setOrders(prev => [...prev, {...addresses.filter(address => address.id == targetAddress), order_id : order.data.orderId, status : 'Pending', totalPrice , user_id : order.data.id}])
+                setOrders(prev => [...prev, {...addresses.filter(address => address.id == targetAddress), order_id : order.data.orderId, status : 'Pending', totalPrice , user_id : order.data.id , created_at : new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}])
             }
             // update cart instantly
 
