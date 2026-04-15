@@ -34,6 +34,8 @@ const AdminDashboard = () => {
     const [toggleDeleteReport, setToggleDeleteReport] = useState({status : false, reportDetails : null});
     const [toggleRespondReport, setToggleRespondReport] = useState({status : false, reportDetails : null});
 
+    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
+
     const [reportsOffset, setReportsOffset] = useState(0)
 
     const config = {headers: { Authorization: `Bearer ${cookies.token}`}}
@@ -50,9 +52,13 @@ const AdminDashboard = () => {
                 setSoldItems(response.data.soldItems)
                 setAdmins({onlineAdmins : response.data.onlineAdmins , offlineAdmins : response.data.offlineAdmins}) 
 
+            } catch (err) {
 
-            } catch (error) {
-                console.log("Dashboard fetch error:", error);
+                setOrders([]);
+                setSoldItems([]);
+                setAdmins({onlineAdmins : [] , offlineAdmins : []});
+
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
             }
         };
 
@@ -60,13 +66,13 @@ const AdminDashboard = () => {
             try{
 
                 const response = await axios.get(`${BACKEND_URL}/api/report/${reportsOffset}`, config)
-                console.log(response)
-                if(response.status == 204) return setReports([])
                 
+                if(response.status == 204) return setReports([])
                 setReports(response.data.reports);
 
             }catch(err){
-                console.log(err)
+                setReports([])
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
             }
         }
 
@@ -74,15 +80,15 @@ const AdminDashboard = () => {
             try{
 
                 const response = await axios.get(`${BACKEND_URL}/api/feedback/${0}/${undefined}`, config)
-                console.log(response)
-                if(response.status === 204) setFeedbacks([])
 
+                if(response.status === 204) return setFeedbacks([])
                 setFeedbacks(response.data.feedbacks)
 
             }catch(err){
-                console.log(err)
-            }
-        }
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
+                setFeedbacks([])
+            };
+        };
 
         return () => {
             fetchStatus();
