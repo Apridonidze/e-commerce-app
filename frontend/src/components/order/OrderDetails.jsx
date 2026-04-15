@@ -39,7 +39,7 @@ const OrderDetails = ({ order, setToggleAlert }) => {
     };
     
     return(
-        <div className="order-details-container rounded-3 " key={order.order_id}>
+        <div className="order-details-container rounded-3 my-2" key={order.order_id}>
 
             <div className="order-top d-flex align-items-center p-3 justify-content-between">
 
@@ -62,7 +62,7 @@ const OrderDetails = ({ order, setToggleAlert }) => {
                 <div className="order-end h-100 d-flex align-items-center gap-3 ">
                     <div className="d-flex flex-column">
                         <span style={{letterSpacing : '1px'}} className="fw-medium text-secondary">TOTAL VALUE</span><br />
-                        <span className="fw-bold">${order.total_price.toFixed(2)}</span>
+                        <span className="fw-bold">${order.total_price?.toFixed(2)}</span>
                     </div>
                     <div className="d d-flex justify-content-between">
                         <button className="btn fw-bold border-0 btn-none" onClick={() => {if (products.length === 0) fetchOrderDetails(order.order_id); setOpenId(prev => (prev === order.order_id ? null : order.order_id));}} type="button" data-toggle="collapse" data-target={`#collapseDiv${order.order_id}`} aria-expanded="false" aria-controls={`collapseDiv${order.order_id}`}><i className={`fa-solid fa-angle-right ${openId === order.order_id ? 'rotate' : ''}`}></i></button>

@@ -15,7 +15,7 @@ const ChooseAddress = ({ setToggleAddress, setToggleAdd, removeAddress, addresse
                 </div>
             </div>
             <div className="choose-address-main">
-                {!isLoading ? "Loading..." : 
+                {isLoading ? "Loading..." : 
                 <div className="address-wrapper">
 
                     {addresses.length === 0 ? <EmptyAddress /> : addresses.map(address => <ChooseAddressRow targetAddress={targetAddress} handleTargetAddress={handleTargetAddress} setTargetAddress={setTargetAddress} address={address} removeAddress={removeAddress}/>)}

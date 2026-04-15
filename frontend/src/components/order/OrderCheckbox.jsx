@@ -1,17 +1,18 @@
-import { useNavigate } from 'react-router-dom';
-import CheckBox from './CheckBox'
+import { useNavigate } from 'react-router-dom'; //importing react library
+
+import CheckBox from './CheckBox'; //importing react component
 
 const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef, handleDeleteFromCart }) => {
 
-    const navigator = useNavigate()
+    const navigator = useNavigate(); //definig navigator to navigate user to product page
 
     const handleImgCheckBox = () => {
 
-        const checkbox = checkboxRef.current[prod?.product_id];
-        if (!checkbox) return;
+        const checkbox = checkboxRef.current[prod?.product_id]; //defining component whichs checkbox is clicked 
+        if (!checkbox) return; //returning empty promise if no img is clicked
 
-        checkbox.checked = !checkbox.checked;
-        handleCheckbox({ target: checkbox }, Number(prod?.amount),prod.sales_price ?? prod.price ?? 0);
+        checkbox.checked = !checkbox.checked; //checking/unchecking checbox check status on each click
+        handleCheckbox({ target: checkbox }, Number(prod?.amount),prod.sales_price ?? prod.price ?? 0) ; //calling handleCheckbox function and passing props
     };
 
     return(
@@ -62,4 +63,4 @@ const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef, handleDeleteFromCart
     );
 };
 
-export default OrderCheckbox;
+export default OrderCheckbox; //exporting component

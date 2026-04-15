@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
-import { useCookies } from "react-cookie"; //importing react libraries
+import { Link } from "react-router-dom";//importing react libraries
 
 import { useEffect, useRef, useState } from "react"; //importing react hooks
 
 import OrderCheckbox from "./OrderCheckbox";
 import PaymentMessage from "../../alerts/SuccessPaymentMessage"; //importing react componenets
 
+import ItemSkeleton from "../../skeletons/ItemSkeleton"; //importing loading skeleton
+
 import '../../styles/checkbox.css'; //importing css file
-import ItemSkeleton from "../../skeletons/ItemSkeleton";
 
 const Order = ({ cartIds ,setToggleOrder, handleDeleteFromCart, setToggleAddress, setSelectedItems , selectedItems , setTotalPrice , totalPrice, toggleOrder}) => {
     

@@ -26,7 +26,7 @@ const OrderList = ({ orders, setToggleAlert }) => {
                 </div>
             </div>
 
-            {filteredOrders?.length > 0 ? (filteredOrders.map(order => <OrderDetails order={order} setToggleAlert={setToggleAlert}/>)) : <EmptyOrders />}
+            {filteredOrders?.length > 0 ? filteredOrders.map(order => <OrderDetails order={order} setToggleAlert={setToggleAlert}/>) : <EmptyOrders />}
 
         </div>
     );
