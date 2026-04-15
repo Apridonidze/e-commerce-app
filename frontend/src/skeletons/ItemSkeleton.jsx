@@ -1,12 +1,10 @@
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const ItemSkeleton = () => {
-    return(
-        <div className="item-skeleton">
-          
-        </div>
-    );
+  return (
+    <div className=""></div>
+  );
 };
 
 export default ItemSkeleton;

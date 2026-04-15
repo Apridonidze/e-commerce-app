@@ -29,6 +29,8 @@ import SuccessPaymentMessage from '../alerts/SuccessPaymentMessage';
 import FailedPaymentMessage from '../alerts/FailedPaymentMessage';
 import UserSkeleton from '../skeletons/UserSkeleton';
 import CardSkeleton from '../skeletons/CardSkeleton';
+import ItemSkeleton from '../skeletons/ItemSkeleton';
+import OrderSkeleton from '../skeletons/OrderSkeleton';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY); //creating stripe promise
 
@@ -48,6 +50,15 @@ const Dashboard = () => {
     const [orders,setOrders] = useState([]); //state to store users orders
     const [toggleAddress, setToggleAddress] = useState(false);
     
+    const [addresses, setAddresses] = useState([]);//state to display addresses 
+    const [targetAddress, setTargetAddress] = useState(0);
+    const [ selectedItems, setSelectedItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0)
+    const [togglePayment,  setTogglePayment] = useState({status : false, success : false, orderId : null});
+    
+    const [isLoading ,setIsLoading] = useState(true);
+    const [isCartLoading, setIsCartLoading] = useState(true);
+    const [isOrderLoading, setIsOrderLoading] = useState(true);
     
     useEffect(() => {//scrolling user to sections if user chooses section from sidebar
         
@@ -121,8 +132,9 @@ const Dashboard = () => {
                 
                 if(orders.status === 204) return setOrders([]); //handling 204 status code
                 if(orders.status === 200) return setOrders(orders.data.orders); //handling 200 staus code
-
+                setIsOrderLoading(false)
             }catch(err){
+                setIsOrderLoading(false)
                // add alert messages
             };
         };
@@ -130,14 +142,6 @@ const Dashboard = () => {
         fetchOrders(); //declearing functions
 
     },[]); //logic triggers on component mount
-
-
-    const [addresses, setAddresses] = useState([]);//state to display addresses 
-    const [isLoading ,setIsLoading] = useState(true);
-    const [targetAddress, setTargetAddress] = useState(0);
-    const [ selectedItems, setSelectedItems] = useState([]);
-    const [totalPrice, setTotalPrice] = useState(0)
-    const [togglePayment,  setTogglePayment] = useState({status : false, success : false, orderId : null});
 
     useEffect(() => {
 
@@ -248,8 +252,7 @@ const Dashboard = () => {
 
                         <div className="dashboard-end w-100 h-100">
                             <section id='cart-items'><Cart setToggleAlert={setToggleAlert} setToggleOrder={setToggleOrder} cartIds={cartIds} setCartIds={setCartIds} handleDeleteFromCart={handleDeleteFromCart}/></section>
-                            <section id='order-list'><OrderList orders={orders} setOrders={setOrders}/></section>
-                            
+                            <section id='order-list'>{!isOrderLoading ? <OrderSkeleton /> : <OrderList orders={orders} setOrders={setOrders}/>}</section>
                         </div>
 
                     </div>
