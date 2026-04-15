@@ -241,7 +241,7 @@ const Dashboard = () => {
                     <div className="dashboard-container">
 
                         <div className="dashboard-start">
-                            {user ? <UserSkeleton /> : <User setToggleAlert={setToggleAlert}/>  } 
+                            {!user ? <UserSkeleton /> : <User setToggleAlert={setToggleAlert}/>  } 
                             {!cardDetails ? <CardSkeleton /> : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }
                             <Address setToggleAdd={setToggleAdd} removeAddress={removeAddress} addresses={addresses} isLoading={isLoading} setTargetAddress={setTargetAddress}/>
                         </div>
