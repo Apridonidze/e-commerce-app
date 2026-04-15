@@ -11,7 +11,7 @@ const Address = ({ removeAddress, addresses, isLoading, setTargetAddress, setTog
                 <h5 className="my-auto">Address Book</h5>
             </div>
 
-            {!isLoading ? <AddressSkeleton /> : 
+            {isLoading ? <AddressSkeleton /> : 
                 <div className="address-wrapper">
 
                     {addresses.length === 0 ? <EmptyAddress /> : addresses.map(address => <AddressRow setTargetAddress={setTargetAddress} address={address} removeAddress={removeAddress}/>)}

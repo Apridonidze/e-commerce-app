@@ -235,15 +235,15 @@ const Dashboard = () => {
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
 
             {toggleCard ? <div className="bg" onClick={() => setToggleCard(false)}><div className="card-details-background mx-auto"  onClick={(e) => e.stopPropagation()}><Elements stripe={stripePromise}><CardDetails toggleCard={toggleCard} setToggleCard={setToggleCard} setToggleAlert={setToggleAlert}/></Elements></div></div> : <></>}
-            {toggleOrder && cardDetails?.last4 ? <div className="bg" onClick={() => setToggleOrder(false)}><div className="order-background m-auto rounded-2 mt-5 p-2"  onClick={(e) => e.stopPropagation()}><Order totalPrice={totalPrice} setTotalPrice={setTotalPrice} selectedItems={selectedItems} setSelectedItems={setSelectedItems} setToggleAlert={setToggleAlert} setCartIds={setCartIds} setToggleOrder={setToggleOrder} cartIds={cartIds} handleDeleteFromCart={handleDeleteFromCart} setToggleAddress={setToggleAddress}/></div></div>  : <></>}
+            {toggleOrder && cardDetails?.last4 ? <div className="bg" onClick={() => setToggleOrder(false)}><div className="order-background m-auto rounded-2 mt-5 p-2"  onClick={(e) => e.stopPropagation()}><Order toggleOrder={toggleOrder} totalPrice={totalPrice} setTotalPrice={setTotalPrice} selectedItems={selectedItems} setSelectedItems={setSelectedItems} setToggleOrder={setToggleOrder} cartIds={cartIds} handleDeleteFromCart={handleDeleteFromCart} setToggleAddress={setToggleAddress}/></div></div>  : <></>}
 
-            {toggleAddress ? <div className="bg" onClick={() => setToggleAddress(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ChooseAddress setToggleAddress={setToggleAddress} orderItems={orderItems} targetAddress={targetAddress} handleTargetAddress={handleTargetAddress} setToggleAdd={setToggleAdd} removeAddress={removeAddress} addresses={addresses} isLoading={isLoading} setTargetAddress={setTargetAddress}/></div></div> : <></>}
+            {toggleAddress ? <div className="bg" onClick={() => setToggleAddress(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ChooseAddress setToggleAddress={setToggleAddress} orderItems={orderItems} targetAddress={targetAddress} setToggleAdd={setToggleAdd} removeAddress={removeAddress} addresses={addresses} isLoading={isLoading} setTargetAddress={setTargetAddress}/></div></div> : <></>}
             {toggleAdd ? <div className="bg" onClick={() => setToggleAdd(false)}><div className="toggle-address-background mx-auto" onClick={(e) => e.stopPropagation()}><ToggleAddress setAddresses={setAddresses} setToggleAdd={setToggleAdd} setToggleAlert={setToggleAlert} toggleAdd={toggleAdd} /></div></div> : <></>}
             
             <div className="main-body " >
 
                 <div className="main-start"><Sidebar /></div>
-                
+
                 <div className="main-end">
 
                     <div className="main-header mb-3"><Header /></div>
@@ -258,7 +258,7 @@ const Dashboard = () => {
 
                         <div className="dashboard-end w-100 h-100">
                             <section id='cart-items'><Cart setToggleAlert={setToggleAlert} setToggleOrder={setToggleOrder} cartIds={cartIds} setCartIds={setCartIds} handleDeleteFromCart={handleDeleteFromCart}/></section>
-                            <section id='order-list'>{!isOrderLoading ? <OrderSkeleton /> : <OrderList orders={orders} setOrders={setOrders}/>}</section>
+                            <section id='order-list'>{isOrderLoading ? <OrderSkeleton /> : <OrderList orders={orders} setOrders={setOrders}/>}</section>
                         </div>
 
                     </div>
