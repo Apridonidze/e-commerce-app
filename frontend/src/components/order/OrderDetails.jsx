@@ -42,6 +42,7 @@ const OrderDetails = ({ order, setToggleAlert }) => {
         <div className="order-details-container rounded-3 " key={order.order_id}>
 
             <div className="order-top d-flex align-items-center p-3 justify-content-between">
+
                 <div className="order-start d-flex gap-2">
                     
                     <div className="order-icon">
@@ -57,6 +58,7 @@ const OrderDetails = ({ order, setToggleAlert }) => {
                     </div>
 
                 </div>
+
                 <div className="order-end h-100 d-flex align-items-center gap-3 ">
                     <div className="d-flex flex-column">
                         <span style={{letterSpacing : '1px'}} className="fw-medium text-secondary">TOTAL VALUE</span><br />
@@ -66,13 +68,14 @@ const OrderDetails = ({ order, setToggleAlert }) => {
                         <button className="btn fw-bold border-0 btn-none" onClick={() => {if (products.length === 0) fetchOrderDetails(order.order_id); setOpenId(prev => (prev === order.order_id ? null : order.order_id));}} type="button" data-toggle="collapse" data-target={`#collapseDiv${order.order_id}`} aria-expanded="false" aria-controls={`collapseDiv${order.order_id}`}><i className={`fa-solid fa-angle-right ${openId === order.order_id ? 'rotate' : ''}`}></i></button>
                     </div>
                 </div>
+
             </div>
 
             <div className="order-bottom p-0">
                 <div className="collapse w-100 p-0" id={`collapseDiv${order.order_id}`}>
 
                     <h6 className="px-3 pt-3">Ordered Items</h6>
-                    {isLoading ? <SmallItemSkeleton /> : products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId} />)}
+                    {isLoading ? <SmallItemSkeleton /> : products?.map(prod => <OrderItem prod={prod} />)}
                 </div>
             </div>
 
