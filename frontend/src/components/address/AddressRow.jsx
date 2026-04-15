@@ -1,6 +1,6 @@
-const AddressRow = ({ address, removeAddress, setTargetAddress }) => {
+const AddressRow = ({ address, removeAddress }) => {
 
-    let parsedAddress;
+    let parsedAddress; //
 
     try {
         parsedAddress = JSON.parse(address.address);
@@ -26,4 +26,4 @@ const AddressRow = ({ address, removeAddress, setTargetAddress }) => {
     );
 };
 
-export default AddressRow;
+export default AddressRow;//exporting component
