@@ -11,8 +11,8 @@ async function list(req,res) {
         const onWay = orders.filter(o => o.status === "OnWay").slice(0,5);
         const delivered = orders.filter(o => o.status === "Delivered").slice(0,5); //getting 5 of each status items
 
-        const [ soldItems ] = await db.query('select ordered_items.product_id, ordered_items.amount, ordered_items.price , products.title from ordered_items join products on ordered_items.product_id = products.products_id'); //selecting sold items to generate charts data for admin dashobard
-
+        const [ soldItems ] = await db.query('select ordered_items.product_id, ordered_items.amount, ordered_items.price , orders.created_at from ordered_items join orders on ordered_items.order_id = orders.order_id '); //selecting sold items to generate charts data for admin dashobard
+        
         const [ allAdmins ] = await db.query('select admin.id , users.fullname from admin join users on users.id = admin.id'); //getting all admins lists
         const onlineAdminList = [...onlineAdmins.keys()]; //getting online admins list from admins objects
         const offlineAdmins = allAdmins.filter(admin => !onlineAdminList.includes(admin.id)); //generating offline admins with filtering all admins with online admins

@@ -16,6 +16,8 @@ import RespondReport from "../admin/components/RespondReport"
 import AdminFeedback from "../admin/components/AdminFeedback"
 import ManageAdmins from "../admin/components/ManageAdmins"
 
+import '../styles/dashboard.css'
+
 const AdminDashboard = () => {
 
     const { hash } = useLocation();
@@ -95,19 +97,20 @@ const AdminDashboard = () => {
     }, [hash]);
 
     return(
-        <div className="admin-dashboard-container">
+        <div classclassName="main-container container-fluid d-flex flex-column justify-content-start" style={{maxWidth : '3000px'}}>
 
             {toggleCreateNew ? <div><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct /></div> : <></> }
             {toggleDeleteReport.status ? <div><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
             {toggleRespondReport.status ? <div><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
             {toggleManageAdmins ? <div><div className="manage-admins-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleManageAdmins(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><ManageAdmins setToggleManageAdmins={setToggleManageAdmins} setAdmins={setAdmins} admins={admins}/></div> : <></>}
-                <div className="row">
+                
+                <div className="main-body">
                         
-                    <div className="admin-dashboard-start col">
+                    <div className="main-start">
                         <Sidebar />
                     </div>
 
-                    <div className="admin-dashboard-end col">
+                    <div className="main-end">
                         {/* create AdminHeader.jsx which will have toggle buttons and additional features of admin dashbaord */}
 
                     <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>
