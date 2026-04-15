@@ -2,15 +2,13 @@ import { useNavigate } from "react-router-dom"; //importing library
 
 const Item = ({ prod, handleDeleteFromCart}) => {
 
-    let images = [];
+    let images = []; //defining variable to store valid format images to avoid json errors
 
-try {
-  images = typeof prod.images === "string"
-    ? JSON.parse(prod.images)
-    : prod.images;
-} catch (e) {
-  images = [];
-}
+    try {
+        images = typeof prod.images === "string" ? JSON.parse(prod.images) : prod.images; //checkign type of images and parsing them if they aare stringified , else storing in array by default
+    } catch (e) {
+        images = []; //returning empty array if error occurs while parising/storing image in logic
+    };
     
     const navigator = useNavigate(); //importing useNavigate from router library to redirect user to product clicked
 
