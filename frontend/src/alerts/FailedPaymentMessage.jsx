@@ -19,7 +19,7 @@ const FailedPaymentMessage = ({ setTogglePayment , orderItems }) => {
             </div>
 
         </div>
-    )
-}
+    );
+};
 
-export default FailedPaymentMessage;
+export default FailedPaymentMessage;//exporting component

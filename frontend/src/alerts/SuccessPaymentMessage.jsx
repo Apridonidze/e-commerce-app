@@ -1,6 +1,4 @@
 const SuccessPaymentMessage = ({ setTogglePayment , togglePayment }) => {
-
-
     return(
         <div className="payment-message-container">
             
@@ -25,7 +23,7 @@ const SuccessPaymentMessage = ({ setTogglePayment , togglePayment }) => {
             <div className="d-flex"><button className="return btn fs-6" onClick={() => setTogglePayment({status : false, succes : false , orderId : null})}>Return To Dashboard</button></div>
 
         </div>
-    )
-}
+    );
+};
 
-export default SuccessPaymentMessage
+export default SuccessPaymentMessage; //exporting component
