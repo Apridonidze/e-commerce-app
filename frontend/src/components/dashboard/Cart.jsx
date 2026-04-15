@@ -1,16 +1,15 @@
-import Item from "./Item"; 
-import EmptyCart from "../../empty/EmptyCart"; //importing react components
-import ItemSkeleton from "../../skeletons/ItemSkeleton";
+import Item from "./Item"; //importing item component
 
-const Cart = ({ setToggleAlert, setToggleOrder, setCartIds, cartIds, handleDeleteFromCart }) => {
+import EmptyCart from "../../empty/EmptyCart"; //importing empty state component
+import ItemSkeleton from "../../skeletons/ItemSkeleton"; //importing loading skeleton
+
+const Cart = ({ setToggleOrder, cartIds, handleDeleteFromCart }) => {
 
     const total = cartIds.reduce((sum, item) => {
-
         const price = item.sales_price ?? item.price ?? 0; //defining items price (if it has sales price or regular one)
         const amount = item.amount ?? 1; //defining items amount
 
         return sum + Number(price) * Number(amount); //returning total price
-
     }, 0); //calculating total price of items 
 
     return(

@@ -257,7 +257,7 @@ const Dashboard = () => {
                         </div>
 
                         <div className="dashboard-end w-100 h-100">
-                            <section id='cart-items'><Cart setToggleAlert={setToggleAlert} setToggleOrder={setToggleOrder} cartIds={cartIds} setCartIds={setCartIds} handleDeleteFromCart={handleDeleteFromCart}/></section>
+                            <section id='cart-items'><Cart setToggleOrder={setToggleOrder} cartIds={cartIds} handleDeleteFromCart={handleDeleteFromCart}/></section>
                             <section id='order-list'>{isOrderLoading ? <OrderSkeleton /> : <OrderList orders={orders} setOrders={setOrders}/>}</section>
                         </div>
 
