@@ -1,6 +1,3 @@
-import { useContext, useState } from 'react'; //importing react hooks
-import { UserContext } from '../../context/UserContext'; //importing user context
-
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom'; //importing react libraries
 

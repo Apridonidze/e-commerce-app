@@ -260,10 +260,8 @@ const Dashboard = () => {
                         </div>
 
                     </div>
-                    
                 </div>
             </div>
-
             <Footer />
         </div>
     );
