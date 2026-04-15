@@ -27,6 +27,8 @@ import Address from '../components/dashboard/Address';
 import ChooseAddress from '../components/address/ChooseAddress';
 import SuccessPaymentMessage from '../alerts/SuccessPaymentMessage';
 import FailedPaymentMessage from '../alerts/FailedPaymentMessage';
+import UserSkeleton from '../skeletons/UserSkeleton';
+import CardSkeleton from '../skeletons/CardSkeleton';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY); //creating stripe promise
 
@@ -239,8 +241,8 @@ const Dashboard = () => {
                     <div className="dashboard-container">
 
                         <div className="dashboard-start">
-                            {!user ? 'loadingg' : <User setToggleAlert={setToggleAlert}/>  } 
-                            {!cardDetails ? 'loading' : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }
+                            {user ? <UserSkeleton /> : <User setToggleAlert={setToggleAlert}/>  } 
+                            {!cardDetails ? <CardSkeleton /> : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }
                             <Address setToggleAdd={setToggleAdd} removeAddress={removeAddress} addresses={addresses} isLoading={isLoading} setTargetAddress={setTargetAddress}/>
                         </div>
 
