@@ -29,7 +29,6 @@ import SuccessPaymentMessage from '../alerts/SuccessPaymentMessage';
 import FailedPaymentMessage from '../alerts/FailedPaymentMessage';
 import UserSkeleton from '../skeletons/UserSkeleton';
 import CardSkeleton from '../skeletons/CardSkeleton';
-import ItemSkeleton from '../skeletons/ItemSkeleton';
 import OrderSkeleton from '../skeletons/OrderSkeleton';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY); //creating stripe promise
@@ -57,7 +56,6 @@ const Dashboard = () => {
     const [togglePayment,  setTogglePayment] = useState({status : false, success : false, orderId : null});
     
     const [isLoading ,setIsLoading] = useState(true);
-    const [isCartLoading, setIsCartLoading] = useState(true);
     const [isOrderLoading, setIsOrderLoading] = useState(true);
     
     useEffect(() => {//scrolling user to sections if user chooses section from sidebar
@@ -183,12 +181,6 @@ const Dashboard = () => {
         };
     };
 
-    const handleTargetAddress = (e) => {
-        console.log(e)
-        // call order item function
-        
-    }
-    // console.log())
     const orderItems = async() => {
         
         let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.sales_price ?? prod.price ?? 0}))
@@ -209,16 +201,19 @@ const Dashboard = () => {
                 setTogglePayment({status : true , success : true, orderId : order.data.orderId})
                 setOrders(prev => [...prev, {...addresses.filter(address => address.id == targetAddress), order_id : order.data.orderId, status : 'Pending', totalPrice , user_id : order.data.id , created_at : new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}])
             }
-            // update cart instantly
 
         }catch(err){
 
-            // handle errors
-            console.log(err.response)
+            if(err.status == 400){
+                setToggleAddress(false)
+                setToggleAdd(false)
+                setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+            }
 
             setToggleAddress(false)
             setToggleAdd(false)
-
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+            
         }
     }
 
@@ -245,7 +240,7 @@ const Dashboard = () => {
                     <div className="dashboard-container">
 
                         <div className="dashboard-start">
-                            {!user ? <UserSkeleton /> : <User setToggleAlert={setToggleAlert}/>  } 
+                            {!user ? <UserSkeleton /> : <User setToggleAlert={setToggleAlert} user={user}/>  } 
                             {!cardDetails ? <CardSkeleton /> : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }
                             <Address setToggleAdd={setToggleAdd} removeAddress={removeAddress} addresses={addresses} isLoading={isLoading} setTargetAddress={setTargetAddress}/>
                         </div>
@@ -264,7 +259,5 @@ const Dashboard = () => {
         </div>
     );
 };
-
-// create loading sjkeletons for selected components
 
 export default Dashboard; //exporting component

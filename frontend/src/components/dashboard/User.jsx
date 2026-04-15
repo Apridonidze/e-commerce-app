@@ -4,11 +4,10 @@ import { UserContext } from '../../context/UserContext'; //importing user contex
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom'; //importing react libraries
 
-const User = ({ setToggleAlert }) => {
+const User = ({ setToggleAlert , user}) => {
 
     const navigator = useNavigate();//defining navigaotor 
 
-    const { user } = useContext(UserContext); //defining user data from user context
     const [ cookies , setCookies, removeCookies] = useCookies(['token']);//defining user cookies
 
     const handleLogout = async() => { //logout function
