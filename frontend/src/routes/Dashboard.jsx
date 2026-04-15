@@ -37,7 +37,6 @@ import '../styles/dashboard.css'; //importing css file
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY); //creating stripe promise
 
-
 const Dashboard = () => {
     
     const { hash } = useLocation(); //defining hash from current url
@@ -168,8 +167,7 @@ const Dashboard = () => {
 
         fetchAddresses(); //declearing function
 
-    },[])
-
+    },[]); //function triggers on every moount of Dashboard.jsx page 
 
     const removeAddress = async (id) => {
 

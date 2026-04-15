@@ -182,7 +182,7 @@
 /*  */
 
 .cart-container {
-    max-width: 100%;
+    max-width: 1250px;
     width: 100%;
 }
 
@@ -264,6 +264,11 @@
 }
 
 /*  */
+
+.order-list-container{
+    max-width: 1250px;
+    width: 100%;
+}
 
 .order-list-end{
     display: flex;

@@ -17,4 +17,4 @@ const CardHolder = ({ setToggleCard, generateCustomerId, cardDetails }) => {
     );
 };
 
-export default CardHolder;
+export default CardHolder;//exporting component

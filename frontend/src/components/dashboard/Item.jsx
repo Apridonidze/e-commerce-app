@@ -1,6 +1,16 @@
 import { useNavigate } from "react-router-dom"; //importing library
 
 const Item = ({ prod, handleDeleteFromCart}) => {
+
+    let images = [];
+
+try {
+  images = typeof prod.images === "string"
+    ? JSON.parse(prod.images)
+    : prod.images;
+} catch (e) {
+  images = [];
+}
     
     const navigator = useNavigate(); //importing useNavigate from router library to redirect user to product clicked
 
@@ -8,7 +18,7 @@ const Item = ({ prod, handleDeleteFromCart}) => {
         <div className="item-container d-flex gap-3 pb-2 my-2 pt-2" key={prod.products_id}>
 
             <div className="item-start" style={{maxHeight:'180px' , maxWidth: '280px', cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.products_id}`)}>
-                {<img className="w-100 h-100 rounded-1" src={`data:image/svg+xml;base64,${JSON.parse(prod?.images)[0]}`} />}
+                <img className="w-100 h-100 rounded-1" loading="lazy" src={`data:image/svg+xml;base64,${images?.[0] || ""}`} />
             </div>
             <div className="item-end d-flex flex-column text-start gap-3">
                 

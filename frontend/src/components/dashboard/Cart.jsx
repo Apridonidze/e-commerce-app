@@ -21,7 +21,7 @@ const Cart = ({ setToggleOrder, cartIds, handleDeleteFromCart }) => {
                     {!cartIds ? Array.from({ length: 5 }).map((_, i) => <ItemSkeleton key={i} />) : cartIds.length ? cartIds.map((prod) => (<Item key={prod.id} prod={prod} handleDeleteFromCart={handleDeleteFromCart} />)): <EmptyCart />}
                 </div>
 
-            {cartIds.length !== 0 ? 
+                {cartIds.length !== 0 ? 
                     <div className="cart-end p-3 d-flex justify-content-between align-items-center">
                         <div className="cart-end-left d-flex flex-column">
                             <span className="fw-light" style={{fontSize : '12px', letterSpacing : '0.5px'}}>CART TOTAL</span>
@@ -34,7 +34,6 @@ const Cart = ({ setToggleOrder, cartIds, handleDeleteFromCart }) => {
                     </div> 
                 :  <></>}
             </div>
-            
         </div >
     );
 };
