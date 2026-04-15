@@ -239,13 +239,12 @@ const Dashboard = () => {
                     <div className="dashboard-container">
 
                         <div className="dashboard-start">
-                            {!user ? 'loadingg' : <User setToggleAlert={setToggleAlert}/>  } {/* add user skeleton here */}
-                            {!cardDetails ? 'loading' : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }{/* add cardholder loading */}
+                            {!user ? 'loadingg' : <User setToggleAlert={setToggleAlert}/>  } 
+                            {!cardDetails ? 'loading' : <CardHolder setToggleCard={setToggleCard} generateCustomerId={generateCustomerId} cardDetails={cardDetails}/> }
                             <Address setToggleAdd={setToggleAdd} removeAddress={removeAddress} addresses={addresses} isLoading={isLoading} setTargetAddress={setTargetAddress}/>
                         </div>
 
                         <div className="dashboard-end w-100 h-100">
-                            {/* add loading skeleton here  .load cart when cartIds is defined*/}
                             <section id='cart-items'><Cart setToggleAlert={setToggleAlert} setToggleOrder={setToggleOrder} cartIds={cartIds} setCartIds={setCartIds} handleDeleteFromCart={handleDeleteFromCart}/></section>
                             <section id='order-list'><OrderList orders={orders} setOrders={setOrders}/></section>
                             
