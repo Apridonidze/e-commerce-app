@@ -38,6 +38,10 @@ const AdminDashboard = () => {
 
     const [reportsOffset, setReportsOffset] = useState(0)
 
+    const [isLoading, setIsLoading] = useState(true)
+    const [isReportsLoading , setIsReportsLoading] = useState(true);
+    const [isFeedbackLoading, setIsFeedbackLoading] = useState(true)
+
     const config = {headers: { Authorization: `Bearer ${cookies.token}`}}
 
     useEffect(() => {
@@ -50,13 +54,17 @@ const AdminDashboard = () => {
                 
                 setOrders(data)
                 setSoldItems(response.data.soldItems)
-                setAdmins({onlineAdmins : response.data.onlineAdmins , offlineAdmins : response.data.offlineAdmins}) 
+                setAdmins({onlineAdmins : response.data.onlineAdmins , offlineAdmins : response.data.offlineAdmins})
+
+                setIsLoading(false);
 
             } catch (err) {
 
                 setOrders([]);
                 setSoldItems([]);
                 setAdmins({onlineAdmins : [] , offlineAdmins : []});
+
+                setIsLoading(false);
 
                 setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
             }
@@ -70,8 +78,12 @@ const AdminDashboard = () => {
                 if(response.status == 204) return setReports([])
                 setReports(response.data.reports);
 
+
+                setIsReportsLoading(false)
+
             }catch(err){
                 setReports([])
+                setIsReportsLoading(false)
                 setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
             }
         }
@@ -84,9 +96,12 @@ const AdminDashboard = () => {
                 if(response.status === 204) return setFeedbacks([])
                 setFeedbacks(response.data.feedbacks)
 
+                setIsFeedbackLoading(false)
+
             }catch(err){
-                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
                 setFeedbacks([])
+                setIsFeedbackLoading(false)
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
             };
         };
 
@@ -119,59 +134,72 @@ const AdminDashboard = () => {
                     <div className="main-end">
                         {/* create AdminHeader.jsx which will have toggle buttons and additional features of admin dashbaord */}
 
-                    <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>
-                    {/* add charts for products */}
+                    {isLoading ? 'loading skeleton' : <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>}
+                    {/* add charts for products **/}
                     {/* fetch counts of orders and sold items  */}
                     {/* add recent activities component on side */}
 
                         <section id="manage-products">
 
-                            <button onClick={() => setToggleCreateNew(true)}>Add New Product</button>
+                            {isLoading ? 'loading skeleton' : <>
+                            
+                                <button onClick={() => setToggleCreateNew(true)}>Add New Product</button>
 
-                            <div className="order-container">
-                                <div className="order-header d-flex ">
-                                    <h2>Pending Orders : {orders?.filter(prod => prod.status == 'Pending')?.length}</h2>
-                                    <h4><Link to='/admin-dashboard/orders/pending-orders'>Visit</Link></h4>
+                                <div className="order-container">
+                                    <div className="order-header d-flex ">
+                                        <h2>Pending Orders : {orders?.filter(prod => prod.status == 'Pending')?.length}</h2>
+                                        <h4><Link to='/admin-dashboard/orders/pending-orders'>Visit</Link></h4>
+                                    </div>
+                                    {orders?.filter(prod => prod.status == 'Pending').length > 0 ? orders?.filter(prod => prod.status == 'Pending').map(order => (
+                                        <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
+                                    )) : "no pending items"}
                                 </div>
-                                {orders?.filter(prod => prod.status == 'Pending').length > 0 ? orders?.filter(prod => prod.status == 'Pending').map(order => (
-                                    <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
-                                )) : "no pending items"}
-                            </div>
 
-                             <div className="order-container">
-                                <div className="order-header d-flex ">
-                                    <h2>On Way Orders : {orders?.filter(prod => prod.status == 'OnWay')?.length}</h2>
-                                    <h4><Link to='/admin-dashboard/orders/onway-orders'>Visit</Link></h4>
+                                <div className="order-container">
+                                    <div className="order-header d-flex ">
+                                        <h2>On Way Orders : {orders?.filter(prod => prod.status == 'OnWay')?.length}</h2>
+                                        <h4><Link to='/admin-dashboard/orders/onway-orders'>Visit</Link></h4>
+                                    </div>
+                                    {orders?.filter(prod => prod.status == 'OnWay').length > 0 ? orders?.filter(prod => prod.status == 'OnWay').map(order => (
+                                        <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
+                                    )) : "no on way items"}
                                 </div>
-                                {orders?.filter(prod => prod.status == 'OnWay').length > 0 ? orders?.filter(prod => prod.status == 'OnWay').map(order => (
-                                    <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
-                                )) : "no on way items"}
-                            </div>
 
-                             <div className="order-container">
-                                <div className="order-header d-flex ">
-                                    <h2>Delivered Orders : {orders?.filter(prod => prod.status == 'Delivered')?.length}</h2>
-                                    <h4><Link to='/admin-dashboard/orders/delivered-orders'>Visit</Link></h4>
+                                <div className="order-container">
+                                    <div className="order-header d-flex ">
+                                        <h2>Delivered Orders : {orders?.filter(prod => prod.status == 'Delivered')?.length}</h2>
+                                        <h4><Link to='/admin-dashboard/orders/delivered-orders'>Visit</Link></h4>
+                                    </div>
+                                    {orders?.filter(prod => prod.status == 'Delivered').length > 0 ? orders?.filter(prod => prod.status == 'Delivered').map(order => (
+                                        <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
+                                    )) : "no delivered items"}
                                 </div>
-                                {orders?.filter(prod => prod.status == 'Delivered').length > 0 ? orders?.filter(prod => prod.status == 'Delivered').map(order => (
-                                    <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
-                                )) : "no delivered items"}
-                            </div>
+                            </>}
 
                         </section>
 
                         <section id="reports">
-                            <h1>Reports</h1>
-                            <Link to={'/admin-dashboard/reports'}>Visit</Link>
-                            {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No reports'}
+                            {isReportsLoading ? 'loading'  : <>
+
+                                <h1>Reports</h1>
+                                
+                                <Link to={'/admin-dashboard/reports'}>Visit</Link>
+                                {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No reports'}
+
+                            </>}
                         </section>
 
                         <section id="feedbacks">
-                            <h1>Feedbacks</h1>
-                            <Link to={'/admin-dashboard/feedbacks'}>Visit</Link>
-                            {feedbacks?.length !== 0 ? feedbacks?.map((feedback, feedbackId) => (
-                                <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId} setFeedbacks={setFeedbacks}/>
-                            )) : "No Feedbacks"}
+                            {isFeedbackLoading ? 'loading' : <>
+
+                                <h1>Feedbacks</h1>
+                                
+                                <Link to={'/admin-dashboard/feedbacks'}>Visit</Link>
+                                {feedbacks?.length !== 0 ? feedbacks?.map((feedback, feedbackId) => (
+                                    <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId} setFeedbacks={setFeedbacks}/>
+                                )) : "No Feedbacks"}
+                            
+                            </>}
                         </section>
 
                     </div>
