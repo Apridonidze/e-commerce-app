@@ -30,7 +30,7 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
                     const exists = prev.find(item => item.product_id === productId); //checking if product already exists in state array
                     if (exists) return prev.map(item =>item.product_id === productId ? { ...item, amount: amount } : item); //if exists then return same product
                     
-                    return [...prev, { id: user.id, product_id: productId, amount: amount }]; //else pushing into array
+                    return [...prev, { id: user.id, product_id: productId, amount: amount, category : toggleAddToCart.product?.category, title : toggleAddToCart.product?.title , price: toggleAddToCart.product?.price , sales_price : toggleAddToCart.product?.sales_price , subcategory : toggleAddToCart.product?.subcategory , images : toggleAddToCart.product?.images  }]; //else pushing into array
                 }); //updating cartIds state safetly
                 
                 setIsInCart(true); // updating isInCart state

@@ -15,8 +15,6 @@ export const UserProvider = ({ children }) => {
     const [cardDetails, setCardDetails] = useState(null);
     const [cartIds, setCartIds] = useState([]);
 
-    const navigator = useNavigate()
-
     useEffect(() => {
 
         if (!cookies.token) return;
@@ -38,7 +36,6 @@ export const UserProvider = ({ children }) => {
                 setUser({...userRes.value.data.user, role: userRes.value.data.role});
             } else if (userRes.reason?.response?.status === 404) {
                 removeCookies("token", { path: "/" });
-                navigator('/', {replace : true})
             }
 
             cardRes.status === "fulfilled" ? setCardDetails(cardRes.value.data.details) : setCardDetails(null);

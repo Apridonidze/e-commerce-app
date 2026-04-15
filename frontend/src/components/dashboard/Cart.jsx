@@ -5,7 +5,7 @@ import ItemSkeleton from "../../skeletons/ItemSkeleton"; //importing loading ske
 
 const Cart = ({ setToggleOrder, cartIds, handleDeleteFromCart }) => {
 
-    const total = cartIds.reduce((sum, item) => {
+    const total = cartIds?.reduce((sum, item) => {
         const price = item.sales_price ?? item.price ?? 0; //defining items price (if it has sales price or regular one)
         const amount = item.amount ?? 1; //defining items amount
 
@@ -17,9 +17,9 @@ const Cart = ({ setToggleOrder, cartIds, handleDeleteFromCart }) => {
             <h3 className="mb-3">Current Cart</h3>
 
             <div className="cart-main">
-                
+
                 <div className="cart-start p-3">
-                    {!cartIds ? Array.from({ length: 5 }).map((_, i) => <ItemSkeleton key={i} />) : cartIds.length ? cartIds.map(prod => <Item key={prod.id} prod={prod} handleDeleteFromCart={handleDeleteFromCart} />): <EmptyCart />}
+                    {!cartIds ? Array.from({ length: 5 }).map((_, i) => <ItemSkeleton key={i} />) : cartIds.length ? cartIds?.map(prod => <Item prod={prod} handleDeleteFromCart={handleDeleteFromCart} />): <EmptyCart />}
                 </div>
 
                 {cartIds.length !== 0 ? 
