@@ -17,6 +17,7 @@ import AdminFeedback from "../admin/components/AdminFeedback"
 import ManageAdmins from "../admin/components/ManageAdmins"
 
 import '../styles/dashboard.css'
+import AdminHeader from "../admin/components/AdminHeader"
 
 const AdminDashboard = () => {
 
@@ -132,7 +133,7 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className="main-end">
-                        {/* create AdminHeader.jsx which will have toggle buttons and additional features of admin dashbaord */}
+                    <AdminHeader onClick={() => setToggleCreateNew(true)}/>
 
                     {isLoading ? 'loading skeleton' : <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>}
                     {/* add charts for products **/}
@@ -193,7 +194,7 @@ const AdminDashboard = () => {
                             {isFeedbackLoading ? 'loading' : <>
 
                                 <h1>Feedbacks</h1>
-                                
+
                                 <Link to={'/admin-dashboard/feedbacks'}>Visit</Link>
                                 {feedbacks?.length !== 0 ? feedbacks?.map((feedback, feedbackId) => (
                                     <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId} setFeedbacks={setFeedbacks}/>
