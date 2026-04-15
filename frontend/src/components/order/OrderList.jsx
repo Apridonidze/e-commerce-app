@@ -3,7 +3,7 @@ import { useState } from "react"; //importing react hooks
 import OrderDetails from "./OrderDetails"; //importing react components
 import EmptyOrders from "../../empty/EmptyOrders";//importing empty state component for orders
 
-const OrderList = ({ setOrders, orders }) => {
+const OrderList = ({ orders, setToggleAlert }) => {
 
     const [type , setType] = useState('NonDelivered'); //state to store type of orders user want to see
 
@@ -26,7 +26,7 @@ const OrderList = ({ setOrders, orders }) => {
                 </div>
             </div>
 
-            {filteredOrders?.length > 0 ? (filteredOrders.map((order, orderId) => (<OrderDetails order={order} orderId={orderId} key={orderId} setOrders={setOrders}/>))) : (<EmptyOrders />)}
+            {filteredOrders?.length > 0 ? (filteredOrders.map(order => <OrderDetails order={order} setToggleAlert={setToggleAlert}/>)) : <EmptyOrders />}
 
         </div>
     );

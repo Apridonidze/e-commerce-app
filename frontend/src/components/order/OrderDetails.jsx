@@ -4,48 +4,41 @@ import { useCookies } from "react-cookie";
 import { useState } from "react";
 
 import OrderItem from "./OrderItem";
-
 import { BACKEND_URL } from "../../../config";
+import ItemSkeleton from "../../skeletons/ItemSkeleton";
+import SmallItemSkeleton from "../../skeletons/SmallItemSkeleton";
 
-const OrderDetails = ({order, orderId, key , setOrders}) => {
+
+const OrderDetails = ({ order, setToggleAlert }) => {
 
     const [ cookies ] = useCookies(['token'])
 
     const [products,setProducts] = useState([]);
-    const [toggleDrop, setToggleDrop] = useState(false)
+    const [openId, setOpenId] = useState(null);
+
+    const [isLoading , setIsLoading] = useState(true);
 
     const fetchOrderDetails = async(id) => {
         try{
-            const response = await axios.get(`${BACKEND_URL}/api/order/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
-            console.log(response)
 
-            setProducts(response.data.orderItems)
+            const response = await axios.get(`${BACKEND_URL}/api/order/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}}); //making api call
 
+            setProducts(response.data.orderItems);
+            setIsLoading(false);
+            
         }catch(err){
-            // toggle error message
-            console.log(err.response)
-        }
-    }
+            if(err.status == 404){
+                setProducts([]);
+            setIsLoading(false);
+            }
+            setProducts([]);
+            setIsLoading(false);
+            return setToggleAlert()
+        };
+    };
     
-    const discardOrder = async(id) => {
-        try{
-
-            const response = await axios.delete(`${BACKEND_URL}/api/order/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
-
-            if(response.status === 200)return setOrders(prev => prev.filter(ord => ord.order_id !== order.order_id))
-            // toggle stattus 400 alert messagee
-            setToggleDrop(false)
-
-        }catch(err){
-            // toggle alert message
-            console.log(err)
-        }
-    }
-
-    const [openId, setOpenId] = useState(null);
-
     return(
-        <div className="order-details-container rounded-3 " key={orderId}>
+        <div className="order-details-container rounded-3 " key={order.order_id}>
 
             <div className="order-top d-flex align-items-center p-3 justify-content-between">
                 <div className="order-start d-flex gap-2">
@@ -67,21 +60,21 @@ const OrderDetails = ({order, orderId, key , setOrders}) => {
                         <span className="fw-bold">${order.total_price.toFixed(2)}</span>
                     </div>
                     <div className="d d-flex justify-content-between">
-                        <button className="btn fw-bold border-0 btn-none" onClick={() => {if (products.length === 0) fetchOrderDetails(order.order_id); setOpenId(prev => (prev === orderId ? null : orderId));}} type="button" data-toggle="collapse" data-target={`#collapseDiv${orderId}`} aria-expanded="false" aria-controls={`collapseDiv${orderId}`}><i className={`fa-solid fa-angle-right ${openId === orderId ? 'rotate' : ''}`}></i></button>
+                        <button className="btn fw-bold border-0 btn-none" onClick={() => {if (products.length === 0) fetchOrderDetails(order.order_id); setOpenId(prev => (prev === order.order_id ? null : order.order_id));}} type="button" data-toggle="collapse" data-target={`#collapseDiv${order.order_id}`} aria-expanded="false" aria-controls={`collapseDiv${order.order_id}`}><i className={`fa-solid fa-angle-right ${openId === order.order_id ? 'rotate' : ''}`}></i></button>
                     </div>
                 </div>
             </div>
 
             <div className="order-bottom p-0">
-                <div className="collapse w-100 p-0" id={`collapseDiv${orderId}`}>
+                <div className="collapse w-100 p-0" id={`collapseDiv${order.order_id}`}>
 
                     <h6 className="px-3 pt-3">Ordered Items</h6>
-                    {products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId} />)}
+                    {isLoading ? <SmallItemSkeleton /> : products?.map((prod, prodId) => <OrderItem prod={prod} prodId={prodId} key={prodId} />)}
                 </div>
             </div>
 
         </div>
-    )
-}
+    );
+};
 
-export default OrderDetails;
+export default OrderDetails; //exporting component
