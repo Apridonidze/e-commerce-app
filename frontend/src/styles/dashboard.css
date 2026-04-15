@@ -722,6 +722,54 @@
     border-left:  3px solid #10b981 !important;
 }
 
+@media(max-width : 555px){
+    .order-list-header div{
+        width: 100%;
+    }
+    .order-list-header{
+        flex-direction: column;
+        text-align: start;
+        justify-content: center;
+    }
+    .order-list-end{
+        border-bottom: var(--btn-border);
+        background-color: transparent;
+        padding: 0px;
+        margin-top: 1rem;
+    }
+    .order-list-end button{
+        font-size: 18px;
+    }
+    .order-list-end button.active {
+        border-bottom: var(--border-2) !important;
+        border-radius: 0px;
+        margin: 0px;
+    }
+
+    .order-top{
+        flex-direction: column;
+        text-align: start;
+        align-items: start !important;
+        gap: 1rem;
+    }
+
+    .order-top span:nth-child(2){
+        position:absolute;
+        text-align: start !important;
+        left: 85%;
+        top: -27%;
+    }
+    .order-start {
+        width: 100%;
+        position: relative;
+    }
+
+    .order-end{
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
 @media(max-width : 540px){
     .order-body {
         width: 100%;
