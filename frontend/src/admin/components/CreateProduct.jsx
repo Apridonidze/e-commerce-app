@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie"; //importing react libraries
 import { BACKEND_URL } from "../../../config"; //importing backend url from config.jsx file
 import { useRef, useState, useEffect } from "react" ; //importing react hooks
 
-const CreateProduct = () => {
+const CreateProduct = ({ setToggleCreateNew }) => {
     
     const categories = [
         {
@@ -207,7 +207,7 @@ const CreateProduct = () => {
                 const response = await axios.post(`${BACKEND_URL}/api/product`,formData,{headers: {Authorization: `Bearer ${cookies.token}`,"Content-Type": "multipart/form-data"}}); //calling api and passing data with image supported content type params
             
                 if(response.status === 200) setToggleAlert({status: true, type: "Success", statusCode: response.status, message: "Product Edited Successfully."}); //triggering success message
-                setTimeout(() => {setToggleEdit({status : false, product: null})}, 3000); //disabling component after 3 seconds when alert message is closed  aswell
+                setTimeout(() => {setToggleCreateNew({status : false, product: null})}, 3000); //disabling component after 3 seconds when alert message is closed  aswell
 
             } catch (err) { //handling errors
 
@@ -243,8 +243,8 @@ const CreateProduct = () => {
         <div className="manage-product-container" style={{left : '40vw' }} tabIndex={9999}>
 
             <div className="manage-product-top d-flex justify-content-between">
-                <h4>Edit Product</h4>
-                <button className="btn btn-none border-0" onClick={() => setToggleEdit({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
+                <h4>Add New Product</h4>
+                <button className="btn btn-none border-0" onClick={() => setToggleCreateNew({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
             </div>
 
             <div className="manage-product-main">
@@ -333,8 +333,8 @@ const CreateProduct = () => {
                         </div>
                         
                         <div className="form-buttons">
+                            <button className="btn btn-danger " onClick={() => setToggleCreateNew(false)}>Cancel</button>
                             <input type="submit" disabled={images.length == 0 ? true : false} className="btn border-0 fw-medium" value='Add Product' style={{backgroundColor : '#10b981', color : "white"}}/>
-                            <button className="btn btn-danger " onClick={() => setToggleEdit({status : false , product : null})}>Cancel</button>
                         </div>
                     </div>
                 </form>
