@@ -7,6 +7,7 @@ import OrderCheckbox from "./OrderCheckbox";
 import PaymentMessage from "../../alerts/SuccessPaymentMessage"; //importing react componenets
 
 import '../../styles/checkbox.css'; //importing css file
+import ItemSkeleton from "../../skeletons/ItemSkeleton";
 
 const Order = ({ cartIds ,setToggleOrder, handleDeleteFromCart, setToggleAddress, setSelectedItems , selectedItems , setTotalPrice , totalPrice, toggleOrder}) => {
     
@@ -143,7 +144,7 @@ const Order = ({ cartIds ,setToggleOrder, handleDeleteFromCart, setToggleAddress
             <div className="order-body">
                 {cartIds.map(prod => (
                     <OrderCheckbox prod={prod} cartIds={cartIds} handleCheckbox={handleCheckbox} checkboxRef={checkboxRef} handleDeleteFromCart={handleDeleteFromCart}/>
-                ))}
+                )) || <ItemSkeleton />}
             </div>
 
             <div className="order-bottom align-items-end">

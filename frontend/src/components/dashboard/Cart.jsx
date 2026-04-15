@@ -1,5 +1,6 @@
 import Item from "./Item"; 
 import EmptyCart from "../../empty/EmptyCart"; //importing react components
+import ItemSkeleton from "../../skeletons/ItemSkeleton";
 
 const Cart = ({ setToggleAlert, setToggleOrder, setCartIds, cartIds, handleDeleteFromCart }) => {
 
@@ -18,9 +19,7 @@ const Cart = ({ setToggleAlert, setToggleOrder, setCartIds, cartIds, handleDelet
 
             <div className="cart-main">
                 <div className="cart-start p-3">
-                    {cartIds?.length !== 0 ? cartIds.map((prod) => (       
-                        <Item prod={prod} handleDeleteFromCart={handleDeleteFromCart}/> || 'loading'
-                    )) : <EmptyCart />}
+                    {!cartIds ? Array.from({ length: 5 }).map((_, i) => <ItemSkeleton key={i} />) : cartIds.length ? cartIds.map((prod) => (<Item key={prod.id} prod={prod} handleDeleteFromCart={handleDeleteFromCart} />)): <EmptyCart />}
                 </div>
 
             {cartIds.length !== 0 ? 
