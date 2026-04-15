@@ -1,12 +1,12 @@
 const AddressRow = ({ address, removeAddress }) => {
 
-    let parsedAddress; //
+    let parsedAddress; // defining varaibel to see if address data is already parsed or not to avoid json errors
 
-    try {
+    try { //trying to parse address 
         parsedAddress = JSON.parse(address.address);
-    } catch {
+    } catch { //returning default address valuie if parse could not happen
         parsedAddress = address.address;
-    }
+    };
     
     return(
         <div className="address-row-container" key={address.id}>
