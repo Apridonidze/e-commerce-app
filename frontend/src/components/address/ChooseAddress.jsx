@@ -1,7 +1,7 @@
 import EmptyAddress from "../../empty/EmptyAddress";
-import ChooseAddressRow from "./ChooseAddressRow";
+import ChooseAddressRow from "./ChooseAddressRow"; //impoirting react componnts
 
-const ChooseAddress = ({ setToggleAddress, setToggleAdd, removeAddress, addresses, isLoading, setTargetAddress, targetAddress,handleTargetAddress, orderItems }) => {
+const ChooseAddress = ({ setToggleAddress, setToggleAdd, removeAddress, addresses, isLoading, setTargetAddress, targetAddress, orderItems }) => {
 
     return(
         <div className="choose-address-container rounded-3 mx-1 p-2 ">
@@ -18,7 +18,7 @@ const ChooseAddress = ({ setToggleAddress, setToggleAdd, removeAddress, addresse
                 {isLoading ? "Loading..." : 
                 <div className="address-wrapper">
 
-                    {addresses.length === 0 ? <EmptyAddress /> : addresses.map(address => <ChooseAddressRow targetAddress={targetAddress} handleTargetAddress={handleTargetAddress} setTargetAddress={setTargetAddress} address={address} removeAddress={removeAddress}/>)}
+                    {addresses.length === 0 ? <EmptyAddress /> : addresses.map(address => <ChooseAddressRow targetAddress={targetAddress}  setTargetAddress={setTargetAddress} address={address} removeAddress={removeAddress}/>)}
                     
                     {addresses?.length >= 3 ? <></> : 
                         <div className="add-new-address d-flex align-items-center gap-2 justify-content-center text-center py-3 my-2" onClick={() => setToggleAdd(true)}>
@@ -37,4 +37,4 @@ const ChooseAddress = ({ setToggleAddress, setToggleAdd, removeAddress, addresse
     );
 };
 
-export default ChooseAddress;
+export default ChooseAddress; //exporting component

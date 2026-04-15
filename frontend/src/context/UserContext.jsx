@@ -2,87 +2,63 @@ import axios from "axios";
 import { useCookies } from "react-cookie";  //importing react libraries
 
 import { BACKEND_URL } from "../../config"; //definig backend url from config file
-import { useState, useEffect, createContext, useMemo } from "react"; //importing react hooks
+import { useState, useEffect, createContext } from "react"; //importing react hooks
+import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext(); //creating userContext
 
-export const UserProvider = ({children}) => {
-    
-    const [ cookies, setCookies, removeCookies ] = useCookies(['token']); //defining cookies and its functions
+export const UserProvider = ({ children }) => {
 
-    const [user,setUser] = useState(null);
-    const [cardDetails, setCardDetails] = useState();
-    const [cartIds , setCartIds] = useState([]); //states for user data
+    const [cookies, , removeCookies] = useCookies(['token']);
+
+    const [user, setUser] = useState(null);
+    const [cardDetails, setCardDetails] = useState(null);
+    const [cartIds, setCartIds] = useState([]);
+
+    const navigator = useNavigate()
 
     useEffect(() => {
 
-        const fetchUser = async() => {
+        if (!cookies.token) return;
 
-            try{
+        let isMounted = true;
 
-                const user = await axios.get(`${BACKEND_URL}/api/auth/me` , {headers : {Authorization : `Bearer ${cookies.token}`}});
-                
-                if(user.status === 404)return removeCookies('token' , {path : '/'})
-                    
-                let data = user.data.user
-                setUser({...data, role : user.data.role})
+        const authHeader = { headers: { Authorization: `Bearer ${cookies.token}`} };
 
-            }catch(err){
-                console.log(err)
-                //add alert here
+        const fetchUser = axios.get(`${BACKEND_URL}/api/auth/me`, authHeader);
+        const fetchCartDetails = axios.get(`${BACKEND_URL}/api/stripe/my-customer-id`, authHeader);
+        const fetchCartIds = axios.get(`${BACKEND_URL}/api/cart`, authHeader);
+
+        Promise.allSettled([fetchUser, fetchCartDetails, fetchCartIds])
+        .then(([userRes, cardRes, cartRes]) => {
+
+            if (!isMounted) return;
+
+            if (userRes.status === "fulfilled") {
+                setUser({...userRes.value.data.user, role: userRes.value.data.role});
+            } else if (userRes.reason?.response?.status === 404) {
+                removeCookies("token", { path: "/" });
+                navigator('/', {replace : true})
             }
-        }
 
-        const fetchCartDetails = async() => {
-            try{
+            cardRes.status === "fulfilled" ? setCardDetails(cardRes.value.data.details) : setCardDetails(null);
+            
 
-                    const customer = await axios.get(`${BACKEND_URL}/api/stripe/my-customer-id` , {headers : {Authorization : `Bearer ${cookies.token}`}})
-                    setCardDetails(customer.data.details)
-                    
-                }catch(err){
-                    setCardDetails(null)
-                    console.log(err)
-                    return
-                }
-        }
+            if (cartRes.status === "fulfilled") {
+                const data = cartRes.value.data;
+                setCartIds(cartRes.value.status === 204 ? [] : data.cartItems);
+            } else {    
+                setCartIds([]);
+            }
+        });
 
+        return () => isMounted = false;
 
-        const fetchCartIds = async() => {
-            try{
+    }, [cookies.token, removeCookies]);
 
-                    const cartIds = await axios.get(`${BACKEND_URL}/api/cart`, {headers : {Authorization : `Bearer ${cookies.token}`}})
-                    if(cartIds.status === 204){setCartIds([]); return}
-                    
-                    setCartIds(cartIds.data.cartItems)
+    const values = { user, cartIds, cardDetails, setCartIds};
 
-                }catch(err){
-                    setCartIds([]);
-                    console.log(err);
-                    //add alert heere
-                }
-        } 
-
-        if(!cookies.token) return; 
-
-        const fetchData = async () => {
-            await fetchUser();
-            await fetchCartDetails();
-            await fetchCartIds();
-        }
-
-        fetchData()
-
-    }, [cookies.token]);
-
-
-    const values = useMemo(() => ({
-        user,
-        cartIds,
-        cardDetails,
-        setCartIds
-    }), [user, cartIds, cardDetails]);
-
-    return(
-        <UserContext.Provider value={values}>{children}</UserContext.Provider>
+    return (
+        <UserContext.Provider value={values}> {children}</UserContext.Provider>
     );
 };

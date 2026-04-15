@@ -1,4 +1,4 @@
-const ChooseAddressRow = ({ targetAddress, address, removeAddress, setTargetAddress, handleTargetAddress }) => {
+const ChooseAddressRow = ({ targetAddress, address, removeAddress, setTargetAddress }) => {
 
      let parsedAddress;
 
