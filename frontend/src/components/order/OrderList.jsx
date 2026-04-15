@@ -1,19 +1,16 @@
-import { useRef, useState } from "react"; //importing react hooks
+import { useState } from "react"; //importing react hooks
+
 import OrderDetails from "./OrderDetails"; //importing react components
-import EmptyAddress from "../../empty/EmptyAddress";
-import EmptyOrders from "../../empty/EmptyOrders";
+import EmptyOrders from "../../empty/EmptyOrders";//importing empty state component for orders
 
 const OrderList = ({ setOrders, orders }) => {
 
     const [type , setType] = useState('NonDelivered'); //state to store type of orders user want to see
 
     const filteredOrders = orders?.filter(order => {
-        if (type === 'Delivered') {
-            return order.status === 'Delivered';
-        } else {
-            return order.status === 'Pending' || order.status === 'OnWay';
-        }
-    });
+        if (type === 'Delivered') return order.status === 'Delivered';
+        return order.status === 'Pending' || order.status === 'OnWay';
+    }); //filtering ordes based on their statuses
 
     return(
         <div className="order-list-container">

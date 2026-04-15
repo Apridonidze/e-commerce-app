@@ -17,8 +17,9 @@ const Cart = ({ setToggleOrder, cartIds, handleDeleteFromCart }) => {
             <h3 className="mb-3">Current Cart</h3>
 
             <div className="cart-main">
+                
                 <div className="cart-start p-3">
-                    {!cartIds ? Array.from({ length: 5 }).map((_, i) => <ItemSkeleton key={i} />) : cartIds.length ? cartIds.map((prod) => (<Item key={prod.id} prod={prod} handleDeleteFromCart={handleDeleteFromCart} />)): <EmptyCart />}
+                    {!cartIds ? Array.from({ length: 5 }).map((_, i) => <ItemSkeleton key={i} />) : cartIds.length ? cartIds.map(prod => <Item key={prod.id} prod={prod} handleDeleteFromCart={handleDeleteFromCart} />): <EmptyCart />}
                 </div>
 
                 {cartIds.length !== 0 ? 
