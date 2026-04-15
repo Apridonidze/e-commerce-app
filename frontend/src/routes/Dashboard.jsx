@@ -1,14 +1,25 @@
 import Header from '../layout/Header';
 import Sidebar from '../layout/Sidebar';
-import Footer from "../layout/Footer"
+import Footer from "../layout/Footer"; //importing layout components
+
 import User from "../components/dashboard/User";
 import Cart from '../components/dashboard/Cart';
-import Order from "../components/order/Order"
-import OrderList from "../components/order/OrderList"
+import Order from "../components/order/Order";
+import OrderList from "../components/order/OrderList";
+import Address from '../components/dashboard/Address';
 import CardHolder from "../components/dashboard/CardHolder"
-import StatusMessage from '../alerts/StatusMessage';
-import ToggleAddress from '../components/dashboard/ToggleAddress';
 import CardDetails from '../components/dashboard/CardDetails'; //importing UI components
+
+import ToggleAddress from '../components/dashboard/ToggleAddress';
+import ChooseAddress from '../components/address/ChooseAddress'; //importing Toggable components
+
+import StatusMessage from '../alerts/StatusMessage';
+import SuccessPaymentMessage from '../alerts/SuccessPaymentMessage';
+import FailedPaymentMessage from '../alerts/FailedPaymentMessage'; //importing popup messages
+
+import UserSkeleton from '../skeletons/UserSkeleton';
+import CardSkeleton from '../skeletons/CardSkeleton';
+import OrderSkeleton from '../skeletons/OrderSkeleton'; //importing loading skeletons
 
 import { useContext, useEffect, useState } from "react"; ///importign react hooks
 
@@ -23,13 +34,6 @@ import { UserContext } from "../context/UserContext"; //importing  user context
 import { BACKEND_URL, STRIPE_PUBLIC_KEY } from '../../config'; //importing keys from config.jsx file
 
 import '../styles/dashboard.css'; //importing css file
-import Address from '../components/dashboard/Address';
-import ChooseAddress from '../components/address/ChooseAddress';
-import SuccessPaymentMessage from '../alerts/SuccessPaymentMessage';
-import FailedPaymentMessage from '../alerts/FailedPaymentMessage';
-import UserSkeleton from '../skeletons/UserSkeleton';
-import CardSkeleton from '../skeletons/CardSkeleton';
-import OrderSkeleton from '../skeletons/OrderSkeleton';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY); //creating stripe promise
 
@@ -44,20 +48,21 @@ const Dashboard = () => {
     const [toggleCard,setToggleCard] = useState(false);
     const [toggleOrder,setToggleOrder] = useState(false);
     const [toggleAdd, setToggleAdd] = useState(false);
+    const [toggleAddress, setToggleAddress] = useState(false);
+    const [togglePayment,  setTogglePayment] = useState({status : false, success : false, orderId : null});
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
-    const [orders,setOrders] = useState([]); //state to store users orders
-    const [toggleAddress, setToggleAddress] = useState(false);
+    const [orders,setOrders] = useState([]);
+    const [addresses, setAddresses] = useState([]); //states to stroe user details
     
-    const [addresses, setAddresses] = useState([]);//state to display addresses 
     const [targetAddress, setTargetAddress] = useState(0);
-    const [ selectedItems, setSelectedItems] = useState([]);
-    const [totalPrice, setTotalPrice] = useState(0)
-    const [togglePayment,  setTogglePayment] = useState({status : false, success : false, orderId : null});
+    const [selectedItems, setSelectedItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0); //state to store current orders details
     
     const [isLoading ,setIsLoading] = useState(true);
-    const [isOrderLoading, setIsOrderLoading] = useState(true);
+    const [isOrderLoading, setIsOrderLoading] = useState(true); //states to define if api is still loading data or not
     
+
     useEffect(() => {//scrolling user to sections if user chooses section from sidebar
         
         if(!hash) return; //returning empty promise if hash is not defiend from url
@@ -69,7 +74,6 @@ const Dashboard = () => {
 
 
     const generateCustomerId = async () => { //function to generate customer intent for stripe payments
-
         try{
 
             const GenerateCustomerId = await axios.post(`${BACKEND_URL}/api/stripe/create-customer-intent`, {email : user.email} , {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api call to stripe third party apis
@@ -80,7 +84,7 @@ const Dashboard = () => {
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
             setToggleCard(false); //untoggling card details filloout component
         
-        };
+        }; 
     };
 
     useEffect(() => {
@@ -96,7 +100,6 @@ const Dashboard = () => {
     }, [toggleOrder, cardDetails]); //triggering logic once these dependencies change
 
     const handleDeleteFromCart = async(e) => {
-
         try{
 
             const response = await axios.delete(`${BACKEND_URL}/api/cart/${e}` , {headers : {Authorization : `Bearer ${cookies.token}`}})
@@ -115,7 +118,7 @@ const Dashboard = () => {
 
             // handling internal error event
             setCartIds(cartIds); //setting cartIds state as default items
-            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error if internal error occurs
 
         };
     };
@@ -128,12 +131,15 @@ const Dashboard = () => {
 
                 const orders = await axios.get(`${BACKEND_URL}/api/order`, {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api call
                 
-                if(orders.status === 204) return setOrders([]); //handling 204 status code
-                if(orders.status === 200) return setOrders(orders.data.orders); //handling 200 staus code
-                setIsOrderLoading(false)
+                if(orders.status === 204) setOrders([]); //handling 204 status code
+                if(orders.status === 200) setOrders(orders.data.orders); //handling 200 staus code
+                
+                return setIsOrderLoading(false); //setting isLoading state to false to let frontyend know that data fetching is finished
+
             }catch(err){
-                setIsOrderLoading(false)
-               // add alert messages
+                setOrders([]); //setting orders state as empty array since no data  will be fetched if error occurs
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error if internal error occurs
+                return setIsOrderLoading(false); //setting isLoading state to false to let frontyend know that data fetching is finished
             };
         };
 
@@ -148,19 +154,19 @@ const Dashboard = () => {
 
                 const addresses = await axios.get(`${BACKEND_URL}/api/address`, {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api call
         
-                if(addresses.status === 204) return setAddresses([]); //handling 204 status code
-                if(addresses.status === 200) return setAddresses(addresses.data.addresses); //handling 200 staus code
+                if(addresses.status === 204) setAddresses([]); //handling 204 status code
+                if(addresses.status === 200) setAddresses(addresses.data.addresses); //handling 200 staus code
 
-                setIsLoading(false);
+                return setIsLoading(false); //setting isLoading state to false to let frontyend know that data fetching is finished
 
             }catch(err){
-                setIsLoading(false);
                 setAddresses([]);//setting empty array in state if internal error occurs
                 setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+                setIsLoading(false); //setting isLoading state to false to let frontyend know that data fetching is finished
             };
         };
 
-        fetchAddresses();
+        fetchAddresses(); //declearing function
 
     },[])
 
@@ -183,39 +189,44 @@ const Dashboard = () => {
 
     const orderItems = async() => {
         
-        let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.sales_price ?? prod.price ?? 0}))
+        let itemsIds = selectedItems?.map(prod => ({product_id: prod.id, amount : prod.amount, price : prod.sales_price ?? prod.price ?? 0})); //definng item short data from seleectedItems state and filtering them to check their prices 
         
         try{
             
-            const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, targetAddress , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const order = await axios.post(`${BACKEND_URL}/api/order` , {itemsIds, targetAddress , totalPrice} , {headers : {Authorization : `Bearer ${cookies.token}`}}); //makiing api call to backend to create new order
             
-            if(order.status === 200) {
+            if(order.status === 200) { //handling 200 status code
                 
                 const items = selectedItems?.map(prod => prod.id);                
-                const newCartIds = cartIds.filter(cart => items.some(id => id === cart.product_id))
+                const newCartIds = cartIds.filter(cart => items.some(id => id === cart.product_id)); // removeing selected items that ahas been ordered by user from cart state
 
-                setCartIds(newCartIds);
-                setToggleOrder(false)
-                setToggleAdd(false)
-                setToggleAddress(false)
-                setTogglePayment({status : true , success : true, orderId : order.data.orderId})
-                setOrders(prev => [...prev, {...addresses.filter(address => address.id == targetAddress), order_id : order.data.orderId, status : 'Pending', totalPrice , user_id : order.data.id , created_at : new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}])
-            }
+                setCartIds(newCartIds);//setting updated cart ids into state 
+                
+                setToggleOrder(false);
+                setToggleAdd(false);
+                setToggleAddress(false); //untoggling order components
+                
+                setTogglePayment({status : true , success : true, orderId : order.data.orderId}); //toggling payment messages
+                setOrders(prev => [...prev, {...addresses.filter(address => address.id == targetAddress), order_id : order.data.orderId, status : 'Pending', totalPrice , user_id : order.data.id , created_at : new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}]); //updating orders instantly
+            };
 
         }catch(err){
 
-            if(err.status == 400){
-                setToggleAddress(false)
-                setToggleAdd(false)
-                setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
-            }
+            if(err.status == 400){ //handling 400 status code error
 
-            setToggleAddress(false)
-            setToggleAdd(false)
+                setToggleAddress(false); 
+                setToggleAdd(false); //untoggling address components
+                
+                setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
+            };
+
+            setToggleAddress(false);
+            setToggleAdd(false); //untoggling address componnenets
+
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
             
-        }
-    }
+        };
+    };
 
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start" style={{maxWidth : '3000px'}}>
