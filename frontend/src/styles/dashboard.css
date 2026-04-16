@@ -661,7 +661,6 @@
 }
 
 .order-details-container * {
-
     background-color: var(--component-bg);
     border: none !important;
 }
@@ -677,7 +676,7 @@
     background-color: rgba(16, 185, 129, 0.15);
 }
 
-.order.Pending {
+.orderStatus.Pending {
     color: #10b981;
     font-weight: 500;
     padding: 0px 20px;
@@ -687,7 +686,7 @@
     text-transform:uppercase ;
     background-color: rgba(16, 185, 129, 0.15);
 }
-.order.OnWay{
+.orderStatus.OnWay{
     color: #10b981;
     font-weight: 500;
     padding: 0px 20px;
@@ -697,7 +696,7 @@
     text-transform:uppercase ;
     background-color: rgba(16, 185, 129, 0.15);
 }
-.order.Delivered{
+.orderStatus.Delivered{
     color: white;
     font-weight: 500;
     padding: 0px 20px;
@@ -725,7 +724,6 @@
 .order-details-container{
     border-left:  3px solid #10b981 !important;
 }
-
 
 /*  */
 
@@ -768,15 +766,15 @@
         gap: 1rem;
     }
 
-    .order-top span:nth-child(2){
-        position:absolute;
-        text-align: start !important;
-        left: 85%;
-        top: -27%;
+    .orderStatus {
+        position: absolute;
+        right: -1rem;
+        bottom: 3.1rem;
+
     }
     .order-start {
         width: 100%;
-        position: relative;
+        position: relative !important;
     }
 
     .order-end{

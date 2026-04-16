@@ -52,7 +52,7 @@ const OrderDetails = ({ order, setToggleAlert }) => {
                     <div className="d">
                         <div className="d-flex gap-3">
                             <h4 className="fw-bold">Order #{order.order_id}</h4>
-                            <span className={`order ${order.status} rounded-1 py-1`}> {order.status}</span>
+                            <span className={`orderStatus ${order.status} rounded-1 py-1`}> {order.status}</span>
                         </div>
                         <h6>Expected Delivery: {new Date(new Date(order.created_at).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}</h6>
                     </div>
