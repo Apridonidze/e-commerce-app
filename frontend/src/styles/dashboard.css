@@ -726,6 +726,14 @@
     border-left:  3px solid #10b981 !important;
 }
 
+
+/*  */
+
+.item-start{
+    background-color:var(--dark-bg) ;
+    border-radius: 5px;
+}
+
 @media(max-width : 555px){
     .order-list-header div{
         width: 100%;

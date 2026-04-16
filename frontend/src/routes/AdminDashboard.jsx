@@ -144,8 +144,6 @@ const AdminDashboard = () => {
 
                             {isLoading ? 'loading skeleton' : <>
                             
-                                <button onClick={() => setToggleCreateNew(true)}>Add New Product</button>
-
                                 <div className="order-container">
                                     <div className="order-header d-flex ">
                                         <h2>Pending Orders : {orders?.filter(prod => prod.status == 'Pending')?.length}</h2>
