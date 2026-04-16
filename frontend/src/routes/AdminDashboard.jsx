@@ -8,7 +8,6 @@ import { BACKEND_URL } from "../../config"
 import Sidebar from "../layout/Sidebar"
 import AdminList from '../admin/components/AdminList'
 import CreateProduct from "../admin/components/CreateProduct"
-import AdminOrder from "../admin/components/AdminOrder"
 import Report from '../components/report/Report'
 import { Link } from "react-router-dom"
 import DeleteReport from "../admin/components/DeleteReport"

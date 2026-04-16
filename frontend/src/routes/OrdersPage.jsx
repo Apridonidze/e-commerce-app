@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useCookies } from "react-cookie";
-import AdminOrder from "../admin/components/AdminOrder";
+import AdminOrder from "../admin/components/orders/AdminOrder";
 
 const OrdersPage = () => {
 
