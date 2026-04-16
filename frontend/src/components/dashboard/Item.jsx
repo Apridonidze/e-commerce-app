@@ -15,14 +15,14 @@ const Item = ({ prod, handleDeleteFromCart}) => {
     return(
         <div className="item-container d-flex gap-3 pb-2 my-2 pt-2" key={prod.products_id}>
 
-            <div className="item-start px-1 d-flex align-items-center" style={{maxHeight:'180px' , maxWidth: '280px', cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.products_id}`)}>
+            <div className="item-start p-1 d-flex align-items-center" style={{maxHeight:'180px' , maxWidth: '280px', cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.products_id}`)}>
                 <img className="w-100 h-auto rounded-1" loading="lazy" src={`data:image/svg+xml;base64,${images?.[0] || ""}`} />
             </div>
             <div className="item-end d-flex flex-column text-start gap-3">
                 
                 <div className="item-container-top d-flex align-items-center justify-content-between">
                     <h5 style={{cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.products_id}`)}>{prod?.title}</h5>
-                    {!prod?.sales_price ? 
+                    {!prod.sales_price ? 
                     <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${prod.price * prod.amount} </span> : 
 
                     <div className="sales-price">

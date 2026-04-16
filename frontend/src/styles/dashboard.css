@@ -735,6 +735,9 @@
 }
 
 @media(max-width : 555px){
+    .item-container{
+        flex-direction: column;
+    }
     .order-list-header div{
         width: 100%;
     }
