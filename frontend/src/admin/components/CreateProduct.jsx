@@ -247,11 +247,11 @@ const CreateProduct = ({ setToggleCreateNew }) => {
                 <button className="btn btn-none border-0" onClick={() => setToggleCreateNew({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <div className="manage-product-main">
+            <div className="manage-product-main ">
 
                 <form className="form-container" onSubmit={handleUploadProduct} enctype="multipart/form-data">
 
-                    <div className="form-start ">
+                    <div className="form-start">
 
                         <div className="target-image-container " >
                             {images?.length === 0 ? <></> : <span className="toggleDeleteImg  bg-danger p-2 rounded-3 m-1 " onClick={() => {const newImages = images.filter((_, id) => id !== targetImage) ; setImages(newImages); setTargetImage(0)}}><i class="fa-solid fa-trash text-white fs-6"></i></span>} 

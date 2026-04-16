@@ -2,7 +2,7 @@ import Admin from "./Admin"
 
 const AdminList = ({ admins, setToggleManageAdmins }) => {
 
-    let adminList = [...admins.onlineAdmins , ...admins.offlineAdmins].slice(0, 5)
+    let adminList = [...admins.onlineAdmins.slice(0, 3) , ...admins.offlineAdmins.slice(0, 2)].slice(0, 5)
     
     return(
         <div className="admin-list-container p-2">
@@ -18,7 +18,6 @@ const AdminList = ({ admins, setToggleManageAdmins }) => {
                 ) : 'No Admins Online'}
             </div>
 
-            
         </div>
     )
 }
