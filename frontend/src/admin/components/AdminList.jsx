@@ -1,40 +1,25 @@
 const AdminList = ({ admins, setToggleManageAdmins }) => {
+
+    let adminList = [...admins.onlineAdmins , ...admins.offlineAdmins].slice(0, 5)
     
     return(
         <div className="admin-list-container">
-            <div className="header d-flex">    
+            <div className="header d-flex">
+                <span>Admin Squad</span>
                 <button onClick={() => setToggleManageAdmins(true)}>Manage Admins</button>
             </div>
 
-
-            
             <div className="admin-div">
 
-                <h3>Online Admins</h3>
-
-                {admins?.onlineAdmins.length ? admins?.onlineAdmins.map((admin, adminId) => 
+                {adminList.length ? adminList.map((admin, adminId) => 
                     <div className="admin d-flex justify-content-between" key={adminId}>
                         <div className="admin-start">
                             <span>Fullname : {admin.fullname}</span>
                             <span>Id : {admin.id}</span>
+                            <span>Status: {admins.onlineAdmins.some(adm => adm.id === admin.id) ? 'online' : 'offline'}</span>
                         </div>
                     </div>
                 ) : 'No Admins Online'}
-            </div>
-
-            <div className="admin-div">
-
-                <h3>Offline Admins</h3>
-
-                {admins?.offlineAdmins.length ? admins?.offlineAdmins.map((admin, adminId) => 
-                    <div className="admin d-flex justify-content-between" key={adminId}>
-                        <div className="admin-start">
-                            <span>Fullname : {admin.fullname}</span>
-                            <span>Id : {admin.id}</span>
-                        </div>
-                    </div>
-                ) : 'No Offline Admins'}
-
             </div>
 
             
