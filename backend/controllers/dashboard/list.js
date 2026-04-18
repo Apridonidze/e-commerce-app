@@ -5,7 +5,7 @@ const onlineAdmins = require('../../socket/socket.stores/onlineAdmins'); //impor
 async function list(req,res) {
     try{
         
-        const [ orders ] = await db.query(`select users.fullname, products.title , ordered_items.product_id , ordered_items.amount , ordered_items.price , ordered_items.amount , orders.created_at , orders.status, orders.order_id from ordered_items join orders on ordered_items.order_id = orders.order_id inner join products on ordered_items.product_id = products.products_id join users on users.id = orders.user_id`); //selecting orders
+        const [ orders ] = await db.query(`select users.fullname, products.title , ordered_items.product_id , ordered_items.amount , orders.created_at , orders.status, orders.order_id from ordered_items join orders on ordered_items.order_id = orders.order_id join products on ordered_items.product_id = products.products_id join users on users.id = orders.user_id`); //selecting orders
 
         const groupedOrders = Object.values(
             orders.reduce((acc, item) => {
@@ -23,15 +23,12 @@ async function list(req,res) {
                 acc[item.order_id].products.push({
                     product_id: item.product_id,
                     amount: item.amount,
-                    price: item.price,
                     title: item.title,
                 });
 
             return acc;
             }, {})
         ); //defining accumulation of order (struccture of order for multiple products in order and forming them in structured object)
-
-        console.log(groupedOrders[0])
 
         const pending = groupedOrders.filter(o => o.status === "Pending").slice(0,5);
         const onWay = groupedOrders.filter(o => o.status === "OnWay").slice(0,5);
@@ -49,8 +46,7 @@ async function list(req,res) {
         return res.status(200).json({pending,onWay,delivered, soldItems, onlineAdmins: admins , offlineAdmins }); //returning data to admin dashobard
         
     }catch(err){
-        console.log(err)
-        return res.status(500).json({message : "Internal Error"}); //returning internal error message
+        return res.status(500).json({message : "Could Not Load Dashboard Information. Try Later"}); //returning internal error message
     };
 };
 

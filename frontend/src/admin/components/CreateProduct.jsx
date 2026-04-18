@@ -307,7 +307,7 @@ const CreateProduct = ({ setToggleCreateNew }) => {
                         <div className="form-line">
                             
                         <div className="form-row">
-                            <select className="form-select" name="" id="" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
+                            <select className="form-select" onChange={(e) => setSelectedCat(e.target.value)} value={selectedCat} ref={categoryRef}>
                                 {categories.map((cat, catId) => (
                                     <option value={cat.name} key={catId}>{cat.name}</option>
                                 ))}
