@@ -20,21 +20,15 @@ const OrdersPage = () => {
 
     const navigator = useNavigate();
 
-    const allowedParams = ["pending-orders", "onway-orders", "delivered-orders"]
-    const formattedStatuses = {'pending-orders': 'Pending','onway-orders': 'OnWay','delivered-orders': 'Delivered'}
-    const formattedStatus = formattedStatuses[params?.orderStatus]
-
+    const allowedParams = ["pending", "onway", "delivered"]
 
     useEffect(() => {
 
-        if(!allowedParams.includes(params?.orderStatus) && user?.role !== 'admin'){
+        if(!allowedParams.includes(params?.orderStatus) || user?.role !== 'admin'){
             navigator('/*', {replace : true})
             return;
         }
-
-       
-        if (!formattedStatus) return
-
+        
         const fetchOrder = async () => {
             
             try {
@@ -59,7 +53,7 @@ const OrdersPage = () => {
                     <button onClick={() => {navigator('/admin-dashboard', {replace : true})}}>PrevUrl</button>
                     {orders?.length !== 0 ? orders?.map(order => (
                         <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
-                    )) : `no ${formattedStatus} items`}
+                    )) : `no order items`}
                 </div>
             </div>
         </div>
