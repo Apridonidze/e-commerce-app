@@ -12,6 +12,8 @@ const Cart = ({ setToggleOrder, cartIds, handleDeleteFromCart }) => {
         return sum + Number(price) * Number(amount); //returning total price
     }, 0); //calculating total price of items 
 
+    console.log(cartIds)
+
     return(
         <div className="cart-container overflow-hidden rounded-3 mb-5">
             <h3 className="mb-3">Current Cart</h3>

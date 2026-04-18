@@ -110,7 +110,6 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
                 </div>
                       
                 <div className="product-main w-100 py-2 px-3">
-        
                     <h2 className="py-1">{toggleAddToCart.product.title.length > 20 ? `${toggleAddToCart.product.title.slice(0, 20)}...` : toggleAddToCart.product.title}</h2>
                     <small >{toggleAddToCart.product.description.length > 300 ? `${toggleAddToCart.product.description.slice(0,300)}...` : toggleAddToCart.product.description}</small>
                     <h5 style={{backgroundColor : '#10b981', color : 'white', width : 'fit-content', fontSize : '12px'}} className="px-2 py-1 my-2 rounded-2">{`${toggleAddToCart.product.category} / ${toggleAddToCart.product.subcategory}`}</h5>
@@ -147,7 +146,7 @@ const AddToCart = ({ setToggleAddToCart, toggleAddToCart, setToggleAlert }) => {
                         </div>
                     </div>
 
-                    <button className="btn border-0 px-3 py-2 mx-auto my-3 w-100 fw-bold" style={{backgroundColor : '#10b981', color :'white', maxWidth : '90%', height : '50px'}} onClick={() => handleAddToCart(toggleAddToCart.product.products_id)} disabled={isInCart || amount == 0 ? true : false}><i class="fa-solid fa-cart-shopping text-white me-2"></i> Add To Cart</button>
+                    <button className="btn border-0 px-3 py-2 mx-auto my-3 w-100 fw-bold" style={{backgroundColor : '#10b981', color :'white', maxWidth : '90%', height : '50px'}} onClick={() => handleAddToCart(toggleAddToCart.product?.products_id)} disabled={isInCart || amount == 0 ? true : false}><i class="fa-solid fa-cart-shopping text-white me-2"></i> Add To Cart</button>
 
                 </div>
         

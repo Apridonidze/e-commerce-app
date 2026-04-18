@@ -21,7 +21,6 @@ const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef, handleDeleteFromCart
             <div className="checkbox-start d-flex justify-content-between">
 
                 <div className="checkbox-main d-flex gap-3 pb-2">
-
                         <div className="item-start position-relative" style={{maxHeight:'120px' , maxWidth: '180px', cursor : 'pointer'}} onClick={() => handleImgCheckBox()}>
                             <div className="position-absolute ms-2"  onClick={(e) => e.stopPropagation()} style={{backgroundColor : 'transparent'}}>
                                 <CheckBox id={prod?.product_id} checkboxRef={checkboxRef} onChange={(e) => handleCheckbox(e, Number(prod?.amount), prod.sales_price ?? prod.price ?? 0)}/>

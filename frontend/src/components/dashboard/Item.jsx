@@ -13,15 +13,14 @@ const Item = ({ prod, handleDeleteFromCart}) => {
     const navigator = useNavigate(); //importing useNavigate from router library to redirect user to product clicked
 
     return(
-        <div className="item-container d-flex gap-3 pb-2 my-2 pt-2" key={prod.products_id}>
-
-            <div className="item-start p-1 d-flex align-items-center" style={{maxHeight:'180px' , maxWidth: '280px', cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.products_id}`)}>
+        <div className="item-container d-flex gap-3 pb-2 my-2 pt-2" key={prod.product_id}>
+            <div className="item-start p-1 d-flex align-items-center" style={{maxHeight:'180px' , maxWidth: '280px', cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.product_id}`)}>
                 <img className="w-100 h-auto rounded-1" loading="lazy" src={`data:image/svg+xml;base64,${images?.[0] || ""}`} />
             </div>
             <div className="item-end d-flex flex-column text-start gap-3">
                 
                 <div className="item-container-top d-flex align-items-center justify-content-between">
-                    <h5 style={{cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.products_id}`)}>{prod?.title}</h5>
+                    <h5 style={{cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.product_id}`)}>{prod?.title}</h5>
                     {!prod.sales_price ? 
                     <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${prod.price * prod.amount} </span> : 
 
@@ -42,7 +41,7 @@ const Item = ({ prod, handleDeleteFromCart}) => {
                             <button className="btn border-0" disabled>+</button>
                         </div>
 
-                        <span style={{letterSpacing : '0.7px', fontSize : '14px', cursor : "pointer"}} className="fw-medium" onClick={() => {handleDeleteFromCart(prod?.products_id)}}>REMOVE</span>
+                        <span style={{letterSpacing : '0.7px', fontSize : '14px', cursor : "pointer"}} className="fw-medium" onClick={() => {handleDeleteFromCart(prod?.product_id)}}>REMOVE</span>
                     </div>
                 </div>
 

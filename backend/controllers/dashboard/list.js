@@ -5,7 +5,8 @@ const onlineAdmins = require('../../socket/socket.stores/onlineAdmins'); //impor
 async function list(req,res) {
     try{
         
-        const [ orders ] = await db.query(`select orders.*, users.fullname, users.email from orders join users on orders.user_id = users.id`); //selecting orders
+        const [ orders ] = await db.query(`select products.title , products.products_id , ordered_items.product_id , ordered_items.amount , ordered_items.price , ordered_items.amount , orders.created_at  , orders.order_id from ordered_items join orders on ordered_items.order_id = orders.order_id join products on ordered_items.product_id = products.products_id`); //selecting orders
+        console.log(orders)
 
         const pending = orders.filter(o => o.status === "Pending").slice(0,5);
         const onWay = orders.filter(o => o.status === "OnWay").slice(0,5);
@@ -23,6 +24,7 @@ async function list(req,res) {
         return res.status(200).json({pending,onWay,delivered, soldItems, onlineAdmins: admins , offlineAdmins }); //returning data to admin dashobard
         
     }catch(err){
+        console.log(err)
         return res.status(500).json({message : "Internal Error"}); //returning internal error message
     };
 };
