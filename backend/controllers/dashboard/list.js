@@ -5,12 +5,33 @@ const onlineAdmins = require('../../socket/socket.stores/onlineAdmins'); //impor
 async function list(req,res) {
     try{
         
-        const [ orders ] = await db.query(`select products.title , products.products_id , ordered_items.product_id , ordered_items.amount , ordered_items.price , ordered_items.amount , orders.created_at  , orders.order_id from ordered_items join orders on ordered_items.order_id = orders.order_id join products on ordered_items.product_id = products.products_id`); //selecting orders
-        console.log(orders)
+        const [ orders ] = await db.query(`select products.title , products.products_id , ordered_items.product_id , ordered_items.amount , ordered_items.price , ordered_items.amount , orders.created_at , orders.status, orders.order_id from ordered_items join orders on ordered_items.order_id = orders.order_id inner join products on ordered_items.product_id = products.products_id`); //selecting orders
+        
+        const groupedOrders = Object.values(
+            orders.reduce((acc, item) => {
+                if (!acc[item.order_id]) {
+                    acc[item.order_id] = {
+                        order_id: item.order_id,
+                        status: item.status,
+                        created_at: item.created_at,
+                        products: []
+                    };
+                }
 
-        const pending = orders.filter(o => o.status === "Pending").slice(0,5);
-        const onWay = orders.filter(o => o.status === "OnWay").slice(0,5);
-        const delivered = orders.filter(o => o.status === "Delivered").slice(0,5); //getting 5 of each status items
+                acc[item.order_id].products.push({
+                product_id: item.product_id,
+                amount: item.amount,
+                price: item.price,
+                title: item.title
+            });
+
+            return acc;
+            }, {})
+        );
+
+        const pending = groupedOrders.filter(o => o.status === "Pending").slice(0,5);
+        const onWay = groupedOrders.filter(o => o.status === "OnWay").slice(0,5);
+        const delivered = groupedOrders.filter(o => o.status === "Delivered").slice(0,5); //getting 5 of each status items
 
         const [ soldItems ] = await db.query('select ordered_items.product_id, ordered_items.amount, ordered_items.price , orders.created_at from ordered_items join orders on ordered_items.order_id = orders.order_id '); //selecting sold items to generate charts data for admin dashobard
         
