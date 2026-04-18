@@ -7,7 +7,10 @@
   --border-2 : 2px solid #00a571;
   --component-bg : #f0f3ff;
   --dark-bg : #dee8ff;
-  --btn-border : 1.5px solid #dee8ff
+  --btn-border : 1.5px solid #dee8ff;
+  --pending : #fabd21;
+  --onway : #00a571;
+  --delivered : #cad4e0;
 }
 
 [data-theme='dark'] {
@@ -18,12 +21,110 @@
   --border : none;
   --component-bg : #080f20;
   --dark-bg : #0f172a;
-  --btn-border : 1.5px solid #161f32
+  --btn-border : 1.5px solid #161f32;
+  --delivered : #94a3b8;
 }
 
+/*  */
 
 .manage-orders-container{
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
+}
+
+.orders-container{
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.default-container{
+    width: 100%;
+    height: auto;
+}
+
+.order-box-container *{
+    background-color: var(--product-bg-color) !important;
+}
+
+.order-box-container{
+    margin-bottom: 1rem;
+    background-color: var(--product-bg-color) !important;
+}
+
+.order-box-container.Pending {
+    border-left: 3px solid var(--pending);
+}
+.order-box-container.OnWay {
+    border-left: 3px solid var(--onway);
+}
+
+.order-box-icon {
+    width: 8px;
+    height: 8px;
+    min-width: 8px;
+    min-height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.order-box-icon.Pending{
+    background-color: var(--pending) !important;
+}
+
+.order-box-icon.OnWay{
+    background-color: var(--onway) !important;
+}
+
+.order-box-icon.Delivered{
+    background-color: var(--delivered) !important;
+}
+
+.order-box-container.Pending i {
+    color: var(--pending);
+}
+
+.order-box-container.OnWay i {
+    color: var(--onway);
+}
+
+.order-box-container.Delivered i {
+    color: var(--delivered);
+}
+
+.deleteIcon *{
+    color: var(--delivered) !important;
+    cursor: pointer;
+    transition: color 0.25s ease;
+}
+
+.deleteIcon:hover:not(:disabled) *{
+    color: #dc3545 !important;
+}
+
+.deleteIcon:disabled *{
+    color: var(--delivered) !important;
+    cursor: not-allowed;
+}
+
+.orderStatus, .orderStatus:active, .orderStatus:focus {
+    border: var(--btn-border);
+    cursor: pointer;
+    max-width: 80%;
+    background-color: var(--component-bg) !important;
+    color: var(--text-color);
+}
+
+.manage-order-header i{
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.manage-order-header i:hover {
+    color: #00a571 !important;
+}
+
+.default-container .Delivered * {
+    color: #94a3b8 !important;
 }

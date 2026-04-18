@@ -13,6 +13,7 @@ import { Link } from "react-router-dom"
 import DeleteReport from "../admin/components/DeleteReport"
 import RespondReport from "../admin/components/RespondReport"
 import AdminFeedback from "../admin/components/AdminFeedback"
+import StatusMessage from "../alerts/StatusMessage"
 import ManageAdmins from "../admin/components/ManageAdmins"
 
 import '../styles/dashboard.css'
@@ -121,14 +122,16 @@ const AdminDashboard = () => {
     }, [hash]);
 
     return(
-        <div classclassName="main-container container-fluid d-flex flex-column justify-content-start" style={{maxWidth : '3000px'}}>
+        <div classclassName="main-container container-fluid d-flex flex-column justify-content-center border-2" style={{maxWidth : '3000px' , margin : 'auto'}}>
+
+            {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
 
             {toggleCreateNew ? <div className="bg"><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct setToggleCreateNew={setToggleCreateNew}/></div> : <></> }
             {toggleDeleteReport.status ? <div className="bg"><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
             {toggleRespondReport.status ? <div className="bg"><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
             {toggleManageAdmins ? <div className="bg"><div className="manage-admins-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleManageAdmins(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><ManageAdmins setToggleManageAdmins={setToggleManageAdmins} setAdmins={setAdmins} admins={admins}/></div> : <></>}
                 
-                <div className="main-body">
+                <div className="main-body ">
                         
                     <div className="main-start">
                         <Sidebar />
@@ -144,7 +147,7 @@ const AdminDashboard = () => {
 
                         <section id="manage-products">
 
-                            {isLoading ? 'loading skeleton' : <ManageOrders orders={orders} setOrders={setOrders}/>}
+                            {isLoading ? 'loading skeleton' : <ManageOrders orders={orders} setOrders={setOrders} setToggleAlert={setToggleAlert}/>}
 
                         </section>
 

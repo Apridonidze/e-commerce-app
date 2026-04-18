@@ -1,29 +1,29 @@
 const OrderBox = ({ order, orderStatuses, handleStatusChange, removeOrder }) => {  
     
     return(
-        <div className={`order-box-container ${order.status}`} key={order.order_id}>
+        <div className={`order-box-container ${order.status} p-2 rounded-3`} key={order.order_id}>
             
-            <div className="order-box-header d-flex align-items-center justify-content-between">
+            <div className="order-box-header d-flex align-items-start justify-content-between">
                 <div className="order-box-header-start">
-                    <span>#{order.order_id}</span>
-                    <h5>{order.ordered_by}</h5>
+                    <span className="fw-bold" style={{color : '#00a571'}}>#{order.order_id}</span>
+                    <h6>{order.ordered_by}</h6>
                 </div>
 
                 <div className="order-box-header-end">
-                    <span className="order-box-icon"></span>
+                    {order.status == 'Pending' ? <i className="fa-regular fa-hourglass-half"></i> : order.status == 'OnWay' ? <i className="fa-solid fa-truck"></i> : <i className="fa-solid fa-circle-check"></i>}
                 </div>
                 
             </div>
-            <div className="order-box-main">
+            <div className="order-box-main mb-2">
                 {order.products.map((prod, id) => <span className="text-secondary fs-6" key={prod.product_id}>x{prod.amount} {prod.title}{id == order.products.length - 1 ? '' : ','} </span>)}
             </div>
-            <div className="order-box-footer">
-                <select defaultValue={order.status} onChange={(e) => handleStatusChange(order.order_id , e.target.value)}>
+            <div className="order-box-footer d-flex align-items-center justify-content-between">
+                <select className="orderStatus form-control" disabled={order.status == 'Delivered'} defaultValue={order.status} onChange={(e) => handleStatusChange(order.order_id , e.target.value)}>
                     {orderStatuses.map(ord => 
-                        <option key={ord} >{ord}</option>
+                        <option key={ord} disabled={order.status == ord}>{ord}</option>
                     )}
                 </select>
-                <i class="fa-solid fa-trash-can" onClick={() => removeOrder(prod.product_id)}></i>
+                <button className="deleteIcon btn-none border-0" disabled={order.status == 'Delivered'} onClick={() => removeOrder(order.order_id)}><i className=" fa-solid fa-trash-can" ></i></button>
             </div>
         </div>  
     )
