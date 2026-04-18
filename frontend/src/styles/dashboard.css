@@ -665,6 +665,17 @@
     border: none !important;
 }
 
+.item-details a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.item-details a:hover{
+    color: #10b981;
+    text-decoration: underline;
+}
+
 .order-icon i{
     font-size: 32px !important;
     color: #10b981;
@@ -697,7 +708,7 @@
     background-color: rgba(16, 185, 129, 0.15);
 }
 .orderStatus.Delivered{
-    color: white;
+    color: #94a3b8;
     font-weight: 500;
     padding: 0px 20px;
     height: fit-content;
