@@ -3,6 +3,7 @@ const OrderBox = ({ setOrders, order }) => {
         <div className="order-box-container" key={order.order_id}>
             
             <div className="order-box-header">
+                {order}
                 <div className="order-box-header-start">
                     <span>#{order.order_id}</span>
                     <h5>{order.fullname}</h5>
