@@ -46,8 +46,7 @@ const Order = ({ cartIds ,setToggleOrder, handleDeleteFromCart, setToggleAddress
                 return sum + Number(price) * Number(amount); //returning total price
             }, 0); //summing total price of selected items
 
-            let allItems = cartIds.map((cartIds,_) => (cartIds)); //returning all items in array form
-            
+            let allItems = cartIds.map((item) => ({id : item.product_id , amount : item.amount, price : item.sales_price ?? item.price ?? 0})); //returning all items in array form
             setTotalPrice(total); 
             setSelectedItems(allItems); //setting order data in states
 
@@ -59,7 +58,7 @@ const Order = ({ cartIds ,setToggleOrder, handleDeleteFromCart, setToggleAddress
             return setTotalPrice(0); //setting 0 as a totalprice
         };
     };
-
+    
     const handleCheckbox = (e, amount, price) => {
 
         const id = e.target.id; //defining id of item
