@@ -1,4 +1,5 @@
-const OrderBox = ({ order, orderStatuses, handleStatusChange, removeOrder }) => {
+const OrderBox = ({ order, orderStatuses, handleStatusChange, removeOrder }) => {  
+    
     return(
         <div className={`order-box-container ${order.status}`} key={order.order_id}>
             
@@ -9,8 +10,7 @@ const OrderBox = ({ order, orderStatuses, handleStatusChange, removeOrder }) => 
                 </div>
 
                 <div className="order-box-header-end">
-                    {/* change icons based on the order.status */}
-                    {order.status}
+                    <span className="order-box-icon"></span>
                 </div>
                 
             </div>
@@ -18,9 +18,9 @@ const OrderBox = ({ order, orderStatuses, handleStatusChange, removeOrder }) => 
                 {order.products.map((prod, id) => <span className="text-secondary fs-6" key={prod.product_id}>x{prod.amount} {prod.title}{id == order.products.length - 1 ? '' : ','} </span>)}
             </div>
             <div className="order-box-footer">
-                <select defaultValue={order.status} onChange={() => handleStatusChange(prod.product_id)}>
+                <select defaultValue={order.status} onChange={(e) => handleStatusChange(order.order_id , e.target.value)}>
                     {orderStatuses.map(ord => 
-                        <option key={ord}>{ord}</option>
+                        <option key={ord} >{ord}</option>
                     )}
                 </select>
                 <i class="fa-solid fa-trash-can" onClick={() => removeOrder(prod.product_id)}></i>

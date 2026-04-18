@@ -16,6 +16,8 @@ import AdminFeedback from "../admin/components/AdminFeedback"
 import ManageAdmins from "../admin/components/ManageAdmins"
 
 import '../styles/dashboard.css'
+import '../styles/admin.dashboard.css'
+
 import AdminHeader from "../admin/components/AdminHeader"
 import ManageOrders from "../admin/components/orders/ManageOrders"
 
