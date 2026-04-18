@@ -4,6 +4,7 @@ import { BACKEND_URL } from "../../../config";
 import { useState, useEffect, useContext, useRef } from "react"
 import { useCookies } from "react-cookie";
 import { UserContext } from "../../context/UserContext";
+import AdminRow from "./AdminRow";
 
 
 const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
@@ -18,6 +19,9 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
     const btnRefs = useRef([null])
 
     const regexContainsSpecial = /[^\w\s]/;
+
+    let adminList = [...admins.onlineAdmins , ...admins.offlineAdmins]
+
 
     const fetchDataList = async() => {
 
@@ -92,12 +96,11 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
     }
 
     return(
-        <div className="manage-admins-container position-relative bg-white w-100" style={{zIndex : 999}}>
-            <div className="manage-admins-header">
-                <h4>Manage Admins</h4>
-                <button onClick={() => setToggleManageAdmins(false)}>Close</button>
+        <div className="manage-admins-container position-relative p-2" style={{zIndex : 999}}>
+             <div className="manage-admin-header py-2 d-flex justify-content-between">
+                <h4> <i class="fa-solid fa-user-group me-2" style={{color: "#10b981"}}></i> Admin Squad</h4>
+                <button className="btn btn-none border-0" onClick={() => setToggleManageAdmins(false)}><i class="fa-solid fa-xmark"></i></button>
             </div>
-
             <div className="search-bar">
                 <div className="form-floating">
                     <input type="text" id="searchUsers" className='form-control' placeholder="Searchs Users..." list="searchlist" onChange={(e) => {setSearchItem(e.target.value); if(dataList.length === 0 || dataList[0] === null) return ; const selected = dataList.find((u) => u.fullname === e.target.value);if (selected) setSelectedUser(selected.id)}} value={searchItem} tabIndex={1}/>
@@ -115,6 +118,10 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
             </div>
 
             <div className="admin-lists">
+                {adminList.length ? adminList.map(admin => 
+                    <AdminRow admin={admin} status={admins.onlineAdmins.some(adm => adm.id === admin.id) ? true : false} handleRemoveAdmin={handleRemoveAdmin}/>
+                ) : 'No Active Admins'}
+                
                 {admins?.onlineAdmins.length ? admins?.onlineAdmins.map((admin, adminId) => 
                 <div className="admin d-flex justify-content-between" key={adminId}>
                     <div className="admin-start">

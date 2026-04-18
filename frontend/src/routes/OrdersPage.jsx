@@ -7,6 +7,8 @@ import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useCookies } from "react-cookie";
 import AdminOrder from "../admin/components/orders/AdminOrder";
+import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const OrdersPage = () => {
 
@@ -20,19 +22,21 @@ const OrdersPage = () => {
 
     const navigator = useNavigate();
 
-    const allowedParams = ["pending", "onway", "delivered"]
+    const allowedParams = ["Pending", "OnWay", "Delivered"]
+
 
     useEffect(() => {
 
-        if(!allowedParams.includes(params?.orderStatus) || user?.role !== 'admin'){
+        if(!allowedParams.includes(params?.orderStatus) && user?.role !== 'admin'){
             navigator('/*', {replace : true})
             return;
         }
-        
+
+
         const fetchOrder = async () => {
             
             try {
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard/${formattedStatus}/${offset}`,{ headers: { Authorization: `Bearer ${cookies.token}` } })
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/${params?.orderStatus}/${offset}`,{ headers: { Authorization: `Bearer ${cookies.token}` } })
                 setOrders(response.data.orders)
 
             } catch (err) {
@@ -46,16 +50,27 @@ const OrdersPage = () => {
 
     return(
 
-        <div className="pending-orders-container d-flex">
-            <Sidebar />
-            <div className="main-container">
-                <div className="prevbtn">
-                    <button onClick={() => {navigator('/admin-dashboard', {replace : true})}}>PrevUrl</button>
+        <div className="main-container container-fluid d-flex flex-column justify-content-center border-2" style={{maxWidth : '3000px' , margin : 'auto'}}>
+            <div className="main-body">
+                <div className="main-start"><Sidebar /></div>
+                <div className="main-end">
+
+                    <div className="main-header">
+
+                        <Header />
+                        <button onClick={() => {navigator('/admin-dashboard', {replace : true})}}>PrevUrl</button>
+                    
+                    </div>
+
+
                     {orders?.length !== 0 ? orders?.map(order => (
                         <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
-                    )) : `no order items`}
+                    )) : `no items`}
+
                 </div>
             </div>
+
+            <Footer />
         </div>
     )
 }

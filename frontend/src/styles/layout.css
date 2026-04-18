@@ -263,7 +263,6 @@
   border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-/* TOP SECTION */
 .footer-row1 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

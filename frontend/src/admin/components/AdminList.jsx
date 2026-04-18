@@ -15,7 +15,7 @@ const AdminList = ({ admins, setToggleManageAdmins }) => {
             <div className="row gap-3 m-3">
                 {adminList.length ? adminList.map(admin => 
                     <Admin admin={admin} status={admins.onlineAdmins.some(adm => adm.id === admin.id) ? true : false}/>
-                ) : 'No Admins Online'}
+                ) : 'No Active Admins'}
             </div>
 
         </div>

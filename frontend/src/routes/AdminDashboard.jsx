@@ -139,9 +139,10 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className="main-end">
-                    <AdminHeader onClick={() => setToggleCreateNew(true)}/>
 
-                    {isLoading ? 'loading skeleton' : <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>}
+                        <div className="main-header"><AdminHeader onClick={() => setToggleCreateNew(true)}/></div>
+
+                        {isLoading ? 'loading skeleton' : <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>}
                     {/* add charts for products **/}
                     {/* fetch counts of orders and sold items  */}
                     {/* add recent activities component on side */}

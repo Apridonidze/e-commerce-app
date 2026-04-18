@@ -43,8 +43,8 @@ const ManageOrders = ({ orders, setOrders, setToggleAlert }) => {
     }
 
     return (
-        <div className="manage-orders-container">
-            <h1>Orders</h1>
+        <div className="manage-orders-container mt-5">
+            <h4><i className="fa-solid fa-box-open me-2" style={{color : "#10b981"}} ></i> Orders</h4>
             <div className="orders-container">
 
                 {orderStatuses?.map((status => (    
@@ -53,7 +53,7 @@ const ManageOrders = ({ orders, setOrders, setToggleAlert }) => {
                         
                         <div className="manage-order-header d-flex justify-content-between mb-3 align-items-center">
                             <h3 className="d-flex mt-3 align-items-center gap-2 fs-6 text-secondary text-uppercase" style={{letterSpacing : '2px'}}><span className={`order-box-icon ${status}`}></span>{status}<span className="text-secondary fs-6">({orders?.filter(ord => ord.status == status).length})</span></h3>
-                            <Link to={`orders/${status.toLowerCase()}`}><i class="p-2 w-auto fa-solid fa-arrow-up-right-from-square text-secondary"></i></Link>
+                            <Link to={`orders/${status}`}><i class="p-2 w-auto fa-solid fa-arrow-up-right-from-square text-secondary"></i></Link>
                         </div>
 
                         {orders?.filter(ord => ord.status == status).length > 0 ? orders?.filter(ord => ord.status == status).map(order => <OrderBox order={order} orderStatuses={orderStatuses} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>) : 'Empty State'}
