@@ -130,7 +130,7 @@ const AdminDashboard = () => {
             {toggleCreateNew ? <div className="bg"><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct setToggleCreateNew={setToggleCreateNew}/></div> : <></> }
             {toggleDeleteReport.status ? <div className="bg"><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
             {toggleRespondReport.status ? <div className="bg"><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
-            {toggleManageAdmins ? <div className="bg"><div className="manage-admins-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleManageAdmins(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><ManageAdmins setToggleManageAdmins={setToggleManageAdmins} setAdmins={setAdmins} admins={admins}/></div> : <></>}
+            {toggleManageAdmins ? <div className="bg"><div className="manage-admins-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleManageAdmins(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><ManageAdmins setToggleManageAdmins={setToggleManageAdmins} setAdmins={setAdmins} admins={admins} setToggleAlert={setToggleAlert}/></div> : <></>}
                 
                 <div className="main-body ">
                         
@@ -143,9 +143,6 @@ const AdminDashboard = () => {
                         <div className="main-header"><AdminHeader onClick={() => setToggleCreateNew(true)}/></div>
 
                         {isLoading ? 'loading skeleton' : <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>}
-                    {/* add charts for products **/}
-                    {/* fetch counts of orders and sold items  */}
-                    {/* add recent activities component on side */}
 
                         <section id="manage-products">
 

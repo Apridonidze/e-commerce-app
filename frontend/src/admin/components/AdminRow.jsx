@@ -15,7 +15,7 @@ const AdminRow = ({admin, status, disabled, handleRemoveAdmin}) => {
 
             <div className="admin-row-end">
 
-                <button className="btn-none border-0 bg-0" disabled={disabled} onClick={() => handleRemoveAdmin(admin.id)}><i className="fa-solid fa-trash-can bg-0"></i></button>
+                <button className="btn-none border-0 bg-0" disabled={disabled} onClick={() => {handleRemoveAdmin(admin.id) ; disabled = true}}><i className="fa-solid fa-trash-can bg-0"></i></button>
             </div>
             
        
