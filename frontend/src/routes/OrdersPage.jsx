@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Sidebar from "../layout/Sidebar"
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useCookies } from "react-cookie";
@@ -48,6 +48,40 @@ const OrdersPage = () => {
     
     },[offset, params.orderStatus])
 
+
+    const orderStatuses = ['Pending' , 'OnWay' , 'Delivered'];
+
+    const handleStatusChange = async(id, status) => {
+        try{
+
+            const response = await axios.put(`${BACKEND_URL}/api/dashboard/${id}` , {status}, {headers : {Authorization : `Bearer ${cookies.token}`}})
+            if(response.status === 200){
+                setOrders(prevOrders => prevOrders?.map(ord => ord.order_id === id ? { ...ord, status: response.data.status } : ord))
+            }
+
+        }catch(err){
+            if(err.status === 400) return setToggleAlert({status: true, type: "Warning", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+            if(err.status === 404)return setToggleAlert({status: true, type: "Warning", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+            return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+        }
+    }
+
+
+    const removeOrder = async(id) => {
+        try{
+
+            const response = await axios.delete(`${BACKEND_URL}/api/order/admin-remove/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
+
+            if(response.status === 200)return setOrders(prev => prev.filter(ord => ord.order_id !== id))
+            setToggleDrop(false)
+
+        }catch(err){
+            if(err.status === 400) return setToggleAlert({status: true, type: "Warning", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+            if(err.status === 404)return setToggleAlert({status: true, type: "Warning", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+            return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+        }
+    }
+
     return(
 
         <div className="main-container container-fluid d-flex flex-column justify-content-center border-2" style={{maxWidth : '3000px' , margin : 'auto'}}>
@@ -58,13 +92,19 @@ const OrdersPage = () => {
                     <div className="main-header">
 
                         <Header />
-                        <button onClick={() => {navigator('/admin-dashboard', {replace : true})}}>PrevUrl</button>
+                        
+                        <div className="orders-page-header-buttons">
+                            <div className="order-page-header-start"><button onClick={() => {navigator('/admin-dashboard', {replace : true})}}>PrevUrl</button></div>
+                            <div className="order-page-header-end">
+                                <NavLink to='/admin-dashboard/orders/OnWay'>link</NavLink>
+                            </div>
+                        </div>
                     
                     </div>
 
 
                     {orders?.length !== 0 ? orders?.map(order => (
-                        <AdminOrder order={order} orderId={order.order_id} key={order.order_id} setOrders={setOrders}/>
+                        <AdminOrder order={order} setOrders={setOrders} orderStatuses={orderStatuses} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>
                     )) : `no items`}
 
                 </div>

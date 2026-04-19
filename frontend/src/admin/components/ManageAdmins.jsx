@@ -96,8 +96,6 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
         }
     }
 
-    console.log(dataList)
-
     return(
         <div className="manage-admins-container position-relative p-3 rounded-3" style={{zIndex : 999}}>
             

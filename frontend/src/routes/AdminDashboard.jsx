@@ -121,7 +121,6 @@ const AdminDashboard = () => {
         if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
     }, [hash]);
 
-    console.log(orders)
     return(
         <div classclassName="main-container container-fluid d-flex flex-column justify-content-center border-2" style={{maxWidth : '3000px' , margin : 'auto'}}>
 
@@ -151,7 +150,7 @@ const AdminDashboard = () => {
                         </section>
 
                         <section id="reports">
-                            {isReportsLoading ? 'loading'  : <>
+                            {isReportsLoading ? 'loading skeleton'  : <>
 
                                 <h1>Reports</h1>
                                 

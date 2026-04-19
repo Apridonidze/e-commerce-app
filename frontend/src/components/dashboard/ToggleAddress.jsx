@@ -180,7 +180,7 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd, setAddresses }
                 const response = await axios.post(`${BACKEND_URL}/api/address/`, { address, apartment, city, state, zipcode } , {headers : {Authorization : `Bearer ${cookies.token}`}});
                 
                 if(response.status === 200) {
-                    setToggleAlert({status: true, type: "Success", statusCode: response.status, message: response.data.message}); //toggling error message if customer intent could not be geneated
+                    setToggleAlert({status: true, type: "Success", statusCode: response.status, message: response.data.message}); //toggling success message
                     setToggleAdd(false);
                     setAddresses(prev => 
                         [...prev , {
