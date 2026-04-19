@@ -21,6 +21,7 @@ import '../styles/admin.dashboard.css'
 
 import AdminHeader from "../admin/components/AdminHeader"
 import ManageOrders from "../admin/components/orders/ManageOrders"
+import ManageReports from "../admin/components/reports/ManageReports"
 
 const AdminDashboard = () => {
 
@@ -150,14 +151,7 @@ const AdminDashboard = () => {
                         </section>
 
                         <section id="reports">
-                            {isReportsLoading ? 'loading skeleton'  : <>
-
-                                <h1>Reports</h1>
-                                
-                                <Link to={'/admin-dashboard/reports'}>Visit</Link>
-                                {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No reports'}
-
-                            </>}
+                            {isReportsLoading ? 'loading skeleton'  : <ManageReports reports={reports} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport} />}
                         </section>
 
                         <section id="feedbacks">
