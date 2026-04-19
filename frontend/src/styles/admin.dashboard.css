@@ -295,6 +295,11 @@
     width: 130px;
 }
 
+.orders-page-header-buttons{
+    display: flex;
+    align-items: center;
+}
+
 
 @media (max-width : 758px){
     .admin-order-top{
@@ -350,5 +355,25 @@
     .admin-order-end div {
         display: flex !important;
         align-items: start !important;
+    }
+}
+
+
+@media (max-width : 468px){
+    
+    .orders-page-header-buttons{
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        gap:1rem;
+    }
+    .order-page-header-end {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .order-page-header-end a {
+        width: 100%;
+        text-align: center;
     }
 }
