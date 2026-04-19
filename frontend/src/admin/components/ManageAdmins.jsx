@@ -113,7 +113,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
                     <label htmlFor="searchUsers">Searchs Users...</label>
                 </div>
                 
-                <div className={`data-list p-2 rounded-3 d-${dataList.length ==  0 ? 'none'  : 'flex'} flex-column gap-2`} >
+                <div className={`data-list p-2 d-${dataList.length ==  0 ? 'none'  : 'flex'} flex-column gap-2`} >
                     <span className="text-secondary">Search Results ( {dataList[0] !== null ? dataList.length : 0} )</span>
                     {dataList[0] !== null ? (
                         dataList?.map((u, uId) => (
@@ -122,6 +122,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
                                 <button className="promoteBtn btn-0 border-0" value={u.id} onClick={() => handleAddAdmin(u.id)} disabled={admins?.offlineAdmins.some(adm => adm.id == u.id) || admins?.onlineAdmins.some(adm => adm.id == u.id)} ref={(e) => btnRefs.current[uId] = e}><i class="fa-solid fa-user-shield"></i> Promote</button>
                             </div>
                     ))) : <div className="emptyAdminRow py-2 px-3 rounded-3 d-flex w-100 "><span><i class="fa-solid fa-user-slash"></i> No User Found</span></div>}
+                    <span className="text-secondary text-center mt-3" style={{fontSize : '14px'}}>End of results for "{searchItem}"</span>
                 </div>
             </div>
 

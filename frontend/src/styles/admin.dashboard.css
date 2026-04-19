@@ -159,6 +159,8 @@
     width: 100%;
     z-index: 999;
     position: absolute;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     background-color: var(--component-bg);
 }
 
@@ -176,6 +178,18 @@
     border-radius: 5px;
     transition: color 0.1s ease;
 }
+
+.promoteBtn:disabled {
+    cursor: not-allowed;
+    color: var(--delivered) !important;
+    background-color: var(--bg-color);
+}
+
+.promoteBtn:disabled *{
+    color: var(--text-color) !important;
+    background-color: var(--component-bg);
+}
+
 
 .promoteBtn:hover , .promoteBtn:hover *{
     color: #00a571;
@@ -195,6 +209,13 @@
     background-color: var(--product-bg-color);
 }
 
-.emptyAdminRow *{
-    color: #00a571;
+
+.search-bar input , .search-bar input:focus{
+    border: var(--btn-border);
+    background-color: var(--component-bg);
+    color: var(--text-color);
+}
+
+.search-bar label{
+    color: var(--text-color);
 }
