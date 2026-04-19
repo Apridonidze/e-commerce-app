@@ -108,9 +108,28 @@ const OrdersPage = () => {
                     </div>
 
 
-                    {orders?.length !== 0 ? orders?.map(order => (
-                        <AdminOrder order={order} setOrders={setOrders} orderStatuses={orderStatuses} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>
-                    )) : `no items`}
+                    <div className="orders-page-main rounded-3 mt-4 py-2">
+
+                        <div className="orders-page-main-text p-3 rounded-3">
+                            <h3>Recent Orders</h3>
+                        </div>
+                        
+                        <div className="order-page-placeholder p-3">
+                            <div className="order-page-placeholder-start">
+                                <span>order id & <br /> date</span>
+                                <span>user name & <br /> email</span>
+                            </div>
+
+                            <div className="order-page-placeholder-end">
+                                <span>status & <br /> total price</span>
+                                <span>actions</span>
+                            </div>
+                        </div>
+
+                        {orders?.length !== 0 ? orders?.map(order => (
+                            <AdminOrder order={order} setOrders={setOrders} orderStatuses={orderStatuses} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>
+                        )) : `no items`}
+                    </div>
 
                 </div>
             </div>

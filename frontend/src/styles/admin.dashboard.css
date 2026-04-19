@@ -248,3 +248,49 @@
 .order-page-header-start button , .order-page-header-start button * {
     color: var(--text-color);
 }
+
+.order-page-placeholder{
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--component-bg) !important;
+}
+
+.order-page-placeholder * {
+    background-color: var(--component-bg) !important;
+}
+
+.order-page-placeholder div{
+    display: flex;
+    align-items: center;
+}
+
+.order-page-placeholder span{
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 12px;
+}
+
+.order-page-placeholder-start{
+    width: 21rem;
+    justify-content: space-between;
+    align-items: start;
+    margin-left: 1rem;
+}
+
+.order-page-placeholder-end{
+    width: 16rem;
+    justify-content: space-between;
+}
+
+.order-page-placeholder-end span{
+    width: auto;
+    margin: auto;
+}
+.orders-page-main , .orders-page-main *{
+    background-color: var(--product-bg-color);
+}
+
+.orderStatus{
+    width: 130px;
+}
