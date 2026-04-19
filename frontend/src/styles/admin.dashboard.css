@@ -300,6 +300,46 @@
     align-items: center;
 }
 
+/*  */
+
+.manage-reports-main-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #8996ab;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.userInitials{
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: var(--product-bg-color);
+    color: #10b981 !important;
+}
+
+.report-container{
+    border: var(--btn-border);
+}
+
+.report-end button{
+    background-color: var(--component-bg);
+}
+
+.replyBtn i{
+    color: var(--text-color);
+}
+
+.deleteBtn i{
+    color: #dc3545 !important;
+}
+
+.report-end button:hover{
+    background-color: var(--dark-bg);
+}
 
 @media (max-width : 758px){
     .admin-order-top{

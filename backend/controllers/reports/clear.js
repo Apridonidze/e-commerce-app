@@ -1,3 +1,4 @@
+const z = require('zod')
 const db = require("../../utils/db");
 const mailer = require('../../utils/mailer'); //importing utilities
 
@@ -22,7 +23,7 @@ async function clear(req,res) {
 
     try{
 
-        const [ data ] = await db.query(`select reports.user_id, reports.content, reports.type, reports.status, reports.resolution_action, reports.resolved_by, reports resolved_at, users.fullname, users.email from reports join users on reports.user_id = users.id where reports.id = ?`,[reportId]); // selecting data from db 
+        const [ data ] = await db.query(`select reports.user_id, reports.content, reports.type, reports.status, reports.resolution_action, reports.resolved_by, reports.resolved_at, users.fullname, users.email from reports join users on reports.user_id = users.id where reports.id = ?`,[reportId]); // selecting data from db 
         
         if(data.length === 0) return res.status(404).json({message : "Report Not Found"}); //checking if data length is valid and returning 404 status code if data === []
 
@@ -55,6 +56,7 @@ async function clear(req,res) {
         return res.status(200).json({message : `Report ${status} Successfully`}); //sending success message
         
     }catch(err){
+        console.log(err)
         return res.status(500).json({message : `Could Not ${status} Report. Try Later`}); //sending internal error message
     };
 };
