@@ -96,6 +96,18 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
         }
     }
 
+
+        useEffect(() => {
+        
+            
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden'; //hiding overflowed elements from body
+
+            
+            return () => {document.documentElement.style.overflow = ''; document.body.style.overflow = ''}; //cleanup funciton
+
+        }, []); //triggering fucntion on toggleAddToCart status chagnes
+
     return(
         <div className="manage-admins-container position-relative p-3 rounded-3" style={{zIndex : 999}}>
             

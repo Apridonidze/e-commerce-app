@@ -244,7 +244,7 @@ const CreateProduct = ({ setToggleCreateNew }) => {
 
             <div className="manage-product-top d-flex justify-content-between">
                 <h4>Add New Product</h4>
-                <button className="btn btn-none border-0" onClick={() => setToggleCreateNew({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
+                <button className="btn btn-none border-0" onClick={() => setToggleCreateNew(false)}><i class="fa-solid fa-xmark"></i></button>
             </div>
 
             <div className="manage-product-main ">
