@@ -45,7 +45,7 @@ const AdminOrder = ({ order ,setOrders , orderStatuses, handleStatusChange, remo
     };
 
     return(
-        <div className="order-details-container rounded-3 m-3" key={order.order_id}>
+        <div className="admin-order-details-container rounded-3 m-3" key={order.order_id}>
 
             <div className="admin-order-top d-flex align-items-center p-3 justify-content-between">
 
@@ -62,28 +62,26 @@ const AdminOrder = ({ order ,setOrders , orderStatuses, handleStatusChange, remo
 
                     <div className="d-block">
                         <h6>{order.fullname}</h6>
-                        <h6 className="text-break">{order.email}</h6>
+                        <h6 >{order.email}</h6>
                     </div>
 
                 </div>
 
-                <div className="admin-order-end h-100 d-flex align-items-center gap-3 ">
-                    <div className="d d-flex justify-content-between gap-2">
+                <div className="admin-order-end h-100 d-flex gap-3 ">
                         
-                        <div className="d-flex flex-column align-items-start">
-                            <h6 style={{color : "#10b981"}} className="fw-bold fs-6">${order.total_price.toFixed(2)}</h6>
-                            <select className="orderStatus form-control " disabled={order.status == 'Delivered'} defaultValue={order.status} onChange={(e) => handleStatusChange(order.order_id , e.target.value)}>
+                        <div className="d-flex flex-column align-items-end">
+                            <h6 style={{color : "#10b981"}} className="fw-bold fs-6 me-1">${order.total_price.toFixed(2)}</h6>
+                            <select className="admin-order-status form-control " disabled={order.status == 'Delivered'} defaultValue={order.status} onChange={(e) => handleStatusChange(order.order_id , e.target.value)}>
                                 {orderStatuses.map(ord => 
                                     <option key={ord} disabled={order.status == ord}>{ord}</option>
                                 )}
                             </select>
                         </div>
 
-                        <div className="d-flex gap-1 align-items-center">
-                            <button className="deleteIcon btn-none border-0" disabled={order.status == 'Delivered'} onClick={() => removeOrder(order.order_id)}><i className=" fa-solid fa-trash-can" ></i></button>
+                        <div className="admin-order-buttons d-flex align-items-center gap-1 ">
+                            <button className="deleteIcon btn-none border-0 my-auto" disabled={order.status == 'Delivered'} onClick={() => removeOrder(order.order_id)}><i className=" fa-solid fa-trash-can" ></i></button>
                             <button className="btn fw-bold border-0 btn-none" onClick={() => {if (products.length === 0) fetchOrderDetails(order.order_id); setOpenId(prev => (prev === order.order_id ? null : order.order_id));}} type="button" data-toggle="collapse" data-target={`#collapseDiv${order.order_id}`} aria-expanded="false" aria-controls={`collapseDiv${order.order_id}`}><i className={`fa-solid fa-angle-right ${openId === order.order_id ? 'rotate' : ''}`}></i></button>
                         </div>
-                    </div>
                 </div>
 
             </div>
