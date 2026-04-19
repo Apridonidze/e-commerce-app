@@ -219,3 +219,32 @@
 .search-bar label{
     color: var(--text-color);
 }
+
+.order-page-header-end{
+    width: fit-content;
+    background-color: var(--component-bg);
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.order-page-header-end a{
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+.order-page-header-end a:hover{
+    background-color: var(--dark-bg);
+    border-radius: 5px;
+}
+
+.order-page-header-end .active-order {
+    color: #00a571;
+    font-weight: 500;
+    background-color: var(--product-bg-color);
+    border-radius: 5px;
+}
+
+.order-page-header-start button , .order-page-header-start button * {
+    color: var(--text-color);
+}

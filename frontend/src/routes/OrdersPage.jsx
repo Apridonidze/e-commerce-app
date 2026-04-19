@@ -93,11 +93,16 @@ const OrdersPage = () => {
 
                         <Header />
                         
-                        <div className="orders-page-header-buttons">
-                            <div className="order-page-header-start"><button onClick={() => {navigator('/admin-dashboard', {replace : true})}}>PrevUrl</button></div>
-                            <div className="order-page-header-end">
-                                <NavLink to='/admin-dashboard/orders/OnWay'>link</NavLink>
+                        <div className="orders-page-header-buttons d-flex justify-content-between pt-3">
+
+                            <div className="order-page-header-start"><button className="d-flex gap-2 align-items-center btn border-0 fs-6" onClick={() => {navigator('/admin-dashboard', {replace : true})}}><i class="fa-solid fa-arrow-left"></i> Return</button></div>
+                            
+                            <div className="order-page-header-end d-flex gap-2 align-items-center">
+                                <NavLink to='/admin-dashboard/orders/Pending' className={({ isActive }) => isActive ? "active-order" : ""}>Pending</NavLink>
+                                <NavLink to='/admin-dashboard/orders/OnWay' className={({ isActive }) => isActive ? "active-order" : ""}>OnWay</NavLink>
+                                <NavLink to='/admin-dashboard/orders/Delivered' className={({ isActive }) => isActive ? "active-order" : ""}>Delivered</NavLink>
                             </div>
+
                         </div>
                     
                     </div>
