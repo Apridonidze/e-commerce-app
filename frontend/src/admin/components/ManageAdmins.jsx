@@ -20,7 +20,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
 
     const regexContainsSpecial = /[^\w\s]/;
 
-    let adminList = [...admins.onlineAdmins , ...admins.offlineAdmins]
+    let adminList = [...admins?.onlineAdmins , ...admins?.offlineAdmins]
 
 
     const fetchDataList = async() => {
@@ -96,12 +96,12 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
     }
 
     return(
-        <div className="manage-admins-container position-relative p-2" style={{zIndex : 999}}>
+        <div className="manage-admins-container position-relative p-3 rounded-3" style={{zIndex : 999}}>
              <div className="manage-admin-header py-2 d-flex justify-content-between">
                 <h4> <i class="fa-solid fa-user-group me-2" style={{color: "#10b981"}}></i> Admin Squad</h4>
                 <button className="btn btn-none border-0" onClick={() => setToggleManageAdmins(false)}><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div className="search-bar">
+            <div className="search-bar position-relative">
                 <div className="form-floating">
                     <input type="text" id="searchUsers" className='form-control' placeholder="Searchs Users..." list="searchlist" onChange={(e) => {setSearchItem(e.target.value); if(dataList.length === 0 || dataList[0] === null) return ; const selected = dataList.find((u) => u.fullname === e.target.value);if (selected) setSelectedUser(selected.id)}} value={searchItem} tabIndex={1}/>
                     <label htmlFor="searchUsers">Searchs Users...</label>
@@ -117,28 +117,10 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins }) => {
                 </div>
             </div>
 
-            <div className="admin-lists">
-                {adminList.length ? adminList.map(admin => 
-                    <AdminRow admin={admin} status={admins.onlineAdmins.some(adm => adm.id === admin.id) ? true : false} handleRemoveAdmin={handleRemoveAdmin}/>
+            <div className="admin-lists d-flex flex-column gap-2 mt-2">
+                {adminList.length ? adminList?.map(admin => 
+                    <AdminRow admin={admin} status={admins.onlineAdmins.some(adm => adm.id === admin.id) ? true : false} disabled={user.id === admin.id ? true : false} handleRemoveAdmin={handleRemoveAdmin}/>
                 ) : 'No Active Admins'}
-                
-                {admins?.onlineAdmins.length ? admins?.onlineAdmins.map((admin, adminId) => 
-                <div className="admin d-flex justify-content-between" key={adminId}>
-                    <div className="admin-start">
-                        <span>{admin.fullname}</span>
-                        <button onClick={() => handleRemoveAdmin(admin.id)} disabled={user.id === admin.id ? true : false}>Remove</button>
-                    </div>
-                </div>
-            ) : 'No Admins Online'}
-
-            {admins?.offlineAdmins.length ? admins?.offlineAdmins.map((admin, adminId) => 
-                <div className="admin d-flex justify-content-between" key={adminId}>
-                    <div className="admin-start">
-                        <span>Fullname : {admin.fullname}</span>
-                        <button onClick={() => handleRemoveAdmin(admin.id)} disabled={user.id === admin.id ? true : false}>Remove</button>
-                    </div>
-                </div>
-            ) : 'No Offline Admins'}
             </div>
         </div>
     )

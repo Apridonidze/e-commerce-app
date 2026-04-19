@@ -181,7 +181,21 @@ const AdminDashboard = () => {
                 </div>
             
         </div>
-    )
-}
+    );
+};
+
+
+// add section where low onstock items will be displayed
+// add separate page for it 
+// create charts for admin panel
+
+// modify dashboard api to return sold items data to display on charts + to reurn low amount items
+
+// add error message toggle
+// create reusable component to submit deletion of orders/admin/report/feedback
+// create loading skeleton for each section with empty states
+// style togglable itemns
+// cleanup code
+
 
 export default AdminDashboard

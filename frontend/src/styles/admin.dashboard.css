@@ -128,3 +128,29 @@
 .default-container .Delivered * {
     color: #94a3b8 !important;
 }
+
+
+/*  */
+
+.manage-admins-container{
+    max-width: 800px;
+    margin: auto;
+    transform: translateY(20%);
+}
+
+.admin-activity{
+    position: relative;
+    left: 30px;
+    bottom: 15px;
+    border: 2px solid var(--component-bg);
+    padding: 5px;
+}
+
+.admin-row-container, .admin-row-container * {
+    background-color: var(--product-bg-color);
+}
+
+.admin-lists{
+    max-height: 400px;
+    overflow-y: scroll;
+}
