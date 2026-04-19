@@ -89,6 +89,10 @@
     color: var(--onway);
 }
 
+.orderStatus {
+    border: var(--btn-border) !important;
+}
+
 .order-box-container.Delivered i {
     color: var(--delivered);
 }
@@ -109,7 +113,7 @@
 }
 
 .admin-order-status, .admin-order-status:active, .admin-order-status:focus {
-    border: var(--btn-border);
+    border: var(--btn-border) !important;
     cursor: pointer;
     max-width: 80%;
     background-color: var(--component-bg) !important;
@@ -340,6 +344,8 @@
 .report-end button:hover{
     background-color: var(--dark-bg);
 }
+
+/* .asignToMe .resolvedAction .pendingAction */
 
 @media (max-width : 758px){
     .admin-order-top{

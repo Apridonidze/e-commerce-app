@@ -12,7 +12,7 @@ async function fullList(req, res) {
 
     try {
 
-        let query = `select users.fullname, users.email, reports.*, products.title from reports join users on users.id = reports.user_id left join products on reports.product_id = products.products_id`; //main query
+        let query = `select u.fullname as user_fullname , u.email as user_email , a.email as admin_email , reports.* , products.title , products.products_id from reports join users u on u.id = reports.user_id left join users a on a.id = reports.resolved_by left join products on reports.product_id = products.products_id`; //main query
         const params = []; //params array
 
         if (status) { //if status is defined statement runs
