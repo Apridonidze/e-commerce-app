@@ -34,7 +34,7 @@ const AdminDashboard = () => {
     const [ orders,  setOrders ] = useState([])
     const [ reports , setReports ] = useState([])
     const [ feedbacks, setFeedbacks ] = useState([])
-    const [ soldItems , setSoldItems] = useState([])
+    const [chartsData, setChartsData] = useState([])
 
     const [toggleCreateNew, setToggleCreateNew] = useState(false);
     const [toggleManageAdmins ,setToggleManageAdmins] = useState(false);
@@ -46,6 +46,7 @@ const AdminDashboard = () => {
     const [reportsOffset, setReportsOffset] = useState(0)
 
     const [isLoading, setIsLoading] = useState(true)
+    const [isChartsLoading , setIsChartsLoading] = useState(true)
     const [isReportsLoading , setIsReportsLoading] = useState(true);
     const [isFeedbackLoading, setIsFeedbackLoading] = useState(true)
 
@@ -57,10 +58,13 @@ const AdminDashboard = () => {
             try{
 
                 const response = await axios.get(`${BACKEND_URL}/api/dashboard/charts`, config)
-                console.log(response)
+                setIsChartsLoading(false)
+                setChartsData(response.data)
 
             }catch(err){
-
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
+                setIsChartsLoading(false)
+                setChartsData([])
             }
         }
 
@@ -71,7 +75,6 @@ const AdminDashboard = () => {
                 const data = [...response.data.pending, response.data.onWay, response.data.delivered].filter((arr) => arr.length !== 0).flat()
                 
                 setOrders(data)
-                setSoldItems(response.data.soldItems)
                 setAdmins({onlineAdmins : response.data.onlineAdmins , offlineAdmins : response.data.offlineAdmins})
 
                 setIsLoading(false);
@@ -79,7 +82,6 @@ const AdminDashboard = () => {
             } catch (err) {
 
                 setOrders([]);
-                setSoldItems([]);
                 setAdmins({onlineAdmins : [] , offlineAdmins : []});
 
                 setIsLoading(false);
