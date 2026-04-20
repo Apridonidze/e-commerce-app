@@ -5,23 +5,14 @@ const ManageReports = ({ reports , setToggleDeleteReport , setToggleRespondRepor
     return(
         <div className="manage-reports-container">
             
-            <div className="manage-reports-header d-flex align-items-center gap-2">
+            <div className="manage-reports-header d-flex align-items-center gap-2 mb-3">
                 <h3><i class="fa-solid fa-flag fs-3" style={{color : '#10b981'}}></i> Reports</h3>
                 <Link to={'/admin-dashboard/reports'}><i class="p-2 w-auto fa-solid fa-arrow-up-right-from-square text-secondary"></i></Link>
             </div>
 
-            <div className="manage-reports-main">
-                <div className="manage-reports-main-header">
-                    <span>user </span>
-                    <span>contact email</span>
-                    <span>type</span>
-                    <span>status</span>
-                    <span>actions</span>
-                </div>
                 <div className="manage-reports-main-body d-flex flex-column gap-3">
                     {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map(report => <Report report={report} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'Empty reports state'}
                 </div>
-            </div>
 
         </div>
     )

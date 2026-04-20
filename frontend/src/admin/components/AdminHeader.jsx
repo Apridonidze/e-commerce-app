@@ -4,6 +4,7 @@ import { useTheme, useToggle } from "../../context/ThemeContext";
 import { UserContext } from "../../context/UserContext";
 
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const AdminHeader = ({ onClick }) => {
 
@@ -14,7 +15,24 @@ const AdminHeader = ({ onClick }) => {
     
     const { theme, toggleTheme } = useTheme(); //defining theme context
     const { toggle , toggleSidebar} = useToggle(); //defining sidebar toggle contxext
+    const [buttonContet, setButtonContent] = useState("Create Product");
 
+    useEffect(() => {
+        const handleResize = () => {
+            const width = document.documentElement.clientWidth;
+
+            if (width <= 1020) {
+            setButtonContent('');
+            } else {
+            setButtonContent('Create Product');
+            }
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return(
         <header className="header-container d-flex justify-content-between align-items-center px-2 py-3 rounded-3" >
@@ -31,7 +49,7 @@ const AdminHeader = ({ onClick }) => {
             <div className="header-end d-flex align-items-center gap-2">
 
                 <div className="side-buttons gap-3">
-                    <button className="createBtn btn btn-none border-0" onClick={onClick}><i class="fa-solid fa-plus text-white me-1"></i> Create Product</button>
+                    <button className="createBtn btn btn-none border-0" onClick={onClick}><i class="fa-solid fa-plus text-white me-1"></i>{buttonContet}</button>
                     <button className="btn" style={{fontSize: "18px", border : 'none'}} onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
                     {user ? <div className="user d-flex gap-2 align-items-center" >
                         <Link to='/dashboard' className="text-decoration-none ">
