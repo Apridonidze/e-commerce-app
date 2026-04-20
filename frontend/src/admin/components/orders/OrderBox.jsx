@@ -18,7 +18,7 @@ const OrderBox = ({ order, orderStatuses, handleStatusChange, removeOrder }) => 
                 {order.products.map((prod, id) => <span className="text-secondary fs-6" key={prod.product_id}>x{prod.amount} {prod.title}{id == order.products.length - 1 ? '' : ','} </span>)}
             </div>
             <div className="order-box-footer d-flex align-items-center justify-content-between">
-                <select className="orderStatus form-control" disabled={order.status == 'Delivered'} defaultValue={order.status} onChange={(e) => handleStatusChange(order.order_id , e.target.value)}>
+                <select className="boxStatus form-control" disabled={order.status == 'Delivered'} defaultValue={order.status} onChange={(e) => handleStatusChange(order.order_id , e.target.value)}>
                     {orderStatuses.map(ord => 
                         <option key={ord} disabled={order.status == ord}>{ord}</option>
                     )}
