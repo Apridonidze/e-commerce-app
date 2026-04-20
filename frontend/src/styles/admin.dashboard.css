@@ -365,7 +365,30 @@
     background-color: #fef3c7;
     color: #b85b13;
 }
+.toggle-report-button{
+    display: none;
+}
 
+.type{
+    background-color: var(--component-bg);
+    text-align: center;
+}
+
+.status{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.status.Sent, .statusDot{
+    color: #10b981;
+}
+.statusDot{
+    font-size: 8px;
+}
+.status.Responded{
+    color: var(--delivered);
+}
 
 @media (max-width : 758px){
     .admin-order-top{
@@ -395,7 +418,28 @@
         flex-direction: row !important;
         width: fit-content !important;
     }
-}
+
+    .toggle-report-button{
+        display: flex;
+    }
+
+    .report-top {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        flex-direction: column;
+    }
+
+    .report-user-initials{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .report-end{
+        display: none !important;
+    }
+}   
+
 
 
 @media (max-width : 518px){
