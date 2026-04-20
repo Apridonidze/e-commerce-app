@@ -345,7 +345,26 @@
     background-color: var(--dark-bg);
 }
 
-/* .asignToMe .resolvedAction .pendingAction */
+/* .resolvedAction  */
+
+.asignToMe{
+    color: #00a571;
+    cursor: pointer;
+}
+
+.asignToMe:hover{
+    text-decoration: underline;
+}
+
+.resolvedAction{
+    background-color:#76face;
+    color: #10b981;
+}
+
+.pendingAction{
+    background-color: #fef3c7;
+    color: #b85b13;
+}
 
 @media (max-width : 758px){
     .admin-order-top{

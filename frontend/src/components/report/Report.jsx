@@ -24,14 +24,17 @@ const Report = ( { report, setToggleDeleteReport, setToggleRespondReport } ) => 
             </div>
 
             <div className="report-bottom">
-                <div className="report-bottom-answer">
-                    
+
+                <div className="report-bottom-answer">    
                     <h6 className="text-secondary">{!report.content ? "No Editorial Text." : `"${report.content.length > 80 ? `${report.content.slice(0,80)}...` : report.content}"`}</h6>
                 </div>
-                <div className="report-bottom-resolution d-flex align-items-center justify-content-between">
-                    <h6 className="text-secondary"> {!report.resolution_action ? <span className="pendingAction">Pending Action</span> : <span className="resolvedAction">Resolved</span> } {report.resolution_action ? report.admin_email : 'Waiting For Supports Action'}</h6>
-                    <h6>{report.resolution_action ? report.resolved_by : <span className="asignToMe" onClick={() => setToggleRespondReport({status : true, reportDetails : report})}>Assign to me</span>}</h6>
+
+                <div className="report-bottom-resolution mt-3 d-flex align-items-center justify-content-between">
+                    <h6 style={{fontSize : '14px'}} className="text-secondary"> {!report.resolution_action ? <span className="pendingAction py-1 px-2 rounded-3">Pending Action</span> : <span className="resolvedAction  py-1 px-2 rounded-3 me-2">Resolved</span> } {report.resolution_action ? <span className="text-secondary"><b>Actioned By : </b>{report.admin_email}</span> : <span className="text-secondary ms-2">Waiting For Supports Action</span>}</h6>
+
+                    <h6 className="text-secondary" style={{fontSize : '14px'}}>{report.resolution_action ? new Date('2026-03-25T08:11:53.000Z').toLocaleDateString() : <span className="asignToMe" onClick={() => setToggleRespondReport({status : true, reportDetails : report})}>Assign to me</span>}</h6>
                 </div>
+            
             </div>
         </div>
     );
