@@ -3,7 +3,7 @@ import Report from "../../../components/report/Report";
 
 const ManageReports = ({ reports , setToggleDeleteReport , setToggleRespondReport }) => {
     return(
-        <div className="manage-reports-container">
+        <div className="manage-reports-container mt-5">
             
             <div className="manage-reports-header d-flex align-items-center gap-2 mb-3">
                 <h3><i class="fa-solid fa-flag fs-3" style={{color : '#10b981'}}></i> Reports</h3>

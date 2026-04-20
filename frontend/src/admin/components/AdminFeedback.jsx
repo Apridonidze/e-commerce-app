@@ -1,53 +1,35 @@
-import axios from "axios";
-
-import { BACKEND_URL } from "../../../config";
 
 import { useState } from "react"
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import { useCookies } from "react-cookie";
 
-const AdminFeedback = ({ feedback, feedbackId, key, setFeedbacks }) => {
+const AdminFeedback = ({ feedback, removeFeedback, toggleDrop , setToggleDrop }) => {
 
-    const [ cookies ] = useCookies(['token'])
-
-    const [toggleDrop , setToggleDrop] = useState(false);
-
-    const removeFeedback = async(id) =>{
-        try{
-
-            const response = await axios.delete(`${BACKEND_URL}/api/feedback/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
-
-            if(response.status === 200) setFeedbacks(prev => prev.filter((fb => fb.feedback_id !== feedback.feedback_id)))
-            // toggle stattus 400 alert messagee
-            setToggleDrop(false)
-
-
-
-        }catch(err){
-            console.log(err)
-        }
-    }
+    const emptyStar = <i class="fa-regular fa-star"></i>;
+    const star = <i class="fa-solid fa-star"></i>
 
     return(
-        <div className="admin-feedback-container d-flex justify-content-between" key={feedbackId}>
-            <div className="admin-start">
-                <div className="admin-header">
-                <h4>{feedback.fullname}</h4>
+        <div className="admin-feedback-container rounded-3 p-2 mb-2 align-items-start d-flex flex-column justify-content-between" key={feedback.feedback_id}>
+
+            <div className="admin-feedback-header d-flex justify-content-between w-100 pt-3">
+                    <div className="initials">
+                        <span className="userInitials text-uppercase me-2">{feedback.fullname.split(' ')[0].at(0)}{feedback.fullname.split(' ')[1].at(0)}</span>
+                        <span className="fs-5 fw-bold">{feedback.fullname}</span>
+                    </div>
+                    
+                    <div className="stars d-flex align-items-center gap-1">{[...Array(5)].map((_, i) => i < feedback.stars ? <span key={i}>{star}</span> : <span key={i}>{emptyStar}</span>)}</div>
+             </div>
+
+            <div className="admin-feedback-main py-3">
+                <div className="comment text-break fs-6">{`"${feedback.content}"`}</div>
+                    {feedback.type === "product" ? <>
+                        Product : <Link to={`/product/${feedback.product_id}`}>{feedback.title}</Link>
+                    </> : <></>}
             </div>
-            <div className="admin-footer">
-                <h6>{feedback.content}</h6>
-                {feedback.stars}
-                {feedback.type}
-                {feedback.type === "product" ? <>
-                    Product : <Link to={`/product/${feedback.product_id}`}>{feedback.title}</Link>
-                </> : <></>}
-            </div>
-            </div>
-            <div className="admin-end">
-                <button className="btn btn-primary" onClick={() => setToggleDrop(!toggleDrop)}>:</button>
-                <div className="toggle text-white" style={{ display : toggleDrop ? 'flex' : 'none' , flexDirection : 'column',position : 'relative', top : '10px'}}>
-                    <button className="btn btn-danger" onClick={() => removeFeedback(feedback.feedback_id)}>Remove</button>
-                </div>
+
+            <div className="admin-feedback-bottom w-100 py-2 d-flex align-items-center justify-content-between">
+                <span style={{color : "#10b981"}} className="fw-bold ms-2">#{feedback.feedback_id}</span>
+                <button className="btn border-0 deleteBtn " on   Click={() => removeFeedback(feedback.feedback_id)}><i class="fa-solid fa-trash-can"></i></button>
             </div>
         </div>
     )

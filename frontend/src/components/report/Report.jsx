@@ -18,7 +18,7 @@ const Report = ( { report, setToggleDeleteReport, setToggleRespondReport } ) => 
 
                 </div>
 
-                <div className="d-flex align-items-center w-50 gap-5 justify-content-between me-3">
+                <div className="user-data d-flex align-items-center w-50 gap-5 justify-content-between me-3">
                     <span>{report.user_email}</span>
                     <span className="type px-3 fs-6 rounded-3">{report.type}</span>
                     <span className={`status ${report.status}`}><i class="statusDot fa-solid fa-circle"></i> {report.status}</span>

@@ -62,7 +62,7 @@ const AdminOrder = ({ order ,setOrders , orderStatuses, handleStatusChange, remo
 
                     <div className="d-block">
                         <h6>{order.fullname}</h6>
-                        <h6 >{order.email}</h6>
+                        <h6>{order.email}</h6>
                     </div>
 
                 </div>

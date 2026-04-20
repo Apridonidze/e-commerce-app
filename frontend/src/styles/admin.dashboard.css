@@ -398,6 +398,31 @@
     color: var(--delivered);
 }
 
+.admin-feedback-container, .admin-feedback-container * , .admin-feedback-container div{
+    background-color: var(--product-bg-color) !important;
+}
+.manage-feedbacks-main{
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+.admin-feedback-container{
+    width: 100%;
+    height: auto;
+}
+
+.admin-feedback-bottom{
+    border-top: var(--btn-border);
+}
+
+.comment{
+    color: #8996ab;
+}
+
+.stars i {
+    color: #10b981;
+}
+
 @media (max-width : 758px){
     .admin-order-top{
         display: flex;
@@ -478,6 +503,23 @@
 
 
 @media (max-width : 468px){
+
+    .user-data{
+        display: flex;
+        flex-direction: column;
+        align-items: start !important;
+        gap: 15px !important;
+        justify-content: start !important;
+        margin: 0px !important;
+    }
+
+    .report-bottom-resolution{
+        display: flex;
+        flex-direction: column;
+        align-items: start !important;
+        gap: 10px;
+        margin-top: 15px;
+    }
     
     .orders-page-header-buttons{
         flex-direction: column;

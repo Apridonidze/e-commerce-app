@@ -22,6 +22,7 @@ import '../styles/admin.dashboard.css'
 import AdminHeader from "../admin/components/AdminHeader"
 import ManageOrders from "../admin/components/orders/ManageOrders"
 import ManageReports from "../admin/components/reports/ManageReports"
+import ManageFeedbacks from "../admin/components/feedbacks/ManageFeedbacks"
 
 const AdminDashboard = () => {
 
@@ -155,16 +156,7 @@ const AdminDashboard = () => {
                         </section>
 
                         <section id="feedbacks">
-                            {isFeedbackLoading ? 'loading' : <>
-
-                                <h1>Feedbacks</h1>
-
-                                <Link to={'/admin-dashboard/feedbacks'}>Visit</Link>
-                                {feedbacks?.length !== 0 ? feedbacks?.map((feedback, feedbackId) => (
-                                    <AdminFeedback feedback={feedback} feedbackId={feedbackId} key={feedbackId} setFeedbacks={setFeedbacks}/>
-                                )) : "No Feedbacks"}
-                            
-                            </>}
+                            {isFeedbackLoading ? 'loading' : <ManageFeedbacks setFeedbacks={setFeedbacks} feedbacks={feedbacks}/>}
                         </section>
 
                     </div>
