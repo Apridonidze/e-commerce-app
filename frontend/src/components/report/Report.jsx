@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Report = ( { report, setToggleDeleteReport, setToggleRespondReport } ) => {
     return(
-        <div className="report-container d-flex flex-column rounded-3 p-2" key={report.report_id}>
+        <div className="report-container d-flex flex-column rounded-3 px-3 py-2" key={report.report_id}>
             
             <div className="report-top d-flex justify-content-between py-3">
 

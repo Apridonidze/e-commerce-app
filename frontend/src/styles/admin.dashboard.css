@@ -326,7 +326,15 @@
 }
 
 .report-container{
-    border: var(--btn-border);
+    background-color: var(--product-bg-color);
+}
+
+.report-container *{
+    background-color: var(--product-bg-color);
+}
+
+.report-container i{
+    background-color: transparent;
 }
 
 .report-end button{
