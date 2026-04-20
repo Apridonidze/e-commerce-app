@@ -24,6 +24,7 @@ import ManageOrders from "../admin/components/orders/ManageOrders"
 import ManageReports from "../admin/components/reports/ManageReports"
 import ManageFeedbacks from "../admin/components/feedbacks/ManageFeedbacks"
 import Footer from "../layout/Footer"
+import Analytics from "../components/analytics/Analytics"
 
 const AdminDashboard = () => {
 
@@ -34,6 +35,8 @@ const AdminDashboard = () => {
     const [ orders,  setOrders ] = useState([])
     const [ reports , setReports ] = useState([])
     const [ feedbacks, setFeedbacks ] = useState([])
+
+    const [chartsDate, setChartsDate ] = useState('Month');
     const [chartsData, setChartsData] = useState([])
 
     const [toggleCreateNew, setToggleCreateNew] = useState(false);
@@ -53,20 +56,6 @@ const AdminDashboard = () => {
     const config = {headers: { Authorization: `Bearer ${cookies.token}`}}
 
     useEffect(() => {
-
-        const fetchCharts = async () => {
-            try{
-
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard/charts`, config)
-                setIsChartsLoading(false)
-                setChartsData(response.data)
-
-            }catch(err){
-                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
-                setIsChartsLoading(false)
-                setChartsData([])
-            }
-        }
 
         const fetchStatus = async () => {
             try {
@@ -129,10 +118,28 @@ const AdminDashboard = () => {
             fetchStatus();
             fetchReports();
             fetchFeedbacks();
-            fetchCharts();
         }
 
     }, []);
+
+    useEffect(() => {
+        const fetchCharts = async () => {
+            try{
+
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/charts`, config)
+                setIsChartsLoading(false)
+                setChartsData(response.data)
+
+            }catch(err){
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
+                setIsChartsLoading(false)
+                setChartsData([])
+            }
+        }
+
+        fetchCharts();
+
+    }, [chartsDate])
 
     useEffect(() => {
         if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
@@ -159,6 +166,7 @@ const AdminDashboard = () => {
                         <div className="main-header"><AdminHeader onClick={() => setToggleCreateNew(true)}/></div>
 
                         {isLoading ? 'loading skeleton' : <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>}
+                        {isChartsLoading ? 'loading skeleton' : chartsData.length === 0 ? "Empty Charts" : <Analytics setChartsDate={setChartsDate} chartsDate={chartsDate} chartsData={chartsData}/>}
 
                         <section id="manage-products">{isLoading ? 'loading skeleton' : <ManageOrders orders={orders} setOrders={setOrders} setToggleAlert={setToggleAlert}/>}</section>
                         <section id="reports">{isReportsLoading ? 'loading skeleton'  : <ManageReports reports={reports} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport} />}</section>

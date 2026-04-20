@@ -1,4 +1,4 @@
-const Stats = () => {
+const Stats = ({ chartsData }) => {
     return(
         <div className="stats-container">
             
