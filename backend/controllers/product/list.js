@@ -22,7 +22,6 @@ async function list(req,res) {
         return res.status(200).json({message : 'Products Fetched Succesfully' , products : products}); //sending data to frontend
 
     }catch(err){
-        console.log(err)
         return res.status(500).json({message: 'Could Not Fetch Products. Try Later'})
     };
 };

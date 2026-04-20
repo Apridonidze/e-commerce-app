@@ -29,7 +29,7 @@ const AdminFeedback = ({ feedback, removeFeedback, toggleDrop , setToggleDrop })
 
             <div className="admin-feedback-bottom w-100 py-2 d-flex align-items-center justify-content-between">
                 <span style={{color : "#10b981"}} className="fw-bold ms-2">#{feedback.feedback_id}</span>
-                <button className="btn border-0 deleteBtn " on   Click={() => removeFeedback(feedback.feedback_id)}><i class="fa-solid fa-trash-can"></i></button>
+                <button className="deleteBtn btn border-0 " on   Click={() => removeFeedback(feedback.feedback_id)}><i class="fa-solid fa-trash-can"></i></button>
             </div>
         </div>
     )

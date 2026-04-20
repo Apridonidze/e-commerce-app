@@ -23,6 +23,7 @@ import AdminHeader from "../admin/components/AdminHeader"
 import ManageOrders from "../admin/components/orders/ManageOrders"
 import ManageReports from "../admin/components/reports/ManageReports"
 import ManageFeedbacks from "../admin/components/feedbacks/ManageFeedbacks"
+import Footer from "../layout/Footer"
 
 const AdminDashboard = () => {
 
@@ -161,6 +162,8 @@ const AdminDashboard = () => {
 
                     </div>
                 </div>
+
+                <Footer />
             
         </div>
     );
