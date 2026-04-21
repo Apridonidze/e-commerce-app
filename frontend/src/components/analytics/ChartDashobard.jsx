@@ -4,7 +4,6 @@ import { XAxis, YAxis, Bar, ResponsiveContainer, BarChart, Tooltip } from "recha
 import ToolTip from "./ToolTip";
 
 const ChartDashboard = ({ chartsData }) => {
-
     
     const [formattedData, setFormattedData] = useState([]);
 
@@ -36,18 +35,20 @@ const ChartDashboard = ({ chartsData }) => {
 
     }, [chartsData?.salesOverTime]);
     
+    const isMobile = window.innerWidth < 768;
+
     return (
         <div className="chart-dashboard-container">
             {formattedData.length == 0 ? 'asdasd' : 
-            <ResponsiveContainer width="95%" height='400' >
-                <BarChart data={formattedData} barCategoryGap={0} barGap={-30}>
+            <ResponsiveContainer width="90%" height='400' >
+                <BarChart data={formattedData} barCategoryGap={0} barGap={isMobile ? -10 : -30}>
 
-                    <XAxis axisLine={false} tickLine={false} dataKey="date" height={120} tickMargin={35} dy={15} angle={-45}/>
+                    <XAxis fontSize={14} axisLine={false} tickLine={false} dataKey="date" height={120} dy={15}/>
 
                     <Tooltip content={<ToolTip />}/>
 
-                    <Bar dataKey="revenue" radius={2} fill="#187c5b" barSize={30} />
-                    <Bar dataKey="sales" radius={2} fill="#10b981" barSize={30} />
+                    <Bar dataKey="revenue" barSize={isMobile ? 10 : 30} fill="#187c5b" radius={2}/>
+                    <Bar dataKey="sales" barSize={isMobile ? 10 : 30} fill="#10b981" radius={2}/>
 
                 </BarChart>
             </ResponsiveContainer>}

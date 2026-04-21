@@ -67,28 +67,9 @@ async function charts(req,res){
             }, {})
         );
 
-        const topProducts = Object.values(
-            soldItems.reduce((acc, curr) => {
-                if (!acc[curr.product_id]) {
-                    acc[curr.product_id] = {
-                        product_id: curr.product_id,
-                        title: curr.title,
-                        total_sold: 0,
-                        revenue: 0
-                    };
-                };
-
-                acc[curr.product_id].total_sold += curr.amount;
-                acc[curr.product_id].revenue += getRevenue(curr);
-
-                return acc;
-            }, {})
-        );
-
-        return res.status(200).json({salesOverTime, bestSellingProducts, revenueByProduct, categoryDistribution, topProducts})
+        return res.status(200).json({salesOverTime, bestSellingProducts:bestSellingProducts.slice(0, 3) ,revenueByProduct, categoryDistribution})
 
     }catch(err){
-        console.log(err)
         return res.status(500).json({message : "Could Not Load Dashboard Information. Try Later"}); //returning internal error message
     }
 }
