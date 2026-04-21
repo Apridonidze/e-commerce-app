@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { XAxis, Bar, ResponsiveContainer, BarChart, Tooltip } from "recharts";
 
 import ToolTip from "./ToolTip";
+import Cursor from "./Cursor";
 
 const ChartDashboard = ({ chartsData , chartsDate}) => {
     
@@ -57,7 +58,7 @@ const ChartDashboard = ({ chartsData , chartsDate}) => {
                         <BarChart  data={formattedData} barCategoryGap={0} barGap={isMobile ? -20 :-30}>
                         <XAxis className="xAxis" fontSize={14} axisLine={false} tickLine={false} dataKey="date" height={120} dy={15}/>
 
-                        <Tooltip content={<ToolTip />} />
+                        <Tooltip content={<ToolTip />} cursor={<Cursor/>} wrapperStyle={{borderRadius: "10px",overflow: "hidden"}}/>
 
                         <Bar dataKey="revenue" fill="#187c5b" barSize={isMobile ? 20 : 30} radius={2}/>
                         <Bar dataKey="sales" fill="#10b981"  barSize={isMobile ? 20 : 30} radius={2}/>
