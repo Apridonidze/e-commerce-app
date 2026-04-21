@@ -481,6 +481,16 @@
     padding: 10px 12px;
 }
 
+.tooltip-container i{
+    color: #10b981 ;
+    margin-right: 3px;
+}
+
+.tooltip-container {
+    font-size: 12px;
+    color: var(--text-color);
+    
+}
 
 .tooltip-container *{
     background-color: var(--component-bg) ;

@@ -58,7 +58,7 @@ const ChartDashboard = ({ chartsData , chartsDate}) => {
                         <BarChart  data={formattedData} barCategoryGap={0} barGap={isMobile ? -20 :-30}>
                         <XAxis className="xAxis" fontSize={14} axisLine={false} tickLine={false} dataKey="date" height={120} dy={15}/>
 
-                        <Tooltip content={<ToolTip />} cursor={<Cursor/>} wrapperStyle={{borderRadius: "10px",overflow: "hidden"}}/>
+                        <Tooltip content={<ToolTip />} cursor={<Cursor/>} wrapperStyle={{borderRadius: "10px",overflow: "hidden", boxShadow : "10px 5px 15px rgba(0, 0, 0, 0.25)"}}/>
 
                         <Bar dataKey="revenue" fill="#187c5b" barSize={isMobile ? 20 : 30} radius={2}/>
                         <Bar dataKey="sales" fill="#10b981"  barSize={isMobile ? 20 : 30} radius={2}/>
