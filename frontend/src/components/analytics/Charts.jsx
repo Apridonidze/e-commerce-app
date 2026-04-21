@@ -1,3 +1,5 @@
+import ChartDashboard from "./ChartDashobard";
+
 const Charts = ({ setChartsDate , chartsDate, chartsData }) => {
     return(
         <div className="charts-container">
@@ -9,7 +11,7 @@ const Charts = ({ setChartsDate , chartsDate, chartsData }) => {
                 <div className="charts-header-end"></div>
             </div>
             <div className="charts-main">
-
+                <ChartDashboard chartsData={chartsData}/>
             </div>
         </div>
     );
