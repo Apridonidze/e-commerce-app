@@ -137,8 +137,7 @@ const AdminDashboard = () => {
 
         const fetchCharts = async () => {
             try{
-                console.log('called')
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard/charts`, config)
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/charts/${chartsDate}`, config)
                 setIsChartsLoading(false)
                 setChartsData(response.data)
 
