@@ -16,7 +16,7 @@ const Charts = ({ setChartsDate , chartsDate, chartsData }) => {
             </div>
 
             <div className="charts-main">
-                <ChartDashboard chartsData={chartsData}/>
+                <ChartDashboard chartsData={chartsData} chartsDate={chartsDate}/>
             </div>
 
         </div>

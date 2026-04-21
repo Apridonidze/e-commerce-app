@@ -3,7 +3,7 @@ import { XAxis, YAxis, Bar, ResponsiveContainer, BarChart, Tooltip } from "recha
 
 import ToolTip from "./ToolTip";
 
-const ChartDashboard = ({ chartsData }) => {
+const ChartDashboard = ({ chartsData , chartsDate}) => {
     
     const chartRef = useRef(null)
     const [formattedData, setFormattedData] = useState([]);
@@ -20,10 +20,12 @@ const ChartDashboard = ({ chartsData }) => {
             salesMap.set(key, item);
         });
 
-        const monthArray = Array.from({ length: 30 }, (_, i) => {
+        const dateNumber = chartsDate == 'Month' ? 30 : 7 
+
+        const monthArray = Array.from({ length: dateNumber }, (_, i) => {
 
             const d = new Date();
-            d.setDate(d.getDate() - (29 - i));
+            d.setDate(d.getDate() - (dateNumber - 1 - i));
 
             const key = d.toISOString().split("T")[0];
             const found = salesMap.get(key);
