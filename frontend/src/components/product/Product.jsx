@@ -60,10 +60,12 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
                         : <></>}
 
                         <div className="toggle-more mt-1 rounded-2 " style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column" ,position : "absolute" , right : '0.2rem' }}>
-                            {user?.role !== 'admin' ? 
+                            {user?.role == 'admin' ? 
                                 <>
+
                                     <button className="btn text-primary d-flex align-items-center py-2 w-100 rounded-0" onClick={() => setToggleEdit({status : true , product : prod})}><i class="fa-regular fa-pen-to-square text-primary"></i> Edit</button>
                                     <button className="btn text-danger d-flex align-items-center py-2 w-100" onClick={() => setToggleRemove({status : true , product : prod})}><i class="fa-regular fa-trash-can text-danger"></i> Remove</button>
+                                    <button className="btn text-danger d-flex align-items-center py-2 w-100 gap-2" onClick={() => setToggleReportProduct({status : true , productId : prod.products_id})}><i class="fa-solid fa-flag text-danger"></i> Report</button>
                                 </>
                             :
                                 <>

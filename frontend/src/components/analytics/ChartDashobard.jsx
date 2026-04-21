@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { XAxis, YAxis, Bar, ResponsiveContainer, BarChart, Tooltip } from "recharts";
+import { XAxis, Bar, ResponsiveContainer, BarChart, Tooltip } from "recharts";
 
 import ToolTip from "./ToolTip";
 
@@ -52,15 +52,15 @@ const ChartDashboard = ({ chartsData , chartsDate}) => {
     return (
         <div className="chart-dashboard-container" ref={chartRef}>
             {formattedData.length === 0 ? "empty" : 
-                <div className="chart-dashboard-inner-container" style={{width: "100%" }} >
+                <div className="chart-dashboard-inner-container" style={{width: '100%' , maxWidth : formattedData.length * 60}} >
                     <ResponsiveContainer width="100%" height={400}>
-                        <BarChart data={formattedData} barCategoryGap={0} barGap={isMobile ? -20 :-30}>
+                        <BarChart  data={formattedData} barCategoryGap={0} barGap={isMobile ? -20 :-30}>
                         <XAxis className="xAxis" fontSize={14} axisLine={false} tickLine={false} dataKey="date" height={120} dy={15}/>
 
                         <Tooltip content={<ToolTip />} />
 
-                        <Bar dataKey="revenue" fill="#187c5b" activeFill="#187c5b" barSize={isMobile ? 20 :30} radius={2}/>
-                        <Bar dataKey="sales" fill="#10b981" activeFill="#10b981" barSize={isMobile ? 20 :30} radius={2}/>
+                        <Bar dataKey="revenue" fill="#187c5b" barSize={isMobile ? 20 : 30} radius={2}/>
+                        <Bar dataKey="sales" fill="#10b981"  barSize={isMobile ? 20 : 30} radius={2}/>
                         </BarChart>
                     </ResponsiveContainer>
                 </div>

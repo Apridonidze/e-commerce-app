@@ -3,15 +3,15 @@ import ChartDashboard from "./ChartDashobard";
 const Charts = ({ setChartsDate , chartsDate, chartsData }) => {
 
     return(
-        <div className="charts-container">
+        <div className="charts-container mt-4 mx-2">
 
             <div className="charts-header">
                 <div className="charts-header-start">
-                    <h4>Performance Analytics</h4>
+                    <h4><i class="fa-solid fa-chart-column"></i> Performance Analytics</h4>
                 </div>
                 <div className="charts-header-end">
-                    <button className={`chartsDate ${chartsDate == 'Week' ? 'active' : ""}`} onClick={() => setChartsDate(prev => prev !== 'Week' ? "Week" : prev)}>7 Days</button>
-                    <button className={`chartsDate ${chartsDate == 'Month' ? 'active' : ""}`} onClick={() => setChartsDate(prev => prev !== "Month" ? "Month" : prev)}>30 Days</button>
+                    <button className={`btn border-0 chartsDate ${chartsDate == 'Week' ? 'active' : ""}`} onClick={() => setChartsDate(prev => prev !== 'Week' ? "Week" : prev)}>7 Days</button>
+                    <button className={`btn border-0 chartsDate ${chartsDate == 'Month' ? 'active' : ""}`} onClick={() => setChartsDate(prev => prev !== "Month" ? "Month" : prev)}>30 Days</button>
                 </div>
             </div>
 

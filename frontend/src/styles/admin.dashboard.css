@@ -427,12 +427,49 @@
 /*  */
 
 
-.chartsDate.active {
-    border: 1px solid red !important;
-}
 .chart-dashboard-container {
     width: 100%;
     overflow-x: hidden; 
+}
+/*  */
+
+
+.charts-header-end{
+    width: fit-content;
+    background-color: var(--component-bg);
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.charts-header-end button{
+    font-weight: 500;
+    font-size: 14px !important;
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+.charts-header-end button:hover{
+    background-color: var(--dark-bg);
+    border-radius: 5px;
+}
+
+.charts-header-end .active {
+    color: #00a571;
+    font-weight: 500;
+    background-color: var(--product-bg-color);
+    border-radius: 5px;
+}
+
+.charts-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.charts-header-start i{
+    color: #10b981;
+    margin-right: 5px;
 }
 
 @media (max-width: 1200px) {
@@ -521,6 +558,12 @@
     .admin-order-end div {
         display: flex !important;
         align-items: start !important;
+    }
+
+    .charts-header{
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
     }
 }
 
