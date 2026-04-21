@@ -426,18 +426,23 @@
 
 /*  */
 
-.chart-dashboard-container{
-    max-width: 100%;
-}
 
 .chartsDate.active {
     border: 1px solid red !important;
 }
+.chart-dashboard-container {
+    width: 100%;
+    overflow-x: hidden; 
+}
 
-@media (max-width : 1202px){
-    .chart-dashboard-container{
-        width: 100%;
+@media (max-width: 1200px) {
+    .chart-dashboard-container {
         overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .chart-dashboard-inner-container {
+        min-width: 900px;
     }
 }
 
