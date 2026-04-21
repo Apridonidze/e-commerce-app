@@ -430,6 +430,9 @@
     max-width: 100%;
 }
 
+.chartsDate.active {
+    border: 1px solid red !important;
+}
 
 @media (max-width : 1202px){
     .chart-dashboard-container{

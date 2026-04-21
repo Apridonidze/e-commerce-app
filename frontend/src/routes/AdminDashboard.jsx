@@ -123,9 +123,21 @@ const AdminDashboard = () => {
     }, []);
 
     useEffect(() => {
+
+        // check if chartsDate is valid , if not return empty promise
+
+        const allowedTypes = ['Week' , "Month"];
+        
+        if(!allowedTypes.includes(chartsDate)) {
+            setIsChartsLoading(false)
+            setChartsDate([])
+            return
+        };
+        
+
         const fetchCharts = async () => {
             try{
-
+                console.log('called')
                 const response = await axios.get(`${BACKEND_URL}/api/dashboard/charts`, config)
                 setIsChartsLoading(false)
                 setChartsData(response.data)
