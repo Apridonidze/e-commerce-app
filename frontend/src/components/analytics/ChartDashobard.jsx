@@ -38,11 +38,19 @@ const ChartDashboard = ({ chartsData }) => {
     
     const isMobile = window.innerWidth < 768;
 
+    useEffect(() => {
+        
+        const el = chartRef.current;
+        if (!el || formattedData.length === 0) return;
+
+        requestAnimationFrame(() => {el.scrollLeft = el.scrollWidth;});
+
+    }, [formattedData]);
     
     return (
-        <div className="chart-dashboard-container" >
+        <div className="chart-dashboard-container" ref={chartRef}>
             {formattedData.length == 0 ? 'empty' : 
-                <div style={{ minWidth: isMobile ? formattedData.length * 60 : '768px' }} ref={chartRef}>
+                <div style={{ minWidth: isMobile ? formattedData.length * 60 : '768px' }} >
                     <ResponsiveContainer width="100%" height='400'>
                         <BarChart data={formattedData} barCategoryGap={0} barGap={-30}>
 
