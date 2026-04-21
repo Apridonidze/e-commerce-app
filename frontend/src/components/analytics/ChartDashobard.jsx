@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { XAxis, YAxis, Bar, ResponsiveContainer, BarChart, Tooltip } from "recharts";
 
 import ToolTip from "./ToolTip";
 
 const ChartDashboard = ({ chartsData }) => {
     
+    const chartRef = useRef(null)
     const [formattedData, setFormattedData] = useState([]);
 
     useEffect(() => {
@@ -37,21 +38,25 @@ const ChartDashboard = ({ chartsData }) => {
     
     const isMobile = window.innerWidth < 768;
 
+    
     return (
-        <div className="chart-dashboard-container">
-            {formattedData.length == 0 ? 'asdasd' : 
-            <ResponsiveContainer width="90%" height='400' >
-                <BarChart data={formattedData} barCategoryGap={0} barGap={isMobile ? -10 : -30}>
+        <div className="chart-dashboard-container" >
+            {formattedData.length == 0 ? 'empty' : 
+                <div style={{ minWidth: isMobile ? formattedData.length * 60 : '768px' }} ref={chartRef}>
+                    <ResponsiveContainer width="100%" height='400'>
+                        <BarChart data={formattedData} barCategoryGap={0} barGap={-30}>
 
-                    <XAxis fontSize={14} axisLine={false} tickLine={false} dataKey="date" height={120} dy={15}/>
+                            <XAxis className="xAxis" fontSize={14}  axisLine={false} tickLine={false} dataKey="date" height={120} dy={15}/>
 
-                    <Tooltip content={<ToolTip />}/>
+                            <Tooltip content={<ToolTip />}/>
 
-                    <Bar dataKey="revenue" barSize={isMobile ? 10 : 30} fill="#187c5b" radius={2}/>
-                    <Bar dataKey="sales" barSize={isMobile ? 10 : 30} fill="#10b981" radius={2}/>
+                            <Bar dataKey="revenue" barSize={30} fill="#187c5b" radius={2}/>
+                            <Bar dataKey="sales" barSize={30} fill="#10b981" radius={2}/>
 
-                </BarChart>
-            </ResponsiveContainer>}
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            }
         </div>
     );
 };

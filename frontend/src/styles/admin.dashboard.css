@@ -424,6 +424,20 @@
     color: #10b981;
 }
 
+/*  */
+
+.chart-dashboard-container{
+    max-width: 100%;
+}
+
+
+@media (max-width : 1202px){
+    .chart-dashboard-container{
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
 @media (max-width : 758px){
     .admin-order-top{
         display: flex;
