@@ -20,8 +20,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
 
     const regexContainsSpecial = /[^\w\s]/;
 
-    let adminList = [...admins?.onlineAdmins , ...admins?.offlineAdmins]
-
+    const [adminList , setAdminList] = useState([...admins?.onlineAdmins , ...admins?.offlineAdmins])
 
     const fetchDataList = async() => {
 
@@ -57,7 +56,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
 
     },[searchItem]) 
 
-    const handleAddAdmin = async(id) => {
+    const handleAddAdmin = async(id, fullname) => {
         try{
 
             const response = await axios.post(`${BACKEND_URL}/api/admin`, {id} , {headers: {Authorization  : `Bearer ${cookies.token}`}})
@@ -65,13 +64,15 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
             if(response.status === 200){
                 btnRefs.current = btnRefs.current.filter(ref => ref.value == id);
                 btnRefs.current.disabled = true
-                setAdmins(prev => ({...prev,offlineAdmins: [...prev.offlineAdmins, id]}));
-                adminList.push({id , fullname : "placeholder  for fullname"})
+                setAdmins(prev => ({...prev,offlineAdmins: [...prev.offlineAdmins, {id , fullname }]}));
+                setAdminList(prev => [...prev, {id , fullname}])
             }
 
         }catch(err){
             // return alert message
             
+            setAdminList(prev)
+
             if(err.status === 400) return setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
             if(err.status === 404) return setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
             return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
@@ -83,14 +84,14 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
         try{
 
             const response = await axios.delete(`${BACKEND_URL}/api/admin/${id}` , {headers: {Authorization  : `Bearer ${cookies.token}`}})
+            setAdmins(prev => ({...prev, onlineAdmins: prev.onlineAdmins.filter(a => a !== id), offlineAdmins: prev.offlineAdmins.filter(a => a !== id)}));
+            setAdminList(prev => prev.filter(adm => adm.id !== id))
 
-            if(response.status === 200){
-                setAdmins(prev => ({...prev, onlineAdmins: prev.onlineAdmins.filter(a => a !== id), offlineAdmins: prev.offlineAdmins.filter(a => a != id)}));
-                adminList.filter(adm => adm.id !== id)
                 // toggle success message and tell them to refreshh page to seee updated admin list
-            }
+            
 
         }catch(err){
+            console.log(err)
             if(err.status === 400) return setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
             return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
         }
@@ -129,7 +130,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
                         dataList?.map((u, uId) => (
                             <div className="admin-search-row py-2 px-3 rounded-3 d-flex align-items-center justify-content-between" key={u.id}>
                                 <span>{u.fullname} - {u.email}</span>
-                                <button className="promoteBtn btn-0 border-0" value={u.id} onClick={() => handleAddAdmin(u.id)} disabled={admins?.offlineAdmins.some(adm => adm.id == u.id) || admins?.onlineAdmins.some(adm => adm.id == u.id)} ref={(e) => btnRefs.current[uId] = e}><i class="fa-solid fa-user-shield"></i> Promote</button>
+                                <button className="promoteBtn btn-0 border-0" value={u.id} onClick={() => handleAddAdmin(u.id, u.fullname)} disabled={admins?.offlineAdmins.some(adm => adm.id == u.id) || admins?.onlineAdmins.some(adm => adm.id == u.id)} ref={(e) => btnRefs.current[uId] = e}><i class="fa-solid fa-user-shield"></i> Promote</button>
                             </div>
                     ))) : <div className="emptyAdminRow py-2 px-3 rounded-3 d-flex w-100 "><span><i class="fa-solid fa-user-slash"></i> No User Found</span></div>}
                     <span className="text-secondary text-center mt-3" style={{fontSize : '14px'}}>End of results for "{searchItem}"</span>
