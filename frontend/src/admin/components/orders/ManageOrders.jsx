@@ -44,7 +44,7 @@ const ManageOrders = ({ orders, setOrders, setToggleAlert }) => {
 
     return (
         <div className="manage-orders-container mt-5">
-            <h4><i className="fa-solid fa-box-open me-2" style={{color : "#10b981"}} ></i> Orders</h4>
+            <div className="manage-orders-header"><h4><i className="fa-solid fa-box-open me-2" style={{color : "#10b981"}} ></i> Orders</h4></div>
             <div className="orders-container">
 
                 {orderStatuses?.map((status => (    

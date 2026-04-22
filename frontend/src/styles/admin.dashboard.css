@@ -36,12 +36,36 @@
 .orders-container{
     display: grid;
     gap: 1.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 }
 
 .default-container{
     width: 100%;
     height: auto;
+}
+
+.default-container.Pending{
+    border: 1px solid rgba(250, 189, 33, 0.2);
+    background-color: rgba(250, 189, 33, 0.03);
+}
+
+.default-container.Pending *{
+    background-color: transparent;
+    color: var(--text-color) !important;
+}
+
+.default-container.OnWay{
+    border: 1px solid rgba(0, 165, 113, 0.3);
+    background-color: rgba(0, 165, 113, 0.1);
+}
+
+.default-container.OnWay *{
+    background-color: transparent;
+    color: var(--text-color) !important;
+}
+
+.default-container.Delivered{
+    border: 1px solid var(--dark-bg);
 }
 
 .order-box-container *{
