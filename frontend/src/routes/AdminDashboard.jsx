@@ -210,7 +210,7 @@ const AdminDashboard = () => {
                     <div className="main-header"><AdminHeader onClick={() => setToggleCreateNew(true)}/></div>
 
                     {isLoading ? <AdminListSkeleton /> : <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>}
-                    {isChartsLoading ? <ChartsLoadingSkeleton /> : chartsData.length !== 0 ? <EmptyCharts/> : <Analytics setChartsDate={setChartsDate} chartsDate={chartsDate} chartsData={chartsData}/>}   
+                    {isChartsLoading ? <ChartsLoadingSkeleton /> : <Analytics setChartsDate={setChartsDate} chartsDate={chartsDate} chartsData={chartsData}/>}   
 
                     <section id="manage-products">{isLoading ? 'loading skeleton' : <ManageOrders orders={orders} setOrders={setOrders} setToggleAlert={setToggleAlert}/>}</section>
                     {isLowStockLoading ? 'loading skeleton' : <LowStock lowStock={lowStock} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>}

@@ -55,6 +55,8 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
             if(response.status === 200){ //handling 200 status code
                 btnRefs.current = btnRefs.current.filter(ref => ref.value == id); //targeting promote button of newly added admins row
                 btnRefs.current.disabled = true; //disabling it instantly
+                
+                setSearchItem(''); //clearing input after adding user
                 setAdmins(prev => ({...prev,offlineAdmins: [...prev.offlineAdmins, {id , fullname }]})); //updating parent state
                 setAdminList(prev => [...prev, {id , fullname}]); // updating local admins state
             };
@@ -99,7 +101,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
     }, []); //triggering fucntion on toggleAddToCart status chagnes
 
     return(
-        <div className="manage-admins-container position-relative p-3 rounded-3" style={{zIndex : 999}}>
+        <div className="manage-admins-container position-relative p-3 rounded-3 mx-auto" style={{zIndex : 999}}>
             
             <div className={`data-list-bg d-${dataList.length == 0 ? 'none'  : 'flex'}`} onClick={() => setSearchItem('')}></div>
 
@@ -134,7 +136,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
                     <AdminRow admin={admin} status={admins.onlineAdmins.some(adm => adm.id === admin.id) ? true : false} disabled={user.id === admin.id ? true : false} handleRemoveAdmin={handleRemoveAdmin}/>
                 ) : <></>}
             </div>
-            
+
         </div>
     );
 };

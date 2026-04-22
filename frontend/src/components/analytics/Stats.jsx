@@ -1,9 +1,9 @@
 const Stats = ({ chartsData }) => {
 
     const displayData = [
-        {id : 0 , icon : <i class="fa-solid fa-money-bills"></i> , title : "TOTAL REVENUE" , value : `$${Number(chartsData.totalRevenue).toFixed(2)}`},
-        {id : 1 , icon : <i class="fa-solid fa-bag-shopping"></i> , title : "TOTAL ORDERS" , value : chartsData.totalOrders},
-        {id : 2 , icon : <i class="fa-solid fa-user-group"></i> , title : "ACTIVE USERS" , value : chartsData.totalUsers},
+        {id : 0 , icon : <i className="fa-solid fa-money-bills"></i> , title : "TOTAL REVENUE" , value : chartsData.totalRevenue ? `$${Number(chartsData.totalRevenue).toFixed(2)}` : '--'},
+        {id : 1 , icon : <i className="fa-solid fa-bag-shopping"></i> , title : "TOTAL ORDERS" , value : chartsData.totalOrders  ? chartsData.totalOrders :  '--'},
+        {id : 2 , icon : <i className="fa-solid fa-user-group"></i> , title : "ACTIVE USERS" , value : chartsData.totalUsers  ? chartsData.totalUsers : '--'},
     ]
 
     return(
