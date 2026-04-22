@@ -196,6 +196,21 @@
     overflow-y: scroll;
 }
 
+.empty-admin-container{
+    text-align: center;
+    align-items: center;
+    background-color: var(--product-bg-color);
+}
+.empty-admin-container i{
+    color: var(--delivered);
+    font-size: 28px;
+    background-color: var(--component-bg);
+}
+
+.empty-admin-container * {
+    background-color: var(--product-bg-color);
+}
+
 .data-list{
     width: 100%;
     z-index: 999;

@@ -44,6 +44,10 @@ i , small, a, span , strong{
   color:  var(--text-color);
 }
 
+button:disabled {
+  cursor: not-allowed !important;
+}
+
 .bg {
   cursor: pointer;
   position: absolute;
