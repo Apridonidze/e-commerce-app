@@ -19,6 +19,8 @@ async function charts(req,res){
 
 
         const [ soldItems ] = await db.query(baseQuery + dateParams); //selecting sold items to generate charts data for admin dashobard
+        const [ totalUsers ] = await db.query('select count(*) from users')
+        const [ totalRevenue ] = await db.query('select sum(total_price) , count(*) from orders where status = "Delivered"')
         
         const getRevenue = (curr) => curr.amount * (curr.sales_price ?? curr.price);
 
@@ -51,38 +53,7 @@ async function charts(req,res){
             }, {})
         );
 
-        const revenueByProduct = Object.values(
-            soldItems.reduce((acc, curr) => {
-                if (!acc[curr.product_id]) {
-                    acc[curr.product_id] = {
-                        product_id: curr.product_id,
-                        title: curr.title,
-                        revenue: 0
-                    };
-                };
-
-                acc[curr.product_id].revenue += getRevenue(curr);
-
-                return acc;
-            }, {})
-        );
-
-        const categoryDistribution = Object.values(
-            soldItems.reduce((acc, curr) => {
-                if (!acc[curr.category]) {
-                    acc[curr.category] = {
-                        category: curr.category,
-                        total: 0
-                    };
-                };
-
-                acc[curr.category].total += curr.amount;
-
-                return acc;
-            }, {})
-        );
-
-        return res.status(200).json({salesOverTime, bestSellingProducts:bestSellingProducts.slice(0, 3) ,revenueByProduct, categoryDistribution})
+        return res.status(200).json({salesOverTime, bestSellingProducts:bestSellingProducts.slice(0, 3) , totalRevenue : totalRevenue[0]['sum(total_price)'] , totalOrders : totalRevenue[0]['count(*)'] ,totalUsers : totalUsers[0]["count(*)"]})
 
     }catch(err){
         return res.status(500).json({message : "Could Not Load Dashboard Information. Try Later"}); //returning internal error message
