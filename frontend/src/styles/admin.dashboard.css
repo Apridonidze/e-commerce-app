@@ -543,6 +543,16 @@
     font-weight: bold;
 }
 
+/*  */
+
+.deleteFeedbackBtn i{
+    transition: color 0.09s ease;
+}
+
+.deleteFeedbackBtn i:hover{
+    color: #dc3545 !important;
+}
+
 @media (max-width: 1200px) {
     .chart-dashboard-container {
         overflow-x: auto;

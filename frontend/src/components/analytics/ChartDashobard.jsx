@@ -53,15 +53,15 @@ const ChartDashboard = ({ chartsData , chartsDate}) => {
     return (
         <div className="chart-dashboard-container" ref={chartRef}>
             {formattedData.length === 0 ? "empty" : 
-                <div className="chart-dashboard-inner-container" style={{width: '100%' , maxWidth : formattedData.length * 60}} >
+                <div className="chart-dashboard-inner-container " style={{width: '100%' , maxWidth : formattedData.length * 60}} >
                     <ResponsiveContainer width="100%" height={400}>
-                        <BarChart  data={formattedData} barCategoryGap={0} barGap={isMobile ? -20 :-30}>
+                        <BarChart  data={formattedData} barCategoryGap={0} barGap={isMobile ? -40 :-30}>
                         <XAxis className="xAxis" fontSize={14} tick={{fill : '#10b981'}} axisLine={false} tickLine={false} dataKey="date" height={40} dy={15}/>
 
                         <Tooltip content={<ToolTip />} cursor={<Cursor/>} wrapperStyle={{borderRadius: "10px",overflow: "hidden", boxShadow : "10px 5px 15px rgba(0, 0, 0, 0.25)"}}/>
 
-                        <Bar dataKey="revenue" fill="#187c5b" barSize={isMobile ? 20 : 30} radius={2}/>
-                        <Bar dataKey="sales" fill="#10b981"  barSize={isMobile ? 20 : 30} radius={2}/>
+                        <Bar dataKey="revenue" fill="#187c5b" barSize={isMobile ? 40 : 30} radius={2}/>
+                        <Bar dataKey="sales" fill="#10b981"  barSize={isMobile ? 40 : 30} radius={2}/>
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
