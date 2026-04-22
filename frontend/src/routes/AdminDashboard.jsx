@@ -22,7 +22,11 @@ import ManageReports from "../admin/components/reports/ManageReports"
 import ManageFeedbacks from "../admin/components/feedbacks/ManageFeedbacks"
 import Footer from "../layout/Footer"
 import Analytics from "../components/analytics/Analytics"
+import LowStock from "../admin/components/LowStock"
 
+import EditProduct from "../admin/components/EditProduct"
+import RemoveProduct from "../admin/components/RemoveProduct"
+import ReportProduct from "../components/report/ReportProduct"
 const AdminDashboard = () => {
 
     const { hash } = useLocation();
@@ -41,6 +45,10 @@ const AdminDashboard = () => {
     const [toggleManageAdmins ,setToggleManageAdmins] = useState(false);
     const [toggleDeleteReport, setToggleDeleteReport] = useState({status : false, reportDetails : null});
     const [toggleRespondReport, setToggleRespondReport] = useState({status : false, reportDetails : null});
+    const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
+    const [toggleRemove , setToggleRemove] = useState({status : false, product: null});
+    const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
+    const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null});
 
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
@@ -175,7 +183,13 @@ const AdminDashboard = () => {
     return(
         <div classclassName="main-container container-fluid d-flex flex-column justify-content-center border-2" style={{maxWidth : '3000px' , margin : 'auto'}}>
 
+            {toggleRemove.status ? <><div className="manage-product-background" style={{zIndex : 1000}} onClick={() => setToggleRemove({status : false, product  :null})}></div><RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove} setToggleAlert={setToggleAlert}/></> : <></> }
+            {toggleReportProduct.status ? <><div className="manage-product-background" style={{zIndex : 1000}} onClick={() => setToggleReportProduct({status : false, productId  :null})}></div><ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct} setToggleAlert={setToggleAlert}/></> : <></>}
+            
+            {toggleAddToCart.status ? <div className="add-to-cart-wrapper" style={{top : `${window.scrollY}px`}}><div className="add-to-cart-background" style={{top : `${window.scrollY}px`}} onClick={() => setToggleAddToCart({status : false , product : null})}></div> <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart} setToggleAlert={setToggleAlert}/></div> : <></>}
+
             {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
+            {toggleEdit.status ? <><div className="manage-product-background" style={{zIndex : 1000}} onClick={() => setToggleEdit({status : false, product  :null})}></div> <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit} setToggleAlert={setToggleAlert}/> </> : <></> }
 
             {toggleCreateNew ? <div className="bg"><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct setToggleCreateNew={setToggleCreateNew}/></div> : <></> }
             {toggleDeleteReport.status ? <div className="bg"><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
@@ -196,6 +210,7 @@ const AdminDashboard = () => {
                         {isChartsLoading ? 'loading skeleton' : chartsData.length === 0 ? "Empty Charts" : <Analytics setChartsDate={setChartsDate} chartsDate={chartsDate} chartsData={chartsData}/>}
 
                         <section id="manage-products">{isLoading ? 'loading skeleton' : <ManageOrders orders={orders} setOrders={setOrders} setToggleAlert={setToggleAlert}/>}</section>
+                        {isLowStockLoading ? 'loading skeleton' : <LowStock lowStock={lowStock} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>}
                         <section id="reports">{isReportsLoading ? 'loading skeleton'  : <ManageReports reports={reports} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport} />}</section>
                         <section id="feedbacks">{isFeedbackLoading ? 'loading' : <ManageFeedbacks setFeedbacks={setFeedbacks} feedbacks={feedbacks}/>}</section>
 
