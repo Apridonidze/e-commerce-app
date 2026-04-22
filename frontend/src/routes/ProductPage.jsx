@@ -77,8 +77,6 @@ const ProductPage = () => {
 
     }, [id])
 
-    console.log(product)
-
     useEffect(() => {
         if (!product || !cartIds) return;
 

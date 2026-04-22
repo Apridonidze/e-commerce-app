@@ -84,7 +84,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
         try{
 
             const response = await axios.delete(`${BACKEND_URL}/api/admin/${id}` , {headers: {Authorization  : `Bearer ${cookies.token}`}})
-            setAdmins(prev => ({...prev, onlineAdmins: prev.onlineAdmins.filter(a => a !== id), offlineAdmins: prev.offlineAdmins.filter(a => a !== id)}));
+            setAdmins(prev => ({...prev, onlineAdmins: (prev.onlineAdmins || []).filter(a => a.id !== id), offlineAdmins: (prev.offlineAdmins || []).filter(a => a.id !== id),}));
             setAdminList(prev => prev.filter(adm => adm.id !== id))
 
                 // toggle success message and tell them to refreshh page to seee updated admin list
