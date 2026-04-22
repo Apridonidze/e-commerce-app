@@ -1,11 +1,15 @@
 const db = require('../../utils/db')
 
 async function charts(req,res){
-    const { chartsDate } = req.params
+    
+    
+    let params = req.params.chartsDate;
 
-    // validate req.params
+    if(!Number(params) || Number(params) < 0) return res.status(400).json({message : "Invalid Offset Parameter"})
+
     try{
-
+        
+        const { chartsDate } = req.params
 
         const baseQuery = 'select ordered_items.product_id, ordered_items.amount, orders.created_at, products.title, products.category, products.subcategory, products.price, products.sales_price from ordered_items join orders on ordered_items.order_id = orders.order_id join products on products.products_id = ordered_items.product_id'
 
