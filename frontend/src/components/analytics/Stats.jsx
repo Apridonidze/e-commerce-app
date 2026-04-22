@@ -1,10 +1,10 @@
-const Stats = ({ chartsData }) => {
+const Stats = ({ chartsData }) => { //importing props from parent component (Analytics.jsx)
 
     const displayData = [
         {id : 0 , icon : <i className="fa-solid fa-money-bills"></i> , title : "TOTAL REVENUE" , value : chartsData.totalRevenue ? `$${Number(chartsData.totalRevenue).toFixed(2)}` : '--'},
         {id : 1 , icon : <i className="fa-solid fa-bag-shopping"></i> , title : "TOTAL ORDERS" , value : chartsData.totalOrders  ? chartsData.totalOrders :  '--'},
         {id : 2 , icon : <i className="fa-solid fa-user-group"></i> , title : "ACTIVE USERS" , value : chartsData.totalUsers  ? chartsData.totalUsers : '--'},
-    ]
+    ]; //defining data for stats of charts with its icons 
 
     return(
         <div className="stats-container mx-2 mt-4">
@@ -16,7 +16,7 @@ const Stats = ({ chartsData }) => {
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default Stats
+export default Stats; //exporting component
