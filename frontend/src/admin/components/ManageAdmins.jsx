@@ -1,26 +1,26 @@
 import axios from "axios";
-import { BACKEND_URL } from "../../../config";
+import { useCookies } from "react-cookie"; //importing react libraries
 
-import { useState, useEffect, useContext, useRef } from "react"
-import { useCookies } from "react-cookie";
-import { UserContext } from "../../context/UserContext";
-import AdminRow from "./AdminRow";
+import { UserContext } from "../../context/UserContext"; //importing user context
+import { BACKEND_URL } from "../../../config"; //defining backend url from config file
 
+import { useState, useEffect, useContext, useRef } from "react"; //imporrting react hooks
 
-const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert }) => {
+import AdminRow from "./AdminRow"; //importing react component
 
-    const [ cookies ] = useCookies(['token'])
-    const { user } = useContext(UserContext);
+const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert }) => { //importing params from parent component (AdminDashboard.jsx)
 
-    const [selectedUser, setSelectedUser] = useState();
+    const { user } = useContext(UserContext); //defining user context
+
+    const [ cookies ] = useCookies(['token']);
+    const config = {headers: {Authorization  : `Bearer ${cookies.token}`}}
+
     const [dataList,setDataList] = useState([]);
     const [searchItem, setSearchItem] = useState('');
+    const [adminList , setAdminList] = useState([...admins?.onlineAdmins , ...admins?.offlineAdmins])
 
     const btnRefs = useRef([null])
-
     const regexContainsSpecial = /[^\w\s]/;
-
-    const [adminList , setAdminList] = useState([...admins?.onlineAdmins , ...admins?.offlineAdmins])
 
     const fetchDataList = async() => {
 
@@ -30,7 +30,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
 
 
         try{
-            const response = await axios.get(`${BACKEND_URL}/api/admin/search-users?targetUser=${searchItem}` , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const response = await axios.get(`${BACKEND_URL}/api/admin/search-users?targetUser=${searchItem}` , config)
 
             if(response.status === 200) {
                 setDataList(response.data.users)
@@ -59,7 +59,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
     const handleAddAdmin = async(id, fullname) => {
         try{
 
-            const response = await axios.post(`${BACKEND_URL}/api/admin`, {id} , {headers: {Authorization  : `Bearer ${cookies.token}`}})
+            const response = await axios.post(`${BACKEND_URL}/api/admin`, {id} , )
 
             if(response.status === 200){
                 btnRefs.current = btnRefs.current.filter(ref => ref.value == id);
@@ -83,7 +83,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
     const handleRemoveAdmin = async(id) => {
         try{
 
-            const response = await axios.delete(`${BACKEND_URL}/api/admin/${id}` , {headers: {Authorization  : `Bearer ${cookies.token}`}})
+            await axios.delete(`${BACKEND_URL}/api/admin/${id}` , config)
             setAdmins(prev => ({...prev, onlineAdmins: (prev.onlineAdmins || []).filter(a => a.id !== id), offlineAdmins: (prev.offlineAdmins || []).filter(a => a.id !== id),}));
             setAdminList(prev => prev.filter(adm => adm.id !== id))
 
@@ -120,7 +120,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
             </div>
             <div className="search-bar position-relative">
                 <div className="form-floating" style={{zIndex : 999}}>
-                    <input type="text" id="searchUsers" className='form-control' placeholder="Searchs Users..." list="searchlist" onChange={(e) => {setSearchItem(e.target.value); if(dataList.length === 0 || dataList[0] === null) return ; const selected = dataList.find((u) => u.fullname === e.target.value);if (selected) setSelectedUser(selected.id)}} value={searchItem} tabIndex={1}/>
+                    <input type="text" id="searchUsers" className='form-control' placeholder="Searchs Users..." list="searchlist" onChange={(e) => {setSearchItem(e.target.value); if(dataList.length === 0 || dataList[0] === null) return;}} value={searchItem} tabIndex={1}/>
                     <label htmlFor="searchUsers">Searchs Users...</label>
                 </div>
                 

@@ -1,38 +1,32 @@
-import { useContext, useState } from "react";
+import { Link } from "react-router-dom"; //importing navigator link from rrd
+import { useContext, useState, useEffect } from "react"; //importing react hooks
 
 import { useTheme, useToggle } from "../../context/ThemeContext";
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext"; //importing User/Theme contexts
 
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
+const AdminHeader = ({ onClick }) => { //recieving params from parent component (AdminDashboard.jsx)
 
-const AdminHeader = ({ onClick }) => {
-
-
-    const { user } = useContext(UserContext);
-
-    const [searchItem, setSearchItem] = useState(''); //search input state
-    
+    const { user } = useContext(UserContext); //defining user context
     const { theme, toggleTheme } = useTheme(); //defining theme context
     const { toggle , toggleSidebar} = useToggle(); //defining sidebar toggle contxext
-    const [buttonContet, setButtonContent] = useState("Create Product");
+
+    const [searchItem, setSearchItem] = useState(''); //search input state
+    const [buttonContet, setButtonContent] = useState("Create Product"); //button content state (for responsiveness)
 
     useEffect(() => {
-        const handleResize = () => {
-            const width = document.documentElement.clientWidth;
 
-            if (width <= 1020) {
-            setButtonContent('');
-            } else {
-            setButtonContent('Create Product');
-            }
+        const handleResize = () => { //checking width of the page and setting button content based on
+            
+            const width = document.documentElement.clientWidth; //defining width parameter from document element
+            width <= 1020 ? setButtonContent('') : setButtonContent('Create Product'); //checking if width is less than 1020px , if so we are removing text and only left plus icon else retrun text content aswell
+            
         };
 
-        handleResize();
-        window.addEventListener('resize', handleResize);
+        handleResize(); //declkearing function
+        window.addEventListener('resize', handleResize); //adding function to window to run function on window resize 
 
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+        return () => window.removeEventListener('resize', handleResize); //cleanup function
+    }, []); //mounting compontent on mount
 
     return(
         <header className="header-container d-flex justify-content-between align-items-center px-2 py-3 rounded-3" >
@@ -65,4 +59,4 @@ const AdminHeader = ({ onClick }) => {
     );
 };
 
-export default AdminHeader
+export default AdminHeader; //exporting component

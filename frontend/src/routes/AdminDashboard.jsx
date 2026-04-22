@@ -178,7 +178,7 @@ const AdminDashboard = () => {
     }, [chartsDate])
 
     useEffect(() => {
-        if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} ; return;
+        if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} return;
     }, [hash]);
 
     return(
@@ -197,28 +197,26 @@ const AdminDashboard = () => {
             {toggleRespondReport.status ? <div className="bg"><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
             {toggleManageAdmins ? <div className="bg"><div className="manage-admins-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleManageAdmins(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><ManageAdmins setToggleManageAdmins={setToggleManageAdmins} setAdmins={setAdmins} admins={admins} setToggleAlert={setToggleAlert}/></div> : <></>}
                 
-                <div className="main-body ">
+            <div className="main-body ">
                         
-                    <div className="main-start">
-                        <Sidebar />
-                    </div>
+                <div className="main-start"><Sidebar /></div>
 
-                    <div className="main-end">
+                <div className="main-end">
 
-                        <div className="main-header"><AdminHeader onClick={() => setToggleCreateNew(true)}/></div>
+                    <div className="main-header"><AdminHeader onClick={() => setToggleCreateNew(true)}/></div>
 
-                        {isLoading ? 'loading skeleton' : <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>}
-                        {isChartsLoading ? 'loading skeleton' : chartsData.length === 0 ? "Empty Charts" : <Analytics setChartsDate={setChartsDate} chartsDate={chartsDate} chartsData={chartsData}/>}
+                    {isLoading ? 'loading skeleton' : <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>}
+                    {isChartsLoading ? 'loading skeleton' : chartsData.length === 0 ? "Empty Charts" : <Analytics setChartsDate={setChartsDate} chartsDate={chartsDate} chartsData={chartsData}/>}
 
-                        <section id="manage-products">{isLoading ? 'loading skeleton' : <ManageOrders orders={orders} setOrders={setOrders} setToggleAlert={setToggleAlert}/>}</section>
-                        {isLowStockLoading ? 'loading skeleton' : <LowStock lowStock={lowStock} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>}
-                        <section id="reports">{isReportsLoading ? 'loading skeleton'  : <ManageReports reports={reports} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport} />}</section>
-                        <section id="feedbacks">{isFeedbackLoading ? 'loading' : <ManageFeedbacks setFeedbacks={setFeedbacks} feedbacks={feedbacks}/>}</section>
+                    <section id="manage-products">{isLoading ? 'loading skeleton' : <ManageOrders orders={orders} setOrders={setOrders} setToggleAlert={setToggleAlert}/>}</section>
+                    {isLowStockLoading ? 'loading skeleton' : <LowStock lowStock={lowStock} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>}
+                    <section id="reports">{isReportsLoading ? 'loading skeleton'  : <ManageReports reports={reports} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport} />}</section>
+                    <section id="feedbacks">{isFeedbackLoading ? 'loading' : <ManageFeedbacks setFeedbacks={setFeedbacks} feedbacks={feedbacks}/>}</section>
 
-                    </div>
                 </div>
+            </div>
 
-                <Footer />
+            <Footer />
             
         </div>
     );
