@@ -14,7 +14,7 @@ const AdminList = ({ admins, setToggleManageAdmins }) => { //importing params fr
             </div>
 
             <div className="row gap-3 m-3">
-                {adminList.length < 0 ? adminList.map(admin => 
+                {adminList.length > 0 ? adminList.map(admin => 
                     <Admin admin={admin} status={admins.onlineAdmins.some(adm => adm.id === admin.id) ? true : false}/>
                 ) : <EmptyAdmin />}
             </div>

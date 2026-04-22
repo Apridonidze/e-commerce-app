@@ -1,5 +1,6 @@
 import Charts from "./Charts"
 import Stats from "./Stats"
+
 const Analytics = ({ setChartsDate, chartsDate, chartsData }) => {
     return(
         <div className="analytics-container my-5">
