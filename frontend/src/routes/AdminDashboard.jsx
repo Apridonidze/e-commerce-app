@@ -8,11 +8,8 @@ import { BACKEND_URL } from "../../config"
 import Sidebar from "../layout/Sidebar"
 import AdminList from '../admin/components/AdminList'
 import CreateProduct from "../admin/components/CreateProduct"
-import Report from '../components/report/Report'
-import { Link } from "react-router-dom"
 import DeleteReport from "../admin/components/DeleteReport"
 import RespondReport from "../admin/components/RespondReport"
-import AdminFeedback from "../admin/components/AdminFeedback"
 import StatusMessage from "../alerts/StatusMessage"
 import ManageAdmins from "../admin/components/ManageAdmins"
 
@@ -195,9 +192,7 @@ const AdminDashboard = () => {
 
 // add section where low onstock items will be displayed
 // add separate page for it 
-// create charts for admin panel
 
-// modify dashboard api to return sold items data to display on charts + to reurn low amount items
 
 // add error message toggle
 // create reusable component to submit deletion of orders/admin/report/feedback

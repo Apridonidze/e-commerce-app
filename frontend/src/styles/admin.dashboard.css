@@ -546,6 +546,8 @@
 /*  */
 
 .deleteFeedbackBtn i{
+    color: var(--delivered);
+    background-color: transparent !important;
     transition: color 0.09s ease;
 }
 
