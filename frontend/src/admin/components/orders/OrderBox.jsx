@@ -1,5 +1,4 @@
-const OrderBox = ({ order, orderStatuses, handleStatusChange, removeOrder }) => {  
-    
+const OrderBox = ({ order, orderStatuses, handleStatusChange, removeOrder }) => {//importing props from parent component (ManageOrders.jsx)
     return(
         <div className={`order-box-container ${order.status} p-2 rounded-3`} key={order.order_id}>
             
@@ -26,7 +25,7 @@ const OrderBox = ({ order, orderStatuses, handleStatusChange, removeOrder }) => 
                 <button className="deleteIcon btn-none border-0" disabled={order.status == 'Delivered'} onClick={() => removeOrder(order.order_id)}><i className=" fa-solid fa-trash-can" ></i></button>
             </div>
         </div>  
-    )
-}
+    );
+};
 
-export default OrderBox
+export default OrderBox; //exporting component

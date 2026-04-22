@@ -1,4 +1,4 @@
-const EmptyOrders = ({ status }) => {
+const EmptyOrders = ({ status }) => { //importing params from parent component (ManageOrders.jsx)
     return(
         <div className="empty-orders-container">
             <div className="empty-order-icon">
