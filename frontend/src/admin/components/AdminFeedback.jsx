@@ -1,9 +1,6 @@
-
-import { useState } from "react"
-import { useEffect } from "react"
 import { Link } from "react-router-dom"
 
-const AdminFeedback = ({ feedback, removeFeedback, toggleDrop , setToggleDrop }) => {
+const AdminFeedback = ({ feedback, removeFeedback }) => {
 
     const emptyStar = <i class="fa-regular fa-star"></i>;
     const star = <i class="fa-solid fa-star"></i>

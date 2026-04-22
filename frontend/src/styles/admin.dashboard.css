@@ -600,6 +600,21 @@
     color: #10b981 !important;
 }
 
+.return{
+    background-color: var(--component-bg);
+    border-radius: 5px;
+    font-size: 17px !important;
+    padding: 7px 20px;
+}
+
+.return , .return i{
+    color: #10b981 !important;
+}
+
+.return:hover{
+    background-color: var(--product-bg-color);
+}
+
 @media (max-width: 1200px) {
     .chart-dashboard-container {
         overflow-x: auto;

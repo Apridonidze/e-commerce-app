@@ -15,7 +15,7 @@ const ManageFeedbacks = ({ setFeedbacks , feedbacks}) => {
 
             const response = await axios.delete(`${BACKEND_URL}/api/feedback/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
 
-            if(response.status === 200) setFeedbacks(prev => prev.filter((fb => fb.feedback_id !== feedback.feedback_id)))
+            if(response.status === 200) setFeedbacks(prev => prev.filter((fb => fb.feedback_id !== id)))
             // toggle stattus 400 alert messagee
             setToggleDrop(false)
 
