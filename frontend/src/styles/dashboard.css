@@ -708,14 +708,14 @@
     background-color: rgba(16, 185, 129, 0.15);
 }
 .orderStatus.Delivered{
-    color: #94a3b8;
+    color: var(--text-color);
     font-weight: 500;
     padding: 0px 20px;
     height: fit-content;
     border-radius: 5px;
     font-size: 14px;
     text-transform:uppercase ;
-    background-color: rgba(22, 31, 50, 0.5);
+    background-color: rgba(22, 31, 50, 0.1);
 }
 
 .rotate {

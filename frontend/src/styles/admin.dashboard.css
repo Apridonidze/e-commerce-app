@@ -41,6 +41,7 @@
 
 .default-container{
     width: 100%;
+    min-height: 400px;
     height: auto;
 }
 

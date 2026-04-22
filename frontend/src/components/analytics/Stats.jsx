@@ -7,7 +7,7 @@ const Stats = ({ chartsData }) => {
     ]
 
     return(
-        <div className="stats-container mt-4">
+        <div className="stats-container mx-2 mt-4">
             {displayData.map(data => 
                 <div className="data-container d-flex flex-column p-3 rounded-3" key={data.id}>
                     {data.icon}

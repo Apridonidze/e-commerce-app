@@ -18,7 +18,7 @@ const OrderCheckbox = ({ prod, handleCheckbox, checkboxRef, handleDeleteFromCart
     return(
         <div className="order-checkbox-container d-flex justify-content-between py-2 my-1 gap-2" key={prod.products_id}>
 
-            <div className="checkbox-start d-flex justify-content-between">
+            <div className="checkbox-start d-flex justify-content-between ">
 
                 <div className="checkbox-main d-flex gap-3 pb-2">
                         <div className="item-start position-relative" style={{maxHeight:'120px' , maxWidth: '180px', cursor : 'pointer'}} onClick={() => handleImgCheckBox()}>
