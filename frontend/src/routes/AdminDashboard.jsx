@@ -27,6 +27,7 @@ import LowStock from "../admin/components/LowStock"
 import EditProduct from "../admin/components/EditProduct"
 import RemoveProduct from "../admin/components/RemoveProduct"
 import ReportProduct from "../components/report/ReportProduct"
+import AdminListSkeleton from "../skeletons/AdminListSkeleton"
 
 const AdminDashboard = () => {
 
@@ -205,7 +206,7 @@ const AdminDashboard = () => {
 
                     <div className="main-header"><AdminHeader onClick={() => setToggleCreateNew(true)}/></div>
 
-                    {isLoading ? 'loading skeleton' : <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>}
+                    {isLoading ? <AdminListSkeleton /> : <AdminList admins={admins} setToggleManageAdmins={setToggleManageAdmins}/>}
                     {isChartsLoading ? 'loading skeleton' : chartsData.length === 0 ? "Empty Charts" : <Analytics setChartsDate={setChartsDate} chartsDate={chartsDate} chartsData={chartsData}/>}
 
                     <section id="manage-products">{isLoading ? 'loading skeleton' : <ManageOrders orders={orders} setOrders={setOrders} setToggleAlert={setToggleAlert}/>}</section>
