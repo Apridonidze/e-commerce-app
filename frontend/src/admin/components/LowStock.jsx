@@ -9,7 +9,7 @@ const LowStock = ({ lowStock, setToggleEdit, setToggleRemove, setToggleReportPro
         <div className="low-stock-container">
             <div className="low-stock-header">
                 <h4><i class="fa-solid fa-arrow-down-1-9"></i> Low Stock Items</h4>
-                <Link to='/admin-dashboard/low-stock'>Visit</Link>
+                <Link to='/admin-dashboard/low-stock'><i className="p-2 w-auto fa-solid fa-arrow-up-right-from-square text-secondary"></i></Link>
             </div>
             <div className="low-stock-main">
                 <div className="products ">

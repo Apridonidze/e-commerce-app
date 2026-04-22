@@ -555,6 +555,26 @@
     color: #dc3545 !important;
 }
 
+/*  */
+
+.low-stock-header{
+    display: flex;
+    justify-content: start;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 5px;
+    transition: all 0.1s ease;
+}
+
+.low-stock-header h4 i{
+    color: #10b981;
+}
+
+.low-stock-header i:hover {
+    color: #10b981 !important;
+}
+
 @media (max-width: 1200px) {
     .chart-dashboard-container {
         overflow-x: auto;

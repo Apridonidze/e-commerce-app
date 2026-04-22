@@ -27,6 +27,7 @@ import LowStock from "../admin/components/LowStock"
 import EditProduct from "../admin/components/EditProduct"
 import RemoveProduct from "../admin/components/RemoveProduct"
 import ReportProduct from "../components/report/ReportProduct"
+
 const AdminDashboard = () => {
 
     const { hash } = useLocation();
