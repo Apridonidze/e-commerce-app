@@ -1,8 +1,8 @@
-import Admin from "./Admin"
+import Admin from "./Admin"; //importing admin component 
 
-const AdminList = ({ admins, setToggleManageAdmins }) => {
+const AdminList = ({ admins, setToggleManageAdmins }) => { //importing params from parent component(AdminDashboard.jsx)
 
-    let adminList = [...admins.onlineAdmins.slice(0, 3) , ...admins.offlineAdmins.slice(0, 2)].slice(0, 5)
+    let adminList = [...admins.onlineAdmins.slice(0, 3) , ...admins.offlineAdmins.slice(0, 2)].slice(0, 5); //fetching 5 admins from admins staet (3 online and two offlines)
     
     return(
         <div className="admin-list-container p-2">
@@ -19,6 +19,6 @@ const AdminList = ({ admins, setToggleManageAdmins }) => {
             </div>
 
         </div>
-    )
-}
-export default AdminList
+    );
+};
+export default AdminList; //exporting component
