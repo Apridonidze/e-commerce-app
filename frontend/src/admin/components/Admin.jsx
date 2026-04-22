@@ -8,7 +8,7 @@ const Admin = ({ admin, status }) => {//importing params from parent component (
             </div>
 
             <h6>{admin.fullname}</h6>
-            <span className={`adminActivity ${status ? 'active' : ''} px-2 py-1 rounded-3`} style={{color : status ? '#10b981' : ''}}>{status ? 'Online' : 'Offline'}</span>
+            <span className={`adminActivity ${status ? 'active' : ''} px-2 py-1 rounded-3`} >{status ? 'Online' : 'Offline'}</span>
         
         </div>
     );

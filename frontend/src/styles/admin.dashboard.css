@@ -170,10 +170,12 @@
 }
 
 .adminActivity.active{
+    color: #10b981;
     background-color: rgba(16, 185, 129, 0.1);
 }
 
 .adminActivity{
+    color: var(--text-color);
     background-color:rgba(2, 6, 23, 0.1);
 }
 
