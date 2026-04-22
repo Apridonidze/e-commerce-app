@@ -472,6 +472,16 @@
     margin-right: 5px;
 }
 
+.chart-dashboard-inner-container{
+    transition: all 0.3 ease;
+}
+
+.chart-dashboard-inner-container *{
+    background-color: var(--product-bg-color) !important;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
 /*  */
 
 .tooltip-container {
@@ -525,6 +535,7 @@
 .data-container h6{
     font-weight: 400;
     font-size: 14px;
+    letter-spacing: 1px;
 }
 
 .data-container span{

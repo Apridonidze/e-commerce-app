@@ -56,7 +56,7 @@ const ChartDashboard = ({ chartsData , chartsDate}) => {
                 <div className="chart-dashboard-inner-container" style={{width: '100%' , maxWidth : formattedData.length * 60}} >
                     <ResponsiveContainer width="100%" height={400}>
                         <BarChart  data={formattedData} barCategoryGap={0} barGap={isMobile ? -20 :-30}>
-                        <XAxis className="xAxis" fontSize={14} axisLine={false} tickLine={false} dataKey="date" height={120} dy={15}/>
+                        <XAxis className="xAxis" fontSize={14} tick={{fill : '#10b981'}} axisLine={false} tickLine={false} dataKey="date" height={40} dy={15}/>
 
                         <Tooltip content={<ToolTip />} cursor={<Cursor/>} wrapperStyle={{borderRadius: "10px",overflow: "hidden", boxShadow : "10px 5px 15px rgba(0, 0, 0, 0.25)"}}/>
 
