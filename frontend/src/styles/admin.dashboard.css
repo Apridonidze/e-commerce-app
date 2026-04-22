@@ -164,8 +164,17 @@
 
 .manage-admins-container{
     max-width: 800px;
+    min-height: 450px;
     margin: auto;
     transform: translateY(20%);
+}
+
+.adminActivity.active{
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.adminActivity{
+    background-color:rgba(2, 6, 23, 0.1);
 }
 
 .admin-activity{
@@ -674,9 +683,7 @@
     .report-end{
         display: none !important;
     }
-}   
-
-
+}
 
 @media (max-width : 518px){
     .admin-order-top{
