@@ -5,7 +5,7 @@ const OrderBox = ({ order, orderStatuses, handleStatusChange, removeOrder }) => 
             
             <div className="order-box-header d-flex align-items-start justify-content-between">
                 <div className="order-box-header-start">
-                    <span className="fw-bold" style={{color : '#00a571'}}>#{order.order_id}</span>
+                    <span className="fw-bold">#{order.order_id}</span>
                     <h6>{order.ordered_by}</h6>
                 </div>
 

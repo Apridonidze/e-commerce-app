@@ -6,7 +6,7 @@ const ToolTip = ({ active, payload }) => { //reciving props from parent componen
     const sales = payload.find(p => p.dataKey === "sales")?.value; //defining revenue and sales value
 
     return(
-        <div className="tooltip-container p-2 fs-6">
+        <div className="tooltip-container fs-6">
             <div ><i className="fa-solid fa-money-bill-trend-up"></i> Revenue : <b>${revenue.toFixed(2)}</b></div>
             <div><i className="fa-solid fa-cart-arrow-down"></i> Sales : <b>{sales}</b></div>
         </div>

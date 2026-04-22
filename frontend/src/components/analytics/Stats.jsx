@@ -10,8 +10,7 @@ const Stats = ({ chartsData }) => { //importing props from parent component (Ana
         <div className="stats-container mx-2 mt-4">
             {displayData.map(data => 
                 <div className="data-container d-flex flex-column p-3 rounded-3" key={data.id}>
-                    {data.icon}
-                    <h6>{data.title}</h6>
+                    <h6 className="d-flex align-items-center gap-3"> {data.icon} {data.title}</h6>
                     <span>{data.value}</span>
                 </div>
             )}

@@ -50,6 +50,12 @@
     background-color: rgba(250, 189, 33, 0.03);
 }
 
+.default-container.Pending .empty-orders-container i{
+    color: rgba(250, 189, 33, 0.5) !important;
+    border: 1px solid rgba(250, 189, 33, 0.2);
+    background-color: rgba(250, 189, 33, 0.03);
+}
+
 .default-container.Pending *{
     background-color: transparent;
     color: var(--text-color) !important;
@@ -65,8 +71,25 @@
     color: var(--text-color) !important;
 }
 
+.default-container.OnWay .empty-orders-container i{
+    color: rgba(0, 165, 113, 0.8)!important;
+    border: 1px solid rgba(0, 165, 113, 0.3);
+    background-color: rgba(0, 165, 113, 0.1);
+}
+
 .default-container.Delivered{
+    border: 1px solid var(--component-bg);
+    background-color: var(--component-bg) !important;
+}
+
+.default-container.Delivered .manage-order-header{
+    background-color: var(--component-bg) !important;
+}
+
+.default-container.Delivered .empty-orders-container i{
+    color: var(--text-color) !important;
     border: 1px solid var(--dark-bg);
+    background-color: var(--dark-bg) !important;
 }
 
 .order-box-container *{
@@ -74,7 +97,11 @@
 }
 .order-box-container{
     height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
+    min-height: 150px;
     margin-bottom: 1rem;
     background-color: var(--product-bg-color) !important;
 }
@@ -117,6 +144,7 @@
 
 .boxStatus {
     border: var(--btn-border) !important;
+    width: 80%;
 }
 
 .order-box-container.Delivered i {

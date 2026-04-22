@@ -5,6 +5,7 @@ import { BACKEND_URL } from "../../../../config";
 import { useCookies } from "react-cookie";
 
 import { Link } from "react-router-dom";
+import EmptyOrders from "../../../empty/EmptyOrders";
 
 const ManageOrders = ({ orders, setOrders, setToggleAlert }) => {
 
@@ -56,7 +57,7 @@ const ManageOrders = ({ orders, setOrders, setToggleAlert }) => {
                             <Link to={`orders/${status}`}><i class="p-2 w-auto fa-solid fa-arrow-up-right-from-square text-secondary"></i></Link>
                         </div>
 
-                        {orders?.filter(ord => ord.status == status).length > 0 ? orders?.filter(ord => ord.status == status).map(order => <OrderBox order={order} orderStatuses={orderStatuses} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>) : 'Empty State'}
+                        {orders?.filter(ord => ord.status == status).length > 0 ? orders?.filter(ord => ord.status == status).map(order => <OrderBox order={order} orderStatuses={orderStatuses} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>) : <EmptyOrders status={status}/>}
 
                     </div>
 
