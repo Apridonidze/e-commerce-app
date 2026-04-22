@@ -559,6 +559,38 @@
 
 /*  */
 
+.empty-charts-container{
+    margin: 10px;
+    padding: 1rem;
+    min-height: 400px;
+    border-radius: 5px;
+    background-color: var(--product-bg-color) !important;
+}
+
+.empty-charts-container * {
+    background-color: var(--product-bg-color);
+    border-radius: 5px;
+}
+
+.empty-charts-main{
+    height: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 300px;
+}
+
+.empty-charts-main i{
+    color: var(--text-color);
+    background-color: var(--dark-bg);
+    font-size: 30px;
+    padding: 1rem;
+    width: fit-content;
+    margin-bottom: 1rem;
+}
+
+/*  */
 
 .stats-container{
     display: grid;
