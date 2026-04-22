@@ -4,12 +4,12 @@ const AdminRow = ({admin, status, disabled, handleRemoveAdmin}) => {
 
             <div className="admin-row-start d-flex gap-1 align-items-center">
                 <div className="admin-icon mt-3">
-                    <i class="fa-regular fa-user border mx-auto border-2 border-dark rounded-5 px-4 py-2 d-flex align-items-center justify-content-center" style={{fontSize: "32px", border : 'none'}}></i>
-                    <span className="admin-activity" style={{ width: '10px', height: '10px', borderRadius: '50%', display: 'inline-block', backgroundColor: status ? '#10b981' : '#9ca3af'}}></span>  
+                    <i class="fa-regular fa-user border mx-auto border-2 border-dark rounded-4 px-4 py-2 d-flex align-items-center justify-content-center" style={{fontSize: "32px", border : 'none'}}></i>
+                    <span className="admin-activity" style={{ width: '10px', height: '10px', borderRadius: '50%', left : '2.3rem' ,display: 'inline-block', backgroundColor: status ? '#10b981' : '#9ca3af'}}></span>  
                 </div>
-                <div className="admin-data">
+                <div className="admin-data ms-1">
                     <h6>{admin.fullname}</h6>
-                    <span style={{color : status ? '#10b981' : ''}}>{status ? 'Online' : 'Offline'}</span>
+                    <span className={`adminActivity ${status ? 'active' : ''} px-2 py-1 rounded-3`} >{status ? 'Online' : 'Offline'}</span>
                 </div>
             </div>
 

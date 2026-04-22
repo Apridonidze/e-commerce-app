@@ -10,7 +10,7 @@ const AdminList = ({ admins, setToggleManageAdmins }) => { //importing params fr
             
             <div className="admin-header d-flex justify-content-between ms-3 mt-2">
                 <h4> <i class="fa-solid fa-user-group me-2"></i> Admin Squad</h4>
-                <button disabled={adminList.length < 1 ? false : true} onClick={() => setToggleManageAdmins(true)}>Manage Admins <i class="fa-solid fa-arrow-right"></i></button>
+                <button disabled={adminList.length > 0 ? false : true} onClick={() => setToggleManageAdmins(true)}>Manage Admins <i class="fa-solid fa-arrow-right"></i></button>
             </div>
 
             <div className="row gap-3 m-3">
