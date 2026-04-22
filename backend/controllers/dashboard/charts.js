@@ -2,10 +2,10 @@ const db = require('../../utils/db')
 
 async function charts(req,res){
     
-    
+    let allowedParams = ['Month' , "Week"]
     let params = req.params.chartsDate;
 
-    if(!Number(params) || Number(params) < 0) return res.status(400).json({message : "Invalid Offset Parameter"})
+    if(!allowedParams.includes(params)) return res.status(400).json({message : "Invalid Offset Parameter"})
 
     try{
         

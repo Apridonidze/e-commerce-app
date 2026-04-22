@@ -15,7 +15,9 @@ async function lowStock(req,res) {
         
         if(row.length === 0)return res.status(204).send()
 
+            console.log(row)
         return res.status(200).json({message : "Low stock items fetched successfully" ,  items : row})
+
 
     }catch(err){
         return res.status(500).json({message : "Could Not Fetch Low Stock Items. Try Later"})
