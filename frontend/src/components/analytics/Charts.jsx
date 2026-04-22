@@ -1,6 +1,6 @@
-import ChartDashboard from "./ChartDashobard";
+import ChartDashboard from "./ChartDashobard";//importing chart dashboard
 
-const Charts = ({ setChartsDate , chartsDate, chartsData }) => {
+const Charts = ({ setChartsDate , chartsDate, chartsData }) => { //importing proprs from parent component (Analytics.jsx)
 
     return(
         <div className="charts-container mt-4 mx-2">
@@ -23,4 +23,4 @@ const Charts = ({ setChartsDate , chartsDate, chartsData }) => {
     );
 };
 
-export default Charts;
+export default Charts;//exporting component
