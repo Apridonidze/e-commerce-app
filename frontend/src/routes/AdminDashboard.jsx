@@ -32,6 +32,7 @@ const AdminDashboard = () => {
     const [ orders,  setOrders ] = useState([])
     const [ reports , setReports ] = useState([])
     const [ feedbacks, setFeedbacks ] = useState([])
+    const [ lowStock , setLowStock ] = useState([]) 
 
     const [chartsDate, setChartsDate ] = useState('Month');
     const [chartsData, setChartsData] = useState([])
@@ -49,6 +50,7 @@ const AdminDashboard = () => {
     const [isChartsLoading , setIsChartsLoading] = useState(true)
     const [isReportsLoading , setIsReportsLoading] = useState(true);
     const [isFeedbackLoading, setIsFeedbackLoading] = useState(true)
+    const [ isLowStockLoading , setIsLowStockLoading] = useState(true);
 
     const config = {headers: { Authorization: `Bearer ${cookies.token}`}}
 
@@ -111,10 +113,27 @@ const AdminDashboard = () => {
             };
         };
 
+        const fetchLowStockItems = async() => {
+            try{
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/low-stock/${0}`, config)
+                
+                setIsLowStockLoading(false)
+                if(response.status === 204) return setLowStock([]);
+
+                setLowStock(response.data.items)
+
+            }catch(err){
+                setIsLowStockLoading(false)
+                setLowStock([])
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
+            }
+        } 
+
         return () => {
             fetchStatus();
             fetchReports();
             fetchFeedbacks();
+            fetchLowStockItems();
         }
 
     }, []);

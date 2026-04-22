@@ -4,7 +4,7 @@ async function lowStock(req,res) {
     
     let params = req.params.offset;
 
-    if(!Number(params) || Number(params) < 0) return res.status(400).json({message : "Invalid Offset Parameter"})
+    if(!Number(params) && !Number(params) < 0) return res.status(400).json({message : "Invalid Offset Parameter"})
 
     try{
 
@@ -20,6 +20,7 @@ async function lowStock(req,res) {
 
 
     }catch(err){
+        console.log(err)
         return res.status(500).json({message : "Could Not Fetch Low Stock Items. Try Later"})
     }
 }
