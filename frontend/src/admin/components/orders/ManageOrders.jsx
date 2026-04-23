@@ -6,6 +6,7 @@ import OrderBox from "./OrderBox";
 import EmptyOrders from "../../../empty/EmptyOrders"; //importing react componnets
 
 import { BACKEND_URL } from "../../../../config"; //importing backend url from config file
+import EmptyAdminOrders from "../../../empty/EmptyAdminOrders";
  
 const ManageOrders = ({ orders, setOrders, setToggleAlert }) => { //importing props from parent component (AdminDashboard.jsx)
 
@@ -57,7 +58,7 @@ const ManageOrders = ({ orders, setOrders, setToggleAlert }) => { //importing pr
                             <Link to={`orders/${status}`}><i class="p-2 w-auto fa-solid fa-arrow-up-right-from-square text-secondary"></i></Link>
                         </div>
 
-                        {orders?.filter(ord => ord.status == status).length > 0 ? orders?.filter(ord => ord.status == status).map(order => <OrderBox order={order} orderStatuses={orderStatuses} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>) : <EmptyOrders status={status}/>}
+                        {orders?.filter(ord => ord.status == status).length > 0 ? orders?.filter(ord => ord.status == status).map(order => <OrderBox order={order} orderStatuses={orderStatuses} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>) : <EmptyAdminOrders status={status}/>}
 
                     </div>
                 )))}
