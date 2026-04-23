@@ -138,7 +138,7 @@ const OrdersPage = () => {
                             </div>
                         </div>
 
-                        {isLoading ? orders?.length > 0 ? orders?.map(order => (
+                        {!isLoading ? orders?.length > 0 ? orders?.map(order => (
                             <AdminOrder order={order} setOrders={setOrders} allowedParams={allowedParams} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>
                         )) : <EmptyAdminOrders status={params.orderStatus}/> : <RowSkeleton />}
                     </div>
