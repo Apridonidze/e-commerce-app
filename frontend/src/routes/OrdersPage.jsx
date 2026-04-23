@@ -84,7 +84,6 @@ const OrdersPage = () => {
     }
 
     return(
-
         <div className="main-container container-fluid d-flex flex-column justify-content-center border-2" style={{maxWidth : '3000px' , margin : 'auto'}}>
             <div className="main-body">
                 <div className="main-start"><Sidebar /></div>
