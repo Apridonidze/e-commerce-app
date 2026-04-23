@@ -3,7 +3,7 @@ import "react-loading-skeleton/dist/skeleton.css"; //importing react loading ske
 
 const FeedbacksSkeleton = () => {
     return(
-        <SkeletonTheme>
+        <SkeletonTheme baseColor="#e9ecf5A1" highlightColor="#f5f7ffA1">
             <div className="feedback-loading-skeleton">
 
             </div>

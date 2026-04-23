@@ -33,6 +33,8 @@ import EmptyCart from "../empty/EmptyCart"
 import EmptyCharts from "../empty/EmptyCharts"
 import ManageOrdersSkeleton from "../skeletons/ManageOrdersSkeleton"
 import LowStockSkeleton from "../skeletons/LowStockSkeleton"
+import ReportsSkeleton from "../skeletons/ReportsSkeleton"
+import FeedbacksSkeleton from "../skeletons/FeedbacksSkeleton"
 
 const AdminDashboard = () => {
 
@@ -217,8 +219,8 @@ const AdminDashboard = () => {
                     <section id="manage-products">{isLoading ? <ManageOrdersSkeleton /> : <ManageOrders orders={orders} setOrders={setOrders} setToggleAlert={setToggleAlert}/>}</section>
                     
                     <section id="low-stock">{isLowStockLoading ? <LowStockSkeleton /> : <LowStock lowStock={lowStock} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>}</section>
-                    <section id="reports">{isReportsLoading ? 'loading skeleton'  : <ManageReports reports={reports} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport} />}</section>
-                    <section id="feedbacks">{isFeedbackLoading ? 'loading' : <ManageFeedbacks setToggleAlert={setToggleAlert} setFeedbacks={setFeedbacks} feedbacks={feedbacks}/>}</section>
+                    <section id="reports">{!isReportsLoading ? <ReportsSkeleton />  : <ManageReports reports={reports} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport} />}</section>
+                    <section id="feedbacks">{!isFeedbackLoading ? <FeedbacksSkeleton /> : <ManageFeedbacks setToggleAlert={setToggleAlert} setFeedbacks={setFeedbacks} feedbacks={feedbacks}/>}</section>
 
                 </div>
             </div>
