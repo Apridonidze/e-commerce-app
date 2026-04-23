@@ -14,8 +14,8 @@ const Item = ({ prod, handleDeleteFromCart}) => {
 
     return(
         <div className="item-container d-flex gap-3 pb-2 my-2 pt-2" key={prod.product_id}>
-            <div className="item-start p-1 d-flex align-items-center" style={{maxHeight:'180px' , maxWidth: '280px', cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.product_id}`)}>
-                <img className="w-100 h-auto rounded-1" loading="lazy" src={`data:image/svg+xml;base64,${images?.[0] || ""}`} />
+            <div className="item-start p-1 d-flex align-items-center" style={{maxHeight:'180px' , width: '280px', cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.product_id}`)}>
+                <img className="w-auto mx-auto rounded-1" style={{maxHeight : '160px' , maxWidth : '100%'}} loading="lazy" src={`data:image/svg+xml;base64,${images?.[0] || ""}`} />
             </div>
             <div className="item-end d-flex flex-column text-start gap-3">
                 
