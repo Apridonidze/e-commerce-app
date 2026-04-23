@@ -1,23 +1,28 @@
-import { Link } from "react-router-dom"
-import Product from "../../components/product/Product"
+import { Link } from "react-router-dom"; //importing react libraries
+import Product from "../../components/product/Product"; //importing react component
 
-import '../../styles/products.css'
+import '../../styles/products.css'; //importinf css styling file
 
-const LowStock = ({ lowStock, setToggleEdit, setToggleRemove, setToggleReportProduct, setToggleAddToCart, setToggleAlert }) => {
-    
+const LowStock = ({ lowStock, setToggleEdit, setToggleRemove, setToggleReportProduct, setToggleAddToCart, setToggleAlert }) => { //recieving props from parent componenet (AdminDashboard.jsx)
     return(
         <div className="low-stock-container my-5">
+
             <div className="low-stock-header">
                 <h4><i class="fa-solid fa-arrow-down-1-9"></i> Low Stock Items</h4>
                 <Link to='/admin-dashboard/low-stock'><i className="p-2 w-auto fa-solid fa-arrow-up-right-from-square text-secondary"></i></Link>
             </div>
+
             <div className="low-stock-main">
                 <div className="products ">
-                    {lowStock?.length === 0 ? 'empty state' : lowStock?.map(prod => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>)}
+                    {lowStock?.length === 0 ? 
+                        'empty state' : 
+                        lowStock?.map(prod => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>
+                    )}
                 </div>
             </div>
+            
         </div>
-    )
-}
+    );
+};
 
-export default LowStock
+export default LowStock; //exporting component
