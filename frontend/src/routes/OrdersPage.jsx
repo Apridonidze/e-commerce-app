@@ -1,47 +1,56 @@
-import { useEffect, useState } from "react"
-import Sidebar from "../layout/Sidebar"
 import axios from "axios";
-import { BACKEND_URL } from "../../config";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
 import { useCookies } from "react-cookie";
-import AdminOrder from "../admin/components/orders/AdminOrder";
+import { NavLink, useNavigate, useParams } from "react-router-dom"; //importing react lbiraries
+
+import { useEffect, useState, useContext } from "react"; //iumporting react hooks
+import { UserContext } from "../context/UserContext"; //importing user context
+
+import { BACKEND_URL } from "../../config"; //importing backend url from conmfig file
+
 import Header from "../layout/Header";
+import Sidebar from "../layout/Sidebar"
 import Footer from "../layout/Footer";
-import EmptyOrders from "../empty/EmptyOrders";
-import EmptyAdminOrders from "../empty/EmptyAdminOrders";
+import AdminOrder from "../admin/components/orders/AdminOrder";
+import EmptyAdminOrders from "../empty/EmptyAdminOrders"; //importing react components
+import StatusMessage from "../alerts/StatusMessage";
+import ReportsSkeleton from "../skeletons/ReportsSkeleton";
+import OrderSkeleton from "../skeletons/OrderSkeleton";
+import RowSkeleton from "../skeletons/RowSkeleton";
 
 const OrdersPage = () => {
 
-    const params = useParams()
+    const params = useParams(); //defining route params
+    const navigator = useNavigate(); //initializing pages navigator
     
-    const [cookies] = useCookies(['token'])
-    const { user } = useContext(UserContext)
+    const { user } = useContext(UserContext); //definig user context
+    const [ cookies ] = useCookies(['token']); //definig user cookies
+    
+    const config = { headers : {Authorization : `Bearer ${cookies.token}`}}; //header content for api calls
+    const allowedParams = ["Pending", "OnWay", "Delivered"]; //array of valid params user join with 
 
-    const [offset, setOffset] = useState(0);
-    const [orders,setOrders] = useState([])
+    const [isLoading , setIsLoading] = useState(true); //state to toggle loading skeleton
+    const [offset, setOffset] = useState(0); //offset for orders
+    const [orders,setOrders] = useState([]); //state to store orers
 
-    const navigator = useNavigate();
-
-    const allowedParams = ["Pending", "OnWay", "Delivered"]
+    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
     useEffect(() => {
 
-        if(!allowedParams.includes(params?.orderStatus) && user?.role !== 'admin'){
-            navigator('/*', {replace : true})
-            return;
-        }
-
+        if(!allowedParams.includes(params?.orderStatus) && user?.role !== 'admin'){ ///checking if user uses one of the allowedParams and is admin
+            return navigator('/*', {replace : true});
+        };//user who uses invalid params and is not admin is redirected to not found page
 
         const fetchOrder = async () => {
-            
             try {
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard/${params?.orderStatus}/${offset}`,{ headers: { Authorization: `Bearer ${cookies.token}` } })
-                setOrders(response.data.orders)
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/${params?.orderStatus}/${offset}`, config)
+                
+                if(response.status == 204) setOrders([]);
+                setOrders(response.data.orders);
+                setIsLoading(false);
 
             } catch (err) {
-                console.log(err)
+                setIsLoading(false)
+                return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
             }
         }
 
@@ -49,16 +58,16 @@ const OrdersPage = () => {
     
     },[offset, params.orderStatus])
 
-
-    const orderStatuses = ['Pending' , 'OnWay' , 'Delivered'];
-
     const handleStatusChange = async(id, status) => {
+
+        if(!allowedParams.includes(status)) return null;
+
         try{
 
-            const response = await axios.put(`${BACKEND_URL}/api/dashboard/${id}` , {status}, {headers : {Authorization : `Bearer ${cookies.token}`}})
-            if(response.status === 200){
-                setOrders(prevOrders => prevOrders?.map(ord => ord.order_id === id ? { ...ord, status: response.data.status } : ord))
-            }
+            const response = await axios.put(`${BACKEND_URL}/api/dashboard/${id}` , {status}, config)
+            
+            setOrders(prevOrders => prevOrders?.map(ord => ord.order_id === id ? { ...ord, status: response.data.status } : ord))
+            setToggleAlert({status: true, type: "Success", statusCode: response.status, message: response.data.message})
 
         }catch(err){
             if(err.status === 400) return setToggleAlert({status: true, type: "Warning", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
@@ -71,7 +80,7 @@ const OrdersPage = () => {
     const removeOrder = async(id) => {
         try{
 
-            const response = await axios.delete(`${BACKEND_URL}/api/order/admin-remove/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}})
+            const response = await axios.delete(`${BACKEND_URL}/api/order/admin-remove/${id}` , config)
 
             if(response.status === 200)return setOrders(prev => prev.filter(ord => ord.order_id !== id))
             setToggleDrop(false)
@@ -85,6 +94,9 @@ const OrdersPage = () => {
 
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-center border-2" style={{maxWidth : '3000px' , margin : 'auto'}}>
+            
+            {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
+
             <div className="main-body">
                 <div className="main-start"><Sidebar /></div>
                 <div className="main-end">
@@ -126,9 +138,9 @@ const OrdersPage = () => {
                             </div>
                         </div>
 
-                        {orders?.length > 0 ? orders?.map(order => (
-                            <AdminOrder order={order} setOrders={setOrders} orderStatuses={orderStatuses} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>
-                        )) : <EmptyAdminOrders status={params.orderStatus}/>}
+                        {isLoading ? orders?.length > 0 ? orders?.map(order => (
+                            <AdminOrder order={order} setOrders={setOrders} allowedParams={allowedParams} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>
+                        )) : <EmptyAdminOrders status={params.orderStatus}/> : <RowSkeleton />}
                     </div>
 
                     {orders?.length % 5 !== 0 || orders?.length === 0 ? <></> : 
@@ -140,7 +152,7 @@ const OrdersPage = () => {
 
             <Footer />
         </div>
-    )
-}
+    );
+};
 
-export default OrdersPage
+export default OrdersPage; //exporting component
