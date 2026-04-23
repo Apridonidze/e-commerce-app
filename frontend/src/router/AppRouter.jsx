@@ -45,13 +45,7 @@ const AppRouter = () => {
     //add  which pages should be used with cookies rest left empty
   ])
 
-  // add content to Footer.jsx 
-  // create NoProductFound.jsx component
-  // create skeletons for components
   // add texts to landing page
-  // fix sales and product page with non defined states error
-  // change sidebar text with icon
-  // style sidebar and style focused links
  
 
   return(
