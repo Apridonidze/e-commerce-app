@@ -205,8 +205,10 @@ const Dashboard = () => {
                 setToggleAddress(false); //untoggling order components
                 
                 setTogglePayment({status : true , success : true, orderId : order.data.orderId}); //toggling payment messages
-                setOrders(prev => [...prev, {...addresses.filter(address => address.id == targetAddress), order_id : order.data.orderId, status : 'Pending', totalPrice , user_id : order.data.id , created_at : new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()}]); //updating orders instantly
+                setOrders(prev => [...prev, {address : [...addresses.filter(address => address.id == targetAddress)], order_id : order.data.orderId, status : 'Pending', total_price : order.data.totalPrice  , user_id : order.data.id , created_at : new Date().toLocaleDateString()}]); //updating orders instantly
             };
+
+            
 
         }catch(err){
 

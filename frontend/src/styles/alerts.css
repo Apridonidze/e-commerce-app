@@ -207,7 +207,7 @@
 }
 
 .payment-message-container .return , .payment-message-container .return:focus{
-  color: white;
+  color: white !important;
   background-color: #10b981;
   border: none;
   font-weight: 500;

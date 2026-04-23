@@ -26,7 +26,7 @@ async function add(req, res) {
         };
 
         await db.query('delete from cart where id = ? and product_id in (?)',[req.user.userId, itemsIds.map(item => item.product_id)]); //clearing users cart
-        return res.status(200).json({message: "Your Items Have Been Ordered Successfully, Wait For Delivery", orderId : order.insertId, id : req.user.userId});//returning success message
+        return res.status(200).json({message: "Your Items Have Been Ordered Successfully, Wait For Delivery", orderId : order.insertId, id : req.user.userId , totalPrice});//returning success message
 
     } catch (err) {
         if (err.code === 'ER_NO_REFERENCED_ROW_2') return res.status(400).json({ message: 'Order Items Not Found In Database'}); //returns 400 status message if no product is same as productid is in db
