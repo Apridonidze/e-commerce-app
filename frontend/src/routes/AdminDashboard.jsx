@@ -217,7 +217,7 @@ const AdminDashboard = () => {
                     
                     <section id="low-stock">{isLowStockLoading ? 'loading skeleton' : <LowStock lowStock={lowStock} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>}</section>
                     <section id="reports">{isReportsLoading ? 'loading skeleton'  : <ManageReports reports={reports} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport} />}</section>
-                    <section id="feedbacks">{isFeedbackLoading ? 'loading' : <ManageFeedbacks setFeedbacks={setFeedbacks} feedbacks={feedbacks}/>}</section>
+                    <section id="feedbacks">{isFeedbackLoading ? 'loading' : <ManageFeedbacks setToggleAlert={setToggleAlert} setFeedbacks={setFeedbacks} feedbacks={feedbacks}/>}</section>
 
                 </div>
             </div>

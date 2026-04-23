@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"; //importing ract library
 
 const AdminFeedback = ({ feedback, removeFeedback }) => {
 
     const emptyStar = <i class="fa-regular fa-star"></i>;
-    const star = <i class="fa-solid fa-star"></i>
+    const star = <i class="fa-solid fa-star"></i>; //definign star icons to display calcualted rate ratio of user's feedback
 
     return(
         <div className="admin-feedback-container rounded-3 p-2 mb-2 align-items-start d-flex flex-column justify-content-between" key={feedback.feedback_id}>
@@ -29,7 +29,7 @@ const AdminFeedback = ({ feedback, removeFeedback }) => {
                 <button className="deleteFeedbackBtn btn-none border-0 " onClick={() => removeFeedback(feedback.feedback_id)}><i class="fa-solid fa-trash-can"></i></button>
             </div>
         </div>
-    )
-}
-// add toggledown with delete function in admin-end to trigger delete component
-export default AdminFeedback
+    );
+};
+
+export default AdminFeedback; //exporting component
