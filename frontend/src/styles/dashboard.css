@@ -134,8 +134,8 @@
 }
 
 .card-container *{
-    color: white;
-    background-color:#161f32;
+    color: var(--text-color);
+    background-color:var(--component-bg);
 }
 
 .card-container{
@@ -146,7 +146,7 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 2rem;
-    background-color:#161f32;
+    background-color: var(--component-bg);
 }
 
 .card-container-header{
