@@ -7,7 +7,7 @@ const ToolTip = ({ active, payload }) => { //reciving props from parent componen
 
     return(
         <div className="tooltip-container fs-6">
-            <div ><i className="fa-solid fa-money-bill-trend-up"></i> Revenue : <b>${revenue.toFixed(2)}</b></div>
+            <div className="m-0"><i className="fa-solid fa-money-bill-trend-up"></i> Revenue : <b>${revenue.toFixed(2)}</b></div>
             <div><i className="fa-solid fa-cart-arrow-down"></i> Sales : <b>{sales}</b></div>
         </div>
     );
