@@ -750,6 +750,35 @@
     margin: 0px !important;
 }
 
+.empty-feedbacks-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--product-bg-color);
+    min-height: 250px;
+}
+
+.empty-feedbacks-container i{
+    color: var(--text-color);
+    background-color: var(--dark-bg);
+    font-size: 30px;
+    padding: 1rem;
+    width: fit-content;
+    margin-bottom: 1rem;
+}
+
+.empty-feedbacks-container a{
+    color: #10b981;
+}
+
+.empty-feedbacks-container a i {
+    color: #10b981 !important;
+    background-color: transparent !important;
+    font-size: 16px;
+    margin: 0px !important;
+}
+
 @media (max-width: 1200px) {
     .chart-dashboard-container {
         overflow-x: auto;

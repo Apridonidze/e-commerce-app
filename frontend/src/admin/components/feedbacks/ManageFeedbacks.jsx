@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { BACKEND_URL } from "../../../../config";
 import { useState } from "react";
+import EmptyFeedbacks from "../../../empty/EmptyFeedbacks";
 const ManageFeedbacks = ({ setFeedbacks , feedbacks}) => {
 
     const [ cookies ] = useCookies(['token'])
@@ -34,11 +35,11 @@ const ManageFeedbacks = ({ setFeedbacks , feedbacks}) => {
                 <Link to={'/admin-dashboard/feedbacks'}><i class="p-2 w-auto fa-solid fa-arrow-up-right-from-square text-secondary"></i></Link>
             </div>
 
-            <div className="manage-feedbacks-main">
-                {feedbacks?.length !== 0 ? feedbacks?.map(feedback => (
-                    <AdminFeedback feedback={feedback} removeFeedback={removeFeedback} toggleDrop={toggleDrop} setToggleDrop={setToggleDrop}/>
-                )) : "Empty feedback sttaets"}
-            </div>
+            
+            {feedbacks?.length !== 0 ? <div className="manage-feedbacks-main">{feedbacks?.map(feedback => (
+                <AdminFeedback feedback={feedback} removeFeedback={removeFeedback} toggleDrop={toggleDrop} setToggleDrop={setToggleDrop}/>
+            ))}</div> : <EmptyFeedbacks />}
+            
         </div>
     );
 };
