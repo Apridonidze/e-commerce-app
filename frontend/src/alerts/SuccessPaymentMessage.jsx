@@ -1,4 +1,18 @@
+import { useEffect } from "react"; //importig react hook
+
 const SuccessPaymentMessage = ({ setTogglePayment , togglePayment }) => {
+
+    useEffect(() => { //handing page scrolling for bg and mian container aligmnet
+    
+        document.documentElement.scrollTop = 0; //scrolling user at the very top of the page
+    
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden'; // hidding page overflow to prevent users from scrolling page when component is triggered
+                   
+        return () => {document.body.style.overflow = ''; document.documentElement.style.overflow = ''}; //cleanup function to remove styling after component unmounts
+    
+    }, []); //logic executes once component toggles
+
     return(
         <div className="payment-message-container">
             
