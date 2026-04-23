@@ -782,6 +782,13 @@
     margin: 0px !important;
 }
 
+/*  */
+
+
+.hightlight{
+    color: #10b981;
+}
+
 @media (max-width: 1200px) {
     .chart-dashboard-container {
         overflow-x: auto;

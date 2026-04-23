@@ -1,4 +1,4 @@
-const AdminRow = ({admin, status, disabled, handleRemoveAdmin}) => {//recievving data from parent component (ManageAdmins.jsx)
+const AdminRow = ({admin, status, disabled, setToggleRemoveSubmit}) => {//recievving data from parent component (ManageAdmins.jsx)
     return(
         <div className="admin-row-container p-2 rounded-3 d-flex align-items-center justify-content-between" key={admin.id}>
 
@@ -14,7 +14,7 @@ const AdminRow = ({admin, status, disabled, handleRemoveAdmin}) => {//recievving
             </div>
 
             <div className="admin-row-end">
-                <button className="deleteIcon btn-none border-0" disabled={disabled} onClick={() => {handleRemoveAdmin(admin.id)}}><i className=" fa-solid fa-trash-can" ></i></button>
+                <button className="deleteIcon btn-none border-0" disabled={disabled} onClick={() => {setToggleRemoveSubmit({status : true , params : {id : admin.id, fullname : admin.fullname}})}}><i className=" fa-solid fa-trash-can" ></i></button>
             </div>
        
         </div>  
