@@ -19,9 +19,9 @@ const AdminFeedback = ({ feedback, removeFeedback }) => {
 
             <div className="admin-feedback-main py-3">
                 <div className="comment text-break fs-6">{`"${feedback.content}"`}</div>
-                    {feedback.type === "product" ? <>
+                    {feedback.type === "product" ? <span className="ms-1 fw-bold">
                         Product : <Link to={`/product/${feedback.product_id}`}>{feedback.title}</Link>
-                    </> : <></>}
+                    </span> : <></>}
             </div>
 
             <div className="admin-feedback-bottom w-100 py-2 d-flex align-items-center justify-content-between">

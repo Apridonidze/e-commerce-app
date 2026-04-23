@@ -32,6 +32,7 @@ import ChartsLoadingSkeleton from "../skeletons/ChartsLoadingSkeleton"
 import EmptyCart from "../empty/EmptyCart"
 import EmptyCharts from "../empty/EmptyCharts"
 import ManageOrdersSkeleton from "../skeletons/ManageOrdersSkeleton"
+import LowStockSkeleton from "../skeletons/LowStockSkeleton"
 
 const AdminDashboard = () => {
 
@@ -215,7 +216,7 @@ const AdminDashboard = () => {
 
                     <section id="manage-products">{isLoading ? <ManageOrdersSkeleton /> : <ManageOrders orders={orders} setOrders={setOrders} setToggleAlert={setToggleAlert}/>}</section>
                     
-                    <section id="low-stock">{isLowStockLoading ? 'loading skeleton' : <LowStock lowStock={lowStock} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>}</section>
+                    <section id="low-stock">{!isLowStockLoading ? <LowStockSkeleton /> : <LowStock lowStock={lowStock} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>}</section>
                     <section id="reports">{isReportsLoading ? 'loading skeleton'  : <ManageReports reports={reports} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport} />}</section>
                     <section id="feedbacks">{isFeedbackLoading ? 'loading' : <ManageFeedbacks setToggleAlert={setToggleAlert} setFeedbacks={setFeedbacks} feedbacks={feedbacks}/>}</section>
 
@@ -228,15 +229,11 @@ const AdminDashboard = () => {
     );
 };
 
-
-// add section where low onstock items will be displayed
 // add separate page for it 
 
 
-// add error message toggle
 // create reusable component to submit deletion of orders/admin/report/feedback
 // create loading skeleton for each section with empty states
-// style togglable itemns
 // cleanup code
 
 

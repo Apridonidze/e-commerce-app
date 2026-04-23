@@ -4,7 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 const OrderSkeleton = () => {
     return(
         <div className="order-skeleton">
-            <SkeletonTheme baseColor="#e9ecf5" highlightColor="#f5f7ff">
+            <SkeletonTheme baseColor="#e9ecf5A1" highlightColor="#f5f7ffA1">
                 <div className="card-details-skeleton">
             
                     <div className="d-flex justify-content-between align-items-center mb-2">
