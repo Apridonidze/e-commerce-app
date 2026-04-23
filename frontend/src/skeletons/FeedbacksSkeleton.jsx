@@ -8,7 +8,10 @@ const FeedbacksSkeleton = () => {
                 <Skeleton width={50} style={{marginRight : '1rem'}} inline height={30}/>
                 <Skeleton width={250} inline height={30}/>
 
-                <div className="row row-cols-md-3 row-cols-lg-5 row-cols-sm-12 row-cols-1 mt-2">
+                <div className="row row-cols-md-3 row-cols-lg-6 row-cols-sm-12 row-cols-1 mt-2">
+                    <Skeleton width={'100%'} height={200}/>
+                    <Skeleton width={'100%'} height={200}/>
+                    <Skeleton width={'100%'} height={200}/>
                     <Skeleton width={'100%'} height={200}/>
                     <Skeleton width={'100%'} height={200}/>
                     <Skeleton width={'100%'} height={200}/>

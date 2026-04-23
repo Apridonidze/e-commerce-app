@@ -9,6 +9,7 @@ import { useCookies } from "react-cookie";
 import AdminOrder from "../admin/components/orders/AdminOrder";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
+import EmptyOrders from "../empty/EmptyOrders";
 
 const OrdersPage = () => {
 
@@ -126,9 +127,9 @@ const OrdersPage = () => {
                             </div>
                         </div>
 
-                        {orders?.length !== 0 ? orders?.map(order => (
+                        {orders?.length > 0 ? orders?.map(order => (
                             <AdminOrder order={order} setOrders={setOrders} orderStatuses={orderStatuses} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>
-                        )) : `no items`}
+                        )) : <EmptyOrders />}
                     </div>
 
                     {orders?.length % 5 !== 0 || orders?.length === 0 ? <></> : 
