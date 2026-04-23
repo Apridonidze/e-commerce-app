@@ -13,8 +13,6 @@ import Footer from "../layout/Footer";
 import AdminOrder from "../admin/components/orders/AdminOrder";
 import EmptyAdminOrders from "../empty/EmptyAdminOrders"; //importing react components
 import StatusMessage from "../alerts/StatusMessage";
-import ReportsSkeleton from "../skeletons/ReportsSkeleton";
-import OrderSkeleton from "../skeletons/OrderSkeleton";
 import RowSkeleton from "../skeletons/RowSkeleton";
 
 const OrdersPage = () => {
@@ -139,7 +137,7 @@ const OrdersPage = () => {
                         </div>
 
                         {!isLoading ? orders?.length > 0 ? orders?.map(order => (
-                            <AdminOrder order={order} setOrders={setOrders} allowedParams={allowedParams} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>
+                            <AdminOrder order={order} allowedParams={allowedParams} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>
                         )) : <EmptyAdminOrders status={params.orderStatus}/> : <RowSkeleton />}
                     </div>
 

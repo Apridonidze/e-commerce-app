@@ -7,7 +7,7 @@ import OrderItem from "../../../components/order/OrderItem"
 
 import SmallItemSkeleton from "../../../skeletons/SmallItemSkeleton"
 
-const AdminOrder = ({ order ,setOrders , orderStatuses, handleStatusChange, removeOrder }) => {
+const AdminOrder = ({ order , allowedParams, handleStatusChange, removeOrder }) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -72,7 +72,7 @@ const AdminOrder = ({ order ,setOrders , orderStatuses, handleStatusChange, remo
                         <div className="d-flex flex-column align-items-end">
                             <h6 style={{color : "#10b981"}} className="fw-bold fs-6 me-1">${order.total_price.toFixed(2)}</h6>
                             <select className="admin-order-status form-control " disabled={order.status == 'Delivered'} defaultValue={order.status} onChange={(e) => handleStatusChange(order.order_id , e.target.value)}>
-                                {orderStatuses.map(ord => 
+                                {allowedParams.map(ord => 
                                     <option key={ord} disabled={order.status == ord}>{ord}</option>
                                 )}
                             </select>
