@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
-
-const Report = ( { report, setToggleDeleteReport, setToggleRespondReport } ) => {
+const Report = ( { report, setToggleDeleteReport, setToggleRespondReport } ) => { //importing props from parent component (ManageReports.jsx)
     return(
         <div className="report-container d-flex flex-column rounded-3 px-3 py-2" key={report.report_id}>
             
@@ -48,5 +46,4 @@ const Report = ( { report, setToggleDeleteReport, setToggleRespondReport } ) => 
     );
 };
 
-
-export default Report
+export default Report;///exportingm component

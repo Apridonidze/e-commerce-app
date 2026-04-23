@@ -1,14 +1,16 @@
-import { Link } from "react-router-dom";
-import AdminFeedback from "../AdminFeedback";
-import { useCookies } from "react-cookie";
 import axios from "axios";
-import { BACKEND_URL } from "../../../../config";
-import { useState } from "react";
-import EmptyFeedbacks from "../../../empty/EmptyFeedbacks";
-const ManageFeedbacks = ({ setFeedbacks , feedbacks}) => {
+import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie"; //importing react lbiraries
+
+import { useState } from "react"; //importing useState hook from react
+import { BACKEND_URL } from "../../../../config"; //importing backend url from config file
+
+import AdminFeedback from "../AdminFeedback";
+import EmptyFeedbacks from "../../../empty/EmptyFeedbacks"; //importing react components
+
+const ManageFeedbacks = ({ setFeedbacks , feedbacks}) => {//importing props from parent component (AdminDashboard.jsx)
 
     const [ cookies ] = useCookies(['token'])
-
     const [toggleDrop , setToggleDrop] = useState(false);
 
     const removeFeedback = async(id) =>{
