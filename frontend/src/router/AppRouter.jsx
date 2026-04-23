@@ -19,6 +19,7 @@ import Legal from '../routes/Legal'
 import Sales from '../routes/Sales'
 import NotFound from '../routes/NotFound'
 import { useEffect, useRef } from 'react'
+import LowStockPage from '../routes/LowStockPage'
 
 const AppRouter = () => {
 
@@ -34,6 +35,7 @@ const AppRouter = () => {
     {path : '/admin-dashboard/orders/:orderStatus' , element : <OrdersPage />},
     {path : '/admin-dashboard/reports' , element : <Reports />},
     {path : '/admin-dashboard/feedbacks' , element : <Feedbacks />},
+    {path : '/admin-dashboard/low-stock' , element : <LowStockPage />},
     {path : '/admin-dashboard/admin-support-chat' , element  :<AdminSupportChatContainer />},
     {path : '/faq' , element  :<FAQ />},
     {path : '/report-platform' , element  :<ReportPage />},
