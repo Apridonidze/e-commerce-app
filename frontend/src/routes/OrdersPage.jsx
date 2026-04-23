@@ -10,6 +10,7 @@ import AdminOrder from "../admin/components/orders/AdminOrder";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import EmptyOrders from "../empty/EmptyOrders";
+import EmptyAdminOrders from "../empty/EmptyAdminOrders";
 
 const OrdersPage = () => {
 
@@ -24,7 +25,6 @@ const OrdersPage = () => {
     const navigator = useNavigate();
 
     const allowedParams = ["Pending", "OnWay", "Delivered"]
-
 
     useEffect(() => {
 
@@ -129,7 +129,7 @@ const OrdersPage = () => {
 
                         {orders?.length > 0 ? orders?.map(order => (
                             <AdminOrder order={order} setOrders={setOrders} orderStatuses={orderStatuses} handleStatusChange={handleStatusChange} removeOrder={removeOrder}/>
-                        )) : <EmptyOrders />}
+                        )) : <EmptyAdminOrders status={params.orderStatus}/>}
                     </div>
 
                     {orders?.length % 5 !== 0 || orders?.length === 0 ? <></> : 
