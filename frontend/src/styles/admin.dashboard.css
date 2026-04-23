@@ -701,6 +701,26 @@
     background-color: var(--product-bg-color);
 }
 
+/*  */
+
+.empty-low-stock-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--product-bg-color);
+    min-height: 250px;
+}
+
+.empty-low-stock-container i {
+    color: var(--text-color);
+    background-color: var(--dark-bg);
+    font-size: 30px;
+    padding: 1rem;
+    width: fit-content;
+    margin-bottom: 1rem;
+}
+
 @media (max-width: 1200px) {
     .chart-dashboard-container {
         overflow-x: auto;
