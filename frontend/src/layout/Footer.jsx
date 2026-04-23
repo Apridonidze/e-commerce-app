@@ -30,16 +30,17 @@ const Footer = () => {
                 </div>
 
             </div>
-<div className="footer-row2">
-  <span>© {new Date().getFullYear()} Shoptic. All rights reserved.</span>
 
-  <div className="footer-icons">
-    <i className="fa-brands fa-cc-stripe"></i>
-    <i className="fa-solid fa-building-columns"></i>
-    <i className="fa-solid fa-truck"></i>
-    <i className="fa-solid fa-bag-shopping"></i>
-  </div>
-</div>
+            <div className="footer-row2">
+                <span>© {new Date().getFullYear()} Shoptic. All rights reserved.</span>
+
+                <div className="footer-icons">
+                    <i className="fa-brands fa-cc-stripe"></i>
+                    <i className="fa-solid fa-building-columns"></i>
+                    <i className="fa-solid fa-truck"></i>
+                    <i className="fa-solid fa-bag-shopping"></i>
+                </div>
+            </div>
         </footer>
     );
 };

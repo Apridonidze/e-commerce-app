@@ -46,6 +46,7 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports })
 
     }
 
+
     return(
         <div className="delete-report-container position-fixed bg-white w-50 h-50" style={{zIndex : 999}}>
             <div className="delete-report-top">

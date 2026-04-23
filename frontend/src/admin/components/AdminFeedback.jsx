@@ -8,7 +8,9 @@ const AdminFeedback = ({ feedback, removeFeedback }) => {
     return(
         <div className="admin-feedback-container rounded-3 p-2 mb-2 align-items-start d-flex flex-column justify-content-between" key={feedback.feedback_id}>
 
-            <div className="admin-feedback-header d-flex justify-content-between w-100 pt-3">
+            {feedback.type === "product" ? <span className="px-2 pt-2 fs-5 fw-bold"><Link to={`/product/${feedback.product_id}`}>{feedback.title}</Link></span> : <></>}
+
+            <div className="admin-feedback-header d-flex justify-content-between w-100 pt-2">
                     <div className="initials">
                         <span className="userInitials text-uppercase me-2">{feedback.fullname.split(' ')[0].at(0)}{feedback.fullname.split(' ')[1].at(0)}</span>
                         <span className="fs-5 fw-bold">{feedback.fullname}</span>
@@ -19,13 +21,10 @@ const AdminFeedback = ({ feedback, removeFeedback }) => {
 
             <div className="admin-feedback-main py-3">
                 <div className="comment text-break fs-6">{`"${feedback.content}"`}</div>
-                    {feedback.type === "product" ? <span className="ms-1 fw-bold">
-                        Product : <Link to={`/product/${feedback.product_id}`}>{feedback.title}</Link>
-                    </span> : <></>}
             </div>
 
             <div className="admin-feedback-bottom w-100 py-2 d-flex align-items-center justify-content-between">
-                <span style={{color : "#10b981"}} className="fw-bold ms-2">#{feedback.feedback_id}</span>
+                <span style={{color : "#10b981"}} className="fw-bold ms-2">Ref: #{feedback.feedback_id}</span>
                 <button className="deleteFeedbackBtn btn-none border-0 " onClick={() => removeFeedback(feedback.feedback_id)}><i class="fa-solid fa-trash-can"></i></button>
             </div>
         </div>

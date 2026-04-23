@@ -29,11 +29,10 @@ import RemoveProduct from "../admin/components/RemoveProduct"
 import ReportProduct from "../components/report/ReportProduct"
 import AdminListSkeleton from "../skeletons/AdminListSkeleton"
 import ChartsLoadingSkeleton from "../skeletons/ChartsLoadingSkeleton"
-import EmptyCart from "../empty/EmptyCart"
-import EmptyCharts from "../empty/EmptyCharts"
 import ManageOrdersSkeleton from "../skeletons/ManageOrdersSkeleton"
 import LowStockSkeleton from "../skeletons/LowStockSkeleton"
 import ReportsSkeleton from "../skeletons/ReportsSkeleton"
+import SubmitRemove from "../admin/components/popup/SubmitRemove"
 import FeedbacksSkeleton from "../skeletons/FeedbacksSkeleton"
 
 const AdminDashboard = () => {
@@ -69,6 +68,7 @@ const AdminDashboard = () => {
     const [isFeedbackLoading, setIsFeedbackLoading] = useState(true)
     const [ isLowStockLoading , setIsLowStockLoading] = useState(true);
 
+    const [toggleRemoveSubmit, setToggleRemoveSubmit] = useState({status : false , params : null})
     const config = {headers: { Authorization: `Bearer ${cookies.token}`}}
 
     useEffect(() => {
@@ -185,6 +185,8 @@ const AdminDashboard = () => {
 
     }, [chartsDate])
 
+    
+
     useEffect(() => {
         if (hash) {const el = document.querySelector(hash);if (el) {el.scrollIntoView({ behavior: "smooth" })}} return;
     }, [hash]);
@@ -204,7 +206,7 @@ const AdminDashboard = () => {
             {toggleDeleteReport.status ? <div className="bg"><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
             {toggleRespondReport.status ? <div className="bg"><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
             {toggleManageAdmins ? <div className="bg"><div className="manage-admins-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleManageAdmins(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><ManageAdmins setToggleManageAdmins={setToggleManageAdmins} setAdmins={setAdmins} admins={admins} setToggleAlert={setToggleAlert}/></div> : <></>}
-                
+                 
             <div className="main-body ">
                         
                 <div className="main-start"><Sidebar /></div>

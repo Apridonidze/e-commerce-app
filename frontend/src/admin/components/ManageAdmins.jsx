@@ -7,8 +7,6 @@ import { BACKEND_URL } from "../../../config"; //defining backend url from confi
 import { useState, useEffect, useContext, useRef } from "react"; //imporrting react hooks
 
 import AdminRow from "./AdminRow"; //importing react component
-import SubmitRemove from "./popup/SubmitRemove";
-
 const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert }) => { //importing params from parent component (AdminDashboard.jsx)
 
     const { user } = useContext(UserContext); //defining user context
@@ -22,7 +20,6 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
     const [adminList , setAdminList] = useState([...admins?.onlineAdmins , ...admins?.offlineAdmins]); //all admins state
     const btnRefs = useRef([null]); //promote button refs 
 
-    const [toggleRemoveSubmit, setToggleRemoveSubmit] = useState({status : false , params : null})
     
     const fetchDataList = async() => {
         
@@ -105,8 +102,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
 
     return(
         <div className="manage-admins-container position-relative p-3 rounded-3 mx-auto" style={{zIndex : 999}}>
-            {toggleRemoveSubmit.status ? <div className="bg"><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRemoveSubmit({status : false , params : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><SubmitRemove setToggleRemoveSubmit={setToggleRemoveSubmit} toggleRemoveSubmit={toggleRemoveSubmit} targetFunction={handleRemoveAdmin}/></div> : <></> }
-            
+           
             <div className={`data-list-bg d-${dataList.length == 0 ? 'none'  : 'flex'}`} onClick={() => setSearchItem('')}></div>
 
             <div className="manage-admin-header py-2 d-flex justify-content-between">
@@ -137,7 +133,7 @@ const ManageAdmins = ({ setToggleManageAdmins, setAdmins, admins, setToggleAlert
 
             <div className="admin-lists d-flex flex-column gap-2 mt-2">
                 {adminList.length ? adminList?.map(admin => 
-                    <AdminRow admin={admin} status={admins.onlineAdmins.some(adm => adm.id === admin.id) ? true : false} disabled={user.id === admin.id ? true : false} setToggleRemoveSubmit={setToggleRemoveSubmit}/>
+                    <AdminRow admin={admin} status={admins.onlineAdmins.some(adm => adm.id === admin.id) ? true : false} disabled={user.id === admin.id ? true : false} handleRemoveAdmin={handleRemoveAdmin} />
                 ) : <></>}
             </div>
 

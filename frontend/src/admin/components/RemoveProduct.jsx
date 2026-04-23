@@ -9,8 +9,6 @@ const RemoveProduct = ({ setToggleRemove, toggleRemove, setToggleAlert }) => {
 
     const [ cookies ] = useCookies(['token'])
 
-    const navigator = useNavigate()
-
     useEffect(() => {
 
         document.body.style.overflow = 'hidden'

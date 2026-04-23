@@ -491,6 +491,15 @@
     height: auto;
 }
 
+.admin-feedback-container a{
+    color: #10b981;
+    text-decoration: none;
+}
+
+.admin-feedback-container a:hover{
+    text-decoration: underline;
+}
+
 .admin-feedback-bottom{
     border-top: var(--btn-border);
 }
@@ -781,9 +790,6 @@
     font-size: 16px;
     margin: 0px !important;
 }
-
-/*  */
-
 
 .hightlight{
     color: #10b981;
