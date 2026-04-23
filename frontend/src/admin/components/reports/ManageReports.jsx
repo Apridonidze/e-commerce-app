@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Report from "../../../components/report/Report";
+import EmptyReports from "../../../empty/EmptyReports";
 
 const ManageReports = ({ reports , setToggleDeleteReport , setToggleRespondReport }) => {
     return(
@@ -11,7 +12,7 @@ const ManageReports = ({ reports , setToggleDeleteReport , setToggleRespondRepor
             </div>
 
                 <div className="manage-reports-main-body d-flex flex-column gap-3">
-                    {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map(report => <Report report={report} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'Empty reports state'}
+                    {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map(report => <Report report={report} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : <EmptyReports />}
                 </div>
 
         </div>

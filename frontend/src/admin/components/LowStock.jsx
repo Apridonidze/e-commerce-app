@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom"; //importing react libraries
-import Product from "../../components/product/Product"; //importing react component
+
+import EmptyLowStock from "../../empty/EmptyLowStock";
+import Product from "../../components/product/Product"; //importing react components
 
 import '../../styles/products.css'; //importinf css styling file
-import EmptyLowStock from "../../empty/EmptyLowStock";
 
 const LowStock = ({ lowStock, setToggleEdit, setToggleRemove, setToggleReportProduct, setToggleAddToCart, setToggleAlert }) => { //recieving props from parent componenet (AdminDashboard.jsx)
     return(
@@ -15,7 +16,7 @@ const LowStock = ({ lowStock, setToggleEdit, setToggleRemove, setToggleReportPro
 
             <div className="low-stock-main">
                 
-                    {lowStock?.length == 0 ? 
+                    {lowStock?.length !== 0 ? 
                         <div className="products">{lowStock?.map(prod => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>)}</div> : <EmptyLowStock />
                     }
             </div>
