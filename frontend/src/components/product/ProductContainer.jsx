@@ -2,6 +2,27 @@ import { Link } from "react-router-dom";
 
 const ProductContainer = ({ user ,setToggleMore,setTargetImage,  amount,  toggleMore, imagesArray, getImageSrc,  targetImage, product, setAmount, isInCart, handleAddToCart, toggleAddToCart }) => {
 
+    const features = [
+  {
+    id: 1,
+    icon: <i className="fa-solid fa-truck"></i>,
+    title: "Free Shipping",
+    subtitle: "On orders over $50",
+  },
+  {
+    id: 2,
+    icon: <i className="fa-solid fa-shield-halved"></i>,
+    title: "Secure Payment",
+    subtitle: "100% protected",
+  },
+  {
+    id: 3,
+    icon: <i className="fa-solid fa-rotate-left"></i>,
+    title: "Easy Returns",
+    subtitle: "30-day return policy",
+  },
+];
+
     return(
         <div className="main-product-container">                      
 
@@ -16,7 +37,7 @@ const ProductContainer = ({ user ,setToggleMore,setTargetImage,  amount,  toggle
                 </div>
             </div>
 
-                <div className="main-product-end">
+            <div className="main-product-end">
 
 
             {!user ? <></> : 
@@ -75,6 +96,18 @@ const ProductContainer = ({ user ,setToggleMore,setTargetImage,  amount,  toggle
 
                         <button className="btn border-0 px-3 py-2 mt-2 w-100 fw-bold mx-auto" style={{backgroundColor : '#10b981', color :'white', maxWidth : '97%', height : '50px'}} onClick={() => handleAddToCart(toggleAddToCart.product?.products_id)} disabled={isInCart || amount == 0 ? true : false}><i class="fa-solid fa-cart-shopping text-white me-2"></i> Add To Cart</button>
 
+                    </div>
+
+                    <div className="trust-container">
+                        {features.map((item) => (
+                            <div key={item.id} className="trust-item">
+                                <div className="trust-icon">{item.icon}</div>
+                                <div>
+                                    <p className="trust-title">{item.title}</p>
+                                    <span className="trust-subtitle">{item.subtitle}</span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
         </div>
