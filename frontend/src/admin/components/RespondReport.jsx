@@ -57,19 +57,20 @@ const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setReports
     ]
 
     return(
-        <div className="delete-report-container position-fixed bg-white w-50 h-50" style={{zIndex : 999}}>
-            <div className="delete-report-top">
+        <div className="manage-report-container position-fixed bg-white w-50 h-50" style={{zIndex : 999}}>
+            <div className="manage-report-top">
                 <h1>Delete Users Report</h1>
                 <h4>Target Report : </h4>
                 
                 <div className="report-details">
+                    {/* copy report.jsx component here without respond or delete buttons */}
                     <span>{targetReport?.fullname} {targetReport?.email} {targetReport?.content}</span>
                     <br />  
                     <span>{targetReport?.type == 'Product' ? <div>Reported Product : <Link to={`/product/${targetReport?.product_id}`}>{targetReport?.title}</Link></div> : <></>}</span>
                 </div>
 
             </div>
-            <div className="delete-report-bottom">
+            <div className="manage-report-bottom">
                 <h4>Reason of report deletion</h4>
                 <div className="select">
                     {selects.map((select,selectId) => (
