@@ -28,17 +28,16 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports, s
 
             const response = await axios.put(`${BACKEND_URL}/api/report/${toggleDeleteReport.reportDetails.id}`, {selectReason, status : "Removed"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
             
-            if(response.status === 200) setReports(prev => prev.map(report => report.id == response.data.reportId? { ...report, status: "Removed" }: report));
-            set
-            // add 400 status code handling
+            setReports(prev => prev.map(report => report.id == response.data.reportId? { ...report, status: "Removed" }: report));
+            setToggleDeleteReport({status  :false , params : null})
+            return setToggleAlert({status: true, type: "Success", statusCode: 200, message: response.data.message}); //toggling error message
+
 
         }catch(err){
-            console.log(err.response)
+            return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
         }
 
     }
-
-    console.log(selectReason)
 
     return(
         <div className="manage-report-container p-3 w-auto" style={{zIndex : 999}}>
