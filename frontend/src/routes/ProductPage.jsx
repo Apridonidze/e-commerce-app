@@ -189,33 +189,13 @@ const ProductPage = () => {
 
                     <div className="main-header"><Header /></div>
 
- {!user ? <></> : 
-                    <div className="more" style={{zIndex : 100, position : 'relative', bottom : '-3rem', right : '1rem'}}>
-
-                        <div className="toggle-more border mt-1 rounded-2 " style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column" ,position : "absolute" , right : '0.2rem' }}>
-                            {user?.role == 'admin' ? 
-                                <>
-
-                                    <button className="btn text-primary d-flex align-items-center py-2 w-100 rounded-0" onClick={() => setToggleEdit({status : true , product : prod})}><i class="fa-regular fa-pen-to-square text-primary"></i> Edit</button>
-                                    <button className="btn text-danger d-flex align-items-center py-2 w-100" onClick={() => setToggleRemove({status : true , product : prod})}><i class="fa-regular fa-trash-can text-danger"></i> Remove</button>
-                                    <button className="btn text-danger d-flex align-items-center py-2 w-100 gap-2" onClick={() => setToggleReportProduct({status : true , reportDetails : prod})}><i class="fa-solid fa-flag text-danger"></i> Report</button>
-                                </>
-                            :
-                                <>
-                                    <button className="btn text-danger d-flex align-items-center py-2 w-100 gap-2" onClick={() => setToggleReportProduct({status : true , reportDetails : prod})}><i class="fa-solid fa-flag text-danger"></i> Report</button>
-                                </>
-                            }
-                        </div>
-                    </div>
-                }
-
                     {toggleFeedback && <div> <div className="feedback-bg bg-dark opacity-25 w-100 h-100" onClick={() => setToggleFeedback(false)} style={{ position: 'absolute', left: 0, top: 0 }}/><FeedbackInput /></div>
                     }
 
                     {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
                     {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
 
-                    {isProductLoading ? 'loading skeleton' : <ProductContainer setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} handleAddToCart={handleAddToCart} toggleAddToCart={toggleAddToCart}/>
+                    {isProductLoading ? 'loading skeleton' : <ProductContainer user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} handleAddToCart={handleAddToCart} toggleAddToCart={toggleAddToCart}/>
 }
 
                     <div className="feedback">
