@@ -50,7 +50,7 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports })
     }
 
     return(
-        <div className="manage-report-container py-3 px-3 mx-auto w-100" style={{zIndex : 999}}>
+        <div className="manage-report-container py-3 px-3 w-auto" style={{zIndex : 999}}>
             <div className="manage-report-top d-flex align-items-center justify-content-between">
                 <h1>Delete Users Report</h1>
                 <button className="btn border-0" onClick={() => setToggleDeleteReport({status :false, reportDetails : null})}><i className="fa-solid fa-xmark fs-5"></i></button>

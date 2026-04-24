@@ -804,8 +804,8 @@
     align-items: start;
     position: fixed;
     left: 50%;
-    transform: translateX(-50%) translateY(30%); 
-    width: 95%;
+    transform: translateX(-50%) translateY(50%); 
+    width: 100% !important;
     max-width: 880px;
     min-height: 400px;
     border-radius: 5px;
@@ -886,6 +886,14 @@
 .manage-report-buttons :nth-child(1):hover{
     background-color: var(--delivered) !important;
     color: var(--text-color) !important;
+}
+
+@media (max-height : 900px){
+    .manage-report-container{
+        transform: translateX(-50%) translateY(100%);
+        max-height: 50vh;
+        overflow-y: scroll;
+    }
 }
 
 @media (max-width: 1200px) {
