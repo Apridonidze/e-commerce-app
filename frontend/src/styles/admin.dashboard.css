@@ -893,6 +893,15 @@
     color: white ;
 }
 
+.main-product-end-header a ,.main-product-end-header i{
+    color: #10b981;
+    text-decoration: none;
+}
+
+.main-product-end-header a:hover{
+    text-decoration: underline;
+}
+
 .url a{
     transition: all 0.1s ease ;
     color: var(--text-color) !important;

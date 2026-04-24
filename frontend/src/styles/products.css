@@ -154,21 +154,7 @@
   display: none;
 }
 
-.row-buttons , .row-buttons button , .row-buttons span{
-  background-color: var(--component-bg) !important;
-  color: var(--text-color);
-  font-weight: bold;
-  gap: 0px !important;
-}
 
-.row-buttons button , .row-buttons span{
-  text-align: center;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  width: 40px;
-  height: 40px !important;
-}
 
 .productTags{
   color : #00a571;
@@ -487,7 +473,7 @@
 }
 
 .more-button:hover{
-  background-color: var(--delivered) !important;
+  background-color: var(--component-bg) !important;
 }
 
 .more-button.false {
@@ -495,10 +481,13 @@
 }
 
 .more-button  {
-  background-color: var(--dark-bg) !important;
+  border: var(--btn-border);
+  background-color: var(--product-bg-color) !important;
 }
 
 .main-product-container {
+  background-color: var(--product-bg-color);
+  border-radius: 0.5rem;
     display: flex;
     gap: 20px;
     position: relative;
@@ -509,31 +498,44 @@
 }
 
 .main-product-start {
+  border-radius: 0.5rem;
+  background-color: transparent;
     flex: 1;
     display: flex;
     gap: 12px;
 }
 
-.target-image-container {
+.target-image-container img{
     width: 100%;
-    max-width: 420px;
-    height: 420px;
+    height: auto;
+    border-radius: 0.5rem !important;
+}
+
+.target-image {
+    width: 100%;
+    max-width: 100%;
+    height: 400px;
     background-color: #f0f3ffA1;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: hidden !important;
     border-radius: 12px;
 }
 
-.target-image-container img,
+.target-image img,
 .targetImage {
-    width: auto;
-    height: 100%;
+    border: var(--btn-border) !important;
+    width: 100%;
+    max-width: 95%;
+    height: auto;
+    max-height: 95%;
     border-radius: 1rem !important;
 }
 
 .image-rows {
+  padding: 0px 0.5rem;
+  background-color: var(--product-bg-color)  !important;
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
@@ -559,6 +561,12 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+  background-color: transparent !important;
+}
+
+.main-product-end div{
+  background-color: transparent!important;
 }
 
 .row-buttons button {
@@ -591,6 +599,25 @@
   padding: 1rem;
   border-radius: 5px;
   font-weight: normal;
+}
+
+.row-buttons , .row-buttons button , .row-buttons span{
+  background-color: var(--component-bg) !important;
+  color: var(--text-color);
+  font-weight: bold;
+  gap: 0px !important;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.row-buttons button , .row-buttons span{
+  text-align: center;
+  align-items: center;
+  border-radius: 0px;
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  height: 40px !important;
 }
 
 @media (max-width: 1121px) {

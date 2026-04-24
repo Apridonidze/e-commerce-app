@@ -5,13 +5,13 @@ const ProductContainer = ({ user ,setToggleMore,setTargetImage,  amount,  toggle
     return(
         <div className="main-product-container">                      
 
-            <div className="main-product-start d-flex">
-                <div className="image-rows d-flex flex-column">
+            <div className="main-product-start d-flex flex-column-reverse">
+                <div className="image-rows d-flex ">
                     {imagesArray.length == 0 ? <span className="text-center" style={{minHeight : '60px' , minWidth : '60px' , backgroundColor : "#f0f3ffA1"}}>No Image</span> : imagesArray.map((_ , id) => 
                         <img onClick={() => setTargetImage(id)} src={getImageSrc(imagesArray[id])} alt={`Image${id}`} className={`targetImage mb-2 justify-content-center d-flex align-items-center ${targetImage == id ? 'active' : ''}`} /> 
                     )}
                 </div>
-                <div className="target-image-container " >
+                <div className="target-image py-3" >
                     <img src={getImageSrc(imagesArray[targetImage])} alt="No Images" className="targetImage rounded-3 mb-2 justify-content-center d-flex align-items-center" /> 
                 </div>
             </div>
@@ -44,22 +44,18 @@ const ProductContainer = ({ user ,setToggleMore,setTargetImage,  amount,  toggle
                         <button className={`more-button btn border-0 rounded-3 w-auto align-self-start ${!toggleMore && 'btn-none'}`} style={{fontSize : '12px', padding : '5px 8px', backgroundColor : toggleMore && '#10b981' , position : 'absolute' , right : '1rem'}} onClick={() => setToggleMore(!toggleMore)} >{toggleMore ? <i class="fa-solid fa-xmark text-white"></i> : <i class="fa-solid fa-ellipsis-vertical"></i>}</button>
                     </div>
                    
-                        <h5 className="text-break fw-medium ps-1" style={{fontSize : '22px'}}>{product.title}</h5>
-                    <div className="product-main-container d-flex justify-content-between align-items-end pt-1">
-                        <div className="product-main-start ">
-                            {!product.sales_price ? 
-                            <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${product.price} </span> : 
-                            <div className="sales-price">
+                    <h5 className="text-break fw-medium ps-1" style={{fontSize : '22px'}}>{product.title}</h5>
+
+                    <div className="product-main-container d-flex flex-row justify-content-between align-items-end">
+                            <div className="sales-price d-flex align-items-center gap-2">
+                                {product.sales_price ? <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${product.sales_price} </span> : <></>}
                                 <span style={{textDecoration: 'line-through', fontSize: '14px'}}>${product.price} </span>
-                                <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${product.sales_price} </span>
                             </div>    
-                            }
-                        </div>
                     </div>
 
                     <div className="product-description-container">
                         <h6 className="small">{product.description}</h6>
-                        <span className=" rounded-5" style={{fontSize:'14px', padding : '2px 10px'}}>{product.amount > 0 ? `${product.amount} Items Left` : 'Out Of Stock'}</span>
+                        <span className="fw-bold" style={{fontSize:'14px', color : '#10b981'}}><i class="fa-solid fa-box-archive" style={{color : '#10b981'}}></i> {product.amount > 0 ? `${product.amount} Items Left` : 'Out Of Stock'}</span>
                     </div>
                     
                     <div className="row d-flex flex-column align-items-start mt-3" style={{overflow: 'hidden'}}>
