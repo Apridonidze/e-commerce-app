@@ -862,7 +862,7 @@
     gap: 1rem;
 }
 
-.manage-report-buttons :nth-child(2){
+.manage-report-buttons > :nth-child(2){
     width: 30%;
     border: none;
     background-color:#dc3545 !important;
@@ -870,12 +870,12 @@
     font-weight: 500;
 }
 
-.manage-report-buttons :nth-child(2):hover{
+.manage-report-buttons >:nth-child(2):hover{
     background-color: #c4303e !important;
     color: white !important;
 }
 
-.manage-report-buttons :nth-child(1){
+.manage-report-buttons > :nth-child(1){
     width: 15%;
     border: none;
     background-color: var(--dark-bg) !important;
@@ -883,10 +883,16 @@
     font-weight: 500;
 }
 
-.manage-report-buttons :nth-child(1):hover{
+.manage-report-buttons > :nth-child(1):hover{
     background-color: var(--delivered) !important;
     color: var(--text-color) !important;
 }
+
+.manage-report-buttons .send {
+    background-color: #10b981  !important;
+    color: white;
+}
+
 
 @media (max-width: 1200px) {
     .chart-dashboard-container {

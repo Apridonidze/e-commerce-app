@@ -20,14 +20,6 @@ const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setToggleA
         setTargetReport(toggleRespondReport?.reportDetails)
     },[])
 
-    useEffect(() => {
-
-        if(!btnRef.current)return
-        if(selectReason === '') btnRef.current.disabled = true
-
-        btnRef.current.disabled = false;
-
-    },[selectReason])
 
     const handleRespondReport = async() => {
 
@@ -38,15 +30,15 @@ const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setToggleA
             const response = await axios.put(`${BACKEND_URL}/api/report/${toggleRespondReport.reportDetails.id}`, {selectReason, status : "Responded"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
             console.log(response)
 
-            if(response.status === 200) setReports(prev => prev.map(report => report.id == response.data.reportId? { ...report, status: "Responded" }: report));
+            setReports(prev => prev.map(report => report.id == response.data.reportId? { ...report, status: "Responded" }: report));
+            setToggleRespondReport({status : false , reportDetails : null})
+            return setToggleAlert({status: true, type: "Success", statusCode: 200, message: response.data.message}); //toggling error message
 
             // add 400 status code handling
 
         }catch(err){
-            console.log(err)
-            // toggle alert message
+            return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
         }
-
     } 
 
     const selects = [
@@ -80,7 +72,7 @@ const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setToggleA
 
             <div className="manage-report-buttons">
                 <button className="btn w-auto" onClick={() => setToggleRespondReport({status : false , reportDetails : null})}>Cancle</button>
-                <button className="btn" onClick={() => handleRespondReport()} disabled={!selectReason ? true : false} ref={btnRef}>Delete</button>
+                <button className="send btn" onClick={() => handleRespondReport()} disabled={!selectReason ? true : false} ref={btnRef}><i class="fa-solid fa-paper-plane text-white"></i> Send Response</button>
             </div>
         </div>
     )
