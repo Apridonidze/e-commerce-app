@@ -5,6 +5,8 @@ import { useRef, useState, useEffect } from "react"
 
 import { BACKEND_URL } from "../../../config"
 
+import SmallReport from "../../components/report/SmallReport"
+
 const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setToggleAlert ,setReports }) => {
 
     const [ cookies ] = useCookies(['token'])
@@ -57,30 +59,29 @@ const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setToggleA
     ]
 
     return(
-        <div className="manage-report-container position-fixed bg-white w-50 h-50" style={{zIndex : 999}}>
-            <div className="manage-report-top">
-                <h1>Delete Users Report</h1>
-                <h4>Target Report : </h4>
-                
-                <div className="report-details">
-                {/* copy report.jsx component here without respond or delete buttons */}
-                    <span>{targetReport?.fullname} {targetReport?.email} {targetReport?.content}</span>
-                    <br />  
-                    <span>{targetReport?.type == 'Product' ? <div>Reported Product : <Link to={`/product/${targetReport?.product_id}`}>{targetReport?.title}</Link></div> : <></>}</span>
-                </div>
+        <div className="manage-report-container p-3 w-auto" style={{zIndex : 999}}>
 
+            <div className="manage-report-top d-flex align-items-center justify-content-between">
+                <h1>Respond to Report</h1>
+                <button className="btn border-0" onClick={() => setToggleRespondReport({status :false, reportDetails : null})}><i className="fa-solid fa-xmark fs-5"></i></button>
             </div>
+
+            <div className="manage-report-main w-100 my-3">
+                <SmallReport reportDetails={toggleRespondReport.reportDetails}/>
+            </div>
+
             <div className="manage-report-bottom">
-                <h4>Reason of report deletion</h4>
-                <div className="select">
-                    {selects.map((select,selectId) => (
-                        <span key={selectId} onClick={() => setSelectReason(select.code)}>{select.title}</span>
-                    ))}
+                <h4>Response templates</h4>
+                <div className="select row gap-2 px-2">
+                    {selects.map((res, id) => <span className={`py-1 rounded-3 fs-6 selectOption ${selectReason == res.code ? 'active' : ''}`} key={id} onClick={() => setSelectReason(res.code)}>{res.title}</span>)}
                 </div>
-
             </div>
-            <button className="btn btn-primary" onClick={() => handleRespondReport()} ref={btnRef}>Respond</button>
-            <button className="btn" onClick={() => setToggleRespondReport({status : false , reeportDetails : null})}>Cancle</button>
+            <span className="warning">*This reason will be logged in the system and sent to reporter via automated mail sender.</span>
+
+            <div className="manage-report-buttons">
+                <button className="btn w-auto" onClick={() => setToggleRespondReport({status : false , reportDetails : null})}>Cancle</button>
+                <button className="btn" onClick={() => handleRespondReport()} disabled={!selectReason ? true : false} ref={btnRef}>Delete</button>
+            </div>
         </div>
     )
 }

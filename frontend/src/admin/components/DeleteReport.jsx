@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useCookies } from "react-cookie"; //importing react libraries
 
-import { useEffect, useRef, useState } from "react"; //importing react hooks
+import { useRef, useState } from "react"; //importing react hooks
 import { BACKEND_URL } from "../../../config"; //importing backend url from config file
 import SmallReport from "../../components/report/SmallReport";
 
@@ -29,20 +29,19 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports, s
             const response = await axios.put(`${BACKEND_URL}/api/report/${toggleDeleteReport.reportDetails.id}`, {selectReason, status : "Removed"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
             
             setReports(prev => prev.map(report => report.id == response.data.reportId? { ...report, status: "Removed" }: report));
-            setToggleDeleteReport({status  :false , params : null})
+            setToggleDeleteReport({status  :false , reportDetails : null})
             return setToggleAlert({status: true, type: "Success", statusCode: 200, message: response.data.message}); //toggling error message
 
 
         }catch(err){
             return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
         }
-
     }
 
     return(
         <div className="manage-report-container p-3 w-auto" style={{zIndex : 999}}>
             <div className="manage-report-top d-flex align-items-center justify-content-between">
-                <h1>Delete Users Report</h1>
+                <h1>Delete user's Report</h1>
                 <button className="btn border-0" onClick={() => setToggleDeleteReport({status :false, reportDetails : null})}><i className="fa-solid fa-xmark fs-5"></i></button>
             </div>
 

@@ -287,7 +287,7 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
         <div className="manage-product-container" style={{left : '40vw' }} tabIndex={9999}>
             <div className="manage-product-top d-flex justify-content-between">
                 <h4>Edit Product</h4>
-                <button className="btn btn-none border-0" onClick={() => setToggleEdit({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
+            <button className="btn btn-none border-0" onClick={() => setToggleEdit({status : false , product : null})}><i class="fa-solid fa-xmark"></i></button>
             </div>
 
             <div className="manage-product-main">

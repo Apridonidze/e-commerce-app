@@ -960,7 +960,7 @@
 @media (max-width : 518px){
     .manage-report-top{
         display: flex;
-        flex-direction: column-reverse;
+    flex-direction: column-reverse;
         text-align: start !important;
         justify-content: start !important;
         align-items:start !important;
