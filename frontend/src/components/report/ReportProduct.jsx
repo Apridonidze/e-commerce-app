@@ -5,11 +5,9 @@ import ReportOption from "./ReportOption"
 import { useRef, useState, useEffect } from "react";
 import { useCookies } from 'react-cookie';
 
-import '../../styles/products.css'
-import AdminItem from '../../admin/components/AdminItem';
 import OrderItem from '../order/OrderItem';
 
-const ReportProduct = ({ setToggleReportProduct, toggleReportProduct }) => {
+const ReportProduct = ({ setToggleReportProduct, toggleReportProduct, setToggleAlert }) => {
 
     const reasons = [
         {
@@ -116,14 +114,12 @@ const ReportProduct = ({ setToggleReportProduct, toggleReportProduct }) => {
         try{
 
             const response = await axios.post(`${BACKEND_URL}/api/report`, {type : targetReason.category , content : input, productId : toggleReportProduct.product_id , status : "Sent"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
-
-            console.log(response)
-            if(response.status === 200) {
-                
-            }
+            
+            setToggleReportProduct({status : false , reportDetails : false});
+            return setToggleAlert({status: true, type: "Success", statusCode: response.status, message: response.data.message});            
+            
         }catch(err){
-            console.log(err)
-            // toggle error emssage
+            return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
         }
     }
 
