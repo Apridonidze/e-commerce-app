@@ -14,8 +14,6 @@ async function lowStock(req,res) {
         const [ row ]  = await db.query("select products.products_id, products.images, products.title, products.description, products.category, products.subcategory, products.price, products.sales_price, products.amount from products where products.amount < 6 limit ? , ?", [offset , offset + limit])
         
         if(row.length === 0)return res.status(204).send()
-
-            console.log(row)
         return res.status(200).json({message : "Low stock items fetched successfully" ,  items : row})
 
 

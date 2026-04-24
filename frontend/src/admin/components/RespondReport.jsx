@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from "react"
 
 import { BACKEND_URL } from "../../../config"
 
-const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setReports }) => {
+const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setToggleAlert ,setReports }) => {
 
     const [ cookies ] = useCookies(['token'])
 
@@ -63,7 +63,7 @@ const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setReports
                 <h4>Target Report : </h4>
                 
                 <div className="report-details">
-                    {/* copy report.jsx component here without respond or delete buttons */}
+                {/* copy report.jsx component here without respond or delete buttons */}
                     <span>{targetReport?.fullname} {targetReport?.email} {targetReport?.content}</span>
                     <br />  
                     <span>{targetReport?.type == 'Product' ? <div>Reported Product : <Link to={`/product/${targetReport?.product_id}`}>{targetReport?.title}</Link></div> : <></>}</span>

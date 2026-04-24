@@ -5,20 +5,20 @@ import { useEffect, useRef, useState } from "react"; //importing react hooks
 import { BACKEND_URL } from "../../../config"; //importing backend url from config file
 import SmallReport from "../../components/report/SmallReport";
 
-const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports }) => { //importing props from parent component (AdminDashbaord.jsx)
+const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports, setToggleAlert }) => { //importing props from parent component (AdminDashbaord.jsx)
 
     const btnRef = useRef(null); //ref for delete button to enable once admin filles out all inputs
     const [ cookies ] = useCookies(['token']); //definign user cookies
     
     const [selectReason, setSelectReason] = useState(''); //state to select reason of reports deletion
     const reasons = [
-        { label: "Valid Report – Content Removed", value: "Content Removed", type: "valid" },
-        { label: "Valid Report – Listing Edited", value: "Listing Edited", type: "valid" },
-        { label: "Invalid Report – No Violation", value: "No Violation", type: "invalid" },
-        { label: "Duplicate Report", value: "Duplicate", type: "invalid" },
-        { label: "Resolved – Already Fixed", value: "Already Fixed", type: "invalid" },
-        { label: "Other Action Taken", value: "Other", type: "invalid" }
-    ]; //array of select options
+        { label: "Valid Report – Content Removed", value: "Content Removed (Valid)", type: "valid" },
+        { label: "Valid Report – Listing Edited", value: "Listing Edited (Valid)", type: "valid" },
+        { label: "Invalid Report – No Violation", value: "No Violation (Invalid)", type: "invalid" },
+        { label: "Duplicate Report", value: "Duplicate (Invalid)", type: "invalid" },
+        { label: "Resolved – Already Fixed", value: "Already Fixed (Invalid)", type: "invalid" },
+        { label: "Other Action Taken", value: "Other (Invalid)", type: "invalid" }
+    ];//array of select options
 
     const handleDeleteReport = async() => {
 
@@ -28,14 +28,12 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports })
 
             const response = await axios.put(`${BACKEND_URL}/api/report/${toggleDeleteReport.reportDetails.id}`, {selectReason, status : "Removed"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
             
-            console.log(response)
             if(response.status === 200) setReports(prev => prev.map(report => report.id == response.data.reportId? { ...report, status: "Removed" }: report));
-            
+            set
             // add 400 status code handling
 
         }catch(err){
-            console.log(err)
-            // toggle alert message
+            console.log(err.response)
         }
 
     }

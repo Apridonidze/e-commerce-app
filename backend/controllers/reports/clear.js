@@ -3,11 +3,13 @@ const db = require("../../utils/db");
 const mailer = require('../../utils/mailer'); //importing utilities
 
 async function clear(req,res) {
-    
+
     const reportId = req.params.id
     const resolution_action = req.body.selectReason
     const status = req.body.status
     const resolved_by = req.user.userId; //defining request data
+
+    console.log(resolution_action)
 
     const Schema = z.object({
         reportId : z.preprocess(val => val !== undefined ? Number(val) : undefined,z.number().optional()),
