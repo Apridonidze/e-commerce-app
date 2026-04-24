@@ -20,24 +20,15 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports })
         { label: "Other Action Taken", value: "Other", type: "invalid" }
     ]; //array of select options
 
-    useEffect(() => {
-
-        if(!btnRef.current) return null; //returning null if btnRef.current is undefined
-        if(selectReason === '') btnRef.current.disabled = true ; //disabling button if selected Reason if empty
-
-        btnRef.current.disabled = false; //un
-
-    },[selectReason])
-
     const handleDeleteReport = async() => {
 
-        if(!selectReason) return btnRef.current.disable = true
+        if(!selectReason) return btnRef.current.disabled = true
 
         try{
 
             const response = await axios.put(`${BACKEND_URL}/api/report/${toggleDeleteReport.reportDetails.id}`, {selectReason, status : "Removed"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
             
-
+            console.log(response)
             if(response.status === 200) setReports(prev => prev.map(report => report.id == response.data.reportId? { ...report, status: "Removed" }: report));
             
             // add 400 status code handling
@@ -49,14 +40,16 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports })
 
     }
 
+    console.log(selectReason)
+
     return(
-        <div className="manage-report-container py-3 px-3 w-auto" style={{zIndex : 999}}>
+        <div className="manage-report-container p-3 w-auto" style={{zIndex : 999}}>
             <div className="manage-report-top d-flex align-items-center justify-content-between">
                 <h1>Delete Users Report</h1>
                 <button className="btn border-0" onClick={() => setToggleDeleteReport({status :false, reportDetails : null})}><i className="fa-solid fa-xmark fs-5"></i></button>
             </div>
 
-            <div className="manage-report-main my-3">
+            <div className="manage-report-main w-100 my-3">
                 <SmallReport reportDetails={toggleDeleteReport.reportDetails}/>
             </div>
 
@@ -70,7 +63,7 @@ const DeleteReport = ({ setToggleDeleteReport, toggleDeleteReport, setReports })
 
             <div className="manage-report-buttons">
                 <button className="btn w-auto" onClick={() => setToggleDeleteReport({status : false , reportDetails : null})}>Cancle</button>
-                <button className="btn" onClick={() => handleDeleteReport()} ref={btnRef}>Delete</button>
+                <button className="btn" onClick={() => handleDeleteReport()} disabled={!selectReason ? true : false} ref={btnRef}>Delete</button>
             </div>
         </div>
     );
