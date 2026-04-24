@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; //importing react library
 
-const OrderItem = ({ prod }) => {
+const OrderItem = ({ prod }) => { //importing params from parent component (OrderDetails.jsx || ReportProduct.jsx)
     return(
         <div className="order-item py-2 d-flex gap-2 align-items-center justify-content-between" key={prod.product_id}>
             <div className="order-row d-flex gap-3 align-items-center">
