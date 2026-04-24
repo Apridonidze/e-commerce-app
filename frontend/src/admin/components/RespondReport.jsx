@@ -11,14 +11,9 @@ const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setToggleA
 
     const [ cookies ] = useCookies(['token'])
 
-    const [targetReport, setTargetReport] = useState(null)
     const [selectReason, setSelectReason] = useState('')
 
     const btnRef = useRef(null);
-
-    useEffect(() => {
-        setTargetReport(toggleRespondReport?.reportDetails)
-    },[])
 
 
     const handleRespondReport = async() => {
@@ -28,13 +23,10 @@ const RespondReport = ({ setToggleRespondReport, toggleRespondReport, setToggleA
         try{
 
             const response = await axios.put(`${BACKEND_URL}/api/report/${toggleRespondReport.reportDetails.id}`, {selectReason, status : "Responded"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
-            console.log(response)
 
             setReports(prev => prev.map(report => report.id == response.data.reportId? { ...report, status: "Responded" }: report));
             setToggleRespondReport({status : false , reportDetails : null})
             return setToggleAlert({status: true, type: "Success", statusCode: 200, message: response.data.message}); //toggling error message
-
-            // add 400 status code handling
 
         }catch(err){
             return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message

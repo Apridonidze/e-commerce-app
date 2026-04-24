@@ -1,9 +1,11 @@
 const ReportOption = ({ reason, setTargetReason, targetReason, reasonRef }) => {
     return(
-        <div className={`report-option-container ${targetReason?.id === reason.id ? 'bg-primary text-white' : ''}`} style={{cursor : 'pointer'}} ref={(el) => reasonRef.current[reason.id] = el} key={reason.id} onClick={() => setTargetReason(reason)}>
-            {reason.icon}
-            {reason.title}
-            {reason.desc}
+        <div className={`report-option-container p-2 rounded-3 ${targetReason?.id === reason.id ? 'active' : ''}`} style={{cursor : 'pointer'}} ref={(el) => reasonRef.current[reason.id] = el} key={reason.id} onClick={() => setTargetReason(reason)}>
+            <div className="report-option-start d-flex gap-2">
+                {reason.icon}
+                <b>{reason.title}</b>
+            </div>
+            <div className="report-option-end"><span>{reason.desc}</span></div>
         </div>
     )
 }

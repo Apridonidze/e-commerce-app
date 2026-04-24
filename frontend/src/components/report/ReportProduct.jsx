@@ -138,36 +138,39 @@ const ReportProduct = ({ setToggleReportProduct, toggleReportProduct }) => {
                 <h6>Submit detailed reports to help us resolve issues faster and keep the Shoptic ecosystem running smoothly.</h6>
             </div>
 
-            <div className="report-target-product">
+            <div className="report-target-product my-2 rounded-3">
                 <OrderItem prod={toggleReportProduct.reportDetails}/>
             </div>
 
             <div className="report-input-container">
                     
-                <div className="row">
-                    <h4>Select Primary Reason : </h4>
-                    {reasons?.map(reason => (
-                        <ReportOption reason={reason} setTargetReason={setTargetReason} targetReason={targetReason} reasonRef={reasonRef}/>
-                    ))}
-                    <span className="text-danger">{targetReasonErr}</span>
+                <div className="d-flex flex-column">
+                    
+                    <h5>Primary Reason</h5>
+
+                    <div className="reasons-grid">
+                        {reasons?.map(reason => (
+                            <ReportOption reason={reason} setTargetReason={setTargetReason} targetReason={targetReason} reasonRef={reasonRef}/>
+                        ))}
+                    </div>
+
+                    <span className="small text-danger">{targetReasonErr}</span>
                 </div>
 
-                <div className="row">
-                    <h4>Editorial Context</h4>
-                    <div className="form-floating">
-                        <textarea className="form-control" onChange={(e) => setInput(e.target.value)} ref={inputRef} name="textArea" id="textArea" placeholder="Provide detailed information regarding the artifact or behavior in question... Min(20 characters)" />                            <label  htmlFor="textArea">Provide detailed information regarding the artifact or behavior in question... Min(20 characters)</label>
-                        <span className="text-danger">{inputErr}</span>
-                    </div>
+                <div className="row mt-3 mx-auto">
+                    <h5 className='text-start p-0'>Editorial Context (Optional)</h5>
+                    <textarea className="textArea form-control" onChange={(e) => setInput(e.target.value)} ref={inputRef} name="textArea" id="textArea" placeholder="Provide detailed information regarding the artifact or behavior in question... Min(20 characters)" />
+                    <span className="text-danger mt-2 small">{inputErr}</span>
                 </div>
                         
             </div>
 
-            <div className="report-footer row">
+            <div className="report-footer mt-2">
                 <div className="report-start ">
                     <h6>Reports are processed within 24 hours by our human curators.</h6>
                 </div> 
-                <div className="report-end ">
-                    <button className="btn border" ref={discardRef} onClick={() => setToggleReportProduct({status : false, product_id : null})}>Discard</button>
+                <div className="manage-report-buttons">
+                    <button className="btn border" ref={discardRef} onClick={() => setToggleReportProduct({status : false, reportDetails : null})}>Discard</button>
                     <button className="btn btn-danger" ref={submitRef} onClick={() => handleSubmitReport()}>Submit Report</button>
                 </div>
             </div>
