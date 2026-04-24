@@ -69,8 +69,11 @@ const ProductContainer = ({ user ,setToggleMore,setTargetImage,  amount,  toggle
 
                     <div className="product-main-container d-flex flex-row justify-content-between align-items-end">
                             <div className="sales-price d-flex align-items-center gap-2">
-                                {product.sales_price ? <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${product.sales_price} </span> : <></>}
-                                <span style={{textDecoration: 'line-through', fontSize: '14px'}}>${product.price} </span>
+                                {product.sales_price ? <>
+                                    <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${product.sales_price}</span> 
+                                    <span style={{textDecoration: 'line-through', fontSize: '14px'}}>${product.price} </span>
+                                </>
+                                : <span className="d-flex align-items-center justify-content-end fw-bold" style={{fontSize : '20px', color : '#10b981'}}>${product.price}</span> }
                             </div>    
                     </div>
 

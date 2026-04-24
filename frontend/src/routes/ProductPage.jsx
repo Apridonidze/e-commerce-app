@@ -12,7 +12,6 @@ import Sidebar from '../layout/Sidebar'
 import Footer from '../layout/Footer'; //importing layout components
 
 import Product from '../components/product/Product';
-import FeedbackInput from '../components/feedback/FeedbackInput'; //importing componenets
 
 import EditProduct from '../admin/components/EditProduct';
 import RemoveProduct from '../admin/components/RemoveProduct';
@@ -20,6 +19,7 @@ import ReportProduct from '../components/report/ReportProduct'; //importing togg
 
 import '../styles/index.css'
 import '../styles/products.css'; // importing css files
+
 import ProductContainer from '../components/product/ProductContainer';
 import FeedbackContainer from '../components/feedback/FeedbackContainer';
 
@@ -40,7 +40,6 @@ const ProductPage = () => {
     const [inCartAmount, setInCartAmount] = useState(0);
     
     const [toggleMore, setToggleMore] = useState(false);
-    const [toggleFeedback, setToggleFeedback] = useState(false);
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
@@ -190,16 +189,13 @@ const ProductPage = () => {
 
                     <div className="main-header"><Header /></div>
 
-                    {toggleFeedback && <div> <div className="feedback-bg bg-dark opacity-25 w-100 h-100" onClick={() => setToggleFeedback(false)} style={{ position: 'absolute', left: 0, top: 0 }}/><FeedbackInput /></div>
-                    }
-
                     {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
                     {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
 
                     <div className="products-page-row d-flex gap-3">
 
                         {isProductLoading ? 'loading skeleton' : <ProductContainer user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} handleAddToCart={handleAddToCart} toggleAddToCart={toggleAddToCart}/>}
-                        {isProductLoading ? 'loading skeleton ' : <FeedbackContainer cookies={cookies} setToggleFeedback={setToggleFeedback} feedback={feedback}/>}
+                        {isProductLoading ? 'loading skeleton ' : <FeedbackContainer cookies={cookies} feedback={feedback}/>}
 
                     </div>
                     

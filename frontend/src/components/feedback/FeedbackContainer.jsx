@@ -1,4 +1,7 @@
-const FeedbackContainer = ({ cookies , setToggleFeedback , feedback}) => {
+const FeedbackContainer = ({ cookies , feedback}) => {
+
+    // {toggleFeedback && <div> <div className="feedback-bg bg-dark opacity-25 w-100 h-100" onClick={() => setToggleFeedback(false)} style={{ position: 'absolute', left: 0, top: 0 }}/><FeedbackInput /></div>
+                    // }
     return(
         <div className="feedback " style={{width : '100%' , maxWidth : "400px"}}>
             <div className="feedback-header">
