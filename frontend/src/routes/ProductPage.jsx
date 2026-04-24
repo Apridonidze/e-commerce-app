@@ -21,6 +21,7 @@ import ReportProduct from '../components/report/ReportProduct'; //importing togg
 import '../styles/index.css'
 import '../styles/products.css'; // importing css files
 import ProductContainer from '../components/product/ProductContainer';
+import FeedbackContainer from '../components/feedback/FeedbackContainer';
 
 const ProductPage = () => {
 
@@ -195,33 +196,12 @@ const ProductPage = () => {
                     {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
                     {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
 
-                    {isProductLoading ? 'loading skeleton' : <ProductContainer user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} handleAddToCart={handleAddToCart} toggleAddToCart={toggleAddToCart}/>
-}
+                    <div className="products-page-row d-flex gap-3">
 
-                    <div className="feedback">
-                        <div className="feedback-header">
-                            <h3>{feedback.length} Product Review</h3>
-                        </div>
+                        {isProductLoading ? 'loading skeleton' : <ProductContainer user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} handleAddToCart={handleAddToCart} toggleAddToCart={toggleAddToCart}/>}
+                        {isProductLoading ? 'loading skeleton ' : <FeedbackContainer cookies={cookies} setToggleFeedback={setToggleFeedback} feedback={feedback}/>}
 
-                        <div className="feedback-main">
-                            {cookies.token && (
-                                <div className="feedback-input d-flex">
-                                    <div className="form-floating">
-                                        <input type="text" onClick={() => setToggleFeedback(true)} className='form-control' id='fb-input'placeholder='Leave Your Feedback...'/>
-                                        <label htmlFor="fb-input">Leave Your Feedback...</label>
-                                    </div>
-
-                                    <button onClick={() => setToggleFeedback(true)} className='btn btn-primary'>Post</button>
-                                </div>
-                            )}
-
-                            <div className="feedback-footer d-flex flex-column">
-                                {feedback.length > 0 ? (feedback.map((fb, i) => (<span key={i}>{fb.fullname} {fb.content} {fb.stars}</span>))
-                                ) : 'No review'}
-                            </div>
-                        </div>
                     </div>
-
                     
                     <div className="products-container" style={{minHeight : '80vh'}}>
                         <h3>Similar Products:</h3>
