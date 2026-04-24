@@ -1,4 +1,4 @@
-const ProductContainer = () => {
+const ProductContainer = ({ setToggleMore, amount,  toggleMore, imagesArray, getImageSrc,  targetImage, product, setAmount, isInCart, handleAddToCart, toggleAddToCart }) => {
     return(
         <div className="product-container row" style={{maxWidth : 'fit-content'}}>
             <btn className={`more-button btn border-0 rounded-3 w-auto align-self-start ${!toggleMore && 'btn-none'}`} style={{fontSize : '12px', padding : '5px 8px', backgroundColor : toggleMore && '#10b981' , position : 'absolute' , right : '2rem'}} onClick={() => setToggleMore(!toggleMore)} >{toggleMore ? <i class="fa-solid fa-xmark text-white"></i> : <i class="fa-solid fa-ellipsis-vertical"></i>}</btn>                                 

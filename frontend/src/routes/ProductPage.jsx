@@ -20,6 +20,7 @@ import ReportProduct from '../components/report/ReportProduct'; //importing togg
 
 import '../styles/index.css'
 import '../styles/products.css'; // importing css files
+import ProductContainer from '../components/product/ProductContainer';
 
 const ProductPage = () => {
 
@@ -214,7 +215,8 @@ const ProductPage = () => {
                     {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
                     {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
 
-                    
+                    {isProductLoading ? 'loading skeleton' : <ProductContainer amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} handleAddToCart={handleAddToCart} toggleAddToCart={toggleAddToCart}/>
+}
 
                     <div className="feedback">
                         <div className="feedback-header">
