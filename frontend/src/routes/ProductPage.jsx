@@ -18,6 +18,9 @@ import EditProduct from '../admin/components/EditProduct';
 import RemoveProduct from '../admin/components/RemoveProduct';
 import ReportProduct from '../components/report/ReportProduct'; //importing toggable components
 
+import '../styles/index.css'
+import '../styles/products.css'; // importing css files
+
 const ProductPage = () => {
 
     const { id } = useParams();
@@ -29,7 +32,7 @@ const ProductPage = () => {
     const [product, setProduct] = useState(null);
     const [feedback, setFeedback] = useState([]);
     const [similarProducts, setSimilarProducts] = useState([]);
-    
+    const [targetImage, setTargetImage] = useState(0);
     const [amount, setAmount] = useState(0);
     const [isInCart, setIsInCart] = useState(false);
     const [inCartAmount, setInCartAmount] = useState(0);
@@ -151,6 +154,16 @@ const ProductPage = () => {
         };
     };
 
+
+    const getImageSrc = (img) => {//formatting images based on image type passed down to make images displayable
+
+        if(!img) return; //returning empty promise if img is not provided
+
+        if (typeof img === "string") return `data:image/jpeg;base64,${img}`; //returning image in base64 format
+        return URL.createObjectURL(img);// else creating url for image if its type is not string
+
+    };
+
     return (
         <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}>
 
@@ -164,7 +177,10 @@ const ProductPage = () => {
             
             {toggleAddToCart.status ? <div className="add-to-cart-wrapper" style={{top : `${window.scrollY}px`}}><div className="add-to-cart-background" style={{top : `${window.scrollY}px`}} onClick={() => setToggleAddToCart({status : false , product : null})}></div> <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart} setToggleAlert={setToggleAlert}/></div> : <></>}
 
+           
+
             <div className="main-body">
+                
 
                 <div className="main-start"><Sidebar /></div>
 
@@ -172,57 +188,33 @@ const ProductPage = () => {
 
                     <div className="main-header"><Header /></div>
 
+ {!user ? <></> : 
+                    <div className="more" style={{zIndex : 100, position : 'relative', bottom : '-3rem', right : '1rem'}}>
+
+                        <div className="toggle-more border mt-1 rounded-2 " style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column" ,position : "absolute" , right : '0.2rem' }}>
+                            {user?.role == 'admin' ? 
+                                <>
+
+                                    <button className="btn text-primary d-flex align-items-center py-2 w-100 rounded-0" onClick={() => setToggleEdit({status : true , product : prod})}><i class="fa-regular fa-pen-to-square text-primary"></i> Edit</button>
+                                    <button className="btn text-danger d-flex align-items-center py-2 w-100" onClick={() => setToggleRemove({status : true , product : prod})}><i class="fa-regular fa-trash-can text-danger"></i> Remove</button>
+                                    <button className="btn text-danger d-flex align-items-center py-2 w-100 gap-2" onClick={() => setToggleReportProduct({status : true , reportDetails : prod})}><i class="fa-solid fa-flag text-danger"></i> Report</button>
+                                </>
+                            :
+                                <>
+                                    <button className="btn text-danger d-flex align-items-center py-2 w-100 gap-2" onClick={() => setToggleReportProduct({status : true , reportDetails : prod})}><i class="fa-solid fa-flag text-danger"></i> Report</button>
+                                </>
+                            }
+                        </div>
+                    </div>
+                }
+
                     {toggleFeedback && <div> <div className="feedback-bg bg-dark opacity-25 w-100 h-100" onClick={() => setToggleFeedback(false)} style={{ position: 'absolute', left: 0, top: 0 }}/><FeedbackInput /></div>
                     }
 
                     {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
                     {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
 
-                    <div className="product-container row">
-                        
-                        <div className="product-start col">
-                            {imagesArray.map((img, index) => (
-                                <img key={index} src={`data:image/jpeg;base64,${img}`} alt={`product-${index}`} style={{ maxWidth: '400px', height: 'auto' }}/>
-                            ))}
-                            {!user ? <></> : 
-                                <div className="more">
-                                    <btn className='btn' onClick={() => setToggleMore(!toggleMore)}>:</btn>
-                                    <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "relative" , bottom : '25px'}}>
-                                        {user?.role == 'admin' ? 
-                                            <>
-                                                <button className="btn btn-primary" onClick={() => setToggleEdit({status : true , product : prod})}>Edit</button>
-                                                <button className="btn btn-danger" onClick={() => setToggleRemove({status : true , productId : prod.products_id})}>Remove</button>
-                                            </>
-                                        :
-                                            <>
-                                                <button className="btn btn-danger" onClick={() => setToggleReportProduct({status : true , productId : prod.products_id})}>Report</button>
-                                            </>
-                                        }
-                                    </div>
-                                </div>}
-                        </div>
-
-                        <div className="product-end col">
-                            <h4>{product?.title}</h4>
-                            <h6>{product?.description}</h6>
-                            <h6>{product?.category} / {product?.subcategory}</h6>
-                            <h4>{product?.price} {product?.sales_price != null ? product?.sales_price : ''}</h4>
-                            <h5>Available: {product?.amount} Pieces</h5>
-
-                            <div className="d-flex flex-column gap-2">
-                                <div>
-                                    <button disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev - 1 <= 0) return 0;return prev - 1})}>-</button>
-                                    <span>{isInCart ? inCartAmount : amount}</span>
-                                    <button disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev + 1 > product?.amount)return prev; return prev + 1})}>+</button>
-                                </div>
-
-                                {isInCart ? (<button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button>) : (
-                                    amount === 0 ? (<button disabled>Add To Cart</button>) : (
-                                        <button onClick={() => handleAddToCart(product.products_id)} disabled={cookies ? false : true}>Add To Cart</button>)
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     <div className="feedback">
                         <div className="feedback-header">

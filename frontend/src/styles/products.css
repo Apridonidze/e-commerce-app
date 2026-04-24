@@ -481,6 +481,11 @@
   background-color: var(--component-bg)  !important;
 }
 
+.more{
+  border: none  !important;
+  background-color: transparent !important;
+}
+
 @keyframes productModalPopup {
   from {
     opacity: 0;
