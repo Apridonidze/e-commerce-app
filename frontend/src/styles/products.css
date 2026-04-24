@@ -486,6 +486,164 @@
   background-color: transparent !important;
 }
 
+.more-button:hover{
+  background-color: var(--delivered) !important;
+}
+
+.more-button.false {
+  background-color: #10b981 !important;
+}
+
+.more-button  {
+  background-color: var(--dark-bg) !important;
+}
+
+.main-product-container {
+    display: flex;
+    gap: 20px;
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    max-width: 1200px;
+    box-sizing: border-box;
+}
+
+.main-product-start {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.target-image-container {
+    width: 100%;
+    max-width: 420px;
+    height: 420px;
+    background-color: #f0f3ffA1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.target-image-container img,
+.targetImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.image-rows {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.image-rows img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.image-rows img.active {
+    border-color: #10b981;
+}
+
+.main-product-end {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.row-buttons button {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    background-color: #f3f4f6;
+    font-weight: bold;
+}
+
+.row-buttons span {
+    min-width: 30px;
+    text-align: center;
+}
+
+.main-product-end .btn[style] {
+    transition: 0.2s ease;
+}
+
+.main-product-end .btn[style]:hover {
+    background-color: #0ea371 !important;
+}
+
+.more-button {
+    z-index: 10;
+}
+
+@media (max-width: 1121px) {
+    .main-product-container {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .target-image-container {
+        max-width: 100%;
+        height: 380px;
+    }
+
+    .main-product-start,
+    .main-product-end {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .target-image-container {
+        height: 300px;
+    }
+
+    .image-rows img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .row-buttons button {
+        width: 32px;
+        height: 32px;
+    }
+
+    .main-product-end h4 {
+        font-size: 18px;
+    }
+
+    .main-product-end h6 {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-product-container {
+        padding: 10px;
+    }
+
+    .target-image-container {
+        height: 240px;
+    }
+
+    .image-rows {
+        justify-content: center;
+    }
+
+    .main-product-end {
+        gap: 8px;
+    }
+}
+
 @keyframes productModalPopup {
   from {
     opacity: 0;
