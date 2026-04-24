@@ -4,7 +4,6 @@ const db = require('../../utils/db');
 async function add(req,res) {
 
     const data = req.body;//defining data from request
-
     const Schema = z.object({
         type : z.enum(['Platform','Service','Product','Delivery','Other']),
         content :   z.string().optional().refine(val => val === undefined || val === '' || (val.length >= 20 && val.length <= 500)),

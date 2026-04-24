@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"; //importing react librarry
+
 const Report = ( { report, setToggleDeleteReport, setToggleRespondReport } ) => { //importing props from parent component (ManageReports.jsx)
     return(
         <div className="report-container d-flex flex-column rounded-3 px-3 py-2" key={report.report_id}>
@@ -33,6 +35,7 @@ const Report = ( { report, setToggleDeleteReport, setToggleRespondReport } ) => 
 
                 <div className="report-bottom-answer">    
                     <h6 className="text-secondary">{!report.content ? "No Editorial Text." : `"${report.content.length > 80 ? `${report.content.slice(0,80)}...` : report.content}"`}</h6>
+                    {report.type == "Product" ? <span className="url px-2 pt-2 fs-5 fw-bold"><Link to={`/product/${report.product_id}`}>{report.title}</Link></span> : <></>}
                 </div>
 
                 <div className="report-bottom-resolution mt-3 d-flex align-items-center justify-content-between">

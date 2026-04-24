@@ -890,9 +890,20 @@
 
 .manage-report-buttons .send {
     background-color: #10b981  !important;
-    color: white;
+    color: white ;
 }
 
+.url a{
+    transition: all 0.1s ease ;
+    color: var(--text-color) !important;
+    text-decoration: none;
+}
+
+
+.url a:hover{
+    text-decoration: underline;
+    color: #10b981 !important;
+}
 
 @media (max-width: 1200px) {
     .chart-dashboard-container {

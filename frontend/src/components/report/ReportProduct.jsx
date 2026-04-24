@@ -110,7 +110,7 @@ const ReportProduct = ({ setToggleReportProduct, toggleReportProduct, setToggleA
     const handleSubmitReport = async() => {
         try{
 
-            const response = await axios.post(`${BACKEND_URL}/api/report`, {type : targetReason.category , content : input, productId : toggleReportProduct.product_id , status : "Sent"} , {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api request and sending user input/cookies
+            const response = await axios.post(`${BACKEND_URL}/api/report`, {type : targetReason.category , content : input, productId : toggleReportProduct.reportDetails.products_id , status : "Sent"} , {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api request and sending user input/cookies
             
             setToggleAlert({status: true, type: "Success", statusCode: response.status, message: response.data.message}); //toggling usccess message      
             setToggleReportProduct({status : false , reportDetails : false}); //closing component 
