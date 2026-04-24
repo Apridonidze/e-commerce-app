@@ -681,13 +681,6 @@
 
 @media (max-width: 1121px) {
 
-  .feedback{
-    max-width: 100% !important;
-    width: 100% !important;
-    margin-top: 1rem;
-    padding: 0rem 1rem;
-  }
-
   .products-page-row{
     display: flex;
     flex-direction: column;
