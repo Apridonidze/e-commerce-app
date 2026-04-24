@@ -1,244 +1,269 @@
-import Sidebar from '../layout/Sidebar'
-import Header from '../layout/Header';
-import { useEffect, useState, useContext } from 'react';
-import { useParams } from "react-router-dom";
 import axios from 'axios';
-import { BACKEND_URL } from '../../config';
-import Product from '../components/product/Product';
 import { useCookies } from 'react-cookie';
-import { UserContext } from '../context/UserContext';
-import FeedbackInput from '../components/feedback/FeedbackInput';
+import { useNavigate, useParams } from "react-router-dom"; //importing react libraries
+
+import { useEffect, useState, useContext } from 'react'; //importing react hooks
+
+import { UserContext } from '../context/UserContext'; //importing user contexnt
+import { BACKEND_URL } from '../../config';//importing backend url from config file
+
+import Header from '../layout/Header';
+import Sidebar from '../layout/Sidebar'
+import Footer from '../layout/Footer'; //importing layout components
+
+import Product from '../components/product/Product';
+import FeedbackInput from '../components/feedback/FeedbackInput'; //importing componenets
 
 import EditProduct from '../admin/components/EditProduct';
 import RemoveProduct from '../admin/components/RemoveProduct';
-import ReportProduct from '../components/report/ReportProduct';
+import ReportProduct from '../components/report/ReportProduct'; //importing toggable components
+
 const ProductPage = () => {
 
-    const [cookies] = useCookies(['token'])
-    const { id } = useParams()
+    const { id } = useParams();
+    const navigator = useNavigate();
 
-    const { user } = useContext(UserContext)
+    const [ cookies ] = useCookies(['token']);
+    const { user, cartIds} = useContext(UserContext);
 
     const [product, setProduct] = useState(null);
     const [feedback, setFeedback] = useState([]);
     const [similarProducts, setSimilarProducts] = useState([]);
-    const [isInCart, setIsInCart] = useState(false)
+    
+    const [amount, setAmount] = useState(0);
+    const [isInCart, setIsInCart] = useState(false);
     const [inCartAmount, setInCartAmount] = useState(0);
-    const [toggleFeedback, setToggleFeedback] = useState(false)
-    const [amount, setAmount] = useState(0)
-
+    
+    const [toggleMore, setToggleMore] = useState(false);
+    const [toggleFeedback, setToggleFeedback] = useState(false);
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId: null})
-    const [toggleSidebar, setToggleSidebar]= useState(false);
+    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
-    const [toggleMore, setToggleMore] = useState(false)
+    const [isProductLoading , setIsProductLoading] = useState(true);
+    const [isSimilarProductsLoading , setIsSimilarProductsLoading] = useState(true);//states to define loading state of components data
 
-    const { cartIds } = useContext(UserContext)
+    let imagesArray = []; //defining array to store formatted imgs
+    
+    try {
+        imagesArray = product?.images ? JSON.parse(product.images) : [] ; //pushing parsed products in imagesArray or parsing images and then passing to array
+    } catch { //if parse could not happend then empty image array is given
+        imagesArray = [];
+    };
 
     useEffect(() => {
 
-        const fetchSimilarProducts = async (category, subcategory) => {
-            console.log(category , subcategory)
+        const fetchSimilarProducts = async (category, subcategory) => { //fetching similar products based on category/subcategory params of current product
             try {
-                
-                const res = await axios.get(`${BACKEND_URL}/api/product/similar-products`, {params: { category, subcategory, id }})
-                setSimilarProducts(res.data.products || [])
+                const res = await axios.get(`${BACKEND_URL}/api/product/similar-products`, { params: { category, subcategory, id }}); //making api call and passign params
+                setIsSimilarProductsLoading(false)
+                setSimilarProducts(res.data.products || []); //setting similar products in state
 
             } catch (err) {
-                console.log(err)
-            }
-        }
+                setSimilarProducts([])
+                setIsSimilarProductsLoading(false)
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+            };
+        };
 
 
-        const fetchProduct = async () => {
+        const fetchProduct = async () => { //fetchin prodcut data by given id params
             try {
+                const productRes = await axios.get(`${BACKEND_URL}/api/product/product-details`, { params: { id } }); //fetching current product data
+                const feedbackRes = await axios.get(`${BACKEND_URL}/api/feedback/product-feedback/${id}`); //fetching product feedbakcs by product id
 
-                const productRes = await axios.get(`${BACKEND_URL}/api/product/product-details`, {params: { id }})
-                const feedbackRes = await axios.get(`${BACKEND_URL}/api/feedback/product-feedback/${id}`)
+                setIsProductLoading(false); //disabling loading state
 
-                const prod = productRes.data.product
+                setProduct(productRes.data.product); //setting products in state
+                setFeedback(feedbackRes.data.feedback || []); //setting feedbacks in state
 
-                setProduct(prod)
-                setFeedback(feedbackRes.data.feedback || [])
+                if (productRes.data.product) { //checcking if product is fetched and then calling fetchSimilarProducts function
+                    fetchSimilarProducts(productRes.data.product.category, productRes.data.product.subcategory);
+                    setAmount(1);
+                };
 
-                if (prod) {
-                    fetchSimilarProducts(prod.category, prod.subcategory)
-                    setAmount(1)
-                }
+            } catch (err) { //catching errors
+                return navigator('/*' , {replace  : true}) ; //navigating user to not found page if product could not be fetched
+            };
+        };
 
-            } catch (err) {
-                console.log(err)
-            }
-        }
+        fetchProduct();//declearing function
 
-        fetchProduct()
-
-    }, [id])
+    }, [id]); //logic executes on mount and id params change
 
     useEffect(() => {
-        if (!product || !cartIds) return;
 
-        const cartItem = cartIds.find(item => item.products_id === product.products_id);
+        if (!product || !cartIds) return; //returning empty promise if cartId or product is undefined
 
-        if (!cartItem) {
-            setIsInCart(false);
-            setInCartAmount(0);
-        } else {
-            setIsInCart(true);
-            setInCartAmount(cartItem.amount);
-        }
+        const cartItem = cartIds.find(item => item.products_id === product.products_id); //checking if item is in cartIds global state
+        
+        if (!cartItem) { //if product is not found in global state then 
+            setIsInCart(false); //enabling add to cart button 
+            setInCartAmount(0); //setting in cart amount to zero
+        } else { //else (if product is in global state)
+            setIsInCart(true); //disabling add to cart button and enabling remove from cart button
+            setInCartAmount(cartItem.amount); //setting in cart amount based on global state given data
+        };
 
-    }, [cartIds, product])
+    }, [cartIds, product]); //logic executes on mount and passed dependencies change
     
-    let imagesArray = []
-    
-    try {   
-        imagesArray = product?.images ? JSON.parse(product.images) : []
-    } catch {
-        imagesArray = []
-    }
-
     const handleAddToCart = async (productId) => {
         try {
 
-            await axios.post(`${BACKEND_URL}/api/cart/${productId}`,{ amount },{ headers: { Authorization: `Bearer ${cookies.token}` } })
-            setIsInCart(true)
-            setInCartAmount(amount)
-            setAmount(0)
+            const response = await axios.post(`${BACKEND_URL}/api/cart/${productId}`, { amount }, {headers: {Authorization: `Bearer ${cookies.token}`}}); //making api call
+            
+            setInCartAmount(amount); //updatin in cart amount state
+            setIsInCart(true); //toggling in cart button
+            setAmount(0); //setting amount to zero
+            
+            setToggleAlert({status: true, type: "Success", statusCode: response.status , message: response.data.message}); //toggling success message
 
         } catch (err) {
-            setIsInCart(false)
-            setInCartAmount(0)
-            setAmount(amount)
-        }
-    }
+            
+            setIsInCart(false);  //untoggling in cart button
+            setInCartAmount(0); //setting in cart amount to zero
+            setAmount(amount); //setting amount to default amount
+
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling internal error message
+        };
+    };
 
     const handleDeleteFromCart = async (productId) => {
         try {
             
-            await axios.delete(`${BACKEND_URL}/api/cart/${productId}`,{ headers: { Authorization: `Bearer ${cookies.token}` } })
-            setIsInCart(false)
-            setAmount(0)
-            setInCartAmount(0)
+            const response = await axios.delete(`${BACKEND_URL}/api/cart/${productId}`,{headers: {Authorization: `Bearer ${cookies.token}`}});//making api call
+
+            setIsInCart(false);//untogglgin in cart button
+            setAmount(0);
+            setInCartAmount(0);//setting amount states to zeros
+
+            setToggleAlert({status: true, type: "Success", statusCode: response.status , message: response.data.message}); //toggling success message
             
         } catch (err) {
-            setIsInCart(true)
-            setInCartAmount(inCartAmount)
-            setAmount(0)
-            console.log(err)
-        }
-    }
+            
+            setIsInCart(true); //toggling in cart button
+            setInCartAmount(inCartAmount); //returning prev data of amount
+            setAmount(0); //setting amount state to zero
+
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling internal error message
+        };
+    };
 
     return (
-        <div className="main-container container-fluid row border">
-            <div className="main-start col">
-                <Sidebar />
-            </div>
+        <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}>
 
-            <div className="main-end col">
-                <Header />
+            {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
+            
+            {toggleEdit.status ? <><div className="manage-product-background" style={{zIndex : 1000}} onClick={() => setToggleEdit({status : false, product  :null})}></div> <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit} setToggleAlert={setToggleAlert}/> </> : <></> }
 
-                {toggleEdit.status ? <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit}/> : <></> }
-                {toggleRemove.status ? <RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove}/> : <></> }
+            {toggleRemove.status ? <><div className="manage-product-background" style={{zIndex : 1000}} onClick={() => setToggleRemove({status : false, product  :null})}></div><RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove} setToggleAlert={setToggleAlert}/></> : <></> }
 
-                {toggleFeedback && (
-                    <div>
-                        <div
-                            className="feedback-bg bg-dark opacity-25 w-100 h-100"
-                            onClick={() => setToggleFeedback(false)}
-                            style={{ position: 'absolute', left: 0, top: 0 }}
-                        />
-                        <FeedbackInput />
-                    </div>
-                )}
+            {toggleReportProduct.status ? <><div className="manage-product-background" style={{zIndex : 1000}} onClick={() => setToggleReportProduct({status : false, productId  :null})}></div><ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct} setToggleAlert={setToggleAlert}/></> : <></>}
+            
+            {toggleAddToCart.status ? <div className="add-to-cart-wrapper" style={{top : `${window.scrollY}px`}}><div className="add-to-cart-background" style={{top : `${window.scrollY}px`}} onClick={() => setToggleAddToCart({status : false , product : null})}></div> <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart} setToggleAlert={setToggleAlert}/></div> : <></>}
 
-                {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
-                {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
+            <div className="main-body">
 
-                <div className="product-container row">
-                    <div className="product-start col">
-                        {imagesArray.map((img, index) => (
-                            <img key={index} src={`data:image/jpeg;base64,${img}`} alt={`product-${index}`} style={{ maxWidth: '400px', height: 'auto' }}/>
-                        ))}
-                        {!user ? <></> : 
-                            <div className="more">
-                                <btn className='btn' onClick={() => setToggleMore(!toggleMore)}>:</btn>
-                                <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "relative" , bottom : '25px'}}>
-                                    {user?.role == 'admin' ? 
-                                        <>
-                                            <button className="btn btn-primary" onClick={() => setToggleEdit({status : true , product : prod})}>Edit</button>
-                                            <button className="btn btn-danger" onClick={() => setToggleRemove({status : true , productId : prod.products_id})}>Remove</button>
-                                        </>
-                                    :
-                                        <>
-                                            <button className="btn btn-danger" onClick={() => setToggleReportProduct({status : true , productId : prod.products_id})}>Report</button>
-                                        </>
-                                    }
+                <div className="main-start"><Sidebar /></div>
+
+                <div className="main-end">
+
+                    <div className="main-header"><Header /></div>
+
+                    {toggleFeedback && <div> <div className="feedback-bg bg-dark opacity-25 w-100 h-100" onClick={() => setToggleFeedback(false)} style={{ position: 'absolute', left: 0, top: 0 }}/><FeedbackInput /></div>
+                    }
+
+                    {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
+                    {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
+
+                    <div className="product-container row">
+                        
+                        <div className="product-start col">
+                            {imagesArray.map((img, index) => (
+                                <img key={index} src={`data:image/jpeg;base64,${img}`} alt={`product-${index}`} style={{ maxWidth: '400px', height: 'auto' }}/>
+                            ))}
+                            {!user ? <></> : 
+                                <div className="more">
+                                    <btn className='btn' onClick={() => setToggleMore(!toggleMore)}>:</btn>
+                                    <div className="toggle-more" style={{ display : toggleMore ? 'flex' : 'none' , flexDirection: "column",position : "relative" , bottom : '25px'}}>
+                                        {user?.role == 'admin' ? 
+                                            <>
+                                                <button className="btn btn-primary" onClick={() => setToggleEdit({status : true , product : prod})}>Edit</button>
+                                                <button className="btn btn-danger" onClick={() => setToggleRemove({status : true , productId : prod.products_id})}>Remove</button>
+                                            </>
+                                        :
+                                            <>
+                                                <button className="btn btn-danger" onClick={() => setToggleReportProduct({status : true , productId : prod.products_id})}>Report</button>
+                                            </>
+                                        }
+                                    </div>
+                                </div>}
+                        </div>
+
+                        <div className="product-end col">
+                            <h4>{product?.title}</h4>
+                            <h6>{product?.description}</h6>
+                            <h6>{product?.category} / {product?.subcategory}</h6>
+                            <h4>{product?.price} {product?.sales_price != null ? product?.sales_price : ''}</h4>
+                            <h5>Available: {product?.amount} Pieces</h5>
+
+                            <div className="d-flex flex-column gap-2">
+                                <div>
+                                    <button disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev - 1 <= 0) return 0;return prev - 1})}>-</button>
+                                    <span>{isInCart ? inCartAmount : amount}</span>
+                                    <button disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev + 1 > product?.amount)return prev; return prev + 1})}>+</button>
                                 </div>
-                            </div>}
+
+                                {isInCart ? (<button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button>) : (
+                                    amount === 0 ? (<button disabled>Add To Cart</button>) : (
+                                        <button onClick={() => handleAddToCart(product.products_id)} disabled={cookies ? false : true}>Add To Cart</button>)
+                                )}
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="product-end col">
-                        <h4>{product?.title}</h4>
-                        <h6>{product?.description}</h6>
-                        <h6>{product?.category} / {product?.subcategory}</h6>
-                        <h4>{product?.price} {product?.sales_price != null ? product?.sales_price : ''}</h4>
-                        <h5>Available: {product?.amount} Pieces</h5>
+                    <div className="feedback">
+                        <div className="feedback-header">
+                            <h3>{feedback.length} Product Review</h3>
+                        </div>
 
-                        <div className="d-flex flex-column gap-2">
-                            <div>
-                                <button disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev - 1 <= 0) return 0;return prev - 1})}>-</button>
-                                <span>{isInCart ? inCartAmount : amount}</span>
-                                <button disabled={isInCart ? true : false} onClick={() => setAmount(prev => { if(prev + 1 > product?.amount)return prev; return prev + 1})}>+</button>
-                            </div>
+                        <div className="feedback-main">
+                            {cookies.token && (
+                                <div className="feedback-input d-flex">
+                                    <div className="form-floating">
+                                        <input type="text" onClick={() => setToggleFeedback(true)} className='form-control' id='fb-input'placeholder='Leave Your Feedback...'/>
+                                        <label htmlFor="fb-input">Leave Your Feedback...</label>
+                                    </div>
 
-                            {isInCart ? (<button onClick={() => handleDeleteFromCart(product.products_id)}>In Cart</button>) : (
-                                amount === 0 ? (<button disabled>Add To Cart</button>) : (
-                                    <button onClick={() => handleAddToCart(product.products_id)} disabled={cookies ? false : true}>Add To Cart</button>)
+                                    <button onClick={() => setToggleFeedback(true)} className='btn btn-primary'>Post</button>
+                                </div>
                             )}
-                        </div>
-                    </div>
-                </div>
 
-                <div className="feedback">
-                    <div className="feedback-header">
-                        <h3>{feedback.length} Product Review</h3>
-                    </div>
-
-                    <div className="feedback-main">
-                        {cookies.token && (
-                            <div className="feedback-input d-flex">
-                                <div className="form-floating">
-                                    <input type="text" onClick={() => setToggleFeedback(true)} className='form-control' id='fb-input'placeholder='Leave Your Feedback...'/>
-                                    <label htmlFor="fb-input">Leave Your Feedback...</label>
-                                </div>
-
-                                <button onClick={() => setToggleFeedback(true)} className='btn btn-primary'>Post</button>
+                            <div className="feedback-footer d-flex flex-column">
+                                {feedback.length > 0 ? (feedback.map((fb, i) => (<span key={i}>{fb.fullname} {fb.content} {fb.stars}</span>))
+                                ) : 'No review'}
                             </div>
-                        )}
-
-                        <div className="feedback-footer d-flex flex-column">
-                            {feedback.length > 0 ? (feedback.map((fb, i) => (<span key={i}>{fb.fullname} {fb.content} {fb.stars}</span>))
-                            ) : 'No review'}
                         </div>
                     </div>
-                </div>
 
-                <div className="similar-products">
-                    <h3>Similar Products:</h3>
+                    
+                    <div className="products-container" style={{minHeight : '80vh'}}>
+                        <h3>Similar Products:</h3>
 
-                    <div className="similar-products-main">
-                        {similarProducts.length > 0 ? (
-                            similarProducts.map((prod, prodId) => (
-                                <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct}/>))
-                        ) : 'No Similar Products Found'}
+                            {similarProducts.length > 0 ? (
+                                similarProducts.map((prod, prodId) => (
+                                    <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct}/>))
+                            ) : 'No Similar Products Found'}
+                        
                     </div>
                 </div>
             </div>
+            
+            <Footer />
         </div>
-    )
-}
+    );
+};
 
-export default ProductPage;
+export default ProductPage; //exporting component
