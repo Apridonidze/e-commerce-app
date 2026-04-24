@@ -400,6 +400,28 @@
   width: 40%;
 }
 
+.report-product-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%) translateY(30%) !important; 
+  width: 100% !important;
+  max-width: 750px;
+  min-height: 500px;
+  border-radius: 5px;
+  color: var(--text-color);
+  z-index: 1001;
+  animation: modalPopup 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: default;
+}
+
+.report-product-container * {
+  background-color: transparent !important;
+}
+
 @keyframes productModalPopup {
   from {
     opacity: 0;

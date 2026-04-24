@@ -15,6 +15,7 @@ const RemoveProduct = ({ setToggleRemove, toggleRemove, setToggleAlert }) => {
         return () => document.body.style.overflow = ''
 
     },[]); //disabling body scrolling when component is triggered
+
     const handleDelete = async() => {
         try{
 
@@ -31,12 +32,7 @@ const RemoveProduct = ({ setToggleRemove, toggleRemove, setToggleAlert }) => {
 
         }
     }
-
-    useEffect(() => {
-        document.body.style.overflow = 'hidden'
-
-    },[])
-
+    
     return(
         <div className="delete-product-container position-fixed bg-danger h-auto border-top border-5 border-danger" style={{zIndex : 999}}>
             

@@ -13,6 +13,7 @@ import RespondReport from "../admin/components/RespondReport"
 import StatusMessage from "../alerts/StatusMessage"
 import ManageAdmins from "../admin/components/ManageAdmins"
 
+import '../styles/products.css'
 import '../styles/dashboard.css'
 import '../styles/admin.dashboard.css'
 
@@ -55,7 +56,7 @@ const AdminDashboard = () => {
     const [toggleRespondReport, setToggleRespondReport] = useState({status : false, reportDetails : null});
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
     const [toggleRemove , setToggleRemove] = useState({status : false, product: null});
-    const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null});
+    const [toggleReportProduct, setToggleReportProduct] = useState({status : null, reportDetails: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
 
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
@@ -192,7 +193,6 @@ const AdminDashboard = () => {
     return(
         <div classclassName="main-container container-fluid d-flex flex-column justify-content-center border-2" style={{maxWidth : '3000px' , margin : 'auto'}}>
 
-            {toggleReportProduct.status ? <><div className="manage-product-background" style={{zIndex : 1000}} onClick={() => setToggleReportProduct({status : false, productId  :null})}></div><ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct} setToggleAlert={setToggleAlert}/></> : <></>}
             
             {toggleAddToCart.status ? <div className="add-to-cart-wrapper" style={{top : `${window.scrollY}px`}}><div className="add-to-cart-background" style={{top : `${window.scrollY}px`}} onClick={() => setToggleAddToCart({status : false , product : null})}></div> <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart} setToggleAlert={setToggleAlert}/></div> : <></>}
 
@@ -205,8 +205,8 @@ const AdminDashboard = () => {
             {toggleCreateNew ? <div className="bg"><div className="create-product-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleCreateNew(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><CreateProduct setToggleCreateNew={setToggleCreateNew}/></div> : <></> }
             
             {toggleDeleteReport.status ? <div className="bg"><div className="manage-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport setToggleAlert={setToggleAlert} setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
-            
-        {toggleRespondReport.status ? <div className="bg"><div className="manage-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleAlert={setToggleAlert} setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
+            {toggleRespondReport.status ? <div className="bg"><div className="manage-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleAlert={setToggleAlert} setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
+            {toggleReportProduct.status ? <><div className="manage-product-background" style={{zIndex : 1000}} onClick={() => setToggleReportProduct({status : false, productId  :null})}></div><ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct} setToggleAlert={setToggleAlert}/></> : <></>}
             
             {toggleManageAdmins ? <div className="bg"><div className="manage-admins-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleManageAdmins(false)} style={{backgroundColor : 'black'}} tabIndex={999}></div><ManageAdmins setToggleManageAdmins={setToggleManageAdmins} setAdmins={setAdmins} admins={admins} setToggleAlert={setToggleAlert}/></div> : <></>}
                  

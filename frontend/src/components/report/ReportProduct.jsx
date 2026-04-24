@@ -5,6 +5,10 @@ import ReportOption from "./ReportOption"
 import { useRef, useState, useEffect } from "react";
 import { useCookies } from 'react-cookie';
 
+import '../../styles/products.css'
+import AdminItem from '../../admin/components/AdminItem';
+import OrderItem from '../order/OrderItem';
+
 const ReportProduct = ({ setToggleReportProduct, toggleReportProduct }) => {
 
     const reasons = [
@@ -101,6 +105,13 @@ const ReportProduct = ({ setToggleReportProduct, toggleReportProduct }) => {
 
     },[input, inputRef, targetReason])
 
+        useEffect(() => {
+
+        document.body.style.overflow = 'hidden'
+        return () => document.body.style.overflow = ''
+
+    },[]); //disabling body scrolling when component is triggered
+
     const handleSubmitReport = async() => {
         try{
 
@@ -116,45 +127,50 @@ const ReportProduct = ({ setToggleReportProduct, toggleReportProduct }) => {
         }
     }
 
-    const handleDiscard = () => {
-
-    }
 
     return(
-        <div className="report-product-container position-relative bg-white border top-50" style={{zIndex : 999}}>
-            <div className="report-header">
-                    <h1>Report</h1>
-                    <h4>Help us maintain the integrity of the Curator ecosystem. Detailed reports allow our developer's team to resolve disputes and technical erros with precision</h4>
+        <div className="report-product-container overflow-hidden p-3" >
+            <div className="report-header d-flex flex-column">
+                <div className="d-flex justify-content-between">
+                    <h2>Report Product</h2>
+                    <button className='btn border-0' onClick={() => setToggleReportProduct({status : false , reportDetails : null})}><i class="fa-solid fa-xmark"></i></button>
                 </div>
-                <div className="report-input-container">
-                    
-                    <div className="row">
-                        <h4>Select Primary Reason : </h4>
-                        {reasons?.map(reason => (
-                            <ReportOption reason={reason} setTargetReason={setTargetReason} targetReason={targetReason} reasonRef={reasonRef}/>
-                        ))}
-                        <span className="text-danger">{targetReasonErr}</span>
-                    </div>
+                <h6>Submit detailed reports to help us resolve issues faster and keep the Shoptic ecosystem running smoothly.</h6>
+            </div>
 
-                    <div className="row">
-                        <h4>Editorial Context</h4>
-                        <div className="form-floating">
-                            <textarea className="form-control" onChange={(e) => setInput(e.target.value)} ref={inputRef} name="textArea" id="textArea" placeholder="Provide detailed information regarding the artifact or behavior in question... Min(20 characters)" />
-                            <label  htmlFor="textArea">Provide detailed information regarding the artifact or behavior in question... Min(20 characters)</label>
-                            <span className="text-danger">{inputErr}</span>
-                        </div>
+            <div className="report-target-product">
+                <OrderItem prod={toggleReportProduct.reportDetails}/>
+            </div>
+
+            <div className="report-input-container">
+                    
+                <div className="row">
+                    <h4>Select Primary Reason : </h4>
+                    {reasons?.map(reason => (
+                        <ReportOption reason={reason} setTargetReason={setTargetReason} targetReason={targetReason} reasonRef={reasonRef}/>
+                    ))}
+                    <span className="text-danger">{targetReasonErr}</span>
+                </div>
+
+                <div className="row">
+                    <h4>Editorial Context</h4>
+                    <div className="form-floating">
+                        <textarea className="form-control" onChange={(e) => setInput(e.target.value)} ref={inputRef} name="textArea" id="textArea" placeholder="Provide detailed information regarding the artifact or behavior in question... Min(20 characters)" />                            <label  htmlFor="textArea">Provide detailed information regarding the artifact or behavior in question... Min(20 characters)</label>
+                        <span className="text-danger">{inputErr}</span>
                     </div>
+                </div>
                         
+            </div>
+
+            <div className="report-footer row">
+                <div className="report-start ">
+                    <h6>Reports are processed within 24 hours by our human curators.</h6>
+                </div> 
+                <div className="report-end ">
+                    <button className="btn border" ref={discardRef} onClick={() => setToggleReportProduct({status : false, product_id : null})}>Discard</button>
+                    <button className="btn btn-danger" ref={submitRef} onClick={() => handleSubmitReport()}>Submit Report</button>
                 </div>
-                <div className="report-footer row">
-                    <div className="report-start ">
-                        <h6>Reports are processed within 24 hours by our human curators.</h6>
-                    </div> 
-                    <div className="report-end ">
-                        <button className="btn border" ref={discardRef} onClick={() => setToggleReportProduct({status : false, product_id : null})}>Discard</button>
-                        <button className="btn btn-danger" ref={submitRef} onClick={() => handleSubmitReport()}>Submit Report</button>
-                    </div>
-                </div>
+            </div>
         </div>
     )
 }
