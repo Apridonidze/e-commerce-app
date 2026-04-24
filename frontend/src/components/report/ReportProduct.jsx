@@ -1,13 +1,13 @@
-import axios from 'axios'
-import { BACKEND_URL } from '../../../config' 
-
-import ReportOption from "./ReportOption"
-import { useRef, useState, useEffect } from "react";
+import axios from 'axios';
 import { useCookies } from 'react-cookie';
+import { BACKEND_URL } from '../../../config' ; //importing react lbiraries
 
-import OrderItem from '../order/OrderItem';
+import { useRef, useState, useEffect } from "react"; //importting react hooks
 
-const ReportProduct = ({ setToggleReportProduct, toggleReportProduct, setToggleAlert }) => {
+import ReportOption from "./ReportOption";
+import OrderItem from '../order/OrderItem'; //importing react components
+
+const ReportProduct = ({ setToggleReportProduct, toggleReportProduct, setToggleAlert }) => { //importing props from parent component (AdminDashboard.jsx || Main.jsx || Sales.jsx || ProductPage.jsx)
 
     const reasons = [
         {
@@ -38,20 +38,19 @@ const ReportProduct = ({ setToggleReportProduct, toggleReportProduct, setToggleA
             title: 'Counterfeit Item',
             desc: 'Fake or unauthorized replica being sold'
         },
-    ]
+    ]; //array of reasons user should select while reporting product
 
-    const [ cookies ] = useCookies(['token'])
+    const [ cookies ] = useCookies(['token']); //defining user cookies
 
     const reasonRef = useRef([null]);
     const inputRef = useRef(null);
     const discardRef = useRef(null);
-    const submitRef = useRef(null);
+    const submitRef = useRef(null); //refs for inputs and buttons
     
-    const [targetReason ,setTargetReason] = useState(null);
     const [input, setInput] = useState('');
+    const [targetReason ,setTargetReason] = useState(null); //state to store users inputs
     
-    const [targetReasonErr, setTargerReasonErr] = useState('');
-    const [inputErr ,setInputErr] = useState('');
+    const [inputErr ,setInputErr] = useState(''); //error message state
 
      useEffect(() => {
 
@@ -59,70 +58,67 @@ const ReportProduct = ({ setToggleReportProduct, toggleReportProduct, setToggleA
 
             let isValid = false;
 
-            if(input.length === 0 || input.length >= 20) {
+            if(input.length === 0 || input.length >= 20) { //checking editorial text message lengths and tirggering logic below if statement is true
+                setInputErr(''); //clearing input message state
                 
-                setInputErr('') 
-                
-                inputRef.current.classList.remove('is-valid')
-                inputRef.current.classList.remove('is-invalid')
+                inputRef.current.classList.remove('is-valid');
+                inputRef.current.classList.remove('is-invalid'); //clearing input styling
 
-                submitRef.current.disabled = false; 
+                submitRef.current.disabled = false;  //toggling submitReef buton
 
-                isValid = true
+                isValid = true ; //returning true statsu of isValid variable
             };
 
-            if(input.length !== 0 && input.length < 20) {
+            if(input.length !== 0 && input.length < 20) { //checking editorial text message lengths and tirggering logic below if statement is true
 
-                setInputErr('Please enter at least 20 characters')
+                setInputErr('Please enter at least 20 characters'); //setting error message
                 
-                inputRef.current.classList.remove('is-valid')
-                inputRef.current.classList.add('is-invalid')
+                inputRef.current.classList.remove('is-valid');
+                inputRef.current.classList.add('is-invalid'); //adding stylinging classNames to refs
             
-                submitRef.current.disabled = true;
+                submitRef.current.disabled = true; //disabling submitRef button
 
-                isValid = false
+                isValid = false; //returning false status of isValid variable
             };
 
-            if(input.length > 500) {
+            if(input.length > 500) { //checking editorial text message lengths and tirggering logic below if statement is true
 
-                setInputErr('Please enter no more than 500 characters')
+                setInputErr('Please enter no more than 500 characters'); //setting error message
                 
-                inputRef.current.classList.remove('is-valid')
-                inputRef.current.classList.add('is-invalid')
+                inputRef.current.classList.remove('is-valid');
+                inputRef.current.classList.add('is-invalid'); //adding stylinging to className's ref
             
-                submitRef.current.disabled = true;
+                submitRef.current.disabled = true; //disabling submitref
 
-                isValid = false
+                isValid = false ; //returning false status of isValid variable
             };
 
-            if(!targetReason) submitRef.current.disabled = true ; isValid = false;
+            if(!targetReason) submitRef.current.disabled = true ; isValid = false; //disabling submity button if targetReason is not choosed
+            if(isValid) submitRef.current.disabled = false; //enabling submit button if every input is valid
 
-            if(isValid){submitRef.current.disabled = false}
+        };
 
-        }
+    },[input, inputRef, targetReason]); //logic executes on mount and on this dependencies changes
 
-    },[input, inputRef, targetReason])
+    useEffect(() => {
 
-        useEffect(() => {
-
-        document.body.style.overflow = 'hidden'
-        return () => document.body.style.overflow = ''
+        document.body.style.overflow = 'hidden'; //hiding document body overflow when component is active
+        return () => document.body.style.overflow = ''; //cleaniing up document body styling on component unmount
 
     },[]); //disabling body scrolling when component is triggered
 
     const handleSubmitReport = async() => {
         try{
 
-            const response = await axios.post(`${BACKEND_URL}/api/report`, {type : targetReason.category , content : input, productId : toggleReportProduct.product_id , status : "Sent"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
+            const response = await axios.post(`${BACKEND_URL}/api/report`, {type : targetReason.category , content : input, productId : toggleReportProduct.product_id , status : "Sent"} , {headers : {Authorization : `Bearer ${cookies.token}`}}); //making api request and sending user input/cookies
             
-            setToggleReportProduct({status : false , reportDetails : false});
-            return setToggleAlert({status: true, type: "Success", statusCode: response.status, message: response.data.message});            
+            setToggleAlert({status: true, type: "Success", statusCode: response.status, message: response.data.message}); //toggling usccess message      
+            setToggleReportProduct({status : false , reportDetails : false}); //closing component 
             
         }catch(err){
             return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
-        }
-    }
-
+        };
+    };
 
     return(
         <div className="report-product-container overflow-hidden p-3" >
@@ -149,8 +145,6 @@ const ReportProduct = ({ setToggleReportProduct, toggleReportProduct, setToggleA
                             <ReportOption reason={reason} setTargetReason={setTargetReason} targetReason={targetReason} reasonRef={reasonRef}/>
                         ))}
                     </div>
-
-                    <span className="small text-danger">{targetReasonErr}</span>
                 </div>
 
                 <div className="row mt-3 mx-auto">
@@ -171,7 +165,7 @@ const ReportProduct = ({ setToggleReportProduct, toggleReportProduct, setToggleA
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default ReportProduct
+export default ReportProduct; //expopting component
