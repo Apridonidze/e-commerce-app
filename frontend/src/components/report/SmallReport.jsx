@@ -1,18 +1,22 @@
 const SmallReport = ({ reportDetails }) => { //importing proprs from parent element (DeleteReport.jsx || RespondReport.jsx)
     return(
-        <div className="report-container d-flex flex-column rounded-3 px-3 py-2" key={reportDetails.report_id}>
+        <div className="report-container d-flex flex-column rounded-3" style={{border : '1px solid rgba(8, 15, 32, 0.15)'}} key={reportDetails.report_id}>
             
             <div className="report-top d-flex justify-content-between py-3">
 
                 <div className="report-user-initials w-auto">
 
-                    <div className="initials"><span className="userInitials text-uppercase me-2">{reportDetails.user_fullname.split(' ')[0].at(0)}{reportDetails.user_fullname.split(' ')[1].at(0)}</span>
-                    <span className="fs-5 fw-bold">{reportDetails.user_fullname}</span></div>
+                    <div className="initials d-flex">
+                        <span className="userInitials text-uppercase me-2">{reportDetails.user_fullname.split(' ')[0].at(0)}{reportDetails.user_fullname.split(' ')[1].at(0)}</span>
+                        <div className="d-flex flex-column">
+                            <span className="fs-5 fw-bold">{reportDetails.user_fullname}</span>
+                            <span>{reportDetails.user_email}</span>
+                        </div>
+                    </div>
 
                 </div>
 
-                <div className="user-data d-flex align-items-center w-50 gap-5 justify-content-between me-3">
-                    <span>{reportDetails.user_email}</span>
+                <div className="user-data d-flex align-items-center w-auto flex-row gap-5 justify-content-between me-3">
                     <span className="type px-3 fs-6 rounded-3">{reportDetails.type}</span>
                     <span className={`status ${reportDetails.status}`}><i class="statusDot fa-solid fa-circle"></i> {reportDetails.status}</span>
                 </div>
@@ -22,7 +26,7 @@ const SmallReport = ({ reportDetails }) => { //importing proprs from parent elem
             <div className="report-bottom">
 
                 <div className="report-bottom-answer">    
-                    <h6 className="text-secondary">{!reportDetails.content ? "No Editorial Text." : `"${reportDetails.content.length > 80 ? `${reportDetails.content.slice(0,80)}...` : reportDetails.content}"`}</h6>
+                    <h6 className="text-secondary ms-2">{!reportDetails.content ? "No Editorial Text." : `"${reportDetails.content.length > 80 ? `${reportDetails.content.slice(0,80)}...` : reportDetails.content}"`}</h6>
                 </div>
 
                 <div className="report-bottom-resolution mt-3 d-flex align-items-center justify-content-between">
