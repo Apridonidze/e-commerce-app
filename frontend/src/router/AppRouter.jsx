@@ -34,6 +34,7 @@ const AppRouter = () => {
     {path : '/admin-dashboard' , element : <AdminDashboard/>},
     {path : '/admin-dashboard/orders/:orderStatus' , element : <OrdersPage />},
     {path : '/admin-dashboard/reports' , element : <Reports />},
+    {path : '/admin-dashboard/reports/:reportStatus' , element : <Reports />},
     {path : '/admin-dashboard/feedbacks' , element : <Feedbacks />},
     {path : '/admin-dashboard/low-stock' , element : <LowStockPage />},
     {path : '/admin-dashboard/admin-support-chat' , element  :<AdminSupportChatContainer />},

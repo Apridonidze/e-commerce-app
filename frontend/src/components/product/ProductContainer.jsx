@@ -40,15 +40,7 @@ const ProductContainer = ({setToggleEdit,setToggleRemove,setToggleReportProduct,
 
       <div className="main-product-end">
         {!user ? null : (<div className="more" style={{zIndex: 100,position: "relative",bottom: "-3rem",right: "0px"}}>
-            <div
-              className="toggle-more border mt-1 rounded-2"
-              style={{
-                display: toggleMore ? "flex" : "none",
-                flexDirection: "column",
-                position: "absolute",
-                right: "0.2rem",
-              }}
-            >
+            <div className="toggle-more border mt-1 rounded-2" style={{display: toggleMore ? "flex" : "none", flexDirection: "column", position: "absolute",  right: "0.2rem"}}>
               {user?.role === "admin" ? (
                 <>
                   <button

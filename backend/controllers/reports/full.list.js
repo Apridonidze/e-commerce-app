@@ -24,9 +24,8 @@ async function fullList(req, res) {
         query += ` limit ? offset ?`; //directly adding limit to main query without where
         params.push(limit, offset); //pushing limit and offset in params array
 
-        const [ReportsList] = await db.query(query, params); //executting query
-
-        if (ReportsList.length === 0) return res.status(204).send();//sending 204 status code if no reports have been found 
+        const [ ReportsList ] = await db.query(query, params); //executting query
+        
         return res.status(200).json({message: "Reports Found",reports: ReportsList}); //sending 200 status code if reports has beeen found
 
     } catch (err) {
