@@ -9,7 +9,7 @@ const ManageReports = ({ reports , setToggleDeleteReport , setToggleRespondRepor
             
             <div className="manage-reports-header d-flex align-items-center gap-2 mb-3">
                 <h3><i class="fa-solid fa-flag fs-3" style={{color : '#10b981'}}></i> Reports</h3>
-                <Link to={'/admin-dashboard/reports'}><i class="p-2 w-auto fa-solid fa-arrow-up-right-from-square text-secondary"></i></Link>
+                <Link to={'/admin-dashboard/reports/Sent'}><i class="p-2 w-auto fa-solid fa-arrow-up-right-from-square text-secondary"></i></Link>
             </div>
 
             <div className="manage-reports-main-body d-flex flex-column gap-3">

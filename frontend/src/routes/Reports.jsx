@@ -32,13 +32,11 @@ const Reports = () => {
     const allowedParams = ['Sent' , 'Responded', 'Removed']
 
     const fetchReports = async () => {
-        try {
-            const response = await axios.get(
-                `${BACKEND_URL}/api/report/report-list/${offset}/${reportStatus}`,
-                config
-            );
 
-            if (response.status === 204) return;
+        if(!allowedParams.includes(reportStatus)) navigator('/*' , {replace : true})
+
+        try {
+            const response = await axios.get(`${BACKEND_URL}/api/report/report-list/${offset}/${reportStatus}`,config);
 
             setReports(prev => [...prev, ...response.data.reports]);
             setOffset(prev => prev + response.data.reports.length);
@@ -59,7 +57,7 @@ const Reports = () => {
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}> 
 
-            {toggleDeleteReport.status ? <div><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
+            {toggleDeleteReport.status ? <div><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" sty onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={10000}></div><DeleteReport setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
             {toggleRespondReport.status ? <div><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
 
             <div className="main-body">
