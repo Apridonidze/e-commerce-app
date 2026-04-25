@@ -3,7 +3,7 @@ const db = require('../../utils/db'); //importing db utility
 async function customerList (req,res) {
     try{
 
-        const [ feedbacks ] = await db.query('select * from feedback where type = ? limit ?' , ['platform', 10]);//fetching latest 10 feedbacks from db
+        const [ feedbacks ] = await db.query('select feedback.*, users.fullname from feedback join users on users.id = feedback.id where feedback.type = ? limit 10', ['platform']); //selecting feedback with users name
 
         if(feedbacks.length === 0) return res.status(204).send(); //returnig 204 status code response if no feedbacks found
         return res.status(200).json({message : "Feedbacks Found" , feedbacks}); //returnig 200 status code response with feedbacks
