@@ -13,6 +13,7 @@ import Footer from '../layout/Footer'; //importing layout components
 
 import Product from '../components/product/Product';
 
+import AddToCart from '../components/product/AddToCart';
 import EditProduct from '../admin/components/EditProduct';
 import RemoveProduct from '../admin/components/RemoveProduct';
 import ReportProduct from '../components/report/ReportProduct'; //importing toggable components
@@ -179,8 +180,8 @@ const ProductPage = () => {
             setFeedbackData({star : null, content : null})
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling internal error message
 
-        }
-    }
+        };
+    };
 
     const removeFeedback = async(id) =>{ //api functionm to delete user feedback as admin
         try{
@@ -215,12 +216,9 @@ const ProductPage = () => {
 
                     <div className="main-header"><Header /></div>
 
-                    {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
-                    {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
-
                     <div className="products-page-row d-flex align-items-start gap-3">
 
-                        {isProductLoading ? 'loading skeleton' : <ProductContainer user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} handleAddToCart={handleAddToCart} toggleAddToCart={toggleAddToCart}/>}
+                        {isProductLoading ? 'loading skeleton' : <ProductContainer setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove}setToggleReportProduct={setToggleReportProduct} handleAddToCart={handleAddToCart} user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} toggleAddToCart={toggleAddToCart}/>}
                         {isProductLoading ? 'loading skeleton ' : <FeedbackContainer user={user} removeFeedback={removeFeedback} handlePostFeedback={handlePostFeedback} feedbackData={feedbackData} setFeedbackData={setFeedbackData}  cookies={cookies} feedback={feedback}/>}
 
                     </div>
@@ -230,8 +228,8 @@ const ProductPage = () => {
 
                             {similarProducts.length > 0 ? 
                                 <div className="products">
-                                    {similarProducts.map((prod, prodId) => (
-                                    <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct}/>))
+                                    {similarProducts.map(prod => (
+                                    <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>))
                             }    
                                 </div>
                                 : 'No Similar Products Found'}
