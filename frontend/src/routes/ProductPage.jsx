@@ -165,25 +165,18 @@ const ProductPage = () => {
 
     };
 
-    console.log(feedback)
-
      const handlePostFeedback = async() => {
-
         try{
 
             const postFeedback = await axios.post(`${BACKEND_URL}/api/feedback/product-feedback/${id}` , feedbackData , {headers : {Authorization : `Bearer ${cookies.token}`}})
             
             setFeedback(prev => [...prev, {id ,feedback_id : postFeedback.data.product_id, content : feedbackData.content , stars  : feedbackData.star, fullname : user?.fullname, type : 'product' , product_id  : id}])
             setFeedbackData({star : null, content : null})
-            // update feedbak
-            // clear inputs
-            console.log(postFeedback)
-            //toggle success message
+            setToggleAlert({status: true, type: "Success", statusCode: postFeedback.status , message: postFeedback.data.message}); //toggling success message
 
         }catch(err){
-            // clear inputs
-            // return prev feedbacks
-            //toggle eerror message
+            setFeedback(prev)
+            setFeedbackData({star : null, content : null})
             setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling internal error message
 
         }
