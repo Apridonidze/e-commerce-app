@@ -21,7 +21,7 @@ const PlatformFeedback = ({ setFeedbacks }) => {
 
             const postFeedback = await axios.post(`${BACKEND_URL}/api/feedback/` , feedbackData , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-            if(postFeedback.status === 200){return setFeedbacks(prev => [...prev, {fullname : user.fullname, stars : feedbackData.star , content : feedbackData.content }])}
+            // if(postFeedback.status === 200){return setFeedbacks(prev => [...prev, {fullname : user.fullname, stars : feedbackData.star , content : feedbackData.content }])}
            
             //if status === 400 toggle error message
 
@@ -41,17 +41,7 @@ const PlatformFeedback = ({ setFeedbacks }) => {
 
     return(
         <div className="feedback-input-container bg-white" style={{position : 'relative' , left : '0vw'}} tabIndex={100}>
-            <input type="text" onChange={(e) => setFeedbackData({...feedbackData, content : e.target.value})} className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
-
-           <div className="d d-flex">
-                <span onClick={() => setFeedbackData({...feedbackData, star : 1})}>*</span>
-                <span onClick={() => setFeedbackData({...feedbackData, star : 2})}>*</span>
-                <span onClick={() => setFeedbackData({...feedbackData, star : 3})}>*</span>
-                <span onClick={() => setFeedbackData({...feedbackData, star : 4})}>*</span>
-                <span onClick={() => setFeedbackData({...feedbackData, star : 5})}>*</span>
-           </div>
-
-            <button ref={postRef} onClick={() => handleFeedback()} className='btn btn-primary'>Post</button>
+         
         </div>
     )
 }
