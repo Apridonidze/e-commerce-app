@@ -1,73 +1,51 @@
-const FeedbackContainer = ({ cookies , feedback}) => {
+import { useRef, useEffect } from "react"
 
-    // {toggleFeedback && <div> <div className="feedback-bg bg-dark opacity-25 w-100 h-100" onClick={() => setToggleFeedback(false)} style={{ position: 'absolute', left: 0, top: 0 }}/><FeedbackInput /></div>
-                    // }
+const FeedbackContainer = ({ cookies , feedback, handlePostFeedback, feedbackData, setFeedbackData}) => {
 
-    //                 // 
-    // const [cookies] = useCookies(['token'])
-    // const [feedbackData, setFeedbackData] = useState({})
+   
+    const postRef = useRef(null)
 
-    // const { id } = useParams()
+      const emptyStar = <i class="fa-regular fa-star"></i>;
+    const star = <i class="fa-solid fa-star"></i>; //definign star icons to display calcualted rate ratio of user's feedback
 
-    // const postRef = useRef(null)
 
-    // const handleFeedback = async() => {
+    useEffect(() => {
 
-    //     !feedbackData.star || !feedbackData.content ? postRef.current.disabled = true : postRef.current.disabled = false;
-    //     //add erorr message if we do not have feedback.star and feedback.content
+        if(!postRef?.current) return
 
-    //     try{
+        !feedbackData?.star || !feedbackData?.content ? postRef.current.disabled = true : postRef.current.disabled = false 
 
-    //         const postFeedback = await axios.post(`${BACKEND_URL}/api/feedback/product-feedback/${id}` , feedbackData , {headers : {Authorization : `Bearer ${cookies.token}`}})
+    } ,[feedbackData])
 
-    //         console.log(postFeedback)
-    //         //toggle success message
-
-    //     }catch(err){
-    //         //toggle eerror message
-    //         console.log(err)
-    //     }
-    // }
-
-    // useEffect(() => {
-
-    //     if(!postRef?.current) return
-
-    //     !feedbackData.star || !feedbackData.content ? postRef.current.disabled = true : postRef.current.disabled = false 
-
-    // } ,[feedbackData])
-
-    // return(
-    //     <div className="feedback-input-container bg-white" style={{position : 'relative' , left : '0vw'}} tabIndex={100}>
-    //         <input type="text" onChange={(e) => setFeedbackData({...feedbackData, content : e.target.value})} className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
-
-    //        <div className="d d-flex">
-    //             <span onClick={() => setFeedbackData({...feedbackData, star : 1})}>*</span>
-    //             <span onClick={() => setFeedbackData({...feedbackData, star : 2})}>*</span>
-    //             <span onClick={() => setFeedbackData({...feedbackData, star : 3})}>*</span>
-    //             <span onClick={() => setFeedbackData({...feedbackData, star : 4})}>*</span>
-    //             <span onClick={() => setFeedbackData({...feedbackData, star : 5})}>*</span>
-    //        </div>
-
-    //         <button ref={postRef} onClick={() => handleFeedback()} className='btn btn-primary'>Post</button>
-    //     </div>
-    // )
     return(
         <div className="feedback py-2" >
             <div className="feedback-header">
-                <h3>{feedback.length} Product Review</h3>
+                <h3>Product's Reviews</h3>
             </div>
 
             <div className="feedback-main">
                 {cookies.token && (
-                    <div className="feedback-input d-flex">
-                        <div className="form-floating">
-                            <input type="text" onClick={() => setToggleFeedback(true)} className='form-control' id='fb-input'placeholder='Leave Your Feedback...'/>
-                            <label htmlFor="fb-input">Leave Your Feedback...</label>
+                    <>
+                    
+                    <div className="stars d d-flex gap-2">
+                            {[1, 2, 3, 4, 5].map((value) => (
+                                <span
+                                key={value}
+                                style={{ cursor: "pointer", fontSize: "20px" }}
+                                onClick={() =>
+                                    setFeedbackData({ ...feedbackData, star: value })
+                                }
+                                >
+                                {feedbackData.star >= value ? star : emptyStar}
+                                </span>
+                            ))}
                         </div>
+                    <div className="feedback-input d-flex w-100 gap-2">
+                        <input type="text" onChange={(e) => setFeedbackData({...feedbackData, content : e.target.value})} className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
 
-                        <button onClick={() => setToggleFeedback(true)} className='btn btn-primary'>Post</button>
+                        <button ref={postRef} onClick={() => handlePostFeedback()} className='submit btn btn-0 border-0 text-white'><i class="fa-solid fa-paper-plane"></i> Post</button>
                     </div>
+                    </>
                 )}
 
                 <div className="feedback-footer d-flex flex-column">

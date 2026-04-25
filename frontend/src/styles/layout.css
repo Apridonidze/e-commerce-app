@@ -482,6 +482,18 @@
   height: auto;
   max-width: 400px;
 }
+.submit, .submit:hover, .submit:focus , .submit:active{
+  background-color: #10b981;
+  color: white;
+}
+
+.submit:disabled{
+  background-color: #10b981;
+}
+
+.submit i{
+  color: white;
+}
 
 @media (max-width: 1400px) {
 

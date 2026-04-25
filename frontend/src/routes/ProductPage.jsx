@@ -48,6 +48,7 @@ const ProductPage = () => {
 
     const [isProductLoading , setIsProductLoading] = useState(true);
     const [isSimilarProductsLoading , setIsSimilarProductsLoading] = useState(true);//states to define loading state of components data
+    const [feedbackData, setFeedbackData] = useState({star : null , content : null})
 
     let imagesArray = []; //defining array to store formatted imgs
     
@@ -155,7 +156,6 @@ const ProductPage = () => {
         };
     };
 
-
     const getImageSrc = (img) => {//formatting images based on image type passed down to make images displayable
 
         if(!img) return; //returning empty promise if img is not provided
@@ -164,6 +164,25 @@ const ProductPage = () => {
         return URL.createObjectURL(img);// else creating url for image if its type is not string
 
     };
+
+     const handlePostFeedback = async() => {
+
+        try{
+
+            const postFeedback = await axios.post(`${BACKEND_URL}/api/feedback/product-feedback/${id}` , feedbackData , {headers : {Authorization : `Bearer ${cookies.token}`}})
+
+            // update feedbak
+            // clear inputs
+            console.log(postFeedback)
+            //toggle success message
+
+        }catch(err){
+            // clear inputs
+            // return prev feedbacks
+            //toggle eerror message
+            console.log(err)
+        }
+    }
 
     return (
         <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}>
@@ -192,7 +211,7 @@ const ProductPage = () => {
                     <div className="products-page-row d-flex gap-3">
 
                         {isProductLoading ? 'loading skeleton' : <ProductContainer user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} handleAddToCart={handleAddToCart} toggleAddToCart={toggleAddToCart}/>}
-                        {isProductLoading ? 'loading skeleton ' : <FeedbackContainer cookies={cookies} feedback={feedback}/>}
+                        {isProductLoading ? 'loading skeleton ' : <FeedbackContainer handlePostFeedback={handlePostFeedback} feedbackData={feedbackData} setFeedbackData={setFeedbackData}  cookies={cookies} feedback={feedback}/>}
 
                     </div>
                     
