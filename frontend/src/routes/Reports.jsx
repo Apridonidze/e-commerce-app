@@ -12,6 +12,8 @@ import DeleteReport from "../admin/components/DeleteReport";
 import RespondReport from "../admin/components/RespondReport";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
+import EmptyReports from "../empty/EmptyReports";
+import EmptyReportPage from "../empty/EmtpyReportPage";
 
 
 const Reports = () => {
@@ -82,9 +84,11 @@ const Reports = () => {
                     </div>
 
                     <div className="reports-main d-flex flex-column gap-2">
-                            <h1>{} Reports</h1>
-                            {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : 'No Unanswered reports'}
-                            {reports?.filter(report => report.status == "Sent").length % 5 !== 0 || reports?.filter(report => report.status == "Responded").length === 0 ? <span>No More Unanswred Reports</span> : <button onClick={() => fetchReports()}>Load More...</button>}
+                            {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : <EmptyReportPage />}
+                            {reports?.filter(report => report.status == "Sent").length % 5 !== 0 || reports?.filter(report => report.status == "Responded").length === 0 ? <>
+                                <span className="lineText mt-5 text-center small">End of {reportStatus} Reports</span>
+                                <div className="line "></div>
+                            </> : <button onClick={() => fetchReports()}>Load More...</button>}
                         
                     </div>
                     

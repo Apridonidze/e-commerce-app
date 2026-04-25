@@ -908,6 +908,20 @@
     text-decoration: none;
 }
 
+.lineText{
+    color: #94a3b8;
+    background-color: var(--bg-color);
+    width: fit-content !important;
+    margin: auto;
+    padding: 0rem 1rem;
+    border-radius: 5px;
+    position: relative;
+    top: 1.2rem;
+}
+
+.line {
+    border-bottom: var(--btn-border);
+}
 
 .url a:hover{
     text-decoration: underline;
