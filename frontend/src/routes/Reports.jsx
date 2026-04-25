@@ -12,7 +12,6 @@ import DeleteReport from "../admin/components/DeleteReport";
 import RespondReport from "../admin/components/RespondReport";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import EmptyReports from "../empty/EmptyReports";
 import EmptyReportPage from "../empty/EmtpyReportPage";
 
 
@@ -25,9 +24,12 @@ const Reports = () => {
 
     const [reports, setReports] = useState([])
     const [offset, setOffset] = useState(0)
+    const [isLoading , setIsLoading] = useState(true);
 
     const [toggleDeleteReport, setToggleDeleteReport] = useState({status : false, reportDetails : null});
     const [toggleRespondReport, setToggleRespondReport] = useState({status : false, reportDetails : null});
+
+    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
     const config = {headers: { Authorization: `Bearer ${cookies.token}`}}
 
@@ -40,11 +42,16 @@ const Reports = () => {
         try {
             const response = await axios.get(`${BACKEND_URL}/api/report/report-list/${offset}/${reportStatus}`,config);
 
+            setIsLoading(false)
             setReports(prev => [...prev, ...response.data.reports]);
             setOffset(prev => prev + response.data.reports.length);
 
         } catch (err) {
-            console.error(err);
+            setIsLoading(false)
+            setReports([])
+            setOffset(0)
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
+
         }
     };
 
@@ -59,8 +66,10 @@ const Reports = () => {
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}> 
 
-            {toggleDeleteReport.status ? <div><div className="delete-report-bg position-fixed w-100 h-100 opacity-25" sty onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={10000}></div><DeleteReport setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
-            {toggleRespondReport.status ? <div><div className="respond-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
+            {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
+
+            {toggleDeleteReport.status ? <div className="bg"><div className="manage-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleDeleteReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><DeleteReport setToggleAlert={setToggleAlert} setToggleDeleteReport={setToggleDeleteReport} toggleDeleteReport={toggleDeleteReport} setReports={setReports}/></div> : <></> }
+            {toggleRespondReport.status ? <div className="bg"><div className="manage-report-bg position-fixed w-100 h-100 opacity-25" onClick={() => setToggleRespondReport({status : false, reportDetails : null})} style={{backgroundColor : 'black'}} tabIndex={999}></div><RespondReport setToggleAlert={setToggleAlert} setToggleRespondReport={setToggleRespondReport} toggleRespondReport={toggleRespondReport} setReports={setReports}/></div> : <></> }
 
             <div className="main-body">
                 <div className="main-start"><Sidebar /></div>
@@ -83,12 +92,18 @@ const Reports = () => {
                         </div>
                     </div>
 
-                    <div className="reports-main d-flex flex-column gap-2" style={{minHeight : "70vh"}}>
-                            {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : <EmptyReportPage />}
-                            {reports?.filter(report => report.status == "Sent").length % 5 !== 0 || reports?.filter(report => report.status == "Responded").length === 0 ? <div className="d-flex flex-column">
+                    <div className="reports-main d-flex flex-column gap-2" style={{minHeight : '75vh'}}>
+
+                            <div className="d-flex flex-column gap-2">
+                                {reports?.length !== 0 ? reports?.map((report,reportId) => <Report report={report} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : <EmptyReportPage />}
+                            </div>
+
+                            <div className="d">
+                                {reports?.length % 5 !== 0 || reports?.length === 0 ? <div className="d-flex flex-column">
                                 <span className="lineText mt-5 text-center small">End of {reportStatus} Reports</span>
                                 <div className="line "></div>
-                            </div> : <button onClick={() => fetchReports()}>Load More...</button>}
+                                </div> : <button onClick={() => fetchReports()}>Load More...</button>}
+                            </div>
                         
                     </div>
                     
