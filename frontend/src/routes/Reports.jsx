@@ -13,6 +13,8 @@ import RespondReport from "../admin/components/RespondReport";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import EmptyReportPage from "../empty/EmtpyReportPage";
+import ReportsSkeleton from "../skeletons/ReportsSkeleton";
+import RowSkeleton from "../skeletons/RowSkeleton";
 
 
 const Reports = () => {
@@ -95,11 +97,11 @@ const Reports = () => {
                     <div className="reports-main d-flex flex-column gap-2" style={{minHeight : '75vh'}}>
 
                             <div className="d-flex flex-column gap-2">
-                                {reports?.length !== 0 ? reports?.map((report,reportId) => <Report report={report} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : <EmptyReportPage />}
+                                {isLoading ? <RowSkeleton /> : reports?.length !== 0 ? reports?.map(report => <Report report={report} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : <EmptyReportPage />}
                             </div>
 
                             <div className="d">
-                                {reports?.length % 5 !== 0 || reports?.length === 0 ? <div className="d-flex flex-column">
+                                {isLoading ? <></> : reports?.length % 5 !== 0 || reports?.length === 0 ? <div className="d-flex flex-column">
                                 <span className="lineText mt-5 text-center small">End of {reportStatus} Reports</span>
                                 <div className="line "></div>
                                 </div> : <button onClick={() => fetchReports()}>Load More...</button>}
