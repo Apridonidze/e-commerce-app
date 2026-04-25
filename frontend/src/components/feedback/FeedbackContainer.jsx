@@ -16,6 +16,8 @@ const FeedbackContainer = ({ user, removeFeedback ,cookies , feedback, handlePos
 
     } ,[feedbackData])
 
+    console.log(feedbackData)
+
     return(
         <div className="feedback py-2" >
             <div className="feedback-header">
@@ -39,15 +41,16 @@ const FeedbackContainer = ({ user, removeFeedback ,cookies , feedback, handlePos
                             ))}
                         </div>
                     <div className="feedback-input d-flex w-100 gap-2">
-                        <input type="text" onChange={(e) => setFeedbackData({...feedbackData, content : e.target.value})} className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
+                        <input type="text" onChange={(e) => setFeedbackData({...feedbackData, content : e.target.value})} value={feedbackData?.content || ""} className='form-control' id='fb-input' placeholder='Leave Your Feedback...'/>
 
                         <button ref={postRef} onClick={() => handlePostFeedback()} className='submit btn btn-0 border-0 text-white'><i class="fa-solid fa-paper-plane"></i> Post</button>
                     </div>
                     </div>
                 )}
+                
 
                 <div className="feedback-footer d-flex flex-column">
-                    {feedback.length > 0 ? (feedback.map((fb) => <Feedback fb={fb} user={user} removeFeedback={removeFeedback}/> )) : 'No review'}
+                    {feedback.length > 0 ? ([...feedback].reverse().slice(0,3 ).map((fb) => <Feedback fb={fb} user={user} removeFeedback={removeFeedback}/> )) : 'No review'}
                 </div>
             </div>
         </div>

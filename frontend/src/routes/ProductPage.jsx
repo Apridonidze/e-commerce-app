@@ -41,6 +41,7 @@ const ProductPage = () => {
     
     const [toggleMore, setToggleMore] = useState(false);
     const [toggleEdit , setToggleEdit] = useState({status : false, product: null});
+    const [feedbackData, setFeedbackData] = useState({star : null , content : null});
     const [toggleRemove , setToggleRemove] = useState({status : false, productId: null});
     const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     const [toggleReportProduct, setToggleReportProduct] = useState({status : false, productId: null})
@@ -48,7 +49,6 @@ const ProductPage = () => {
 
     const [isProductLoading , setIsProductLoading] = useState(true);
     const [isSimilarProductsLoading , setIsSimilarProductsLoading] = useState(true);//states to define loading state of components data
-    const [feedbackData, setFeedbackData] = useState({star : null , content : null})
 
     let imagesArray = []; //defining array to store formatted imgs
     
@@ -165,12 +165,16 @@ const ProductPage = () => {
 
     };
 
+    console.log(feedback)
+
      const handlePostFeedback = async() => {
 
         try{
 
             const postFeedback = await axios.post(`${BACKEND_URL}/api/feedback/product-feedback/${id}` , feedbackData , {headers : {Authorization : `Bearer ${cookies.token}`}})
-
+            
+            setFeedback(prev => [...prev, {id ,feedback_id : postFeedback.data.product_id, content : feedbackData.content , stars  : feedbackData.star, fullname : user?.fullname, type : 'product' , product_id  : id}])
+            setFeedbackData({star : null, content : null})
             // update feedbak
             // clear inputs
             console.log(postFeedback)
@@ -180,7 +184,8 @@ const ProductPage = () => {
             // clear inputs
             // return prev feedbacks
             //toggle eerror message
-            console.log(err)
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling internal error message
+
         }
     }
 

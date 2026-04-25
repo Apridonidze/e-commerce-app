@@ -19,8 +19,8 @@ async function addByProdId(req,res) {
 
     try{
         
-        await db.query('insert into feedback (id, content, stars, product_id, type) values (?, ?, ?, ?, ?)' , [req.user.userId , data.content, data.star, prodId, 'product']); //inserting feedback into table
-        return res.status(200).json({message : "Feedback Sent Succesfully"}); //returning success message
+        const [ row ] = await db.query('insert into feedback (id, content, stars, product_id, type) values (?, ?, ?, ?, ?)' , [req.user.userId , data.content, data.star, prodId, 'product']); //inserting feedback into table
+        return res.status(200).json({message : "Feedback Sent Succesfully", product_id : row.insertId}); //returning success message
 
     }catch(err){
         return res.status(500).json({errMessage : "Could Not Send Feedback. Try Later"}); //returning internal error message
