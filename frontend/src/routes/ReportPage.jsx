@@ -1,3 +1,5 @@
+import Header from "../layout/Header"
+import Footer from "../layout/Footer"
 import Sidebar from "../layout/Sidebar"
 import ReportOption from "../components/report/ReportOption"
 
@@ -168,43 +170,64 @@ const ReportPage = () => {
     }
 
     return(
-        <div className="report-page-container d-flex">
-            <Sidebar />
-            <div className="report-main-container">
-                <div className="report-header">
-                    <h1>Report</h1>
-                    <h4>Help us maintain the integrity of the Curator ecosystem. Detailed reports allow our developer's team to resolve disputes and technical erros with precision</h4>
+        <div className="main-container container-fluid d-flex flex-column justify-content-start" style={{maxWidth : '3000px'}}> 
+              <div className="main-body" >
+
+                <div className="main-start"><Sidebar /></div>
+                
+                <div className="main-end">
+
+                    <div className="main-header">
+                        <Header />
+                    </div>
+
+           
+
+
+            <div className="report-container p-3 rounded-3" >
+            <div className="report-header d-flex flex-column">
+                <div className="d-flex justify-content-between">
+                    <h2>Report Product</h2>
                 </div>
-                <div className="report-input-container">
+                <h6>Submit detailed reports to help us resolve issues faster and keep the Shoptic ecosystem running smoothly.</h6>
+            </div>
+
+            <div className="report-input-container">
                     
-                    <div className="row">
-                        <h4>Select Primary Reason : </h4>
+                <div className="d-flex flex-column">
+                    
+                    <h5>Primary Reason</h5>
+
+                    <div className="reasons-grid">
                         {reasons?.map(reason => (
                             <ReportOption reason={reason} setTargetReason={setTargetReason} targetReason={targetReason} reasonRef={reasonRef}/>
                         ))}
-                        <span className="text-danger">{targetReasonErr}</span>
                     </div>
-
-                    <div className="row">
-                        <h4>Editorial Context</h4>
-                        <div className="form-floating">
-                            <textarea className="form-control" onChange={(e) => setInput(e.target.value)} ref={inputRef} name="textArea" id="textArea" placeholder="Provide detailed information regarding the artifact or behavior in question... Min(20 characters)" />
-                            <label  htmlFor="textArea">Provide detailed information regarding the artifact or behavior in question... Min(20 characters)</label>
-                            <span className="text-danger">{inputErr}</span>
-                        </div>
-                    </div>
-                        
                 </div>
-                <div className="report-footer row">
-                    <div className="report-start ">
-                        <h6>Reports are processed within 24 hours by our human curators.</h6>
-                    </div> 
-                    <div className="report-end ">
-                        <button className="btn border" ref={discardRef} onClick={() => handleDiscard()}>Discard</button>
-                        <button className="btn btn-danger" ref={submitRef} onClick={() => handleSubmitReport()}>Submit Report</button>
-                    </div>
+
+                <div className="row mt-3 mx-auto">
+                    <h5 className='text-start p-0'>Editorial Context (Optional)</h5>
+                    <textarea className="textArea form-control" onChange={(e) => setInput(e.target.value)} ref={inputRef} name="textArea" id="textArea" placeholder="Provide detailed information regarding the artifact or behavior in question... Min(20 characters)" />
+                    <span className="text-danger mt-2 small">{inputErr}</span>
+                </div>
+                        
+            </div>
+
+            <div className="report-footer mt-2">
+                <div className="report-start ">
+                    <h6>Reports are processed within 24 hours by our human curators.</h6>
+                </div> 
+                <div className="manage-report-buttons">
+                    <button className="btn border" ref={discardRef} onClick={() => handleDiscard()}>Discard</button>
+                    <button className="btn btn-danger" ref={submitRef} onClick={() => handleSubmitReport()}>Submit Report</button>
                 </div>
             </div>
+        </div>
+                  
+                </div>
+            </div>
+
+            <Footer />
         </div>
     )
 }

@@ -45,9 +45,10 @@ const AdminSupportChatSidebar = ({ setTargetConvId }) => {
     return(
         <div className="sidebar-container" >
 
-            <div className="row">
-                <span className="d-flex align-items-top gap-3"> <Link to='/'><i class="fa-solid fa-arrow-left"></i></Link>
-                <h4>Support Chat</h4></span>
+            <div className="d-flex flex-column">
+                <h4>Conversations</h4>
+                <h6 className="small">ONGOING CONVERSATIONS</h6>
+                <span className="d-flex align-items-top gap-3"> <Link to='/'><i class="fa-solid fa-arrow-left"></i></Link></span>
             </div>
 
             <div className="row w-100">

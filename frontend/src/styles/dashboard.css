@@ -652,6 +652,25 @@
     font-size: 14px;
 }
 
+.report-option-container{
+    background-color: var(--component-bg) !important;
+}
+
+.report-option-container * {
+    background-color: transparent !important;
+}
+
+.report-option-container:hover{
+    background-color: var(--bg-color) !important;
+}
+
+.report-option-container.active:hover{
+    background-color: #0fad79 !important;
+}
+
+.report-container{
+    max-width: 1800px;
+}
 
 /*  */
 
