@@ -83,12 +83,12 @@ const Reports = () => {
                         </div>
                     </div>
 
-                    <div className="reports-main d-flex flex-column gap-2">
+                    <div className="reports-main d-flex flex-column gap-2" style={{minHeight : "70vh"}}>
                             {reports?.length !== 0 ? reports?.filter(report => report.status == "Sent").map((report,reportId) => <Report report={report} reportId={reportId} key={reportId} setToggleDeleteReport={setToggleDeleteReport} setToggleRespondReport={setToggleRespondReport}/>) : <EmptyReportPage />}
-                            {reports?.filter(report => report.status == "Sent").length % 5 !== 0 || reports?.filter(report => report.status == "Responded").length === 0 ? <>
+                            {reports?.filter(report => report.status == "Sent").length % 5 !== 0 || reports?.filter(report => report.status == "Responded").length === 0 ? <div className="d-flex flex-column">
                                 <span className="lineText mt-5 text-center small">End of {reportStatus} Reports</span>
                                 <div className="line "></div>
-                            </> : <button onClick={() => fetchReports()}>Load More...</button>}
+                            </div> : <button onClick={() => fetchReports()}>Load More...</button>}
                         
                     </div>
                     
