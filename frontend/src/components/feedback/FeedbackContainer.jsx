@@ -1,13 +1,12 @@
 import { useRef, useEffect } from "react"
+import Feedback from "./Feedback";
 
-const FeedbackContainer = ({ cookies , feedback, handlePostFeedback, feedbackData, setFeedbackData}) => {
-
+const FeedbackContainer = ({ user, removeFeedback ,cookies , feedback, handlePostFeedback, feedbackData, setFeedbackData}) => {
    
     const postRef = useRef(null)
 
-      const emptyStar = <i class="fa-regular fa-star"></i>;
+    const emptyStar = <i class="fa-regular fa-star"></i>;
     const star = <i class="fa-solid fa-star"></i>; //definign star icons to display calcualted rate ratio of user's feedback
-
 
     useEffect(() => {
 
@@ -25,8 +24,7 @@ const FeedbackContainer = ({ cookies , feedback, handlePostFeedback, feedbackDat
 
             <div className="feedback-main">
                 {cookies.token && (
-                    <>
-                    
+                    <div className="my-4">
                     <div className="stars d d-flex gap-2">
                             {[1, 2, 3, 4, 5].map((value) => (
                                 <span
@@ -45,11 +43,11 @@ const FeedbackContainer = ({ cookies , feedback, handlePostFeedback, feedbackDat
 
                         <button ref={postRef} onClick={() => handlePostFeedback()} className='submit btn btn-0 border-0 text-white'><i class="fa-solid fa-paper-plane"></i> Post</button>
                     </div>
-                    </>
+                    </div>
                 )}
 
                 <div className="feedback-footer d-flex flex-column">
-                    {feedback.length > 0 ? (feedback.map((fb, i) => (<span key={i}>{fb.fullname} {fb.content} {fb.stars}</span>))) : 'No review'}
+                    {feedback.length > 0 ? (feedback.map((fb) => <Feedback fb={fb} user={user} removeFeedback={removeFeedback}/> )) : 'No review'}
                 </div>
             </div>
         </div>

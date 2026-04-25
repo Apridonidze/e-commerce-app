@@ -184,6 +184,18 @@ const ProductPage = () => {
         }
     }
 
+    const removeFeedback = async(id) =>{ //api functionm to delete user feedback as admin
+        try{
+
+            const response = await axios.delete(`${BACKEND_URL}/api/feedback/${id}` , {headers: {Authorization : `Bearer ${cookies.token}`}}); //making api call
+            if(response.status === 200) setFeedback(prev => prev.filter((fb => fb.feedback_id !== id))) //handling 200 status code
+
+        }catch(err){
+            setFeedback(prev); //returning previous state if err occurs
+            setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message
+        };
+    };
+
     return (
         <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}>
 
@@ -208,20 +220,23 @@ const ProductPage = () => {
                     {toggleAddToCart.status ? <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart}/> : <></>}
                     {toggleReportProduct.status ? <ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct}/> : <></>}
 
-                    <div className="products-page-row d-flex gap-3">
+                    <div className="products-page-row d-flex align-items-start gap-3">
 
                         {isProductLoading ? 'loading skeleton' : <ProductContainer user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} handleAddToCart={handleAddToCart} toggleAddToCart={toggleAddToCart}/>}
-                        {isProductLoading ? 'loading skeleton ' : <FeedbackContainer handlePostFeedback={handlePostFeedback} feedbackData={feedbackData} setFeedbackData={setFeedbackData}  cookies={cookies} feedback={feedback}/>}
+                        {isProductLoading ? 'loading skeleton ' : <FeedbackContainer user={user} removeFeedback={removeFeedback} handlePostFeedback={handlePostFeedback} feedbackData={feedbackData} setFeedbackData={setFeedbackData}  cookies={cookies} feedback={feedback}/>}
 
                     </div>
                     
-                    <div className="products-container" style={{minHeight : '80vh'}}>
-                        <h3>Similar Products:</h3>
+                    <div className="similar-products-container d-flex flex-column gap-2">
+                        <h4><i class="fa-solid fa-layer-group" style={{color : '#10b981'}}></i> Similar Products:</h4>
 
-                            {similarProducts.length > 0 ? (
-                                similarProducts.map((prod, prodId) => (
+                            {similarProducts.length > 0 ? 
+                                <div className="products">
+                                    {similarProducts.map((prod, prodId) => (
                                     <Product prod={prod} prodId={prodId} key={prodId} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct}/>))
-                            ) : 'No Similar Products Found'}
+                            }    
+                                </div>
+                                : 'No Similar Products Found'}
                         
                     </div>
                 </div>

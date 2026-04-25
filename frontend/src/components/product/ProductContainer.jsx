@@ -3,25 +3,25 @@ import { Link } from "react-router-dom";
 const ProductContainer = ({ user ,setToggleMore,setTargetImage,  amount,  toggleMore, imagesArray, getImageSrc,  targetImage, product, setAmount, isInCart, handleAddToCart, toggleAddToCart }) => {
 
     const features = [
-  {
-    id: 1,
-    icon: <i className="fa-solid fa-truck"></i>,
-    title: "Free Shipping",
-    subtitle: "On orders over $50",
-  },
-  {
-    id: 2,
-    icon: <i className="fa-solid fa-shield-halved"></i>,
-    title: "Secure Payment",
-    subtitle: "100% protected",
-  },
-  {
-    id: 3,
-    icon: <i className="fa-solid fa-rotate-left"></i>,
-    title: "Easy Returns",
-    subtitle: "30-day return policy",
-  },
-];
+        {
+            id: 1,
+            icon: <i className="fa-solid fa-truck"></i>,
+            title: "Free Shipping",
+            subtitle: "On orders over $50",
+        },
+        {
+            id: 2,
+            icon: <i className="fa-solid fa-shield-halved"></i>,
+            title: "Secure Payment",
+            subtitle: "100% protected",
+        },
+        {
+            id: 3,
+            icon: <i className="fa-solid fa-rotate-left"></i>,
+            title: "Easy Returns",
+            subtitle: "30-day return policy",
+        },
+    ];
 
     return(
         <div className="main-product-container">                      
@@ -108,7 +108,7 @@ const ProductContainer = ({ user ,setToggleMore,setTargetImage,  amount,  toggle
                                 <div>
                                     <p className="trust-title">{item.title}</p>
                                     <span className="trust-subtitle">{item.subtitle}</span>
-                                </div>
+                                </div>      
                             </div>
                         ))}
                     </div>
