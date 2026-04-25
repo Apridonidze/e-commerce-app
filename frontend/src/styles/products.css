@@ -679,13 +679,17 @@
   color: #6b7280;
 }
 
-@media (max-width: 1121px) {
+@media (max-width : 1400px){
 
   .products-page-row{
     display: flex;
     flex-direction: column;
-
+  
   }
+}
+
+@media (max-width: 1121px) {
+
 
     .main-product-container {
         flex-direction: column-reverse;

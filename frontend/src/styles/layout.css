@@ -470,13 +470,20 @@
 
  /* */
 
+.feedback * {
+  background-color: transparent;
+}
+
 .feedback {
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: var(--product-bg-color);
   width: 100%;
   height: auto;
   max-width: 400px;
 }
 
-@media (max-width: 1121px) {
+@media (max-width: 1400px) {
 
   .feedback{
     max-width: 100% !important;

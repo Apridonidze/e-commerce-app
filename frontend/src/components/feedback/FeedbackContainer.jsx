@@ -53,7 +53,7 @@ const FeedbackContainer = ({ cookies , feedback}) => {
     //     </div>
     // )
     return(
-        <div className="feedback" >
+        <div className="feedback py-2" >
             <div className="feedback-header">
                 <h3>{feedback.length} Product Review</h3>
             </div>
