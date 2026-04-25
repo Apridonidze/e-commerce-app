@@ -43,7 +43,7 @@ const AdminSupportChatSidebar = ({ setTargetConvId }) => {
     },[])
     
     return(
-        <div className="admin-support-chat-sidebar border" >
+        <div className="sidebar-container" >
 
             <div className="row">
                 <span className="d-flex align-items-top gap-3"> <Link to='/'><i class="fa-solid fa-arrow-left"></i></Link>
