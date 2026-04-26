@@ -29,6 +29,9 @@ const Login =  () =>  {
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
 
+    const submitPasswordRef = useRef(null)
+
+    const [showPass,setShowPass] = useState(false)
     const navigator = useNavigate()
 
     const submitLogin = async (e) => {
@@ -60,7 +63,7 @@ const Login =  () =>  {
 
 
             }catch(err){
-                if(err.status === 400)isValid = false; setPasswordErr(err.response.data.err) ; setEmailErr('') ; passwordRef.current.classList.add('is-invalid'); passwordRef.current.classList.remove('is-valid'); emailRef.current.classList.add('is-invalid'); emailRef.current.classList.remove('is-valid')
+                if(err.status === 400)isValid = false; setPasswordErr('Invalid Credidentials Provided!') ; setEmailErr('') ; passwordRef.current.classList.add('is-invalid'); passwordRef.current.classList.remove('is-valid'); emailRef.current.classList.add('is-invalid'); emailRef.current.classList.remove('is-valid')
                 if(err.status === 500) setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
             };
         };
@@ -75,21 +78,30 @@ const Login =  () =>  {
                 <div className="main-start"><Sidebar /></div>
                 <div className="main-end">
                     <div className="main-header"><Header /></div>
-                    <div className="auth-container">
-                    <form onSubmit={submitLogin}>
-                        <div className="form-floating"> 
-                            <input className="form-control" type="text" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} value={email} ref={emailRef}/>
-                            <label htmlFor="email">Email</label>
-                            {emailErr}
-                        </div>
-                        <div className="form-floating"> 
-                            <input className="form-control" type="text" id="name" placeholder="Full Name" onChange={(e) => setPassword(e.target.value)} value={password} ref={passwordRef}/>
-                            <label htmlFor="name">Password</label>
-                            {passwordErr}
-                        </div>
-                        <input type="submit" value="Log In" />
-                    </form>
-                    <Link to='/sign' replace>Do Not Have A Account? Sign Up Here!</Link>
+
+                    <div className="auth-container p-3 rounded-3 mt-5">
+                        <h1 className='fw-bold' style={{color : '#10b981'}}>Welcome Back!</h1>
+                        <h4 className='mb-5'>Sign in to continue to your account</h4>
+
+                        <form onSubmit={submitLogin}>
+                            <div className="form-floating"> 
+                                <input className="form-control" type="text" id="email" placeholder="" onChange={(e) => setEmail(e.target.value)} value={email} ref={emailRef}/>
+                                <label htmlFor="email">Email</label>
+                                <span className='errorMessage small'>{emailErr}</span>
+                            </div>
+
+                            <div className="input-group"> 
+                                <div className="form-floating">
+                                    <input className="form-control" type={showPass ? 'text' : 'password'} id="name" placeholder="" ref={passwordRef} onChange={(e) => setPassword(e.target.value)} value={password} />
+                                    <label htmlFor="name">Password...</label>
+                                    <span className='errorMessage small'>{passwordErr}</span>
+                                </div>
+                                    <button className={`showBtn ${passwordErr !== '' ?  'isInvalid' : ''} btn border-0 btn-0`} onClick={() => setShowPass(!showPass)}>{showPass ? <i class="fa-regular fa-eye-slash"></i> : <i class="fa-regular fa-eye"></i>}</button>
+                            </div>
+
+                            <input className='submitBtn btn w-100' type="submit" value="Log In" />
+                        </form>
+                        <Link to='/sign' replace>Do Not Have A Account? Sign Up Here!</Link>
                 </div>
 
                 </div>

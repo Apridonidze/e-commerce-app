@@ -10,7 +10,7 @@ const Footer = () => {
                         <span className="icon"></span>
                         <span className='fs-3 fw-bold' style={{color : "#10b981"}}>Shoptic</span>
                     </div>
-                    <span className="small text-secondary text-break" >Your trusted marketplace for quality products, fast delivery, and secure shopping.</span>
+                    <span className="small text-break" >Your trusted marketplace for quality products, fast delivery, and secure shopping.</span>
                 </div>
 
                 <div className="footer-column pt-1 fw-medium ">
@@ -76,7 +76,7 @@ const Footer = () => {
                         <div className="link-start"><i className="fa-solid fa-comment-dots" style={{color : '#10b981'}}></i></div>
                         <div className="link-end">
                             <span style={{color : '#10b981'}}>Leave Feedback</span>
-                            <span className="small mt-1">/feedback</span>
+                            <span className="small mt-1" style={{color : '#10b981'}}>/feedback</span>
                         </div>
                     </Link>
                 </div>

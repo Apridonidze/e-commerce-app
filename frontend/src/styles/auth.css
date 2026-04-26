@@ -29,15 +29,77 @@
     width: 100%;
     height: auto;
     margin: auto;
-    transform: translateY(20%);
     background-color: var(--component-bg);
 }
 
 .auth-container input , .auth-container input:active , .auth-container input:focus , .auth-container select , .auth-container select:focus , .auth-container select:active {
     color: var(--text-color);
-    background-color: var(--component-bg);
+    background-color: var(--dark-bg);
+    border: var(--btn-border);
+}
+
+.auth-container form div {
+    background-color: transparent !important;
+    height: 100px;
+    align-items: start;
+}
+
+.showBtn {
+    height: 58px;
+    border-top: var(--btn-border) !important;
+    border-right: var(--btn-border) !important;
+    border-bottom: var(--btn-border) !important;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.auth-container label{
+    color: var(--text-color);
+}
+
+.showBtn {
+    border: var(--btn-border) !important;
+    background-color: var(--dark-bg) !important;
+}
+
+.showBtn.isInvalid {
+    border-top: 1px solid #dc3545 !important;
+    border-right: 1px solid #dc3545 !important;
+    border-bottom:1px solid #dc3545 !important;
+    color: #dc3545 !important;
+}
+
+.showBtn.isInvalid i {
+    color: #dc3545;
+}
+
+.auth-container input::placeholder , .auth-container select::placeholder{
+    color: var(--text-color) !important;
 }
 
 .auth-container input, .auth-container select {
     cursor: pointer;
 } 
+
+.auth-container a {
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.auth-container a:hover{
+    text-decoration: underline;
+    color: #10b981;
+}
+
+.submitBtn{
+    height: 50px;
+    background-color: #10b981 !important;
+    color: white !important;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+.errorMessage {
+    color: #dc3545 !important;
+}
