@@ -73,7 +73,7 @@ const location = useLocation()
                     <div className="center-center col-12 h-auto">
                         {cookies?.token ? <div className="text d-flex flex-column">
                             <span className='p-2 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>Dashboard</span>
-                            <NavLink to='/dashboard' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-chart-line pe-4"></i> Dashboard</NavLink>
+                            <NavLink to='/dashboard' className={({ isActive }) => isActive && !location.hash ? "active-link" : ""}><i class="fa-solid fa-chart-line pe-4"></i> Dashboard</NavLink>
                             <Link to='/dashboard#cart-items' className={isActiveHash("#cart-items") ? "active-link" : ""}><i class="fa-solid fa-cart-shopping pe-4"></i> Cart</Link>
                             <Link to='/dashboard#order-list' className={isActiveHash("#order-list") ? "active-link" : ""}><i class="fa-solid fa-box-open pe-4"></i> Orders</Link>
                         </div> : <></>}
@@ -83,7 +83,7 @@ const location = useLocation()
                             <div className="text d-flex flex-column ">
                                 <span className='p-2 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>MANAGMENT</span>
 
-                                <NavLink to='/admin-dashboard' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-chart-pie pe-4"></i> Admin Dashboard</NavLink>
+                                <NavLink to='/admin-dashboard' className={({ isActive }) => isActive && !location.hash ? "active-link" : ""}><i class="fa-solid fa-chart-pie pe-4"></i> Admin Dashboard</NavLink>
                                 <Link to='/admin-dashboard#manage-products' className={isActiveHash("#manage-products") ? "active-link" : ""}><i class="fa-solid fa-box pe-4"></i> Manage Products</Link>
                                 <Link to='/admin-dashboard#reports' className={isActiveHash("#reports") ? "active-link" : ""}><i class="fa-solid fa-newspaper pe-4"></i> Reports</Link>
                                 <Link to='/admin-dashboard#feedbacks' className={isActiveHash("#feedbacks") ? "active-link" : ""}><i class="fa-solid fa-message pe-4"></i> Feedbacks</Link>
