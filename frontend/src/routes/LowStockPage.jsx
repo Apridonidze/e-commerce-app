@@ -17,6 +17,10 @@ import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { useCookies } from "react-cookie"
 
+import { NavLink } from "react-router-dom"
+
+import LowStockProduct from "../components/product/LowStockProduct"
+
 const LowStockPage = () => {
 
     const [ cookies ] = useCookies(['token'])
@@ -29,13 +33,12 @@ const LowStockPage = () => {
     const [isLowStockLoading, setIsLowStockLoading] = useState(true)
     const [lowStock, setLowStock] = useState([])
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
-    const [toggleReportProduct, setToggleReportProduct] = useState({status : null, productId: null});
+    const [offset, setOffset] = useState(0)
 
-    const [toggleAddToCart ,setToggleAddToCart] = useState({status : false, product: null});
     useEffect(() => {
         const fetchLowStockItems = async() => {
             try{
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard/low-stock/${0}`, config)
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/low-stock/${offset}`, config)
                 
                 setIsLowStockLoading(false)
                 if(response.status === 204) return setLowStock([]);
@@ -50,7 +53,7 @@ const LowStockPage = () => {
         } 
 
         fetchLowStockItems();
-    }, [])
+    }, [offset])
 
                 
 
@@ -60,8 +63,6 @@ const LowStockPage = () => {
 
             {toggleRemove.status ? <><div className="manage-product-background" style={{zIndex : 1000}} onClick={() => setToggleRemove({status : false, product  :null})}></div><RemoveProduct setToggleRemove={setToggleRemove} toggleRemove={toggleRemove} setToggleAlert={setToggleAlert}/></> : <></> }
             {toggleEdit.status ? <><div className="manage-product-background" style={{zIndex : 1000}} onClick={() => setToggleEdit({status : false, product  :null})}></div> <EditProduct setToggleEdit={setToggleEdit} toggleEdit={toggleEdit} setToggleAlert={setToggleAlert}/> </> : <></> }
-            {toggleReportProduct.status ? <><div className="manage-product-background" style={{zIndex : 1000}} onClick={() => setToggleReportProduct({status : false, productId  :null})}></div><ReportProduct setToggleReportProduct={setToggleReportProduct} toggleReportProduct={toggleReportProduct} setToggleAlert={setToggleAlert}/></> : <></>}
-{toggleAddToCart.status ? <div className="add-to-cart-wrapper" style={{top : `${window.scrollY}px`}}><div className="add-to-cart-background" style={{top : `${window.scrollY}px`}} onClick={() => setToggleAddToCart({status : false , product : null})}></div> <AddToCart setToggleAddToCart={setToggleAddToCart} toggleAddToCart={toggleAddToCart} setToggleAlert={setToggleAlert}/></div> : <></>}
 
 
             <div className="main-body">
@@ -73,21 +74,26 @@ const LowStockPage = () => {
                         <Header />
                         
                         <div className="orders-page-header-buttons d-flex justify-content-between pt-3">
-                            <div className="order-page-header-start"><button className="return d-flex gap-2 align-items-center btn border-0 fs-6" onClick={() => {navigator('/admin-dashboard', {replace : true})}}><i class="fa-solid fa-arrow-left"></i> Return</button></div>
+                            <div className="order-page-header-start">
+                                <button className="return d-flex gap-2 align-items-center btn border-0 fs-6" onClick={() =>    {navigator('/admin-dashboard', {replace : true})}}><i class="fa-solid fa-arrow-left"></i> Return</button>
+                            </div>
+                            <div className="order-page-header-end">
+                                <NavLink to='/admin-dashboard/orders/OnWay' className={({ isActive }) => isActive ? "active-order" : ""}>OnWay</NavLink>
+                                <NavLink to='/admin-dashboard/orders/Delivered' className={({ isActive }) => isActive ? "active-order" : ""}>Delivered</NavLink>
+                            </div>
                         </div>
                     
                     </div>
 
                     <div className="low-stock-page-main rounded-3 mt-4 py-2">
 
-                        {lowStock?.length !== 0 ? 
-                            <div className="products">{lowStock?.map(prod => <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>)}</div> : <EmptyLowStock />
-                        }
+                        {lowStock?.length !== 0 ? <div className="products">{lowStock?.map(prod => <LowStockProduct prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove }/>)}</div> 
+                        : <EmptyLowStock />}
 
                         {lowStock?.length % 5 !== 0 || lowStock?.length === 0 ? <></> : 
-                            <button className="btn d-flex text-white fw-bold my-5 align-items-center py-2 justify-content-center mx-auto w-25 " style={{backgroundColor : "#10b981", height : '50px', textAlign: 'center'}} onClick={() => setOffset((prev) => {if(lowStock.length % 15 === 0){return prev + 15} return})}>Load More <Items></Items>...</button>
+                            <button className="btn d-flex text-white fw-bold my-5 align-items-center py-2 justify-content-center mx-auto w-25 " style={{backgroundColor : "#10b981", height : '50px', textAlign: 'center'}} onClick={() => setOffset((prev) => {if(lowStock.length % 5 === 0){return prev + 5} return prev})}>Load More Items...</button>
                         }
-                        
+
                     </div>
 
                 </div>

@@ -4,7 +4,7 @@ import EmptyLowStock from "../../empty/EmptyLowStock";
 
 import '../../styles/products.css'; //importinf css styling file
 import LowStockProduct from "../../components/product/LowStockProduct";
-const LowStock = ({ lowStock, setToggleEdit, setToggleRemove}) => { //recieving props from parent componenet (AdminDashboard.jsx)
+const LowStock = ({ lowStock, setToggleEdit, setToggleRemove, setToggleReportProduct, setToggleAddToCart, setToggleAlert }) => { //recieving props from parent componenet (AdminDashboard.jsx)
     return(
         <div className="low-stock-container my-5">
 
@@ -16,7 +16,7 @@ const LowStock = ({ lowStock, setToggleEdit, setToggleRemove}) => { //recieving 
             <div className="low-stock-main">
                 
                 {lowStock?.length !== 0 ? 
-                   <div className="products">{lowStock?.map(prod => <LowStockProduct prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} />)}</div> : <EmptyLowStock />
+                   <div className="products">{lowStock?.map(prod => <LowStockProduct prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>)}</div> : <EmptyLowStock />
                 }
             </div>
 
