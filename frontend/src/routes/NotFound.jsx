@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import Footer from "../layout/Footer"
+
 const NotFound = () => {
     return(
         <div className="not-found-page-container">
