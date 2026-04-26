@@ -11,6 +11,7 @@ import Header from '../layout/Header';
 import Sidebar from '../layout/Sidebar'
 import Footer from '../layout/Footer'; //importing layout components
 
+import StatusMessage from '../alerts/StatusMessage';
 import Product from '../components/product/Product';
 
 import AddToCart from '../components/product/AddToCart';
