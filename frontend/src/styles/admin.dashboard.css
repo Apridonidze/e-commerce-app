@@ -928,6 +928,92 @@
     color: #10b981 !important;
 }
 
+.restockBtn{
+    background-color: #10b981;
+    color: white;
+    font-weight: 500;
+    border-radius: 5px !important;
+}
+
+.low-stock-product{
+    max-width: 400px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: var(--product-bg-color);
+    border-radius: 5px;
+}
+
+.low-stock-product.danger{
+    border-left: 3px solid #c4303e;
+}
+
+.low-stock-product.warning{
+    border-left: 3px solid #f49600;
+}
+
+.restockBtn{
+    background-color: #10b981 !important;
+    text-align: center !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.removeBtn{
+    background-color: var(--component-bg) !important;
+}
+
+.removeBtn:hover{
+    background-color: var(--component-bg) !important;
+}
+
+.removeBtn i{
+    background-color: transparent;
+    color: #b5bec9 !important;
+}
+
+.restockBtn:hover, .restockBtn:active, .restockBtn:focus{
+    background-color: #00a571 !important;
+    color: whitesmoke;
+}
+
+.low-stock-product * {
+    background-color: var(--product-bg-color);
+}
+
+.outOfStockText span{
+    background-color: rgba(196, 48, 62, 0.1);
+    color:  #d13242;
+    padding: 0.1rem 0.5rem;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.outOfStockText i{
+    font-size: 17px;
+    color:  #d13242;
+}
+
+.lowStockText span{
+    background-color: rgba(244, 150, 0, 0.1);
+    color:  rgba(244, 150, 0, 1);
+    padding: 0.1rem 0.5rem;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.lowStockText i {
+    font-size: 17px;
+    color:  rgba(244, 150, 0, 1);
+}
+
 @media (max-width: 1200px) {
     .chart-dashboard-container {
         overflow-x: auto;
