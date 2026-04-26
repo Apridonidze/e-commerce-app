@@ -166,17 +166,15 @@
     width: 100%;
 }
 .category-sidebar .toggleDropDown ,.category-sidebar .allCat {
-    background-color: var(--bg-color) ;
+    background-color: var(--component-bg) ;
 }
 
 .allCat , .allCat button{
   color: var(--text-color);
-  background-color: var(--product-bg-color);
 }
 
 .toggleDropDown {
   border: none;
-  background-color: var(--product-bg-color) ;
   color: var(--product-color);
 }
 .subcategory-list-unstyled li, .subcategory-list-unstyled {
@@ -819,7 +817,7 @@
 
   .footer-column{
     border: none !important;
-    width: 100%;
+    width: 100% ;
     margin: 2rem 0rem;
     display: flex;
     justify-content: center !important;
