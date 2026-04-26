@@ -564,6 +564,31 @@
   background-color: transparent;
 }
 
+.support-chat-placeholder{
+  max-width: 400px;
+  height: auto;
+  background-color: #10b981;
+  color: white;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.support-chat-placeholder * {
+  background-color: transparent;
+  color: white;
+}
+
+.support-chat-placeholder button{
+  background-color: white;
+  color: #10b981;
+  font-weight: bold;
+}
+
+.support-chat-placeholder button:hover{
+  background-color: whitesmoke ;
+  color: #0fac77;
+}
+
 @media (max-width: 1400px) {
 
   .products-page-col1, .products-page-col2{

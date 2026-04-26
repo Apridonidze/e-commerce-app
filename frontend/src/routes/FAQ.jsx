@@ -3,7 +3,20 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import Question from "../components/faq/Question";
 
+import StatusMessage from "../alerts/StatusMessage";
+import SupportChatContainer from "../components/supportchat/SupportChatContainer";
+
+import { useContext, useState } from "react";
+import { UserContext } from "../context/UserContext";
+
+
 const FAQ = () => {
+
+    const { user } = useContext(UserContext)
+
+    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
+
+
     const faqs = [
     {
         title: "Ordering & Products",
@@ -95,18 +108,30 @@ const FAQ = () => {
 
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}> 
+            {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
+
                 <div className="main-body">
                     <div className="main-start"><Sidebar /></div>
                     <div className="main-end">
 
                         <div className="main-header"><Header /></div>
 
-                            <h1 className="fw-bold" style={{color : '#10b981'}}>Frequently Asked Questions</h1>
-                            <h6 className="small">Find quick answers to the most common questions about ordering, payments, shipping, and account management. If you can’t find what you’re looking for, feel free to contact our support team.</h6>
-                            
-                            <div className="faq-list-container mt-5">
-                                {faqs.map(faq => <Question faq={faq}/>)}
+                        <h1 className="fw-bold" style={{color : '#10b981', fontSize : '48px'}}>Frequently Asked Questions</h1>
+                        <h6 className="small">Find quick answers to the most common questions about ordering, payments, shipping, and account management. If you can’t find what you’re looking for, feel free to contact our support team.</h6>
+                        
+                        <div className="faq-list-container mt-5">
+                            {faqs.map(faq => <Question faq={faq}/>)}
+                        </div>
+
+                        <div className="support-chat-placeholder p-4">
+                            <div className="d mb-4">
+                                <h2 className="fw-bold">Still Need Assistance?</h2>
+                                <h6 className="small">Can’t find what you’re looking for? Our support team is ready to help you in real time.Open the chat and get quick answers to your questions.</h6>
                             </div>
+                            <button className="btn border-0 px-4 py-2">Open Support Chat</button>
+                        </div>
+
+                        {!user ||  user?.role !== 'admin'  ? <></> : <SupportChatContainer setToggleAlert={setToggleAlert}/>}
 
                     </div>
                 </div>
