@@ -2,19 +2,22 @@ import Footer from "../layout/Footer"
 import Sidebar from "../layout/Sidebar"
 import Header from "../layout/Header"
 
-import SupportChatContainer from "../components/supportchat/SupportChatContainer"
-
+import SupportChat from "../components/supportchat/SupportChat"
 import { useContext, useState } from "react"
 import { UserContext } from "../context/UserContext"
 
 import '../styles/landing.css'
 
+import { Link } from "react-router-dom"
 const Landing = () => {
 
+
+    
     const { user } = useContext(UserContext)
 
+    const [toggleChat, setToggleChat] = useState(false) ; //state to toggle SupportChat.jsx component
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
-    
+
 
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}> 
@@ -32,8 +35,8 @@ const Landing = () => {
                             <p>A modern marketplace for fast, secure, and simple online shopping.</p>
 
                             <div className="hero-buttons">
-                                <button className="btn primary"><i className="fa-solid fa-cart-shopping"></i> Start Shopping</button>
-                                <button className="btn secondary"><i className="fa-solid fa-play"></i> View Products</button>
+                                <Link to={'/'}><button className="btn "><i className="fa-solid fa-cart-shopping"></i> Start Shopping</button></Link>
+                                <Link to={'/'}><button className="btn "><i className="fa-solid fa-play"></i> View Products</button></Link>
                             </div>
 
                             <small>Secure payments • Fast delivery • Live support</small>
@@ -122,10 +125,10 @@ const Landing = () => {
                             <h2 className="fw-bold" style={{color : '#10b981'}}>Start Shopping Today</h2>
                             <p>Join now and experience a faster way to shop online.</p>
 
-                            <button className="btn secondary">Get Started <i className="fa-solid fa-arrow-right"></i></button>
+                            <Link to={user ? '/dashboard' : '/sign'}><button className="btn secondary">Get Started <i className="fa-solid fa-arrow-right"></i></button></Link>
                         </section>
 
-                        {!user ||  user?.role !== 'admin'  ? <></> : <SupportChatContainer setToggleAlert={setToggleAlert}/>}
+                        {toggleChat ? <div className="support-chat-main-container"><SupportChat  setToggleChat={setToggleChat} setToggleAlert={setToggleAlert}/></div> : <></> }
                         
                     </div>
                     

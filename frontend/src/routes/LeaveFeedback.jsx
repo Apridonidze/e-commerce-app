@@ -64,7 +64,7 @@ const LeaveFeedback = () => {
                 <div className="main-end">
                     <div className="main-header"><Header /></div>
 
-                    <div className="leave-feedback-container">
+                    <div className="leave-feedback-container mb-5">
                         <h1 className="fw-bold">Share Your Experience</h1>
                         <h5>Help us improve your experience by sharing your thoughts.</h5>
                         <span className="small">Your feedback helps us identify issues, improve features, and deliver a better product for everyone.</span>
@@ -73,8 +73,13 @@ const LeaveFeedback = () => {
                     </div>
 
                     
-                        {isLoading ? <CustomerFeedbackSkeleton /> : feedbacks.length === 0 ? <EmptyCustomerFeedback /> : <div className="manage-feedbacks-main mt-3"> {feedbacks?.map(fb => 
-                            <Feedback fb={fb} user={user} removeFeedback={removeFeedback}/>)}</div> }
+                    {isLoading ? <CustomerFeedbackSkeleton /> : feedbacks.length === 0 ? <EmptyCustomerFeedback /> : 
+                    <div className="user-feedbacks mt-4">
+                        <h4><i class="fa-solid fa-user-group fs-3"></i>  Other User Experiences</h4>
+                        <div className="manage-feedbacks-main mt-3">
+                            {feedbacks?.map(fb => <Feedback fb={fb} user={user} removeFeedback={removeFeedback}/>)}
+                        </div>
+                    </div> }
                     
                 </div>
             </div>

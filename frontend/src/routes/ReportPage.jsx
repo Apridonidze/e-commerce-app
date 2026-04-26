@@ -147,7 +147,6 @@ const ReportPage = () => {
 
             const response = await axios.post(`${BACKEND_URL}/api/report/`, {type : targetReason.category , content : input , status : "Sent"} , {headers : {Authorization : `Bearer ${cookies.token}`}})
 
-            console.log(response)
             if(response.status === 200) {
                 
             }
@@ -183,7 +182,7 @@ const ReportPage = () => {
 
             <div className="report-container p-3 rounded-3 d-flex flex-column justify-content-between" style={{minHeight : '85vh'}}>
             <div className="report-header d-flex flex-column">
-                <h1 className="fw-bold">Report Product</h1>
+                <h1 className="fw-bold">Report Platform</h1>
                 <h6>Submit detailed reports to help us resolve issues faster and keep the Shoptic ecosystem running smoothly.</h6>
             </div>
 
@@ -210,7 +209,7 @@ const ReportPage = () => {
 
             <div className="report-footer mt-2">
                 <div className="report-start ">
-                    <h6 className="small fw-light">*Reports are processed within 24 hours by our human curators.</h6>
+                    <h6 className="small fw-light">*Reports are processed within 24 hours by support group.</h6>
                 </div> 
                 <div className="manage-report-buttons">
                     <button className="btn " ref={discardRef} onClick={() => handleDiscard()}>Discard</button>

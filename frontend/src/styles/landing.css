@@ -4,6 +4,10 @@
     color: var(--text-color);
 }
 
+.landing-container a {
+    text-decoration: none;
+}
+
 .hero {
     display: flex;
     flex-direction: column;
@@ -47,7 +51,7 @@
   background-color: #0fac77;
 }
 
-.btn {
+.landing-container .btn {
     padding: 12px 18px;
     border-radius: 7px;
     border: none;
@@ -73,14 +77,14 @@
     margin-bottom: 30px;
 }
 
-.grid {
+.landing-container .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 20px;
     width: 100%;
 }
 
-.card {
+.landing-container .card {
     padding: 22px;
     border-radius: 14px;
     border: none !important;
@@ -90,7 +94,7 @@
     align-items: flex-start;
 }
 
-.card i {
+.landing-container .card i {
     width: auto;
     color: #10b981;
     font-size: 24px;
@@ -100,13 +104,13 @@
     margin-bottom: 12px;
 }
 
-.categories {
+.landing-container .categories {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-.category {
+.landing-container .category {
     padding: 10px 14px;
     border-radius: 20px;
     background-color: rgba(16, 185, 129, 1);

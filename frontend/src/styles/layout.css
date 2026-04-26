@@ -531,6 +531,10 @@
   color: #10b981;
 }
 
+.user-feedbacks i{
+  color: #10b981;
+}
+
 .faq-header button{
   border: none !important;
   background-color: transparent;

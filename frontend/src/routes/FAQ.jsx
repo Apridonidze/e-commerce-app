@@ -119,7 +119,7 @@ const FAQ = () => {
                         <div className="main-header"><Header /></div>
 
                         <h1 className="fw-bold" style={{color : '#10b981', fontSize : '48px'}}>Frequently Asked Questions</h1>
-                        <h6 className="small">Find quick answers to the most common questions about ordering, payments, shipping, and account management. If you can’t find what you’re looking for, feel free to contact our support team.</h6>
+                        <h6 className="h6">Find quick answers to the most common questions about ordering, payments, shipping, and account management. If you can’t find what you’re looking for, feel free to contact our support team.</h6>
                         
                         <div className="faq-list-container mt-5">
                             {faqs.map(faq => <Question faq={faq}/>)}
