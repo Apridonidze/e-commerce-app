@@ -1,6 +1,7 @@
 import Sidebar from "../layout/Sidebar";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
+import Question from "../components/faq/Question";
 
 const FAQ = () => {
 
@@ -95,25 +96,12 @@ const FAQ = () => {
                     <div className="main-end">
 
                         <div className="main-header"><Header /></div>
+
                             <h1>Frequently Asked Questions</h1>
                             <div className="faq-list-container">
-                                {faqs.map((faq, faqId) => (<div className="faq" key={faqId}>
-                                    <h3>{faq.title}</h3>
-                                    <div className="faq-items">
-                                        {faq?.items.map((item , itemId) => (
-                                            <div className="faq-item" key={itemId}>
-                                                <div className="faq-header d-flex justify-content-between">
-                                                    <h5>{item.question}</h5>
-                                                    <button className="btn btn-primary" type="button" data-toggle="collapse" data-target={`#collapseDiv${itemId}`} aria-expanded="false" aria-controls={`collapseDiv${itemId}`}>^</button>
-                                                </div>
-                                                <div className="collapse" id={`collapseDiv${itemId}`}>
-                                                    <h5>{item.answer}</h5>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>))}
-                        </div>
+                                {faqs.map(faq => <Question faq={faq}/>)}
+                            </div>
+
                     </div>
                 </div>
                 <Footer />
