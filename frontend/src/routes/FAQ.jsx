@@ -4,16 +4,18 @@ import Footer from "../layout/Footer";
 import Question from "../components/faq/Question";
 
 import StatusMessage from "../alerts/StatusMessage";
-import SupportChatContainer from "../components/supportchat/SupportChatContainer";
+import SupportChat from "../components/supportchat/SupportChat";
 
 import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 
+import '../styles/supportchat.css'
 
 const FAQ = () => {
 
     const { user } = useContext(UserContext)
 
+    const [toggleChat, setToggleChat] = useState(false) ; //state to toggle SupportChat.jsx component
     const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
 
@@ -123,15 +125,15 @@ const FAQ = () => {
                             {faqs.map(faq => <Question faq={faq}/>)}
                         </div>
 
-                        <div className="support-chat-placeholder p-4">
+                        {user ? <div className="support-chat-placeholder p-4">
                             <div className="d mb-4">
                                 <h2 className="fw-bold">Still Need Assistance?</h2>
                                 <h6 className="small">Can’t find what you’re looking for? Our support team is ready to help you in real time.Open the chat and get quick answers to your questions.</h6>
                             </div>
-                            <button className="btn border-0 px-4 py-2">Open Support Chat</button>
-                        </div>
-
-                        {!user ||  user?.role !== 'admin'  ? <></> : <SupportChatContainer setToggleAlert={setToggleAlert}/>}
+                            <button className="btn border-0 px-4 py-2" onClick={() => setToggleChat(true)}>Open Support Chat</button>
+                        </div> : <></>}
+    
+                        {toggleChat ? <div className="support-chat-main-container"><SupportChat  setToggleChat={setToggleChat} setToggleAlert={setToggleAlert}/></div> : <></> }
 
                     </div>
                 </div>
