@@ -24,6 +24,8 @@ import '../styles/products.css'; // importing css files
 import ProductContainer from '../components/product/ProductContainer';
 import FeedbackContainer from '../components/feedback/FeedbackContainer';
 
+import ProductPageSkeleton from '../skeletons/ProductPageSkeleton';
+
 const ProductPage = () => {
 
     const { id } = useParams();
@@ -219,7 +221,7 @@ const ProductPage = () => {
                     <div className="products-page-row d-flex align-items-start gap-3">
 
                         {isProductLoading ? 'loading skeleton' : <ProductContainer setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove}setToggleReportProduct={setToggleReportProduct} handleAddToCart={handleAddToCart} user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} toggleAddToCart={toggleAddToCart}/>}
-                        {isProductLoading ? 'loading skeleton ' : <FeedbackContainer user={user} removeFeedback={removeFeedback} handlePostFeedback={handlePostFeedback} feedbackData={feedbackData} setFeedbackData={setFeedbackData}  cookies={cookies} feedback={feedback}/>}
+                        {isProductLoading ? <ProductPageSkeleton />  : <FeedbackContainer user={user} removeFeedback={removeFeedback} handlePostFeedback={handlePostFeedback} feedbackData={feedbackData} setFeedbackData={setFeedbackData}  cookies={cookies} feedback={feedback}/>}
 
                     </div>
                     

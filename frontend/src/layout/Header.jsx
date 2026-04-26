@@ -62,7 +62,7 @@ const Header = ({ setProducts, setToggleAlert, fetchProducts }) => {
             <div className="header-end d-flex align-items-center gap-2">
 
                 <div className="side-buttons gap-3">
-                    <button className="btn" style={{fontSize: "18px", border : 'none'}} onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
+                    <button className="btn border-0" style={{fontSize: "18px", border : 'none'}} onClick={() => toggleTheme(theme === 'light' ? 'dark' : 'light')}>{theme == 'dark' ? <i class="fa-solid fa-moon"></i> :  <i class="fa-solid fa-sun"></i> }</button>
                     {user ? <div className="user d-flex gap-2 align-items-center" >
                         <Link to='/dashboard' className="text-decoration-none ">
                             <small ><strong>{user?.fullname}</strong> <br /> <span >{user?.email.length > 20 ? user?.email.slice(0, 21) : user?.email}</span></small>
