@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react"
 import Feedback from "./Feedback";
+import EmptyCustomerFeedback from "../../empty/EmptyCustomerFeedback";
 
 const FeedbackContainer = ({ user, removeFeedback ,cookies , feedback, handlePostFeedback, feedbackData, setFeedbackData}) => {
    
@@ -48,7 +49,7 @@ const FeedbackContainer = ({ user, removeFeedback ,cookies , feedback, handlePos
                 
 
                 <div className="feedback-footer d-flex flex-column mt-4">
-                    {feedback.length > 0 ? ([...feedback].reverse().slice(0,3 ).map((fb) => <Feedback fb={fb} user={user} removeFeedback={removeFeedback}/> )) : 'No review'}
+                    {feedback.length > 0 ? ([...feedback].reverse().slice(0,3 ).map((fb) => <Feedback fb={fb} user={user} removeFeedback={removeFeedback}/> )) : <EmptyCustomerFeedback />}
                 </div>
             </div>
         </div>

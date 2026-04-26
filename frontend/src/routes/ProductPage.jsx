@@ -226,8 +226,8 @@ const ProductPage = () => {
                         <div className="products-page-col1">
                             {isProductLoading ? <ProductContainerSkeleton/> : <ProductContainer handleDeleteFromCart={handleDeleteFromCart} inCartAmount={inCartAmount} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove}setToggleReportProduct={setToggleReportProduct} handleAddToCart={handleAddToCart} user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} toggleAddToCart={toggleAddToCart}/>}
 
-                            <div className="similar-products-container d-flex flex-column gap-2">
-                                <h4><i class="fa-solid fa-layer-group" style={{color : '#10b981'}}></i> Similar Products:</h4>
+                            <div className="similar-products-container d-flex flex-column gap-2 mt-5">
+                                <h4 className='fw-bold' style={{color : '#10b981'}}>Similar Products:</h4>
 
                                 {isSimilarProductsLoading ? <div className="products">{[...Array(5)].map((_,i) => (<ProductSkeleton key={i}/>))}</div> : similarProducts.length > 0 ? 
                                     <div className="products">
