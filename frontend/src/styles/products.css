@@ -683,6 +683,17 @@
   color: #6b7280;
 }
 
+.empty-low-stock-container a{
+  color: #10b981;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.empty-low-stock-container a:hover{
+  color: #0ea572;
+  text-decoration: underline;
+}
+
 @media (max-width : 1400px){
 
   .products-page-row{

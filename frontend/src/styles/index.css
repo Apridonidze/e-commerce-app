@@ -52,7 +52,7 @@ button:disabled {
   cursor: not-allowed !important;
 }
 
-textarea, button{
+textarea{
   border:var(--btn-border)  !important;
 }
 

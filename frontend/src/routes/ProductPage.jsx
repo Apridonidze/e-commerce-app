@@ -28,6 +28,7 @@ import FeedbackContainer from '../components/feedback/FeedbackContainer';
 import ProductContainerSkeleton from '../skeletons/ProductContainerSkeleton'
 import ProductPageSkeleton from '../skeletons/ProductPageSkeleton';
 import ProductSkeleton from '../skeletons/ProductSkeleton';
+import EmptySimilarProducts from '../empty/EmptySimilarProducts';
 
 const ProductPage = () => {
 
@@ -235,7 +236,7 @@ const ProductPage = () => {
                                             <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>
                                         ))}    
                                     </div>
-                                : 'No Similar Products Found'}
+                                : <EmptySimilarProducts />}
                             </div>
                         </div>
                         <div className="products-page-col2">  
