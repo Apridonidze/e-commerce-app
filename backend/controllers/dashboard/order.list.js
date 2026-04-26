@@ -8,7 +8,7 @@ async function orderList (req,res) {
 
     try{
         const { status, offset } = req.params; //defining params
-        const limit = 15; //defining default limit for offset
+        const limit = 5; //defining default limit for offset
 
         const [ orders ] = await db.query(`select orders.*, users.fullname, users.email from orders join users on orders.user_id = users.id where orders.status = ? limit ?` , [status, limit+ Number(offset)]); //fetching orders based on the offset + limit amount
         if(orders.length === 0) return res.status(204).send(); //sending 204 status code if no order is found
