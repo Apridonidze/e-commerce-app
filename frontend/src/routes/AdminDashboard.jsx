@@ -235,9 +235,4 @@ const AdminDashboard = () => {
     );
 };
 
-// create reusable component to submit deletion of orders/admin/report/feedback
-// create loading skeleton for each section with empty states
-// cleanup code
-
-
 export default AdminDashboard

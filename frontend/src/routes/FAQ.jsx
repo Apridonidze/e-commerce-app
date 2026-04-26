@@ -1,4 +1,6 @@
 import Sidebar from "../layout/Sidebar";
+import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const FAQ = () => {
 
@@ -87,29 +89,34 @@ const FAQ = () => {
     ];
 
     return(
-        <div className="faq-container d-flex">
-            <Sidebar />
-            <div className="faq-main-container">
-                <h1>Frequently Asked Questions</h1>
-                <div className="faq-list-container">
-                    {faqs.map((faq, faqId) => (<div className="faq" key={faqId}>
-                        <h3>{faq.title}</h3>
-                        <div className="faq-items">
-                            {faq?.items.map((item , itemId) => (
-                                <div className="faq-item" key={itemId}>
-                                    <div className="faq-header d-flex justify-content-between">
-                                        <h5>{item.question}</h5>
-                                        <button className="btn btn-primary" type="button" data-toggle="collapse" data-target={`#collapseDiv${itemId}`} aria-expanded="false" aria-controls={`collapseDiv${itemId}`}>^</button>
+        <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}> 
+                <div className="main-body">
+                    <div className="main-start"><Sidebar /></div>
+                    <div className="main-end">
+
+                        <div className="main-header"><Header /></div>
+                            <h1>Frequently Asked Questions</h1>
+                            <div className="faq-list-container">
+                                {faqs.map((faq, faqId) => (<div className="faq" key={faqId}>
+                                    <h3>{faq.title}</h3>
+                                    <div className="faq-items">
+                                        {faq?.items.map((item , itemId) => (
+                                            <div className="faq-item" key={itemId}>
+                                                <div className="faq-header d-flex justify-content-between">
+                                                    <h5>{item.question}</h5>
+                                                    <button className="btn btn-primary" type="button" data-toggle="collapse" data-target={`#collapseDiv${itemId}`} aria-expanded="false" aria-controls={`collapseDiv${itemId}`}>^</button>
+                                                </div>
+                                                <div className="collapse" id={`collapseDiv${itemId}`}>
+                                                    <h5>{item.answer}</h5>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <div className="collapse" id={`collapseDiv${itemId}`}>
-                                        <h5>{item.answer}</h5>
-                                    </div>
-                                </div>
-                            ))}
+                                </div>))}
                         </div>
-                    </div>))}
+                    </div>
                 </div>
-            </div>
+                <Footer />
         </div>
     )
 }
