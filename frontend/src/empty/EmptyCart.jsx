@@ -7,7 +7,7 @@ const EmptyCart = () => {
                 <div className="icon-bg my-2"><i className="fa-solid fa-cart-shopping"></i></div>
                 <h4>Your Cart Is Empty</h4>
                 <small>Browse products and add them to your cart.</small>
-                <Link to='/'><button  className="buttonComponent mt-4 btn btn-none text-white px-2 py-2">
+                <Link to='/' style={{textDecoration : 'none'}}><button className="buttonComponent fs-6 mt-4 btn btn-none text-white px-2 py-2">
                     <i className="fa-regular fa-compass"></i> Explore
                 </button></Link>
             </div>

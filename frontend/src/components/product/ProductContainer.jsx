@@ -218,7 +218,7 @@ const ProductContainer = ({setToggleEdit,handleDeleteFromCart, setToggleRemove,s
           </div>
 
           {!isInCart ? 
-          <button className="btn border-0 px-3 py-2 mt-2 w-100 fw-bold mx-auto"style={{ backgroundColor: "#10b981", color: "white", maxWidth: "97%", height: "50px",}}onClick={() => handleAddToCart(product.products_id)}disabled={!user || amount === 0}><i className="fa-solid fa-cart-shopping text-white me-2"></i>Add To Cart</button> : <button className="btn border-0 px-3 py-2 mt-2 w-100 fw-bold mx-auto"style={{ backgroundColor: "#10b981", color: "white", maxWidth: "97%", height: "50px",}} onClick={() => handleDeleteFromCart(product.products_id)}><i className="fa-solid fa-cart-shopping text-white me-2"></i>In Cart</button>         
+          <button className="btn border-0 px-3 py-2 mt-2 w-100 fw-bold mx-auto d-flex justify-content-center fs-6"style={{ backgroundColor: "#10b981", color: "white", maxWidth: "97%", height: "50px",}}onClick={() => handleAddToCart(product.products_id)}disabled={!user || amount === 0}><i className="fa-solid fa-cart-shopping text-white me-2"></i>Add To Cart</button> : <button className="btn border-0 px-3 py-2 mt-2 w-100 fw-bold mx-auto d-flex justify-content-center fs-6"style={{ backgroundColor: "#10b981", color: "white", maxWidth: "97%", height: "50px",}} onClick={() => handleDeleteFromCart(product.products_id)}><i className="fa-solid fa-cart-shopping text-white me-2"></i>In Cart</button>         
           }
         </div>
 

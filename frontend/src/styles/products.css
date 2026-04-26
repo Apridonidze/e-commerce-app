@@ -694,6 +694,12 @@
   text-decoration: underline;
 }
 
+.product-footer button {
+  display: flex !important;
+  justify-content: center;
+  text-align: center !important;
+}
+
 @media (max-width : 1400px){
 
   .products-page-row{

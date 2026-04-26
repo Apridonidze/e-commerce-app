@@ -1,0 +1,185 @@
+
+.landing-container {
+    font-family: Arial, sans-serif;
+    color: var(--text-color);
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5rem 20px;
+}
+
+.hero h1 {
+    color: #10b981;
+    font-size: 44px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+    opacity: 0.85;
+}
+
+.hero small {
+    margin-top: 15px;
+    opacity: 0.75;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.hero-buttons button {
+  background-color: #10b981;
+  color: white;
+}
+.hero-buttons i {
+  color: white;
+  background-color: transparent;
+}
+
+.hero-buttons button:hover{
+  color: whitesmoke;
+  background-color: #0fac77;
+}
+
+.btn {
+    padding: 12px 18px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section {
+    padding: 1rem 20px;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.section h2 {
+    color: #10b981;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.card {
+    padding: 22px;
+    border-radius: 14px;
+    border: none !important;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--component-bg);
+    align-items: flex-start;
+}
+
+.card i {
+    width: auto;
+    color: #10b981;
+    font-size: 24px;
+    padding: 0.6rem;
+    border-radius: 10px;
+    background: rgba(16, 185, 129, 0.15);
+    margin-bottom: 12px;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category {
+    padding: 10px 14px;
+    border-radius: 20px;
+    background-color: rgba(16, 185, 129, 1);
+    display: flex;
+    color: white;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.category i {
+  color: white;
+}
+
+.trust,
+.support,
+.cta {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* SUPPORT */
+.support p,
+.trust p,
+.cta p {
+    opacity: 0.8;
+    max-width: 700px;
+}
+
+/* CTA */
+.cta {
+    width: 100%;
+}
+
+
+
+.support {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.support button {
+  background-color: #10b981;
+  color: white;
+}
+.support i {
+  color: white;
+  background-color: transparent;
+}
+
+.support button:hover{
+  color: whitesmoke;
+  background-color: #0fac77;
+}
+.cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.cta button {
+  background-color: #10b981;
+  color: white;
+}
+.cta i {
+  color: white;
+  background-color: transparent;
+}
+
+.cta button:hover{
+  color: whitesmoke;
+  background-color: #0fac77;
+}
