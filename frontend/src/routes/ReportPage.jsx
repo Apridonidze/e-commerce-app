@@ -180,12 +180,10 @@ const ReportPage = () => {
                     <div className="main-header">
                         <Header />
                     </div>
-                    
+
             <div className="report-container p-3 rounded-3 d-flex flex-column justify-content-between" style={{minHeight : '85vh'}}>
             <div className="report-header d-flex flex-column">
-                <div className="d-flex justify-content-between">
-                    <h2>Report Product</h2>
-                </div>
+                <h1 className="fw-bold">Report Product</h1>
                 <h6>Submit detailed reports to help us resolve issues faster and keep the Shoptic ecosystem running smoothly.</h6>
             </div>
 
@@ -212,10 +210,10 @@ const ReportPage = () => {
 
             <div className="report-footer mt-2">
                 <div className="report-start ">
-                    <h6>Reports are processed within 24 hours by our human curators.</h6>
+                    <h6 className="small fw-light">*Reports are processed within 24 hours by our human curators.</h6>
                 </div> 
                 <div className="manage-report-buttons">
-                    <button className="btn border" ref={discardRef} onClick={() => handleDiscard()}>Discard</button>
+                    <button className="btn " ref={discardRef} onClick={() => handleDiscard()}>Discard</button>
                     <button className="btn btn-danger" ref={submitRef} onClick={() => handleSubmitReport()}>Submit Report</button>
                 </div>
             </div>
