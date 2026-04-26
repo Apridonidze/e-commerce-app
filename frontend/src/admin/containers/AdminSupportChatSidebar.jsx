@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { BACKEND_URL } from "../../../config";
 
 import { Link } from "react-router-dom";
-const AdminSupportChatSidebar = ({ setTargetConvId }) => {
+const AdminSupportChatSidebar = ({ setTargetConvId, setToggleAlert,targetConvId }) => {
 
     const [ cookies ] = useCookies(['token'])
     const socketRef = useRef(null);
@@ -29,11 +29,11 @@ const AdminSupportChatSidebar = ({ setTargetConvId }) => {
             }
     
             if(response.type === 'admin_access'){
-                console.log(response)
+                setToggleAlert()
             }
 
             if(response.type === 'internal_error'){
-                console.log(response)
+                setToggleAlert()
             }
 
     
@@ -41,23 +41,53 @@ const AdminSupportChatSidebar = ({ setTargetConvId }) => {
     
         return () => {socketRef.current?.close()}
     },[])
+
+    console.log(rooms)
     
     return(
-        <div className="sidebar-container" >
+        <div className="sidebar-container">
 
-            <div className="d-flex flex-column">
-                <h4>Conversations</h4>
-                <h6 className="small">ONGOING CONVERSATIONS</h6>
-                <span className="d-flex align-items-top gap-3"> <Link to='/'><i class="fa-solid fa-arrow-left"></i></Link></span>
+            <div className="sidebar-header">
+                <h4><i className="fa-solid fa-message"></i>Messages</h4>
             </div>
 
-            <div className="row w-100">
-                {rooms.length === 0 ? 'no messages yet' : rooms?.map((room,roomId) => (
-                    <div className="message d-flex gap-3 border align-items-center justify-content-start" style={{fontWeight : room.sender_id !== 'You' ? 'bolder' : "lighter" , cursor : 'pointer'}} key={roomId} onClick={() => setTargetConvId(room.conversation_id)}>
-                        <span className="border fs-2 text-secondary rounded-5 text-center m-auto" style={{width: "75px", height: '55px'}}><i class="fa-solid fa-user"></i></span>
-                        <span><span className="fw-bolder">{room.fullname}</span> <br /> {room.sender_id} : {room.content} <br />{room.created_at} </span>
+            <div className="sidebar-section">
+                <span className="section-title">Ongoing Conversations</span>
+
+                {rooms.length === 0 ? (
+                    <div className="empty-state">
+                        <i className="fa-regular fa-comments"></i>
+                        <p>No conversations yet</p>
                     </div>
-                ))}
+                ) : (
+
+                <div className="conversation-list">
+                    {rooms.map((room, roomId) => (
+                        <div
+                            key={roomId}
+                            className={`conversation-item mb-2 ${room.sender_id !== 'You' ? 'unread' : ''} ${room.conversation_id == targetConvId.conversation_id ? 'active' : ''}`}
+                            onClick={() => setTargetConvId({conversation_id : room.conversation_id, user : room.fullname})}
+                        >
+
+                            <div className="avatar">
+                                <i className="fa-solid fa-user"></i>
+                            </div>
+
+                            <div className="conversation-content">
+                                <div className="conversation-top align-items-center">
+                                    <span className="name fw-medium">{room.fullname}</span>
+                                    <span className="time">{new Date(room.created_at).toLocaleDateString()}</span>
+                                </div>
+
+                                <div className="conversation-bottom">
+                                    <span className="message-preview">{room.sender_id}: {room.content}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    ))}
+                </div>
+                )}
             </div>
         </div>
     )
