@@ -4,11 +4,11 @@ import Footer from "../layout/Footer";
 import Question from "../components/faq/Question";
 
 const FAQ = () => {
-
     const faqs = [
-        {
-            title: "Ordering & Products",
-            items: [
+    {
+        title: "Ordering & Products",
+        icon: <i className="fa-solid fa-circle-info"></i>,
+        items: [
             {
                 question: "How do I place an order?",
                 answer: "Browse the products, select the items you want, add them to your cart, and proceed to checkout. You must create an account to complete the order."
@@ -25,11 +25,12 @@ const FAQ = () => {
                 question: "Are there any special product types or restrictions?",
                 answer: "No, all products follow the same standard policies."
             }
-            ]
-        },
-        {
-            title: "Payment & Billing",
-            items: [
+        ]
+    },
+    {
+        title: "Payment & Billing",
+        icon: <i className="fa-solid fa-credit-card"></i>,
+        items: [
             {
                 question: "What payment methods are accepted?",
                 answer: "We currently accept full payments via Stripe."
@@ -42,11 +43,12 @@ const FAQ = () => {
                 question: "Can I pay in installments or use multiple payment methods?",
                 answer: "No, only full payment is accepted per order."
             }
-            ]
-        },
-        {
-            title: "Shipping & Delivery",
-            items: [
+        ]
+    },
+    {
+        title: "Shipping & Delivery",
+        icon: <i className="fa-solid fa-truck-fast"></i>,
+        items: [
             {
                 question: "Do you offer international shipping?",
                 answer: "No, we currently only ship locally."
@@ -59,11 +61,12 @@ const FAQ = () => {
                 question: "Are there any special shipping rules?",
                 answer: "No, we do not have special shipping options at this time."
             }
-            ]
-        },
-        {
-            title: "Account & Support",
-            items: [
+        ]
+    },
+    {
+        title: "Account & Support",
+        icon: <i class="fa-regular fa-user"></i>,
+        items: [
             {
                 question: "Do I need an account to place an order?",
                 answer: "Yes, creating an account is required to place orders."
@@ -72,11 +75,12 @@ const FAQ = () => {
                 question: "How do I contact customer support?",
                 answer: "You can contact support via the built-in support chat on the website or by email at support@example.com."
             }
-            ]
-        },
-        {
-            title: "Feedback & Reports",
-            items: [
+        ]
+    },
+    {
+        title: "Feedback & Reports",
+        icon: <i className="fa-solid fa-comment-dots"></i>,
+        items: [
             {
                 question: "Can I provide feedback on products?",
                 answer: "Yes, our system allows users to submit feedback and reports on products."
@@ -85,9 +89,9 @@ const FAQ = () => {
                 question: "Are there any feedback restrictions?",
                 answer: "Feedback should be relevant and constructive. Abusive or irrelevant reports may be removed by the admin."
             }
-            ]
-        }
-    ];
+        ]
+    }
+];
 
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}> 
@@ -97,8 +101,10 @@ const FAQ = () => {
 
                         <div className="main-header"><Header /></div>
 
-                            <h1>Frequently Asked Questions</h1>
-                            <div className="faq-list-container">
+                            <h1 className="fw-bold" style={{color : '#10b981'}}>Frequently Asked Questions</h1>
+                            <h6 className="small">Find quick answers to the most common questions about ordering, payments, shipping, and account management. If you can’t find what you’re looking for, feel free to contact our support team.</h6>
+                            
+                            <div className="faq-list-container mt-5">
                                 {faqs.map(faq => <Question faq={faq}/>)}
                             </div>
 
