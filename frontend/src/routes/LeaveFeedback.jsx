@@ -10,6 +10,9 @@ import axios from "axios"
 import { BACKEND_URL } from "../../config"
 import Header from "../layout/Header"
 import Footer from "../layout/Footer"
+import CustomerFeedbackSkeleton from "../skeletons/CustomerFeedbackSkeleton"
+import EmptyFeedbacks from "../empty/EmptyFeedbacks"
+import EmptyCustomerFeedback from "../empty/EmptyCustomerFeedback"
 const LeaveFeedback = () => {
 
     const { user } = useContext(UserContext);
@@ -42,8 +45,8 @@ const LeaveFeedback = () => {
 
             }catch(err){
                 setIsLoading(false)
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
                 setFeedbacks([])
-                console.log(err)
             }
         }
 
@@ -65,8 +68,8 @@ const LeaveFeedback = () => {
                     {user ? <PlatformFeedback setFeedbacks={setFeedbacks}/> : <></>}
 
                     
-                        {!isLoading ? <FeedbacksSkeleton /> :<div className="manage-feedbacks-main"> {feedbacks?.map(fb => 
-                            <Feedback fb={fb} removeFeedback={removeFeedback}/>)}</div>}
+                        {isLoading ? <CustomerFeedbackSkeleton /> : feedbacks.length === 0 ? <EmptyCustomerFeedback /> : <div className="manage-feedbacks-main mt-3"> {feedbacks?.map(fb => 
+                            <Feedback fb={fb} removeFeedback={removeFeedback}/>)}</div> }
                     
                 </div>
             </div>
