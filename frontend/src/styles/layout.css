@@ -607,6 +607,37 @@
   color: #0fac77;
 }
 
+.not-found-container h1{
+  color: #10b981;
+}
+
+.not-found-container button{
+  background-color: #10b981 !important;
+  color: white !important;
+}
+
+.not-found-container{
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+  max-width: 800px;
+}
+
+.not-found-page-container{
+  height: 100vh;
+  display: flex;
+  flex-direction:column ;
+  justify-content: space-between;
+}
+
+.not-found-start{
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 1400px) {
 
   .products-page-col1, .products-page-col2{
