@@ -531,6 +531,20 @@
   color: #10b981;
 }
 
+.messageCount{
+  position: relative;
+  bottom: 5px;
+
+  background-color: #10b981;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  width: 20px;
+  text-align: center;
+  height: 20px;
+  border-radius: 100%;
+}
+
 .user-feedbacks i{
   color: #10b981;
 }

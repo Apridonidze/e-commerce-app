@@ -41,18 +41,16 @@ const AdminSupportChatSidebar = ({ setTargetConvId, setToggleAlert,targetConvId 
     
         return () => {socketRef.current?.close()}
     },[])
-
-    console.log(rooms)
     
     return(
         <div className="sidebar-container">
 
-            <div className="sidebar-header">
+            <div className="sidebar-header pt-3 px-2">
                 <h4><i className="fa-solid fa-message"></i>Messages</h4>
             </div>
 
             <div className="sidebar-section">
-                <span className="section-title">Ongoing Conversations</span>
+                <span className='section-title p-2 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>ONGOING CONVERSATIONS</span>
 
                 {rooms.length === 0 ? (
                     <div className="empty-state">

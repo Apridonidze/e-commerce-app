@@ -3,7 +3,7 @@ import SupportChat from "./SupportChat";//importing componnent
 
 import '../../styles/supportchat.css'
 
-const SupportChatContainer = ({  }) =>{
+const SupportChatContainer = ({ setToggleChat , toggleChat}) =>{
 
 
     return(

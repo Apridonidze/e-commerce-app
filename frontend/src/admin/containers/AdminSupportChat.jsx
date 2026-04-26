@@ -61,10 +61,6 @@ const AdminSupportChat = ({ targetConvId ,setTargetConvId }) => {
             }
     
         };
-      
-//     no_online_admins
-// error
-
 
         return () => {socketRef.current?.close() };
     
@@ -95,10 +91,11 @@ const AdminSupportChat = ({ targetConvId ,setTargetConvId }) => {
         socketRef.current.send(JSON.stringify({type : 'end_chat'}))
     }
     
+    console.log(messages)
     return(
         <div className="admin-support-chat d-flex flex-column w-100">
-            <div className="admin-support-char-header row">
-                <h3>Customer</h3>
+            <div className="admin-support-char-header d-flex">
+                <h3>{targetConvId.user}</h3>
                 <button onClick={() => handleEndChat()}>End Chat</button>
             </div>
             <div className="support-chat-header d-flex flex-column w-auto border"  ref={messagesRef}>

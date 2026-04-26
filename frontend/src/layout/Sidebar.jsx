@@ -1,5 +1,5 @@
 import { useCookies } from 'react-cookie'
-import { Link, NavLink, replace, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { BACKEND_URL } from '../../config'
 
 import { useEffect , useState, useRef, useContext } from 'react'
@@ -88,7 +88,7 @@ const location = useLocation()
                                 <Link to='/admin-dashboard#reports' className={isActiveHash("#reports") ? "active-link" : ""}><i class="fa-solid fa-newspaper pe-4"></i> Reports</Link>
                                 <Link to='/admin-dashboard#feedbacks' className={isActiveHash("#feedbacks") ? "active-link" : ""}><i class="fa-solid fa-message pe-4"></i> Feedbacks</Link>
                                 
-                                <NavLink to='/admin-dashboard/admin-support-chat' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-comments pe-4"></i> Support Chat <span>{messagesCount < 9  ? messagesCount : '9+' }</span></NavLink> {/* add limit for messageCount (max 9 , after 9 return 9+) */}
+                                <NavLink to='/admin-dashboard/admin-support-chat' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-comments pe-4"></i> Support Chat <span className='messageCount '>{messagesCount < 9  ? messagesCount : '9+' }</span></NavLink>
                                 
                             </div> : <></>
                         }

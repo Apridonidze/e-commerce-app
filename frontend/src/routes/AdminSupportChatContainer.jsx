@@ -13,14 +13,13 @@ const AdminSupportChatContainer = () => {
 
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}>
-                {toggleAlert?.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
+            {toggleAlert?.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
 
             <div className="main-body" >
 
                 <div className="main-start"><AdminSupportChatSidebar setTargetConvId={setTargetConvId} targetConvId={targetConvId} setToggleAlert={setToggleAlert}/></div>
                 
                 <div className="main-end">
-                    <div className="main-header"><Header /></div>
                     {targetConvId ? <AdminSupportChat targetConvId={targetConvId} setTargetConvId={setTargetConvId}/> : 'No chats targeted'}
                 </div>
             </div>
