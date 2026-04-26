@@ -704,16 +704,6 @@
       flex-direction: row !important;
     }
 
-    .image-rows img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 8px;
-      cursor: pointer;
-      border: 2px solid transparent;
-    }
-
-
     .target-image-container {
         max-width: 100%;
         height: 380px;
@@ -728,11 +718,6 @@
 @media (max-width: 768px) {
     .target-image-container {
         height: 300px;
-    }
-
-    .image-rows img {
-        width: 50px;
-        height: 50px;
     }
 
     .row-buttons button {

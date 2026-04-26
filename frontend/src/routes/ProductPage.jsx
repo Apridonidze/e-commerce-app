@@ -222,22 +222,31 @@ const ProductPage = () => {
                     <div className="main-header"><Header /></div>
 
                     <div className="products-page-row d-flex align-items-start gap-3">
-                        {isProductLoading ? <ProductContainerSkeleton/> : <ProductContainer setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove}setToggleReportProduct={setToggleReportProduct} handleAddToCart={handleAddToCart} user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} toggleAddToCart={toggleAddToCart}/>}
+
+                        <div className="products-page-col1">
+                            {isProductLoading ? <ProductContainerSkeleton/> : <ProductContainer setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove}setToggleReportProduct={setToggleReportProduct} handleAddToCart={handleAddToCart} user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} toggleAddToCart={toggleAddToCart}/>}
+
+                            <div className="similar-products-container d-flex flex-column gap-2">
+                                <h4><i class="fa-solid fa-layer-group" style={{color : '#10b981'}}></i> Similar Products:</h4>
+
+                                {isSimilarProductsLoading ? <div className="products">{[...Array(5)].map((_,i) => (<ProductSkeleton key={i}/>))}</div> : similarProducts.length > 0 ? 
+                                    <div className="products">
+                                        {similarProducts.map(prod => (
+                                            <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>
+                                        ))}    
+                                    </div>
+                                : 'No Similar Products Found'}
+                            </div>
+                        </div>
+                        <div className="products-page-col2">  
                         {isProductLoading ? <ProductPageSkeleton />  : <FeedbackContainer user={user} removeFeedback={removeFeedback} handlePostFeedback={handlePostFeedback} feedbackData={feedbackData} setFeedbackData={setFeedbackData}  cookies={cookies} feedback={feedback}/>}
+                        </div>
+
+                      
+                        
 
                     </div>
                     
-                    <div className="similar-products-container d-flex flex-column gap-2">
-                        <h4><i class="fa-solid fa-layer-group" style={{color : '#10b981'}}></i> Similar Products:</h4>
-
-                        {isSimilarProductsLoading ? <div className="products">{[...Array(5)].map((_,i) => (<ProductSkeleton key={i}/>))}</div> : similarProducts.length > 0 ? 
-                            <div className="products">
-                                {similarProducts.map(prod => (
-                                    <Product prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setToggleReportProduct={setToggleReportProduct} setToggleAddToCart={setToggleAddToCart} setToggleAlert={setToggleAlert}/>
-                                ))}    
-                            </div>
-                            : 'No Similar Products Found'}
-                    </div>
                 </div>
             </div>
             
