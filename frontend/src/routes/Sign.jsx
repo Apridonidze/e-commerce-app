@@ -7,6 +7,8 @@ import { BACKEND_URL } from '../../config'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCookies } from "react-cookie";
 
+import '../styles/auth.css'
+
 const Sign = () => {
 
     const NumberRegex = /\d/;
@@ -38,6 +40,8 @@ const Sign = () => {
     const [showConfPass , setShowConfPass] = useState(false)
 
     const [ cookies , setCookies ] = useCookies(['token'])
+    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
+
 
     const navigator = useNavigate()
 
@@ -88,15 +92,15 @@ const Sign = () => {
             })
                 
         }catch(err){
-            if(err.status === 400 & err.response.data.state === 'name') console.log(err); isValid = false ; setNameErr(`Name Already In Use`); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')
-            if(err.status === 400 & err.response.data.state === 'email') console.log(err); isValid = false ; setEmailErr(`Email Already In Use`); emailRef.current.classList.add('is-invalid');emailRef.current.classList.remove('is-valid')
-            if(err.status === 400 & err.response.data.state === 'phone') console.log(err); isValid = false ; setPhoneErr(`Phone Number Already In Use`); phoneRef.current.classList.add('is-invalid');phoneRef.current.classList.remove('is-valid')
-            console.log(err)
+            if(err.status === 400 & err.response.data.state === 'name') isValid = false ; setNameErr(`Name Already In Use`); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')
+            if(err.status === 400 & err.response.data.state === 'email') isValid = false ; setEmailErr(`Email Already In Use`); emailRef.current.classList.add('is-invalid');emailRef.current.classList.remove('is-valid')
+            if(err.status === 400 & err.response.data.state === 'phone') isValid = false ; setPhoneErr(`Phone Number Already In Use`); phoneRef.current.classList.add('is-invalid');phoneRef.current.classList.remove('is-valid')
+            if(err.status === 500) setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
         }
     }
 
     return(
-        <div className="sign-container" onSubmit={SubmitForm}>
+        <div className="auth-container" onSubmit={SubmitForm}>
             <form>
                 <div className="form-floating"> 
                     <input className="form-control" type="text" id="name" placeholder="Full Name" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name}/>

@@ -36,7 +36,7 @@
   width: 53px;
   height: 53px;
   display: inline-block;
-  background: var(--icon-bg);
+  background: var(--component-bg);
   border-radius: 20px;
   position: relative;
 }
@@ -128,7 +128,8 @@
 }
 
 .sidebar-container a.active-link , .sidebar-container a.active-link  i {
-    background: var(--icon-bg);
+    background-color: var(--component-bg);
+    border-radius: 5px;
     color: #33d298;
 }
 
@@ -148,7 +149,7 @@
     min-width: 235px;
     min-height: 855px;
     max-height: 97vh;
-    background-color: var(--bg);
+    background-color: var(--product-bg-color);
     border-radius: 5px;
     margin-top: 10px;
 }

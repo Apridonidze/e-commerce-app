@@ -1,0 +1,43 @@
+
+/* defining styling variables for dark/light themes */
+
+:root {
+  --bg-color: #f9f9ff;
+  --text-color: #111c2d;
+  --product-bg-color : white;
+  --product-color : '#111c2d';
+  --border : 2px solid #f4f5fc;
+  --border-2 : 2px solid #00a571;
+  --component-bg : #f0f3ff;
+  --dark-bg : #dee8ff;
+  --btn-border : 1.5px solid #dee8ff
+}
+
+[data-theme='dark'] {
+  --bg-color: #020617;
+  --text-color: #94a3b8;
+  --product-bg-color : #0f172a;
+  --product-color : '#ffffff';
+  --border : none;
+  --component-bg : #080f20;
+  --dark-bg : #0f172a;
+  --btn-border : 1.5px solid #161f32
+}
+
+.auth-container{
+    max-width: 800px;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    transform: translateY(20%);
+    background-color: var(--component-bg);
+}
+
+.auth-container input , .auth-container input:active , .auth-container input:focus , .auth-container select , .auth-container select:focus , .auth-container select:active {
+    color: var(--text-color);
+    background-color: var(--component-bg);
+}
+
+.auth-container input, .auth-container select {
+    cursor: pointer;
+} 
