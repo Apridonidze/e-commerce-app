@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 
-const ProductContainer = ({setToggleEdit,setToggleRemove,setToggleReportProduct,handleAddToCart,user,setTargetImage,amount,setToggleMore,getImageSrc,toggleMore,imagesArray,targetImage,product,setAmount,isInCart,inCartAmount,}) => {
+const ProductContainer = ({setToggleEdit,handleDeleteFromCart, setToggleRemove,setToggleReportProduct,handleAddToCart,user,setTargetImage,amount,setToggleMore,getImageSrc,toggleMore,imagesArray,targetImage,product,setAmount,isInCart,inCartAmount}) => {
   
+
     const features = [
     {
       id: 1,
@@ -192,7 +193,7 @@ const ProductContainer = ({setToggleEdit,setToggleRemove,setToggleReportProduct,
             <div className="row-buttons row-end d-flex gap-2 align-items-center">
               <button
                 className="btn border-0"
-                disabled={isInCart}
+                disabled={isInCart || amount === 0}
                 onClick={() =>
                   setAmount((prev) => (prev - 1 <= 0 ? 0 : prev - 1))
                 }
@@ -200,11 +201,11 @@ const ProductContainer = ({setToggleEdit,setToggleRemove,setToggleReportProduct,
                 -
               </button>
 
-              <span>{isInCart ? inCartAmount : amount}</span>
+              <span >{isInCart ? inCartAmount : amount }</span>
 
               <button
                 className="btn border-0"
-                disabled={isInCart}
+                disabled={isInCart || amount === 0}
                 onClick={() =>
                   setAmount((prev) =>
                     prev + 1 > product.amount ? prev : prev + 1
@@ -216,20 +217,9 @@ const ProductContainer = ({setToggleEdit,setToggleRemove,setToggleReportProduct,
             </div>
           </div>
 
-          <button
-            className="btn border-0 px-3 py-2 mt-2 w-100 fw-bold mx-auto"
-            style={{
-              backgroundColor: "#10b981",
-              color: "white",
-              maxWidth: "97%",
-              height: "50px",
-            }}
-            onClick={() => handleAddToCart(product.products_id)}
-            disabled={isInCart || amount === 0}
-          >
-            <i className="fa-solid fa-cart-shopping text-white me-2"></i>
-            Add To Cart
-          </button>
+          {!isInCart ? 
+          <button className="btn border-0 px-3 py-2 mt-2 w-100 fw-bold mx-auto"style={{ backgroundColor: "#10b981", color: "white", maxWidth: "97%", height: "50px",}}onClick={() => handleAddToCart(product.products_id)}disabled={!user || amount === 0}><i className="fa-solid fa-cart-shopping text-white me-2"></i>Add To Cart</button> : <button className="btn border-0 px-3 py-2 mt-2 w-100 fw-bold mx-auto"style={{ backgroundColor: "#10b981", color: "white", maxWidth: "97%", height: "50px",}} onClick={() => handleDeleteFromCart(product.products_id)}><i className="fa-solid fa-cart-shopping text-white me-2"></i>In Cart</button>         
+          }
         </div>
 
         <div className="trust-container">

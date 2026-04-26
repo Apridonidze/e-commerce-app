@@ -35,7 +35,7 @@ const ProductPage = () => {
     const navigator = useNavigate();
 
     const [ cookies ] = useCookies(['token']);
-    const { user, cartIds} = useContext(UserContext);
+    const { user, cartIds } = useContext(UserContext);
 
     const [product, setProduct] = useState(null);
     const [feedback, setFeedback] = useState([]);
@@ -224,7 +224,7 @@ const ProductPage = () => {
                     <div className="products-page-row d-flex align-items-start gap-3">
 
                         <div className="products-page-col1">
-                            {isProductLoading ? <ProductContainerSkeleton/> : <ProductContainer setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove}setToggleReportProduct={setToggleReportProduct} handleAddToCart={handleAddToCart} user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} toggleAddToCart={toggleAddToCart}/>}
+                            {isProductLoading ? <ProductContainerSkeleton/> : <ProductContainer handleDeleteFromCart={handleDeleteFromCart} inCartAmount={inCartAmount} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove}setToggleReportProduct={setToggleReportProduct} handleAddToCart={handleAddToCart} user={user} setTargetImage={setTargetImage} amount={amount} setToggleMore={setToggleMore} getImageSrc={getImageSrc} toggleMore={toggleMore} imagesArray={imagesArray} targetImage={targetImage} product={product} setAmount={setAmount} isInCart={isInCart} toggleAddToCart={toggleAddToCart}/>}
 
                             <div className="similar-products-container d-flex flex-column gap-2">
                                 <h4><i class="fa-solid fa-layer-group" style={{color : '#10b981'}}></i> Similar Products:</h4>

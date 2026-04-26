@@ -602,7 +602,6 @@
 
 .product-description-container{
   background-color: var(--dark-bg);
-  padding: 1rem;
   border-radius: 5px;
   font-weight: normal;
 }
@@ -614,6 +613,11 @@
   gap: 0px !important;
   overflow: hidden;
   border-radius: 5px;
+}
+
+.row-buttons span{
+  color: var(--text-color) !important;
+  background-color: var(--component-bg);
 }
 
 .row-buttons button , .row-buttons span{
