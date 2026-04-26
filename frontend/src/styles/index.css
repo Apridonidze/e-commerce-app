@@ -64,6 +64,10 @@ textarea::placeholder{
   color: var(--text-color) !important;
 }
 
+.card-holder-container{
+  min-width: 250px;
+}
+
 .bg {
   cursor: pointer;
   position: absolute;

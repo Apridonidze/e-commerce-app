@@ -99,7 +99,7 @@ const SupportChat = ({ setToggleChat, setToggleAlert }) => {
     return(
         <div className="support-chat-container" tabIndex={1}>
 
-            <div className="support-chat-header d-flex justify-content-between">
+            <div className="support-chat-header d-flex flex-row justify-content-between">
                 <div className="header-start text-start border-0">
                     <h4>Support Chat</h4>
                     <h6><i class="fa-solid fa-circle rounded-5" style={{color : count > 0 ? '#10b981' : '#9b9b9b' , fontSize : '14px'}}></i> Online Admins {count}</h6>

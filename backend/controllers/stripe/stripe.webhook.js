@@ -30,7 +30,6 @@ async function webHook(req,res){
 
                 const paymentMethodId = setupIntent.payment_method; //defining card data
                 const customerId = setupIntent.customer;//defining customer data
-
                 const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);//submitting card data
 
                 await db.query('update stripe_users set payment_method_id = ?, brand = ?, last4 = ? where customer_id = ?',[paymentMethodId,paymentMethod.card.brand,paymentMethod.card.last4,customerId]); //saving data in stripe_users table

@@ -588,6 +588,14 @@
   background-color: transparent;
 }
 
+.footer-row{
+  max-width: 350px;
+}
+
+.footer-column a {
+  width: fit-content;
+}
+
 .support-chat-placeholder{
   max-width: 400px;
   height: auto;
@@ -690,6 +698,18 @@
   padding: 0rem 1rem;
   border-left: var(--btn-border);
   border-right: var(--btn-border);
+}
+
+.legal-component * {
+  background-color: transparent;
+} 
+
+.legal-component{
+  background-color: var(--product-bg-color);
+  color: var(--text-color);
+  padding: 1rem;
+  border-radius: 5px;
+  margin: 2rem 0rem;
 }
 
 @media (max-width: 1400px) {

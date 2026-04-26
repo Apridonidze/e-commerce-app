@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom"
+import { UserContext } from "../context/UserContext";
 
 const Footer = () => {
+
+    const { user } = useContext(UserContext)
+
     return(
         <footer className="footer-component mt-5 d-flex flex-column w-100 justify-content-space-between">
 
@@ -10,7 +15,7 @@ const Footer = () => {
                         <span className="icon"></span>
                         <span className='fs-3 fw-bold' style={{color : "#10b981"}}>Shoptic</span>
                     </div>
-                    <span className="small text-break" >Your trusted marketplace for quality products, fast delivery, and secure shopping.</span>
+                    <span className="text small" >Your trusted marketplace for quality products, fast delivery, and secure shopping.</span>
                 </div>
 
                 <div className="footer-column pt-1 fw-medium ">
@@ -59,16 +64,17 @@ const Footer = () => {
                         </div>
                     </Link>
 
-                    <Link to={'/report-platform'}>
+                    {!user ? <></> : <Link to={'/report-platform'}>
                         <div className="link-start"><i className="fa-solid fa-flag"></i></div>
                         <div className="link-end">
                             <span>Report</span>
                             <span className="small">/report</span>
                         </div>
-                    </Link>
+                    </Link>}
                     </div>
                 </div>
 
+                {!user ? <></> : 
                 <div className="footer-column pt-1 fw-medium align-items-start">
                     <h6 className="fw-bold">Feedback </h6>
                     <span>Help us improve your experience</span>
@@ -79,7 +85,7 @@ const Footer = () => {
                             <span className="small mt-1" style={{color : '#10b981'}}>/feedback</span>
                         </div>
                     </Link>
-                </div>
+                </div>}
 
             </div>
 
@@ -88,17 +94,17 @@ const Footer = () => {
 
                 <div className="footer-column d-flex flex-row gap-4 pt-1 fw-medium">
 
-                    <Link to={'/legal'}>
+                    <Link to={'/legal#terms'}>
                         <div className="link-end">
                             <span>Terms of Service</span>
                             <span className="small">/terms</span>
                         </div>
                     </Link>
 
-                    <Link to={'/legal'}>
+                    <Link to={'/legal#privacy'}>
                         <div className="link-end">
                             <span>Privacy Policy</span>
-                            <span className="small">/legal</span>
+                            <span className="small">/privacy</span>
                         </div>
                     </Link>
 

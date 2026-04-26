@@ -63,117 +63,8 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd, setAddresses }
     const validateForm = async (e) => {
         e.preventDefault();
 
-        let isValid = true;
+   
 
-        setAddressErr('');
-        setApartmentErr('');
-        setCityErr('');
-        setStateErr('');
-        setZipcodeErr('');
-
-        const LIMITS = {address: 100, apartment: 20, city: 50, zipcode: 10};
-        [addressRef, apartmentRef, cityRef, stateRef, zipcodeRef].forEach(ref => ref.current?.classList.remove('invalid'));
-
-        const zipRegex = /^[0-9]{3,10}$/;
-        const cityRegex = /^[a-zA-Z\s-]+$/;
-        const addressRegex = /^(\d+\s+[a-zA-Z0-9\s]+|[a-zA-Z0-9\s]+\s+\d+)$/;
-
-        if (!address.trim()) { setAddressErr('Address is required'); addressRef.current.classList.add('invalid'); addressRef.current.focus();isValid = false} 
-        else if (address.length > LIMITS.address) {setAddressErr(`Max ${LIMITS.address} characters`);addressRef.current.classList.add('invalid');addressRef.current.focus();isValid = false} 
-        else if (!addressRegex.test(address.trim())) {setAddressErr('Format: 12 Rustaveli');addressRef.current.classList.add('invalid');addressRef.current.focus();isValid = false}
-
-        if (apartment) {
-            if (apartment.length > LIMITS.apartment) {
-                
-                setApartmentErr(`Max ${LIMITS.apartment} characters`);
-                apartmentRef.current.classList.add('invalid');
-                
-                if (isValid) apartmentRef.current.focus();
-                isValid = false;
-
-            } else if (apartment.length < 2) {
-                
-                setApartmentErr('Too short');
-                apartmentRef.current.classList.add('invalid');
-                
-                if (isValid) apartmentRef.current.focus();
-                isValid = false;
-            };
-        };
-
-        if (!city.trim()) {
-        
-            setCityErr('City is required');
-            cityRef.current.classList.add('invalid');
-        
-            if (isValid) cityRef.current.focus();
-            isValid = false;
-        
-        } else if (city.length > LIMITS.city) {
-        
-            setCityErr(`Max ${LIMITS.city} characters`);
-            cityRef.current.classList.add('invalid');
-        
-            if (isValid) cityRef.current.focus();
-            isValid = false;
-        
-        } else if (!cityRegex.test(city.trim())) {
-        
-            setCityErr('Only letters allowed');
-            cityRef.current.classList.add('invalid');
-        
-            if (isValid) cityRef.current.focus();
-            isValid = false;
-        }
-
-        if (!state) {
-            setStateErr('Please select a region');
-            stateRef.current.classList.add('invalid');
-
-            if (isValid) stateRef.current.focus();
-            isValid = false;
-
-        } else if (!regions.includes(state)) {
-
-            setStateErr('Invalid region');
-            stateRef.current.classList.add('invalid');
-            
-            if (isValid) stateRef.current.focus();
-            isValid = false;
-
-        }
-
-        if (!zipcode.trim()) {
-
-            setZipcodeErr('ZIP is required');
-            zipcodeRef.current.classList.add('invalid');
-
-            if (isValid) zipcodeRef.current.focus();
-            isValid = false;
-
-        } else if (zipcode.length > LIMITS.zipcode) {
-
-            setZipcodeErr(`Max ${LIMITS.zipcode} digits`);
-            zipcodeRef.current.classList.add('invalid');
-            
-            if (isValid) zipcodeRef.current.focus();
-            isValid = false;
-
-        } else if (!zipRegex.test(zipcode.trim())) {
-            
-            setZipcodeErr('3–10 digits only');
-            zipcodeRef.current.classList.add('invalid');
-            
-            if (isValid) zipcodeRef.current.focus();
-            isValid = false;
-
-        };
-
-        if(!isValid) submitRef.current.disabled = true;
-
-        if(isValid){
-            
-            submitRef.current.disabled = false;
             
             try{
 
@@ -193,14 +84,10 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd, setAddresses }
                             zipcode: zipcode,
                         }])
                 }
-
-
             }catch(err){
                 if(err.response?.status === 400) return setToggleAlert({status: true, type: "Failed", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
                 if(err.response?.status === 500) return setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')}); //toggling error message if customer intent could not be geneated
-
             };
-        };
     };
 
     useEffect(() => { //handing page scrolling for bg and mian container aligmnet
@@ -222,17 +109,65 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd, setAddresses }
     useEffect(() => {
         if (!submitRef.current) return;
 
+        const LIMITS = {address: 100, apartment: 20, city: 50, zipcode: 10};
+
+        const zipRegex = /^[0-9]{3,10}$/;
+        const cityRegex = /^[a-zA-Z\s-]+$/;
+
+        let isValid = true;
+
+        [addressRef, apartmentRef, cityRef, stateRef, zipcodeRef].forEach(ref => ref.current?.classList.remove('invalid'));
+
         const addressRegex = /^\d+\s+[A-Za-z\s]+$|^[A-Za-z\s]+\s+\d+$/;
         const zipcodeRegex = /^\d+$/;
 
-        const isValid =
-            address.trim() !== '' &&
-            addressRegex.test(address.trim()) &&
-            city.trim() !== '' &&
-            state.trim() !== '' &&
-            zipcode.trim() !== '' &&
-            zipcodeRegex.test(zipcode.trim());
+        if (!address.trim()) { addressRef.current.classList.add('invalid'); ;isValid = false} 
+        else if (address.length > LIMITS.address) {addressRef.current.classList.add('invalid');isValid = false} 
+        else if (!addressRegex.test(address.trim())) {setAddressErr('Format: 12 Rustaveli');addressRef.current.classList.add('invalid');isValid = false}
+        else{setAddressErr('');addressRef.current.classList.add('valid');  isValid = true}
 
+        if (apartment) {
+            if (apartment.length > LIMITS.apartment) {
+                apartmentRef.current.classList.add('invalid');                
+                isValid = false;
+            } else if (apartment.length < 2) {
+                apartmentRef.current.classList.add('invalid');
+                isValid = false;
+            };
+        };
+
+        if (!city.trim()) {
+            cityRef.current.classList.add('invalid');
+            isValid = false;
+        } else if (city.length > LIMITS.city) {
+            cityRef.current.classList.add('invalid');
+            isValid = false;
+        } else if (!cityRegex.test(city.trim())) {
+            cityRef.current.classList.add('invalid');
+            isValid = false;
+        }
+
+        if (!state) {
+            stateRef.current.classList.add('invalid');
+            isValid = false;
+        } else if (!regions.includes(state)) {
+            stateRef.current.classList.add('invalid');
+            isValid = false;
+        }
+
+        if (!zipcode.trim()) {
+            zipcodeRef.current.classList.add('invalid');
+            isValid = false;
+        } else if (zipcode.length > LIMITS.zipcode) {
+            zipcodeRef.current.classList.add('invalid');
+            isValid = false;
+        } else if (!zipRegex.test(zipcode.trim())) {
+            zipcodeRef.current.classList.add('invalid');
+            isValid = false;
+        };
+
+        if(!isValid) submitRef.current.disabled = true;
+        
         submitRef.current.disabled = !isValid;
         
     }, [address, city, state, zipcode]);
@@ -247,7 +182,7 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd, setAddresses }
                 <div className="toggle-address-main">
 
                     <div className="form-group" >
-                        <label htmlFor="address">Street Address</label>
+                        <label htmlFor="address">* Street Address</label>
                         <input className="form-control" ref={addressRef} maxLength={100} type="text" placeholder="1221 Tbilisis Qucha" name="address" onChange={(e) => setAddress(e.target.value)} value={address} />
                         <span>{addressErr}</span>
                     </div>
@@ -255,30 +190,26 @@ const ToggleAddress = ({ setToggleAdd, setToggleAlert, toggleAdd, setAddresses }
                     <div className="form-group" >
                         <label htmlFor="apartment">Apartment (optional)</label>
                         <input className="form-control" ref={apartmentRef} maxLength={20} type="text" placeholder="Studio 403" name="apartment" onChange={(e) => setApartment(e.target.value)} value={apartment} />
-                        <span>{apartmentErr}</span>
                     </div>
 
                     <div className="form-group" >
-                        <label htmlFor="city">City</label>
+                        <label htmlFor="city">* City</label>
                         <input className="form-control" ref={cityRef} maxLength={50} type="text" placeholder="Tbilisi" name="city" onChange={(e) => setCity(e.target.value)} value={city} />
-                        <span>{cityErr}</span>
                     </div>
 
                     <div className="form-group" >
 
-                        <label htmlFor="state">State / Province</label>
+                        <label htmlFor="state">* State / Province</label>
                         <select className="select-region form-control" ref={stateRef} name="state" onChange={(e) => setState(e.target.value)} value={state} >
                             <option value="">Select Region</option>
                             {regions.map(region => (<option key={region} value={region}>{region}</option>))}
                         </select>
                         
-                        <span>{stateErr}</span>
                     </div>
 
                     <div className="form-group" >
-                        <label htmlFor="zip">ZIP / Postal Code</label>
+                        <label htmlFor="zip">* ZIP / Postal Code</label>
                         <input className="form-control" ref={zipcodeRef} maxLength={10} type="text" placeholder="E.g 0144" name="zip" onChange={(e) => setZipCode(e.target.value)} value={zipcode} />
-                        <span>{zipcodeErr}</span>
                     </div>
                 </div>
 

@@ -1,6 +1,6 @@
 const Privacy = () => {
     return(
-        <div className="privacy-container">
+        <div className="legal-component">
             <h2>Privacy Policy</h2>
             <p><strong>Last updated:</strong> January 1, 2026</p>
             <p>E Commerce App respects your privacy and is committed to protecting your personal information.</p>

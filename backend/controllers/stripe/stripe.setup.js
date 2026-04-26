@@ -7,7 +7,6 @@ async function createSetup(req,res){
     try{
         
         const { customerId } = req.body; //defining data from request
-
         const setup = await stripe.setupIntents.create({
             customer : customerId,
             payment_method_types : ['card']
