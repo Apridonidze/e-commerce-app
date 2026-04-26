@@ -101,7 +101,7 @@ const Login =  () =>  {
 
                             <input className='submitBtn btn w-100' type="submit" value="Log In" />
                         </form>
-                        <Link to='/sign' replace>Do Not Have A Account? Sign Up Here!</Link>
+                        <Link to='/sign' className='my-3 ' replace>Do Not Have A Account? Sign Up Here!</Link>
                 </div>
 
                 </div>

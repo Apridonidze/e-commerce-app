@@ -40,8 +40,17 @@
 
 .auth-container form div {
     background-color: transparent !important;
-    height: 100px;
+    height: 90px;
     align-items: start;
+}
+
+.number-group{
+    height: 100px !important;
+}
+
+.number-group div {
+    height: 60px !important;
+    margin: 0px !important;
 }
 
 .showBtn {

@@ -8,6 +8,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useCookies } from "react-cookie";
 
 import '../styles/auth.css'
+import Footer from "../layout/Footer";
+
+import Sidebar from "../layout/Sidebar";
+import Header from "../layout/Header";
 
 const Sign = () => {
 
@@ -84,12 +88,15 @@ const Sign = () => {
 
         try{
 
-            await axios.post(`${BACKEND_URL}/api/auth/sign` , {data}).then(resp => {
-                console.log(resp);
-                setCookies('token' , resp.data.token , {path : '/' , maxAge :  2592000})
+            const response = await axios.post(`${BACKEND_URL}/api/auth/sign` , {data})
+
+            setCookies('token' , resp.data.token , {path : '/' , maxAge :  2592000})
+            setToggleAlert({status: true, type: "Success", statusCode: response.status, message: "Account Created Successfully."});
+
+            setTimeout(() => {
                 navigator('/' , {replace : true})
                 window.location.reload()
-            })
+            }, 3000)
                 
         }catch(err){
             if(err.status === 400 & err.response.data.state === 'name') isValid = false ; setNameErr(`Name Already In Use`); nameRef.current.classList.add('is-invalid');nameRef.current.classList.remove('is-valid')
@@ -100,58 +107,80 @@ const Sign = () => {
     }
 
     return(
-        <div className="auth-container" onSubmit={SubmitForm}>
-            <form>
-                <div className="form-floating"> 
-                    <input className="form-control" type="text" id="name" placeholder="Full Name" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name}/>
-                    <label htmlFor="name">Full Name</label>
-                    <span>{nameErr}</span>
-                </div>
-                <div className="form-floating"> 
-                    <input className="form-control" type="email" id="email" placeholder="Email" ref={emailRef} onChange={(e) => setEmail(e.target.value)} value={email}/>
-                    <label htmlFor="email">Email</label>
-                    <span>{emailErr}</span>
-                </div>
-                <div className="number-group">
-                    <div className="input-group">
-                        <CountryCode setCountryCode={setCountryCode} countryRef={countryRef}/>
-                        
-                        <div className="form-floating"> 
-                            <input className="form-control" type="text " id="phonenumber" placeholder="Full Name" ref={phoneRef} onChange={(e) => setPhone(e.target.value)} value={phone}/>
-                            <label htmlFor="phonenumber">Phone Number</label>
-                        
-                        </div>
+        <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}> 
 
+            {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
+            
+            <div className="main-body">
+                
+                <div className="main-start"><Sidebar /></div>
+                <div className="main-end">
+                    <div className="main-header"><Header /></div>
+
+                    <div className="auth-container p-3 rounded-3 mt-3">
+
+                        <h1 className='fw-bold' style={{color : '#10b981'}}>Create Your Account</h1>
+                        <h4 className='mb-5'>Join us and start your journey today</h4>
+
+                        <form onSubmit={SubmitForm}>
+
+                            <div className="form-floating"> 
+                                <input className="form-control" type="text" id="name" placeholder="" ref={nameRef} onChange={(e) => setName(e.target.value)} value={name}/>
+                                <label htmlFor="name">Full Name</label>
+                                <span className='errorMessage small'>{nameErr}</span>
+                            </div>
+
+                            <div className="form-floating"> 
+                                <input className="form-control" type="email" id="email" placeholder="" ref={emailRef} onChange={(e) => setEmail(e.target.value)} value={email}/>
+                                <label htmlFor="email">Email</label>
+                                <span className='errorMessage small'>{emailErr}</span>
+                            </div>
+
+                            <div className="number-group h-100">
+                                <div className="input-group m-0 p-0" style={{margin : '0px', padding : '0px'}}>
+                                    <CountryCode setCountryCode={setCountryCode} countryRef={countryRef} countryCodeErr={countryCodeErr} phoneErr={phoneErr}/>
+                                    
+                                    <div className="form-floating" style={{margin : '0px'}}> 
+                                        <input className="form-control" type="text " id="phonenumber" placeholder="" ref={phoneRef} onChange={(e) => setPhone(e.target.value)} value={phone}/>
+                                        <label htmlFor="phonenumber">Phone Number</label>
+                                    </div>
+                                </div>
+
+                                    <span className='errorMessage small'>{countryCodeErr}</span>
+                                        <span className='errorMessage small'>{phoneErr}</span>
+                            </div>
+                            <div className="d">
+                                <div className="input-group"> 
+                                    <div className="form-floating">
+                                        <input className="form-control" type={showPass ? 'text' : 'password'} id="name" placeholder="" ref={passwordRef} onChange={(e) => setPassword(e.target.value)} value={password}/>
+                                        <label htmlFor="name">Password</label>
+                                        <span className='errorMessage small'>{passwordErr}</span>
+                                        
+                                    </div>
+                                    <button className={`showBtn ${passwordErr !== '' ?  'isInvalid' : ''} btn border-0 btn-0`} onClick={() => setShowPass(!showPass)}>{showPass ? <i class="fa-regular fa-eye-slash"></i> : <i class="fa-regular fa-eye"></i>}</button>
+                                </div>
+                            </div>
+                            
+                            <div className="input-group"> 
+                                <div className="form-floating">
+                                    <input className="form-control" type={showConfPass ? 'text' : 'password' } id="name" placeholder="" ref={submitPasswordRef} onChange={(e) => setConfrimPass(e.target.value)} value={confrimPass}/>
+                                    <label htmlFor="name">Confrim Password</label>
+                                    <span className='errorMessage small'>{confrimPassErr}</span>
+                                    
+                                </div>
+                                <button className={`showBtn ${passwordErr !== '' ?  'isInvalid' : ''} btn border-0 btn-0`} onClick={() => setShowConfPass(!showConfPass)}>{showConfPass ? <i class="fa-regular fa-eye-slash"></i> : <i class="fa-regular fa-eye"></i>}</button>
+                            </div>
+                            <input className="submitBtn btn w-100" type="submit" value="Create Account" />
+                        </form>
+                        <Link to='/login' className="my-2 mx-2" replace>Already Have An Account?</Link>
                     </div>
 
-                    {countryCodeErr}
-                    {phoneErr}
-                    
                 </div>
-                <div className="input-group"> 
-                    <div className="form-floating">
-                        <input className="form-control" type={showPass ? 'text' : 'password'} id="name" placeholder="Full Name" ref={passwordRef} onChange={(e) => setPassword(e.target.value)} value={password}/>
-                        <label htmlFor="name">Password</label>
-                        
-                    </div>
-                    <button onClick={() => setShowPass(!showPass)}>{showPass ? <i class="fa-regular fa-eye-slash"></i> : <i class="fa-regular fa-eye"></i>}</button>
-                </div>
-                <span>{passwordErr}</span>
-                <div className="input-group"> 
-                    <div className="form-floating">
-                        <input className="form-control" type={showConfPass ? 'text' : 'password'} id="name" placeholder="Full Name" ref={submitPasswordRef} onChange={(e) => setConfrimPass(e.target.value)} value={confrimPass}/>
-                        <label htmlFor="name">Confrim Password</label>
-                        
-                    </div>
-                    <button onClick={() => setShowConfPass(!showConfPass)}>{showConfPass ? <i class="fa-regular fa-eye-slash"></i> : <i class="fa-regular fa-eye"></i>}</button>
-                </div>
-                <span>{confrimPassErr}</span>
-                <input type="submit" value="Create Account" />
-            </form>
-            <Link to='/login' replace>Already Have An Account?</Link>
+            </div>
+
+            <Footer />
         </div>
-    )
-}
+    );
+};
 
-
-export default Sign
+export default Sign;

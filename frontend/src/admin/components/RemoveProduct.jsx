@@ -23,7 +23,7 @@ const RemoveProduct = ({ setToggleRemove, toggleRemove, setToggleAlert }) => {
             
             if(response.status === 200) setToggleAlert({status: true, type: "Success", statusCode: response.status, message: "Product Deleted Successfully."});
                 
-            setTimeout(() => {setToggleRemove({status : false, product: null})}, 3000)
+            setTimeout(() => {window.location.reload()}, 3000)
 
         }catch(err){
 
