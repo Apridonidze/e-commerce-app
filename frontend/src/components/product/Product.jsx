@@ -105,8 +105,8 @@ const Product = ( { prod , setToggleEdit, setToggleRemove, setToggleReportProduc
                 <div className="product-footer d-flex align-items-center border-0" >
                     
                     {!user ? <></> : isInCart ? 
-                        <button className="btn w-100 fw-bold border-0 fs-6" style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => handleDeleteFromCart(prod?.products_id)}><i class="fa-solid fa-cart-shopping text-white me-2"></i> In Cart</button> : 
-                        <button className="btn w-100 fw-bold border-0 fs-6" disabled={prod.amount <= 0 ? true : false} style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => setToggleAddToCart({status : true , product : prod})}><i class="fa-solid fa-cart-shopping text-white me-2"></i>Add To Cart</button>
+                        <button className="btn w-100 fw-bold border-0 fs-6 align-items-center" style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => handleDeleteFromCart(prod?.products_id)}><i class="fa-solid fa-cart-shopping text-white me-2"></i> In Cart</button> : 
+                        <button className="btn w-100 fw-bold border-0 fs-6 align-items-center" disabled={prod.amount <= 0 ? true : false} style={{backgroundColor : '#10b981', color :'white', height : '50px'}} onClick={() => setToggleAddToCart({status : true , product : prod})}><i class="fa-solid fa-cart-shopping text-white me-2"></i>Add To Cart</button>
                     }
                 </div>
 
