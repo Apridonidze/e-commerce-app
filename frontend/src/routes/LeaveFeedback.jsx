@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 
 import { UserContext } from "../context/UserContext"
-import FeedbacksSkeleton from '../skeletons/FeedbacksSkeleton'
 import { useCookies } from "react-cookie"
 import Sidebar from "../layout/Sidebar"
 import PlatformFeedback from "../components/feedback/PlatformFeedback"
@@ -11,15 +10,17 @@ import { BACKEND_URL } from "../../config"
 import Header from "../layout/Header"
 import Footer from "../layout/Footer"
 import CustomerFeedbackSkeleton from "../skeletons/CustomerFeedbackSkeleton"
-import EmptyFeedbacks from "../empty/EmptyFeedbacks"
 import EmptyCustomerFeedback from "../empty/EmptyCustomerFeedback"
+import StatusMessage from "../alerts/StatusMessage"
+
 const LeaveFeedback = () => {
 
     const { user } = useContext(UserContext);
 
     const [feedbacks, setFeedbacks] = useState([]);
     const [isLoading ,setIsLoading] = useState(true);
-        const [ cookies ] = useCookies(['token']); //defining user cookies
+    const [ cookies ] = useCookies(['token']); //defining user cookies
+    const [toggleAlert, setToggleAlert] = useState({status : false , type: '', statusCode : null, message : ''}); //states to toggle components
 
     const removeFeedback = async(id) =>{ //api functionm to delete user feedback as admin
         try{
@@ -55,21 +56,25 @@ const LeaveFeedback = () => {
 
     return(
         <div className="main-container container-fluid d-flex flex-column justify-content-start " style={{maxWidth : '3000px'}}> 
+                {toggleAlert.status ? <StatusMessage setToggleAlert={setToggleAlert} toggleAlert={toggleAlert}/> : <></>}
+
             <div className="main-body">
                 <div className="main-start"><Sidebar /></div>
 
                 <div className="main-end">
                     <div className="main-header"><Header /></div>
 
-                    <h4>Share Your Experience</h4>
-                    <h5>Help us improve your experience by sharing your thoughts.</h5>
-                    <span className="small">Your feedback helps us identify issues, improve features, and deliver a better product for everyone.</span>
+                    <div className="leave-feedback-container">
+                        <h1 className="fw-bold">Share Your Experience</h1>
+                        <h5>Help us improve your experience by sharing your thoughts.</h5>
+                        <span className="small">Your feedback helps us identify issues, improve features, and deliver a better product for everyone.</span>
 
-                    {user ? <PlatformFeedback setFeedbacks={setFeedbacks}/> : <></>}
+                        {user ? <PlatformFeedback setFeedbacks={setFeedbacks}/> : <></>}
+                    </div>
 
                     
                         {isLoading ? <CustomerFeedbackSkeleton /> : feedbacks.length === 0 ? <EmptyCustomerFeedback /> : <div className="manage-feedbacks-main mt-3"> {feedbacks?.map(fb => 
-                            <Feedback fb={fb} removeFeedback={removeFeedback}/>)}</div> }
+                            <Feedback fb={fb} user={user} removeFeedback={removeFeedback}/>)}</div> }
                     
                 </div>
             </div>

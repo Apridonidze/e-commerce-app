@@ -672,6 +672,49 @@
     max-width: 1800px;
 }
 
+.leave-feedback-container{
+    background-color: var(--product-bg-color);
+    padding: 1rem;
+    border-radius:5px ;
+}
+
+.feedback-input-container i{
+    padding:0.3rem ;
+    width: auto;
+    background-color: var(--component-bg);
+    border-radius: 5px;
+}
+
+.leave-feedback-container h1{
+    color: #10b981;
+}
+
+.feedback-input textarea , .feedback-input input , .feedback-input textarea:focus , .feedback-input input:focus{
+    color: var(--text-color);
+    background-color: var(--component-bg);
+    border: var(--btn-border) !important;
+}
+
+.submit i {
+    background-color: transparent;
+}
+
+.submit{
+    height: 45px;
+    font-size: 18px;
+    max-width: 500px;
+    font-weight: 500;
+    background-color: #10b981 !important;
+}
+
+.submit:focus {
+    background-color: #10b981;
+}
+
+.leave-feedback-container * {
+    background-color: transparent;
+}
+
 /*  */
 
 .order-details-container{

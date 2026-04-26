@@ -180,11 +180,8 @@ const ReportPage = () => {
                     <div className="main-header">
                         <Header />
                     </div>
-
-           
-
-
-            <div className="report-container p-3 rounded-3" >
+                    
+            <div className="report-container p-3 rounded-3 d-flex flex-column justify-content-between" style={{minHeight : '85vh'}}>
             <div className="report-header d-flex flex-column">
                 <div className="d-flex justify-content-between">
                     <h2>Report Product</h2>
