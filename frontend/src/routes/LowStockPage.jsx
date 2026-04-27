@@ -37,9 +37,9 @@ const LowStockPage = () => {
     const [offset, setOffset] = useState(0)
 
     useEffect(() => {
-        const fetchLowStockItems = async() => {
+        const fetchLowStockItems = async(status) => {
             try{
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard/low-stock/${offset}`, config)
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/low-stock/${status}/${offset}`, config)
                 
                 setIsLowStockLoading(false)
                 if(response.status === 204) return setLowStock([]);
@@ -53,7 +53,8 @@ const LowStockPage = () => {
             }
         } 
 
-        fetchLowStockItems();
+        fetchLowStockItems('Out Of Stock');
+        fetchLowStockItems('Low Stock');
     }, [offset])
 
                 
