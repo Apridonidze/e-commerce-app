@@ -242,10 +242,7 @@ const ProductPage = () => {
                         <div className="products-page-col2">  
                         {isProductLoading ? <ProductPageSkeleton />  : <FeedbackContainer user={user} removeFeedback={removeFeedback} handlePostFeedback={handlePostFeedback} feedbackData={feedbackData} setFeedbackData={setFeedbackData}  cookies={cookies} feedback={feedback}/>}
                         </div>
-
                       
-                        
-
                     </div>
                     
                 </div>

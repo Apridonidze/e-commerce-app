@@ -297,12 +297,12 @@ const EditProduct = ({ setToggleEdit, toggleEdit, setToggleAlert }) => {
                     <div className="form-start ">
 
                         <div className="target-image-container">
-                            {images?.length === 0 ? <></> : <span className="toggleDeleteImg  bg-danger p-2 rounded-3 m-1 " onClick={() => {const newImages = images.filter((_, id) => id !== targetImage) ; setImages(newImages); setTargetImage(0)}}><i class="fa-solid fa-trash text-white fs-6"></i></span>} 
+                            {images?.length === 0 ? <></> : <span className="toggleDeleteImg bg-danger p-2 rounded-3 m-1 " onClick={() => {const newImages = images.filter((_, id) => id !== targetImage) ; setImages(newImages); setTargetImage(0)}}><i class="fa-solid fa-trash text-white fs-6"></i></span>} 
                             <img src={getImageSrc(images[targetImage])} alt="No Images" className="targetImage mb-2 justify-content-center d-flex align-items-center" /> 
                         </div>
 
                         <div className="images-container my-3">
-                            {images.map((img, imgId) => {return <div className="img-holder"><img className="rounded-2" src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} onClick={() => setTargetImage(imgId)} alt={img.name} key={imgId} /></div>})}
+                            {images.map((img, imgId) => {return <div className="img-holder"><img className="rounded-2 " src={getImageSrc(img)} style={{maxWidth: '120px' , height : 'auto', cursor : 'pointer'}} onClick={() => setTargetImage(imgId)} alt={img.name} key={imgId} /></div>})}
                         <div className="form-floating">
                         
                         {images?.length > 5 ? <></> : <button type="button" className="upload-btn" onClick={() => imageRef.current.click()}><i class="fa-regular fa-image fw-medium"></i> <br /> Add Images</button>}
