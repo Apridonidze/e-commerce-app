@@ -20,6 +20,7 @@ import { useCookies } from "react-cookie"
 import { NavLink } from "react-router-dom"
 
 import LowStockProduct from "../components/product/LowStockProduct"
+import AdminHeader from "../admin/components/AdminHeader"
 
 const LowStockPage = () => {
 
@@ -72,15 +73,11 @@ const LowStockPage = () => {
 
                     <div className="main-header">
 
-                        <Header />
+                        <AdminHeader />
                         
                         <div className="orders-page-header-buttons d-flex justify-content-between pt-3">
                             <div className="order-page-header-start">
                                 <button className="return d-flex gap-2 align-items-center btn border-0 fs-6" onClick={() =>    {navigator('/admin-dashboard', {replace : true})}}><i class="fa-solid fa-arrow-left"></i> Return</button>
-                            </div>
-                            <div className="order-page-header-end">
-                                <NavLink to='/admin-dashboard/orders/OnWay' className={({ isActive }) => isActive ? "active-order" : ""}>OnWay</NavLink>
-                                <NavLink to='/admin-dashboard/orders/Delivered' className={({ isActive }) => isActive ? "active-order" : ""}>Delivered</NavLink>
                             </div>
                         </div>
                     
