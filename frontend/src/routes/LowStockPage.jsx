@@ -53,10 +53,10 @@ const LowStockPage = () => {
             }
         } 
 
-        fetchLowStockItems('Out Of Stock');
-        fetchLowStockItems('Low Stock');
+        fetchLowStockItems();
     }, [offset])
 
+    console.log(lowStock)
                 
 
     return(

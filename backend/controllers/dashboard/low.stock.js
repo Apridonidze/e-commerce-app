@@ -6,13 +6,8 @@ async function getStockOverview(req, res) {
     offset = Number(offset);
     limit = Number(limit);
 
-    if (Number.isNaN(offset) || offset < 0) {
-        return res.status(400).json({ message: "Invalid offset" });
-    }
-
-    if (Number.isNaN(limit) || limit <= 0) {
-        return res.status(400).json({ message: "Invalid limit" });
-    }
+    if (Number.isNaN(offset) || offset < 0) return res.status(400).json({ message: "Invalid offset" });
+    if (Number.isNaN(limit) || limit <= 0)return res.status(400).json({ message: "Invalid limit" });
 
     try {
 
@@ -35,7 +30,6 @@ async function getStockOverview(req, res) {
         return res.status(200).json({message: "Stock overview fetched successfully", data: grouped});
 
     } catch (err) {
-        console.log(err)
         return res.status(500).json({message: "Could not fetch stock overview"});
     };
 };

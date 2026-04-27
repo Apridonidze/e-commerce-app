@@ -130,12 +130,11 @@ const AdminDashboard = () => {
 
         const fetchLowStockItems = async() => {
             try{
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard/low-stock/${undefined}/${0}`, config)
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/low-stock/${0}`, config)
                 
                 setIsLowStockLoading(false)
                 if(response.status === 204) return setLowStock([]);
-
-                setLowStock(response.data.items)
+                setLowStock([...response.data.data.out , ...response.data.data.low])
 
             }catch(err){
                 setIsLowStockLoading(false)
