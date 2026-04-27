@@ -1,6 +1,5 @@
 import { Navigate, RouterProvider, createBrowserRouter} from 'react-router-dom'
 
-
 import Main from '../routes/Main'
 import Landing from '../routes/Landing'
 import Login from '../routes/Login'
@@ -18,8 +17,9 @@ import ReportPage from '../routes/ReportPage'
 import Legal from '../routes/Legal'
 import Sales from '../routes/Sales'
 import NotFound from '../routes/NotFound'
-import { useContext, useRef } from 'react'
 import LowStockPage from '../routes/LowStockPage'
+
+import { useContext, useRef } from 'react'
 import { UserContext } from '../context/UserContext'
 
 const AppRouter = () => {
