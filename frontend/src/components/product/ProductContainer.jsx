@@ -29,8 +29,8 @@ const ProductContainer = ({setToggleEdit,handleDeleteFromCart, setToggleRemove,s
 
       <div className="main-product-start d-flex flex-column-reverse">
         
-        <div className="image-rows d-flex">
-            {imagesArray.length === 0 ? (<span className="text-center" style={{ minHeight: "60px",minWidth: "60px",backgroundColor: "#f0f3ffA1",}}>No Image</span>) : (imagesArray.map((_, id) => (<img key={id} onClick={() => setTargetImage(id)} src={getImageSrc(imagesArray[id])} alt={`Image${id}`} className={`targetImage mb-2 justify-content-center d-flex align-items-center ${targetImage === id ? "active" : ""}`}/>)))}
+        <div className="image-rows d-flex flex-row ">
+            {imagesArray.length === 0 ? (<span className="text-center" style={{ minHeight: "60px",minWidth: "60px",backgroundColor: "rgba(240, 243, 255, 0.2)",}}>No Image</span>) : (imagesArray.map((_, id) => (<img key={id} onClick={() => setTargetImage(id)} src={getImageSrc(imagesArray[id])} alt={`Image${id}`} className={`targetImage mb-2 justify-content-center d-flex align-items-center ${targetImage === id ? "active" : ""}`}/>)))}
         </div>
 
         <div className="target-image py-3">
