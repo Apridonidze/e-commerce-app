@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter} from 'react-router-dom'
+import { Navigate, RouterProvider, createBrowserRouter} from 'react-router-dom'
 
 
 import Main from '../routes/Main'
@@ -18,38 +18,36 @@ import ReportPage from '../routes/ReportPage'
 import Legal from '../routes/Legal'
 import Sales from '../routes/Sales'
 import NotFound from '../routes/NotFound'
-import { useEffect, useRef } from 'react'
+import { useContext, useRef } from 'react'
 import LowStockPage from '../routes/LowStockPage'
+import { UserContext } from '../context/UserContext'
 
 const AppRouter = () => {
 
+  const { user } = useContext(UserContext)
   const bodyRef = useRef(null)
 
   const router = createBrowserRouter([
     {path : '/' , element : <Main />},
     {path : '/sales' , element : <Sales />},
     {path : '/landing-page' , element : <Landing />},
-    {path : '/dashboard' , element : <Dashboard />},
+    {path : '/dashboard' , element : !user ? <Navigate to='/'/> : <Dashboard />},
     {path : '/product/:id' , element : <ProductPage />},
-    {path : '/admin-dashboard' , element : <AdminDashboard/>},
-    {path : '/admin-dashboard/orders/:orderStatus' , element : <OrdersPage />},
-    {path : '/admin-dashboard/reports' , element : <Reports />},
-    {path : '/admin-dashboard/reports/:reportStatus' , element : <Reports />},
-    {path : '/admin-dashboard/feedbacks' , element : <Feedbacks />},
-    {path : '/admin-dashboard/low-stock' , element : <LowStockPage />},
-    {path : '/admin-dashboard/admin-support-chat' , element  :<AdminSupportChatContainer />},
+    {path : '/admin-dashboard' , element : user.role !== 'admin' ? <Navigate to='/*'/> : <AdminDashboard/>},
+    {path : '/admin-dashboard/orders/:orderStatus' , element : user.role !== 'admin' ? <Navigate to='/*'/> : <OrdersPage />},
+    {path : '/admin-dashboard/reports' , element : user.role !== 'admin' ? <Navigate to='/*'/> :<Reports />},
+    {path : '/admin-dashboard/reports/:reportStatus' , element : user.role !== 'admin' ? <Navigate to='/*'/> :<Reports />},
+    {path : '/admin-dashboard/feedbacks' , element : user.role !== 'admin' ? <Navigate to='/*'/> :<Feedbacks />},
+    {path : '/admin-dashboard/low-stock' , element : user.role !== 'admin' ? <Navigate to='/*'/> :<LowStockPage />},
+    {path : '/admin-dashboard/admin-support-chat' , element  : user.role !== 'admin' ? <Navigate to='/*'/> :<AdminSupportChatContainer />},
     {path : '/faq' , element  :<FAQ />},
-    {path : '/report-platform' , element  :<ReportPage />},
-    {path : '/leave-feedback' , element  :<LeaveFeedback />},
+    {path : '/report-platform' , element  : !user ?  <Navigate to='/*'/> : <ReportPage />},
+    {path : '/leave-feedback' , element  : !user ?  <Navigate to='/*'/> :  <LeaveFeedback />},
     {path : '/legal' , element  :<Legal />},
     {path : '/login' , element : <Login />},
     {path : '/sign' , element : <Sign />},
-    {path : '*' , element : <NotFound />}, /**add 404 page with not-found url for this and button to go back to main page */
-    //add  which pages should be used with cookies rest left empty
+    {path : '*' , element : <NotFound />},
   ])
-
-  // add texts to landing page
- 
 
   return(
     <div className="app-container" ref={bodyRef}>
