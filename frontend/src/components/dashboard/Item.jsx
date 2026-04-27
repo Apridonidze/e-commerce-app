@@ -17,7 +17,7 @@ const Item = ({ prod, handleDeleteFromCart}) => {
             <div className="item-start p-1 d-flex align-items-center" style={{maxHeight:'180px' , width: '280px', cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.product_id}`)}>
                 <img className="w-auto mx-auto rounded-1" style={{maxHeight : '160px' , maxWidth : '100%'}} loading="lazy" src={`data:image/svg+xml;base64,${images?.[0] || ""}`} />
             </div>
-            <div className="item-end d-flex flex-column text-start gap-3">
+            <div className="item-end d-flex flex-column text-start gap-3 w-100">
                 
                 <div className="item-container-top d-flex align-items-center justify-content-between">
                     <h5 style={{cursor : 'pointer'}} onClick={() => navigator(`/product/${prod.product_id}`)}>{prod?.title}</h5>

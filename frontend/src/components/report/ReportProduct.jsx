@@ -160,7 +160,7 @@ const ReportProduct = ({ setToggleReportProduct, toggleReportProduct, setToggleA
                     <h6>Reports are processed within 24 hours by our human curators.</h6>
                 </div> 
                 <div className="manage-report-buttons">
-                    <button className="btn border" ref={discardRef} onClick={() => setToggleReportProduct({status : false, reportDetails : null})}>Discard</button>
+                    <button className="btn border-0" ref={discardRef} onClick={() => setToggleReportProduct({status : false, reportDetails : null})}>Discard</button>
                     <button className="btn btn-danger" ref={submitRef} onClick={() => handleSubmitReport()}>Submit Report</button>
                 </div>
             </div>
