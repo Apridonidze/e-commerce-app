@@ -108,9 +108,6 @@ The system also includes secure payment processing, email notifications, and rea
 ### 📊 Analytics Dashboard
 ![Analytics](/frontend/public/assets/img4.png)
 
-### 💬 Live Chat
-![Chat](/frontend/public/assets/img6.png)
-
 ---
 
 ## ⚙️ Installation Guide
@@ -119,23 +116,18 @@ The system also includes secure payment processing, email notifications, and rea
 ```bash
 git clone https://github.com/your-username/ecommerce-app.git 
 ```
---
 
 ### 2. Install backend dependencies
 ```bash
 cd backend
 npm install
 ```
---
-
 
 ### 3. Install frontend dependencies
 ```bash
 cd frontend
 npm install
 ```
---
-
 
 ### 4. Setup environment variables
 
@@ -158,7 +150,6 @@ Create a .env file in frontend folder:
 VITE_BACKEND_URl=localhost://8081
 VITE_STRIPE_PUBLIC_KEY=pk_test_51T3HPbDhDPlvJFNzLqb5y5nmgK1Sq6NeqWNnnmBGggStVexE0WEW8pNsJqkIQBMRfPIQAt35vok5Jc4m7EJODeYp00GrSyMxE5
 ```
---
 
 ### 5. Run the project
 
