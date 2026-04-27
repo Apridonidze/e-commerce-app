@@ -20,7 +20,6 @@ import { useCookies } from "react-cookie"
 import { NavLink } from "react-router-dom"
 
 import LowStockProduct from "../components/product/LowStockProduct"
-import StockRow from "../admin/components/StockRow"
 
 const LowStockPage = () => {
 
@@ -39,12 +38,12 @@ const LowStockPage = () => {
     useEffect(() => {
         const fetchLowStockItems = async(status) => {
             try{
-                const response = await axios.get(`${BACKEND_URL}/api/dashboard/low-stock/${status}/${offset}`, config)
+                const response = await axios.get(`${BACKEND_URL}/api/dashboard/low-stock/${offset}`, config)
                 
                 setIsLowStockLoading(false)
                 if(response.status === 204) return setLowStock([]);
 
-                setLowStock(response.data.items)
+                setLowStock(response.data.data)
 
             }catch(err){
                 setIsLowStockLoading(false)
@@ -87,10 +86,28 @@ const LowStockPage = () => {
                     
                     </div>
 
-                    <div className="low-stock-page-main rounded-3 mt-4 py-2">
+                    <div className="low-stock-page-main rounded-3 my-4 py-2">
 
-                        <section id="">{isLowStockLoading ? 'laoding' : <StockRow lowStock={lowStock} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setOffset={setOffset}/>}</section>
-                        <section id="">{isLowStockLoading ? 'laoding' : <StockRow lowStock={lowStock} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove} setOffset={setOffset}/>}</section>
+                        <section className="mt-1">
+                            <h4><i class="fas fa-chart-line p-2 w-auto rounded-1" style={{color : '#f49600', backgroundColor : "rgba(244, 150, 0, 0.2)"}}></i> Low Stock Items</h4>
+                            {lowStock.low?.length !== 0 ? <div className="products">{lowStock.low?.map(prod => <LowStockProduct prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove }/>)}</div> 
+                            : <EmptyLowStock />}
+
+                            {lowStock.low?.length % 5 !== 0 || lowStock.low?.length === 0 ? <></> : 
+                                <button className="btn d-flex text-white fw-bold my-5 align-items-center py-2 justify-content-center mx-auto w-25 " style={{backgroundColor : "#10b981", height : '50px', textAlign: 'center'}} onClick={() => setOffset((prev) => {if(lowStock.length % 5 === 0){return prev + 5} return prev})}>Load More Items...</button>
+                            }
+                        </section>
+
+                        <section className="mt-5">
+                            <h4><i class="fas fa-ban p-2 w-auto rounded-1" style={{color : '#d13242', backgroundColor : "rgba(196, 48, 62, 0.2)"}}></i> Out Of Stock Items</h4>
+
+                            {lowStock.out?.length !== 0 ? <div className="products">{lowStock.out?.map(prod => <LowStockProduct prod={prod} setToggleEdit={setToggleEdit} setToggleRemove={setToggleRemove }/>)}</div> 
+                            : <EmptyLowStock />}
+
+                            {lowStock.out?.length % 5 !== 0 || lowStock.out?.length === 0 ? <></> : 
+                                <button className="btn d-flex text-white fw-bold my-5 align-items-center py-2 justify-content-center mx-auto w-25 " style={{backgroundColor : "#10b981", height : '50px', textAlign: 'center'}} onClick={() => setOffset((prev) => {if(lowStock.length % 5 === 0){return prev + 5} return prev})}>Load More Items...</button>
+                            }
+                        </section>
 
                     </div>
 
