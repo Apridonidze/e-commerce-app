@@ -88,7 +88,7 @@ const location = useLocation()
                                 <Link to='/admin-dashboard#reports' className={isActiveHash("#reports") ? "active-link" : ""}><i class="fa-solid fa-newspaper pe-4"></i> Reports</Link>
                                 <Link to='/admin-dashboard#feedbacks' className={isActiveHash("#feedbacks") ? "active-link" : ""}><i class="fa-solid fa-message pe-4"></i> Feedbacks</Link>
                                 
-                                <NavLink to='/admin-dashboard/admin-support-chat' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-comments pe-4"></i> Support Chat <span className='messageCount '>{messagesCount < 9  ? messagesCount : '9+' }</span></NavLink>
+                                <NavLink to='/admin-dashboard/admin-support-chat' className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-comment pe-4"></i> Support Chat <span className='messageCount '>{messagesCount < 9  ? messagesCount : '9+' }</span></NavLink>
                                 
                             </div> : <></>
                         }
