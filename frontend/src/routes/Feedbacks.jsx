@@ -9,6 +9,7 @@ import Header from "../layout/Header";
 import { BACKEND_URL } from "../../config";
 import AdminHeader from "../admin/components/AdminHeader";
 import AdminFeedback from "../admin/components/AdminFeedback";
+import Footer from "../layout/Footer";
 const Feedbacks = () => {
 
     const [ cookies ] = useCookies(['token'])
@@ -87,6 +88,7 @@ const Feedbacks = () => {
 
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

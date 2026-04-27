@@ -24,8 +24,9 @@ const Legal = () => {
 
                     <div className="main-header"> <Header /> </div>
                     <div className="legal-main-container">
-                        <h1 className="">Welcome to <strong style={{color : '#10b981'}}>Shoptic</strong></h1>
-                        <h5>These Terms of Service govern your use of our platform. By creating an account or using the platform, you agree to these terms.</h5>
+                        
+                        <h1 className="mt-5">Welcome to <strong style={{color : '#10b981'}}>Shoptic</strong></h1>
+                        <h5 className="mb-5">These Terms of Service govern your use of our platform. By creating an account or using the platform, you agree to these terms.</h5>
                         
                         <section id="terms"><Terms /></section>
                         <section id="privacy"><Privacy /></section>

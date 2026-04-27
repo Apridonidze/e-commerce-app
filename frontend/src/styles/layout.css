@@ -704,6 +704,10 @@
   background-color: transparent;
 } 
 
+.legal-component h1 , .legal-component h2 , .legal-component h3{
+  color: #10b981;
+}
+
 .legal-component{
   background-color: var(--product-bg-color);
   color: var(--text-color);
