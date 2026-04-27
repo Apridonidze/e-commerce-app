@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import AdminSupportChat from '../admin/containers/AdminSupportChat';
 import AdminSupportChatSidebar from '../admin/containers/AdminSupportChatSidebar'
-import Header from '../layout/Header';
 
 import '../styles/supportchat.css'
 
@@ -20,7 +19,7 @@ const AdminSupportChatContainer = () => {
                 <div className="main-start"><AdminSupportChatSidebar setTargetConvId={setTargetConvId} targetConvId={targetConvId} setToggleAlert={setToggleAlert}/></div>
                 
                 <div className="main-end">
-                    {targetConvId ? <AdminSupportChat targetConvId={targetConvId} setTargetConvId={setTargetConvId}/> : 'No chats targeted'}
+                    {targetConvId.conversation_id ? <AdminSupportChat targetConvId={targetConvId} setTargetConvId={setTargetConvId}/> : 'No chats targeted'}
                 </div>
             </div>
         </div>

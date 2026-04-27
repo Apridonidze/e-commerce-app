@@ -50,11 +50,11 @@ const AdminSupportChatSidebar = ({ setTargetConvId, setToggleAlert,targetConvId 
             </div>
 
             <div className="sidebar-section">
-                <span className='section-title p-2 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>ONGOING CONVERSATIONS</span>
+                <span className='section-title px-2 pb-1 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>ONGOING CONVERSATIONS</span>
 
                 {rooms.length === 0 ? (
-                    <div className="empty-state">
-                        <i className="fa-regular fa-comments"></i>
+                    <div className="empty-state text-start align-items-start d-flex flex-row gap-3">
+                        <i className="fa-regular fa-comments w-auto"></i>
                         <p>No conversations yet</p>
                     </div>
                 ) : (
