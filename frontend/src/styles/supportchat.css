@@ -46,18 +46,19 @@
     min-width: 400px;
     max-width: 400px;
     min-height: 350px;
-    max-height: 350px;
+    max-height: 400px;
     border-radius: 0.5rem;
     border: 1px solid;
 }
 
-.support-chat-header{
+.support-chat-head{
     border-bottom: 1px solid ;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
+    padding: 0.5rem;
 }
 
 .support-chat-main{
@@ -67,6 +68,12 @@
 
 .support-chat-footer{
     margin: 10px;
+}
+
+.support-chat-footer input , .support-chat-footer input::placeholder, .support-chat-footer input:focus{
+  color: var(--text-color);
+  background-color: var(--component-bg);
+  border: none;
 }
 
 

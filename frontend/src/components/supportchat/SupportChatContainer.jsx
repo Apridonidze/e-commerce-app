@@ -3,8 +3,9 @@ import SupportChat from "./SupportChat";//importing componnent
 
 import '../../styles/supportchat.css'
 
-const SupportChatContainer = ({ setToggleChat , toggleChat}) =>{
+const SupportChatContainer = ({ setToggleAlert }) =>{
 
+    const [toggleChat, setToggleChat] = useState(false) ; //state to toggle SupportChat.jsx component
 
     return(
         <div className="support-chat-main-container text-center align-items-center rounded-5" style={{cursor: 'pointer'}}>
@@ -15,6 +16,7 @@ const SupportChatContainer = ({ setToggleChat , toggleChat}) =>{
                 </div> : 
             <></>}
 
+            {toggleChat ? <SupportChat  setToggleChat={setToggleChat} setToggleAlert={setToggleAlert}/> : <></> }
 
         </div>
     );

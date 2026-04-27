@@ -104,7 +104,7 @@ const location = useLocation()
                 <div className="sidebar-end  d-flex flex-column"> 
                     <span className='p-2 fw-medium' style={{fontSize : '12px' , letterSpacing : '0.8px'}}>HELP</span>
                     <NavLink to={'/faq'} className={({ isActive }) => isActive ? "active-link" : ""}><i class="fa-solid fa-circle-question pe-4"></i> FAQ</NavLink>
-                    {user ? <>
+                    {!user ? <>
                         <Link to='/legal#terms' className={isActiveHash("#terms") ? "active-link" : ""}><i class="fa-solid fa-comment-dots pe-4"></i>Terms</Link>
                         <Link to='/legal#privacy' className={isActiveHash("#privacy") ? "active-link" : ""}><i class="fa-solid fa-comment-dots pe-4"></i>Policy</Link>
                     </> :

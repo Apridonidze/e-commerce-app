@@ -73,7 +73,6 @@ const SupportChat = ({ setToggleChat, setToggleAlert }) => {
     const handleMessageSend = (e) => {
 
         e.preventDefault(); //preventing page load after function triggers
-
         if(input.trim() === ''|| input.trim().length > 300) return; //returnign empty promise if input is empty or too large
 
         socketRef.current.send(JSON.stringify({type : 'support_chat_message', text : input , convId : convId})); //else sending our message to websocket
@@ -97,9 +96,9 @@ const SupportChat = ({ setToggleChat, setToggleAlert }) => {
     },[messages]); //displaying your users last message status 'Delivered' , 'Seen' (by admin) on messages state change
 
     return(
-        <div className="support-chat-container" tabIndex={1}>
+        <div className="support-chat-container" style={{zIndex : '99999'}}>
 
-            <div className="support-chat-header d-flex flex-row justify-content-between">
+            <div className="support-chat-head d-flex d-flex justify-content-between">
                 <div className="header-start text-start border-0">
                     <h4>Support Chat</h4>
                     <h6><i class="fa-solid fa-circle rounded-5" style={{color : count > 0 ? '#10b981' : '#9b9b9b' , fontSize : '14px'}}></i> Online Admins {count}</h6>
