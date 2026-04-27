@@ -3,7 +3,12 @@ import { useState } from 'react';
 import AdminSupportChat from '../admin/containers/AdminSupportChat';
 import AdminSupportChatSidebar from '../admin/containers/AdminSupportChatSidebar'
 
+import EmptyChat from '../empty/EmptyChat';
+import Footer from '../layout/Footer';
+
+import '../styles/layout.css'
 import '../styles/supportchat.css'
+import AdminHeader from '../admin/components/AdminHeader';
 
 const AdminSupportChatContainer = () => {
 
@@ -19,9 +24,11 @@ const AdminSupportChatContainer = () => {
                 <div className="main-start"><AdminSupportChatSidebar setTargetConvId={setTargetConvId} targetConvId={targetConvId} setToggleAlert={setToggleAlert}/></div>
                 
                 <div className="main-end">
-                    {targetConvId.conversation_id ? <AdminSupportChat targetConvId={targetConvId} setTargetConvId={setTargetConvId}/> : 'No chats targeted'}
+                    <div className="main-header"><AdminHeader /></div>
+                    {targetConvId.conversation_id ? <AdminSupportChat targetConvId={targetConvId} setTargetConvId={setTargetConvId}/> : <EmptyChat />}
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

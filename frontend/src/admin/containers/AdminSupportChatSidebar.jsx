@@ -3,22 +3,19 @@ import { useEffect, useRef, useState } from "react";
 
 import { BACKEND_URL } from "../../../config";
 
-import { Link } from "react-router-dom";
+import { Link, replace, useNavigate } from "react-router-dom";
 const AdminSupportChatSidebar = ({ setTargetConvId, setToggleAlert,targetConvId }) => {
 
     const [ cookies ] = useCookies(['token'])
     const socketRef = useRef(null);
 
     const [rooms,setRooms] = useState([])
+
+    const navigator = useNavigate()
     
     useEffect(() => {
         
-        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}&gainAdminAccess=${true}&conversation_id=${null}`)
-    
-        socketRef.current.onopen = () => {
-
-            console.log('connected to websocket')
-        }
+        socketRef.current = new WebSocket(`ws://${BACKEND_URL.split('/')[2]}?token=${cookies.token}&gainAdminAccess=${true}&conversation_id=${targetConvId.conversation_id}`)
     
         socketRef.current.onmessage = (event) => {
 
@@ -29,14 +26,12 @@ const AdminSupportChatSidebar = ({ setTargetConvId, setToggleAlert,targetConvId 
             }
     
             if(response.type === 'admin_access'){
-                setToggleAlert()
+                if (!response.admin_access) navigator('/*' , {replace : true}) 
             }
 
             if(response.type === 'internal_error'){
-                setToggleAlert()
+                setToggleAlert({status: true, type: "Internal_Error", statusCode: err.status, message: String(err.response?.data?.message || err.message || 'Unknown error')});
             }
-
-    
         }
     
         return () => {socketRef.current?.close()}
