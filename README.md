@@ -1,69 +1,180 @@
-# 🛒 E-Commerce App
+# 🛒 E-Commerce Platform
 
-A modern full-stack e-commerce web application that allows users to browse products, manage carts, and place orders through a smooth and responsive interface. It also includes an admin panel for product and order management.
+A full-stack e-commerce web application that provides a complete online shopping experience with user authentication, product management, secure payments, real-time communication, and an advanced admin dashboard.
+
+This project was built as a **learning and practice project**, and I gained significant experience in full-stack development, API design, real-time systems, and production-level architecture.
 
 ---
 
 ## 📌 About The Project
 
-This project is a full-stack e-commerce platform built to simulate a real online shopping experience.
+This platform simulates a real-world e-commerce system with both user and admin functionalities.
 
-### Key Features:
-- User authentication (login/register)
-- Product browsing and filtering
-- Shopping cart functionality
-- Order placement system
-- Admin dashboard for product management
-- Responsive UI for all devices
+Users can browse products, manage their cart, place orders, and interact with support features. Admins can manage products, handle feedback/reports, track sales analytics, and manage the entire platform.
+
+The system also includes secure payment processing, email notifications, and real-time chat support.
 
 ---
 
-## 🧰 Technologies Used
+## 🚀 Features
 
-### Frontend:
+### 👤 User Features
+- User authentication (Login / Signup)
+- Browse and search products
+- Add/remove products from cart
+- Place orders with secure checkout (Stripe)
+- Receive email notifications for order status updates
+- Submit feedback and reports
+- Live support chat system
+- FAQ section
+
+---
+
+### 🛠 Admin Features
+- Add / Edit / Delete products
+- Manage users and orders
+- Handle feedback and reports system
+- Order status management (triggers email updates)
+- Dashboard analytics (30-day / 7-day sales & revenue charts)
+- Admin control panel
+
+---
+
+### 📊 Analytics & Dashboard
+- Revenue tracking (7-day & 30-day views)
+- Sales statistics visualization
+- Built with interactive charts (Recharts.js)
+
+---
+
+### 💬 Real-Time Features
+- Live support chat using WebSockets
+- Instant admin-user communication
+
+---
+
+### 🔐 Security Features
+- Rate limiting (prevents abuse)
+- CORS protection
+- Secure REST APIs
+- JWT-based authentication
+
+---
+
+## 🧰 Tech Stack
+
+### Frontend
 - React.js
-- HTML5
-- CSS3
-- JavaScript
-- Bootstrap / Font Awesome
+- React State Management
+- Bootstrap
+- CSS
+- Recharts.js
 
-### Backend:
+### Backend
 - Node.js
 - Express.js
-- REST API
+- REST APIs
+- WebSocket
+- Webhooks
 
-### Database:
-- MySQL (or your DB here)
+### Database
+- MySQL
 
-### Other:
-- JWT Authentication
-- Axios (API requests)
+### Integrations & Tools
+- Stripe (Payments)
+- SendGrid (Email notifications)
+- Docker
+- Git & GitHub
+- Rate Limiter
+- CORS middleware
 
 ---
 
-## 📸 Project Screenshots
+## 📸 Screenshots
+
 
 ### 🏠 Home Page
-![Home Page](./screenshots/home.png)
+![Home](/frontend/public/assets/img2.png)
 
 ### 🛍 Product Page
-![Product Page](./screenshots/products.png)
+![Products](/frontend/public/assets/img1.png)
 
 ### 🛒 Cart Page
-![Cart Page](./screenshots/cart.png)
+![Cart](/frontend/public/assets/img8.png)
 
-### 🔐 Login Page
-![Login Page](./screenshots/login.png)
+### 💳 Checkout Page
+![Checkout](/frontend/public/assets/img5.png)
 
-### 🛠 Admin Dashboard
-![Admin Dashboard](./screenshots/admin.png)
+### 📊 Analytics Dashboard
+![Analytics](/frontend/public/assets/img4.png)
+
+### 💬 Live Chat
+![Chat](/frontend/public/assets/img6.png)
 
 ---
 
 ## ⚙️ Installation Guide
 
-Follow these steps to run the project locally:
-
-### 1. Clone the repository
+### 1. Clone repository
 ```bash
-git clone https://github.com/your-username/ecommerce-app.git
+git clone https://github.com/your-username/ecommerce-app.git 
+```
+--
+
+### 2. Install backend dependencies
+```bash
+cd backend
+npm install
+```
+--
+
+
+### 3. Install frontend dependencies
+```bash
+cd frontend
+npm install
+```
+--
+
+
+### 4. Setup environment variables
+
+Create a .env file in the backend folder:
+
+```bash
+DB_HOST=your_host
+DB_USER=your_user
+DB_PASSWORD=your_password
+DB_NAME=your_database
+
+JWT_SECRET=your_secret_key
+
+STRIPE_SECRET_KEY=your_stripe_key
+SENDGRID_API_KEY=your_sendgrid_key
+```
+
+Create a .env file in frontend folder:
+```bash
+VITE_BACKEND_URl=localhost://8081
+VITE_STRIPE_PUBLIC_KEY=pk_test_51T3HPbDhDPlvJFNzLqb5y5nmgK1Sq6NeqWNnnmBGggStVexE0WEW8pNsJqkIQBMRfPIQAt35vok5Jc4m7EJODeYp00GrSyMxE5
+```
+--
+
+### 5. Run the project
+
+```bash 
+cd backend nodemon server.js
+```
+
+```bash
+cd frontend npm run dev
+```
+---
+
+## 🚀 Future Improvements
+
+- 🎨 Improve UI/UX design for a more modern and user-friendly experience
+- 🔔 Add real-time notifications for orders, messages, and system updates
+- 📊 Enhance admin analytics with deeper insights and advanced reporting
+- 🤖 Integrate an AI-powered chatbot for customer support and assistance
+- 📱 Improve mobile responsiveness and performance optimization
