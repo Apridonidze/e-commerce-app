@@ -26,10 +26,10 @@ This platform simulates a real-world e-commerce system with both user and admin 
 ## Tech Stack
 
 ### Frontend
--**Frontend:** React.js, State Management, Bootstrap, CSS, Recharts.js
--**Backend:** Node.js, Express.js, REST APIs, WebSocket, Webhooks
--**Database & Integrations:** MySQL, Stripe, SendGrid,
--**Other Tools:** Docker, Git, GitHub, Rate Limiter, CORS
+- **Frontend:** React.js, State Management, Bootstrap, CSS, Recharts.js
+- **Backend:** Node.js, Express.js, REST APIs, WebSocket, Webhooks
+- **Database & Integrations:** MySQL, Stripe, SendGrid,
+- **Other Tools:** Docker, Git, GitHub, Rate Limiter, CORS
 
 ---
 
