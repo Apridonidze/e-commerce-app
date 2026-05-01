@@ -95,10 +95,10 @@ cd frontend npm run dev
 ```
 ---
 
-## 🚀 Future Improvements
+## Future Improvements
 
-- 🎨 Improve UI/UX design for a more modern and user-friendly experience
-- 🔔 Add real-time notifications for orders, messages, and system updates
-- 📊 Enhance admin analytics with deeper insights and advanced reporting
-- 🤖 Integrate an AI-powered chatbot for customer support and assistance
-- 📱 Improve mobile responsiveness and performance optimization
+- Improve UI/UX design for a more modern and user-friendly experience
+- Add real-time notifications for orders, messages, and system updates
+- Enhance admin analytics with deeper insights and advanced reporting
+- Integrate an AI-powered chatbot for customer support and assistance
+- Improve mobile responsiveness and performance optimization
