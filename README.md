@@ -1,111 +1,44 @@
-# 🛒 E-Commerce Platform
+# E-Commerce Platform
 
 A full-stack e-commerce web application that provides a complete online shopping experience with user authentication, product management, secure payments, real-time communication, and an advanced admin dashboard.
 
-This project was built as a **learning and practice project**, and I gained significant experience in full-stack development, API design, real-time systems, and production-level architecture.
+---
+
+## About The Project
+
+This platform simulates a real-world e-commerce system with both user and admin functionalities.Users can browse products, manage their cart, place orders, and interact with support features. Admins can manage products, handle feedback/reports, track sales analytics, and manage the entire platform.The system also includes secure payment processing, email notifications, and real-time chat support.
 
 ---
 
-## 📌 About The Project
+## Features
+- Authentication System – Secure login & signup for users
+- Product Browsing & Search – Explore and find products easily
+- Shopping Cart – Add, update, and remove items from cart
+- Secure Checkout – Stripe-powered payment processing
+- Order Management – Place orders and track status updates with email notifications
+- Admin Dashboard – Manage products, users, and orders from a centralized panel
+- Product Management (Admin) – Add, edit, and delete products
+- Analytics Dashboard – 7-day & 30-day revenue and sales insights with interactive charts
+- Real-Time Support Chat – Live WebSocket-based communication between users and admins
+- Feedback & Reports System – Users can submit feedback and issue reports
+- FAQ Section – Quick answers to common questions
 
-This platform simulates a real-world e-commerce system with both user and admin functionalities.
-
-Users can browse products, manage their cart, place orders, and interact with support features. Admins can manage products, handle feedback/reports, track sales analytics, and manage the entire platform.
-
-The system also includes secure payment processing, email notifications, and real-time chat support.
-
----
-
-## 🚀 Features
-
-### 👤 User Features
-- User authentication (Login / Signup)
-- Browse and search products
-- Add/remove products from cart
-- Place orders with secure checkout (Stripe)
-- Receive email notifications for order status updates
-- Submit feedback and reports
-- Live support chat system
-- FAQ section
-
----
-
-### 🛠 Admin Features
-- Add / Edit / Delete products
-- Manage users and orders
-- Handle feedback and reports system
-- Order status management (triggers email updates)
-- Dashboard analytics (30-day / 7-day sales & revenue charts)
-- Admin control panel
-
----
-
-### 📊 Analytics & Dashboard
-- Revenue tracking (7-day & 30-day views)
-- Sales statistics visualization
-- Built with interactive charts (Recharts.js)
-
----
-
-### 💬 Real-Time Features
-- Live support chat using WebSockets
-- Instant admin-user communication
-
----
-
-### 🔐 Security Features
-- Rate limiting (prevents abuse)
-- CORS protection
-- Secure REST APIs
-- JWT-based authentication
-
----
-
-## 🧰 Tech Stack
+## Tech Stack
 
 ### Frontend
-- React.js
-- React State Management
-- Bootstrap
-- CSS
-- Recharts.js
-
-### Backend
-- Node.js
-- Express.js
-- REST APIs
-- WebSocket
-- Webhooks
-
-### Database
-- MySQL
-
-### Integrations & Tools
-- Stripe (Payments)
-- SendGrid (Email notifications)
-- Docker
-- Git & GitHub
-- Rate Limiter
-- CORS middleware
+-**Frontend:** React.js, State Management, Bootstrap, CSS, Recharts.js
+-**Backend:** Node.js, Express.js, REST APIs, WebSocket, Webhooks
+-**Database & Integrations:** MySQL, Stripe, SendGrid,
+-**Other Tools:** Docker, Git, GitHub, Rate Limiter, CORS
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-
-### 🏠 Home Page
 ![Home](/frontend/public/assets/img2.png)
-
-### 🛍 Product Page
 ![Products](/frontend/public/assets/img1.png)
-
-### 🛒 Cart Page
 ![Cart](/frontend/public/assets/img8.png)
-
-### 💳 Checkout Page
 ![Checkout](/frontend/public/assets/img5.png)
-
-### 📊 Analytics Dashboard
 ![Analytics](/frontend/public/assets/img4.png)
 
 ---
